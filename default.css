@@ -1,6 +1,8 @@
+@import url("font/stylesheet.css");
+
 body
 {
-	font-family: sans-serif;
+	font-family: QuicksandBook, sans-serif;
 }
 
 /* deprecated */
