@@ -16,6 +16,11 @@
 					<li><a href="http://de.autohotkey.com/forum">AutoHotkey forum (DE)</a></li>
 				</ul>
 			</td>
+			<td>
+				<ul>
+					<li><a href="about.php">About</a></li>
+				</ul>
+			</td>
 		</tr>
 	</table>
 </div>
