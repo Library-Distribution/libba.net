@@ -81,7 +81,7 @@
 		<xsd:complexType>
 			<xsd:attribute use="required" type="xsd:string" name="name"/> <!-- a short name for what the link points to -->
 			<xsd:attribute use="required" type="xsd:string" name="description"/> <!-- a description of what the link points to -->
-			<xsd:attribute use="required" type="xsd:string" name="href"/> <!-- the URL the link points to -->
+			<xsd:attribute use="required" type="xsd:anyURI" name="href"/> <!-- the URL the link points to -->
 			<xsd:anyAttribute/>
 		</xsd:complexType>
 	</xsd:element>
@@ -155,6 +155,7 @@
 			<xsd:attribute use="required" type="pack-type" name="type"/> <!-- the type of the package -->
 			<xsd:attribute use="required" type="xsd:string" name="name"/> <!-- the name of the package -->
 			<xsd:attribute use="required" type="xsd:string" name="version"/> <!-- the current version of the package -->
+			<xsd:attribute use="optional" type="xsd:boolean" name="has-logo-image"/> <!-- set to true to define that a logo file is included as "logo.png" -->
 			<xsd:anyAttribute/>
 		</xsd:complexType>
 	</xsd:element>
