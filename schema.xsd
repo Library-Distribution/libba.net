@@ -1,0 +1,161 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+			xmlns:ald="ald://package/schema/2012"
+			attributeFormDefault="qualified" elementFormDefault="qualified"
+			targetNamespace="ald://package/schema/2012">
+
+	<xsd:simpleType name="guid-type"> <!-- defines the type of a GUID -->
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="\{[a-fA-F0-9]{8}-([a-fA-F\d]{4}\-){3}[a-fA-F0-9]{12}\}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="pack-type"> <!-- defines what type of packages can be created -->
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="app"/>
+			<xsd:enumeration value="lib"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="requirement-type"> <!-- defines what type of requirements are available -->
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="os"/> <!-- a specific OS is required -->
+			<xsd:enumeration value="ahk"/> <!-- a specific AHK version is required -->
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:element name="author"> <!-- defines data of an author who wrote this lib or app -->
+		<xsd:complexType>
+			<xsd:attribute use="required" type="xsd:string" name="name"/> <!-- the name to identify the author. Can be same as user-name -->
+			<xsd:attribute use="optional" type="xsd:string" name="user-name"/> <!-- the AHK forums user name -->
+			<xsd:attribute use="optional" type="xsd:string" name="homepage"/> <!-- an URL to a homepage of the author -->
+			<xsd:attribute use="optional" type="xsd:string" name="email"/> <!-- an email address of the author -->
+			<xsd:anyAttribute/>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="dependency"> <!-- defines a library required for this lib or app to work -->
+		<xsd:complexType>
+			<xsd:sequence> <!-- a list of accepted version numbers for the lib -->
+				<xsd:element name="version" minOccurs="0" maxOccurs="unbounded" type="xsd:string"/> <!-- the version number is carried as element value -->
+				<xsd:any/>
+			</xsd:sequence>
+
+			<xsd:attribute use="required" type="xsd:string" name="name"/> <!-- the name of the required lib -->
+			<xsd:attribute use="optional" type="xsd:string" name="version"/> <!-- one specific version the lib must have -->
+			<xsd:attribute use="optional" type="xsd:string" name="min-version"/> <!-- the lower bound of a range of accepted version numbers for the lib. 0 if omitted -->
+			<xsd:attribute use="optional" type="xsd:string" name="max-version"/> <!-- the upper bound of a range of accepted version numbers for the lib. unbounded if omitted -->
+			<xsd:anyAttribute/>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="requirement"> <!-- defines an additional requirement the lib has -->
+		<xsd:complexType>
+			<xsd:sequence> <!-- a list of accepted values for the requirement -->
+				<xsd:element name="value" minOccurs="0" maxOccurs="unbounded" type="xsd:string"/>
+				<xsd:any/>
+			</xsd:sequence>
+
+			<xsd:attribute use="required" name="type" type="requirement-type"/> <!-- defines the type of requirement -->
+			<xsd:attribute use="optional" type="xsd:string" name="value"/> <!-- defines a single accepted value for the requirement -->
+			<xsd:attribute use="optional" type="xsd:string" name="min-value"/> <!-- defines the lower bound for a range of accepted values. 0 if omitted -->
+			<xsd:attribute use="optional" type="xsd:string" name="max-value"/> <!-- defines the upper bound for a range of accepted values. unbounded if omitted -->
+			<xsd:anyAttribute/>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="file"> <!-- defines a file being included -->
+		<xsd:complexType>
+			<xsd:attribute name="path" use="required" type="xsd:string"/> <!-- the path to the file -->
+			<xsd:anyAttribute/>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="tag"> <!-- defines a tag for the package -->
+		<xsd:complexType>
+			<xsd:attribute name="name" use="required" type="xsd:string"/> <!-- the name of the tag -->
+			<xsd:anyAttribute/>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="link"> <!-- defines a link related to the package -->
+		<xsd:complexType>
+			<xsd:attribute use="required" type="xsd:string" name="name"/> <!-- a short name for what the link points to -->
+			<xsd:attribute use="required" type="xsd:string" name="description"/> <!-- a description of what the link points to -->
+			<xsd:attribute use="required" type="xsd:string" name="href"/> <!-- the URL the link points to -->
+			<xsd:anyAttribute/>
+		</xsd:complexType>
+	</xsd:element>
+
+	<!-- root -->
+	<xsd:element name="package">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="authors" minOccurs="1" maxOccurs="1"> <!-- the list of authors being involved in this lib or app -->
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element ref="author" minOccurs="1" maxOccurs="unbounded"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="dependencies" minOccurs="0" maxOccurs="1"> <!-- the list of dependencies this package has -->
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element ref="dependency"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="requirements" minOccurs="0" maxOccurs="1"> <!-- the list of additional requirements for this package -->
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element ref="requirement"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="files" minOccurs="1" maxOccurs="1"> <!-- holds the lists of files to include -->
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="doc" minOccurs="0" maxOccurs="1"> <!-- the list of documentation files (optional) -->
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element ref="file" minOccurs="1" maxOccurs="unbounded"/>
+									</xsd:sequence>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element name="src" minOccurs="1" maxOccurs="1"> <!-- the list of source files -->
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element ref="file" minOccurs="1" maxOccurs="unbounded"/>
+									</xsd:sequence>
+								</xsd:complexType>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="tags" minOccurs="0" maxOccurs="1"> <!-- the list of tags for the package -->
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element ref="tag" minOccurs="1" maxOccurs="unbounded"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<!-- todo: triggers
+					Triggers can be run after installation, before and after update and before uninstall.
+					They consist of a command line to execute.
+				-->
+				<xsd:element name="links" minOccurs="0" maxOccurs="1"> <!-- the list of related links -->
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element ref="link" minOccurs="1" maxOccurs="unbounded"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+
+			<xsd:attribute use="required" type="guid-type" name="unique-id"/> <!-- the unique ID of the package -->
+			<xsd:attribute use="required" type="pack-type" name="type"/> <!-- the type of the package -->
+			<xsd:attribute use="required" type="xsd:string" name="name"/> <!-- the name of the package -->
+			<xsd:attribute use="required" type="xsd:string" name="version"/> <!-- the current version of the package -->
+			<xsd:anyAttribute/>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>
