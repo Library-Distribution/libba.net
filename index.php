@@ -89,7 +89,7 @@
 						}
 						else
 						{
-							$db_query_cond .= "AND user = '$user'";
+							$db_query_cond .= " AND user = '$user'";
 						}
 					}
 
