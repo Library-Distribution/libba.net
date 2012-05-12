@@ -16,20 +16,6 @@
 					<li><a href="http://de.autohotkey.com/forum">AutoHotkey forum (DE)</a></li>
 				</ul>
 			</td>
-			<td>
-				<ul>
-					<li><a href="index.php">Index</a></li>
-					<li><a href="faq.php">FAQ</a></li>
-					<li><a href="http://www.autohotkey.proboards.com">Discussion forum</a></li>
-				</ul>
-			</td>
-			<td>
-				<ul>
-					<li><a href="index.php">Index</a></li>
-					<li><a href="faq.php">FAQ</a></li>
-					<li><a href="http://www.autohotkey.proboards.com">Discussion forum</a></li>
-				</ul>
-			</td>
 		</tr>
 	</table>
 </div>
