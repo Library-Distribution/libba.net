@@ -4,12 +4,12 @@
 		# 'GET' parameters:
 		# Name		possible values			Meaning
 		###########################################################################################################
-		# page		any integer >= 1		Show the page with specified index. Omit to show the main page.
+		# page		any integer >= 0		Show the page with specified index. Omit to show the main page.
 		#									The parameters below only have effect when this is one is present.
 		# mode		"apps", "libs"			Only show applications or libraries in the listing. Omit to show both.
 		# items		any integer >= 1		Show the specified amount of items on a page. Omit to use 20.
 		# user		any valid user name		Only show items by the specified user. Omit to show items by all users.
-		# todo: tags, author, time (newer than, older than)
+		# todo: time (newer than, older than)
 
 		$page_title = "Browse ";
 		$mode = "";
@@ -39,6 +39,10 @@
 			$user = $_GET["user"];
 			$page_title .= " by $user";
 		}
+		if (isset($_GET["tag"]))
+		{
+			$tag = $_GET["tag"];
+		}
 
 		$page_itemcount = (empty($_GET["items"])) ? 20 : $_GET["items"];
 	?>
@@ -52,89 +56,109 @@
 		<h1 id="page-title"><?php echo $page_title; ?></h1>
 		<div id="page-content">
 			<?php
-				if (!isset($page_index))
+				if (!isset($page_index) && !isset($_GET["items"]) && !isset($user) && !isset($tag))
 				{
 			?>
 					<p>
 						<span class="text-first-word">Welcome</span> to <b><abbr>ALD</abbr></b>, the <b>A</b>utoHotkey <b>L</b>ibrary <b>D</b>istribution system.
 						This is a standardized system for distribution of code you have written in AutoHotkey.
 						By uploading your code here, you can make it accessible for every AutoHotkey user.
-						See the list below for apps and libraries already available.
+						See the list below for apps and libraries already available,
 						or check out the manual to see how you can upload your own software.
 					</p>
 			<?php
-					$page_index = 1;
 				}
-				if (isset($page_index))
+				if (!isset($page_index))
 				{
-					require("db.php");
+					$page_index = 0;
+				}
+				require("db.php");
 
-					# connect to database server
-					$db_connection = db_ensureConnection();
+				# connect to database server
+				$db_connection = db_ensureConnection();
 
-					$db_query_cond = "";
-					if ($mode == "apps")
+				$db_query_cond = "";
+				if ($mode == "apps")
+				{
+					$db_query_cond = "WHERE type = 'app'";
+				}
+				else if ($mode == "libs")
+				{
+					$db_query_cond = "WHERE type = 'lib'";
+				}
+				if (!empty($user))
+				{
+					$user = mysql_real_escape_string($user, $db_connection);
+					if ($db_query_cond == "")
 					{
-						$db_query_cond = "WHERE type = 'app'";
+						$db_query_cond = "WHERE user = '$user'";
 					}
-					else if ($mode == "libs")
+					else
 					{
-						$db_query_cond = "WHERE type = 'lib'";
+						$db_query_cond .= " AND user = '$user'";
 					}
-					if (!empty($user))
+				}
+				if (isset($tag))
+				{
+					$tag = mysql_real_escape_string($tag, $db_connection);
+					if ($db_query_cond == "")
 					{
-						if ($db_query_cond == "")
+						$db_query_cond = "WHERE tags REGEXP '(^|;)$tag($|;)'";
+					}
+					else
+					{
+						$db_query_cond .= " AND tags REGEXP '(^|;)$tag($|;)'";
+					}
+				}
+
+				$start_index = ($page_index) * $page_itemcount;
+				$db_query = "SELECT id, name, version, user FROM $db_table_main $db_query_cond ORDER BY name LIMIT $start_index,$page_itemcount";
+				$db_result = mysql_query($db_query, $db_connection)
+				or die ("Could not retrieve list of apps and libraries.".mysql_error());
+
+				$items = array();
+				while ($item = mysql_fetch_object($db_result))
+				{
+					$items[$item->name] = $item;
+				}
+
+				$last_letter = "";
+				foreach ($items as $item_name => $item)
+				{
+					$current_letter = strtoupper(substr($item_name, 0, 1));
+					if (!ctype_alpha($current_letter))
+					{
+						$current_letter = ".#?1";
+					}
+					if ($current_letter != $last_letter)
+					{
+						if ($last_letter != "")
 						{
-							$db_query_cond = "WHERE user = '$user'";
+							echo "</ul></div>";
 						}
-						else
-						{
-							$db_query_cond .= " AND user = '$user'";
-						}
+						echo "<div class='letter-container' id='items$current_letter'><span class='letter-item'>$current_letter</span><ul>";
 					}
+					echo "<li><a class='item' name='item$item->id' href='viewitem.php?id=$item->id'>$item_name</a> (v$item->version) by <a class='userlink' href='viewuser.php?user=$item->user'>$item->user</a></li>";
+					$last_letter = $current_letter;
+				}
+				if (count($items) > 0)
+				{
+					echo "</ul></div>";
+				}
+				else
+				{
+					echo "<b>No items found that match your query.</b>";
+				}
 
-					$start_index = ($page_index - 1) * $page_itemcount;
-					$db_query = "SELECT id, name, version, user FROM $db_table_main $db_query_cond ORDER BY name LIMIT $start_index,$page_itemcount";
-					$db_result = mysql_query($db_query, $db_connection)
-					or die ("Could not retrieve list of apps and libraries.".mysql_error());
+				if ($page_index > 0)
+				{
+					echo "<a class='next-previous' id='prev' href='?items=$page_itemcount&amp;page=".($page_index - 1)."'>Previous page</a>";
+				}
 
-					$items = array();
-					while ($item = mysql_fetch_object($db_result))
-					{
-						$items[$item->name] = $item;
-					}
-
-					$last_letter = "";
-					foreach ($items as $item_name => $item)
-					{
-						$current_letter = strtoupper(substr($item_name, 0, 1));
-						if (!ctype_alpha($current_letter))
-						{
-							$current_letter = ".#?1";
-						}
-						if ($current_letter != $last_letter)
-						{
-							if ($last_letter != "")
-							{
-								echo "</ul></div>";
-							}
-							echo "<div class='letter-container' id='items$current_letter'><span class='letter-item'>$current_letter</span><ul>";
-						}
-						echo "<li><a class='item' name='item$item->id' href='viewitem.php?id=$item->id'>$item_name</a> (v$item->version) by <a class='userlink' href='viewuser.php?user=$item->user'>$item->user</a></li>";
-						$last_letter = $current_letter;
-					}
-					if (count($items) > 0)
-					{
-						echo "</ul></div>";
-					}
-
-					if ($page_index > 1)
-					{
-						echo "<a class='next-previous' id='prev' href='?items=$page_itemcount&amp;page=".($page_index - 1)."'>Previous page</a>";
-					}
-
+				if (count($items) > 0)
+				{
 					# check if there are more items
-					$db_query = "SELECT id FROM $db_table_main ORDER BY name LIMIT ".($start_index + $page_itemcount).",1";
+					$db_query = "SELECT id FROM $db_table_main $db_query_cond ORDER BY name LIMIT ".($start_index + $page_itemcount).",1";
 					$db_result = mysql_query($db_query, $db_connection)
 					or die ("ERROR: Could not query for more items\n".mysql_error());
 					if (mysql_num_rows($db_result) > 0) # if so, show the "next" link
