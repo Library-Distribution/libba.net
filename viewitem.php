@@ -13,9 +13,9 @@
 		}
 		
 		$db_connection = db_ensureConnection();
-		$db_query = "SELECT name, author, version, user, description, uploaded, tags FROM $db_table_main WHERE id = '$id' LIMIT 1";
+		$db_query = "SELECT name, version, user, description, uploaded, tags FROM $db_table_main WHERE id = '$id' LIMIT 1";
 		$db_result = mysql_query($db_query, $db_connection)
-		or die ("Failed to read data from database!");
+		or die ("ERROR: Failed to read data from database.\n".mysql_error());
 
 		while ($db_entry = mysql_fetch_object($db_result))
 		{
@@ -39,10 +39,6 @@
 				<tr>
 					<td>Uploaded by:</td>
 					<td><a href="viewuser.php?user=<?php echo $item->user; ?>"><?php echo $item->user; ?></a></td>
-				</tr>
-				<tr>
-					<td>Author:</td>
-					<td><?php echo $item->author; ?></td>
 				</tr>
 				<tr>
 					<td>Uploaded:</td>
