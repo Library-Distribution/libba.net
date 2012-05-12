@@ -90,6 +90,7 @@
 	<xsd:element name="package">
 		<xsd:complexType>
 			<xsd:sequence>
+				<xsd:element name="description" minOccurs="1" maxOccurs="1" type="xsd:string"/>
 				<xsd:element name="authors" minOccurs="1" maxOccurs="1"> <!-- the list of authors being involved in this lib or app -->
 					<xsd:complexType>
 						<xsd:sequence>
