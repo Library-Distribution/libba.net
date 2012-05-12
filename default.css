@@ -94,3 +94,15 @@ a:hover
 	font-weight: bold;
 	font-style: italic;
 }
+
+.next-previous
+{
+}
+#next
+{
+	float: right;
+}
+#previous
+{
+	float: left;
+}
