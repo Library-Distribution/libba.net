@@ -67,7 +67,7 @@
 
 				if (mysql_num_rows($db_result) > 0)
 				{
-					echo "<h3>Previous versions:</h3><ul>";
+					echo "<h3>Other versions:</h3><ul>";
 					while ($db_entry = mysql_fetch_object($db_result))
 					{
 						echo "<li><a href='?id=$db_entry->id'>version $db_entry->version</a></li>";
