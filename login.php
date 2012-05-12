@@ -4,7 +4,7 @@
 	</head>
 	<body>
 		<?php
-			$redirect = urldecode((empty($_GET["redirect")) ? "index.php" : $_GET["redirect"]);
+			$redirect = (empty($_GET["redirect")) ? "index.php" : urldecode($_GET["redirect"]);
 			# todo...
 			header("Location: $redirect");
 		?>
