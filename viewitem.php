@@ -13,7 +13,7 @@
 		}
 		
 		$db_connection = db_ensureConnection();
-		$db_query = "SELECT name, version, user, description, uploaded, tags FROM $db_table_main WHERE id = '$id' LIMIT 1";
+		$db_query = "SELECT name, file, version, user, description, uploaded, tags FROM $db_table_main WHERE id = '$id' LIMIT 1";
 		$db_result = mysql_query($db_query, $db_connection)
 		or die ("ERROR: Failed to read data from database.\n".mysql_error());
 
@@ -56,6 +56,7 @@
 					</td>
 				</tr>
 			</table>
+			<a href="<?php echo $item->file; ?>">Download</a>
 			<h3>Description</h3>
 			<div>
 				<?php echo $item->description; ?>
@@ -63,7 +64,7 @@
 			<?php
 				$db_query = "SELECT id, version FROM $db_table_main WHERE name = '$item->name' AND version != '$item->version' ORDER BY version";
 				$db_result = mysql_query($db_query, $db_connection)
-				or die("ERROR: Could not query for older versions.\n" . mysql_error());
+				or die("ERROR: Could not query for other versions.\n" . mysql_error());
 
 				if (mysql_num_rows($db_result) > 0)
 				{
