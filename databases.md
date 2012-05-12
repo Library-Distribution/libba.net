@@ -20,7 +20,7 @@ holds the list of apps and libs being uploaded.
 * default_include (`BOOLEAN`, default: `0`)
 
 ### table: `users`
-holds the list of users, an sha256-hash of the password and the privileges they have.
+holds the list of users, a sha256-hash of the password and the privileges they have.
 
 #### columns
 * name (`varchar(25)`)
