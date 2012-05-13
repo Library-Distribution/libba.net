@@ -73,7 +73,7 @@
 					or die ("ERROR: failed to query libraries.\n".mysql_error());
 					$uploaded = array();
 
-					echo "<h2>Libraries uploaded:</h2><ul>";
+					echo "<h2>Libraries uploaded (".(mysql_num_rows($db_result)).") :</h2><ul>";
 					while ($db_entry = mysql_fetch_object($db_result))
 					{
 						if (!in_array($db_entry->name, $uploaded))
@@ -89,7 +89,7 @@
 					or die ("ERROR: failed to query libraries.\n".mysql_error());
 					$uploaded = array();
 
-					echo "<h2>Applications uploaded:</h2><ul>";
+					echo "<h2>Applications uploaded (".(mysql_num_rows($db_result)).") :</h2><ul>";
 					while ($db_entry = mysql_fetch_object($db_result))
 					{
 						if (!in_array($db_entry->name, $uploaded))
