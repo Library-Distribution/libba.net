@@ -63,6 +63,11 @@
 				{
 					# user profile
 
+					$db_query = "SELECT joined FROM $db_table_users WHERE name = '$user' LIMIT 1";
+					$db_result = mysql_query($db_query, $db_connection)
+					or die ("ERROR: could not retrieve joined date.\n".mysql_error());
+					echo "Joined: <span class='joined-date'>".(mysql_fetch_object($db_result)->joined)."</span>";
+
 					$db_query = "SELECT name, id, version FROM $db_table_main WHERE user = '$user' AND type = 'lib' ORDER BY name, version DESC";
 					$db_result = mysql_query($db_query, $db_connection)
 					or die ("ERROR: failed to query libraries.\n".mysql_error());

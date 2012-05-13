@@ -26,3 +26,4 @@ holds the list of users, a sha256-hash of the password and the privileges they h
 * name (`varchar(25)`)
 * pw (`varchar(64)`)
 * privileges (`int(1)`, default: `0`)
+* joined (`date`)
