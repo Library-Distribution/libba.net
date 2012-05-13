@@ -27,6 +27,7 @@
 	?>
 	<head>
 		<link rel="stylesheet" href="default.css"/>
+		<link rel="stylesheet" href="upload.css"/>
 		<title><?php echo $page_title; ?></title>
 		<?php
 			if ($mode == "start")

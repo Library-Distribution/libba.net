@@ -5,24 +5,6 @@ body
 	font-family: QuicksandBook, sans-serif;
 }
 
-/* deprecated */
-
-td
-{
-	padding: 3px;
-}
-tr.form-header
-{
-	background-color: lightgray;
-	font-weight: bold;
-}
-tr.form-header td
-{
-	border-bottom: solid gray 2px;
-}
-
-/* end of deprecated */
-
 table
 {
 	border-collapse: collapse;
