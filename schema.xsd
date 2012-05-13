@@ -156,7 +156,7 @@
 			<xsd:attribute use="required" type="pack-type" name="type"/> <!-- the type of the package -->
 			<xsd:attribute use="required" type="xsd:string" name="name"/> <!-- the name of the package -->
 			<xsd:attribute use="required" type="xsd:string" name="version"/> <!-- the current version of the package -->
-			<xsd:attribute use="optional" type="xsd:boolean" name="has-logo-image"/> <!-- set to true to define that a logo file is included as "logo.png" -->
+			<xsd:attribute use="optional" type="xsd:string" name="logo-image"/> <!-- the relative path to a logo image, if one is included -->
 			<xsd:anyAttribute/>
 		</xsd:complexType>
 	</xsd:element>
