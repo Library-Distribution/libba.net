@@ -81,9 +81,10 @@ table
 	font-size: 200%;
 }
 
-a
+a, a:visited
 {
 	text-decoration: none;
+	color: navy;
 }
 a:hover
 {
