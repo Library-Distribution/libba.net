@@ -2,17 +2,18 @@
 <html>
 	<?php
 		require("db.php");
-		$page_title = "hi!";
+		$db_connection = db_ensureConnection();
+
+		$page_title = "";
 		if (isset($_GET["id"]))
 		{
-			$id = $_GET["id"];
+			$id = mysql_real_escape_string($_GET["id"], $db_connection);
 		}
 		else
 		{
 			header("Location: index.php");
 		}
 		
-		$db_connection = db_ensureConnection();
 		$db_query = "SELECT name, file, version, user, description, uploaded, tags FROM $db_table_main WHERE id = '$id' LIMIT 1";
 		$db_result = mysql_query($db_query, $db_connection)
 		or die ("ERROR: Failed to read data from database.\n".mysql_error());

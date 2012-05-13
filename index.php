@@ -76,6 +76,7 @@
 
 				# connect to database server
 				$db_connection = db_ensureConnection();
+				$page_itemcount = mysql_real_escape_string($page_itemcount, $db_connection);
 
 				$db_query_cond = "";
 				if ($mode == "apps")

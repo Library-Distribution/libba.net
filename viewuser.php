@@ -29,6 +29,7 @@
 			<?php
 				require("db.php");
 				$db_connection = db_ensureConnection();
+				$page_itemcount = mysql_real_escape_string($page_itemcount, $db_connection);
 
 				if (!isset($user))
 				{
@@ -62,6 +63,7 @@
 				else
 				{
 					# user profile
+					$user = mysql_real_escape_string($user, $db_connection);
 
 					$db_query = "SELECT joined FROM $db_table_users WHERE name = '$user' LIMIT 1";
 					$db_result = mysql_query($db_query, $db_connection)
