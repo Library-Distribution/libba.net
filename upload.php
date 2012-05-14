@@ -14,7 +14,7 @@
 				$mode = "error";
 			}
 		}
-		else if ($_POST)
+		else if ($_POST && $_FILES)
 		{
 			$page_title = "Uploading...";
 			$mode = "process";
