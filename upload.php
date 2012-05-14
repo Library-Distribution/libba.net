@@ -234,11 +234,13 @@
 					{
 						# todo: possibly emit more data, using the id (if present)
 						echo "<a href=\"viewitem.php?id=\"".$_GET["id"]."\">View uploaded app or library</a>";
+						flush();
 						sleep(10);
 						header("Location: viewitem.php?id=".$_GET["id"]);
 					}
 					else
 					{
+						flush();
 						sleep(10);
 						header("Location: index.php");
 					}
