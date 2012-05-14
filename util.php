@@ -1,4 +1,6 @@
 <?php
+require_once("archive.php");
+
 function get_max_id($db_connection)
 {
 	$db_query = "SELECT id from $db_table_main ORDER BY id DESC LIMIT 1";
@@ -76,15 +78,5 @@ function rrmdir($dir) {
     rmdir($dir);
 }
 
-function extract_archive($file, $dir)
-{
-	exec("7za e ".escapeshellarg($file)." -o".escapeshellarg($dir)." -y -aoa", $arr, $return_value);
-	return $return_value;
-}
 
-function archive_extract_file($archive, $file, $dir)
-{
-	exec("7za e ".escapeshellarg($archive)." -y -aoa -o".escapeshellarg($dir)." ".escapeshellarg($file), $arr, $return_value);
-	return $return_value;
-}
 ?>
