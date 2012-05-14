@@ -87,10 +87,12 @@
 									<input type="radio" name="pack_type" onchange="validateData()" value="lib" checked="checked">Library or function</input>
 								</td>
 							</tr>
+							<!-- todo: read from definition file -->
 							<tr>
 								<td>Description:</td>
 								<td><textarea name="pack_description"></textarea></td>
 							</tr>
+							<!-- todo: read from definition file -->
 							<tr>
 								<td>Tags:</td>
 								<td><textarea name="pack_tags"></textarea>(separated by ";")</td>
@@ -131,7 +133,7 @@
 					$pack_tags = $_POST["pack_tags"];
 
 					# retrieve posted parameters
-					$pack_file = $_POST["pack_file"];
+					$pack_file = $_FILES["pack_file"];
 					$user_name = $_POST["user_name"];
 					$user_pw = $_POST["user_pw"];
 
@@ -140,7 +142,6 @@
 					{
 						die("Error: you did not fill in all required fields!");
 					}
-					echo "FILE: $pack_file";
 
 					# connect to database server
 					$db_connection = db_ensureConnection();
@@ -165,15 +166,21 @@
 					# validate user & password
 					validateLogin($user_name, $user_pw);
 
-					# upload file
-					$file = find_free_file("uploads\\", ".7z");
-					if ($_FILES["pack_file"]["size"] > 262144000) # 250 MB
+					# upload and read file:
+					###########################################################
+					if ($pack_file["size"] > (100 * 1024 * 1024)) # 100 MB
 					{
-						die ("File is too large ( > 250MB ).");
+						die ("File is too large ( > 100 MB ).");
 					}
-					$file_content = read_definition_file($_FILES["pack_file"]["tmp_name"]);
+
+					ensure_upload_dir(); # ensure the directory for uploads exists
+					$file = find_free_file(upload_dir_path(), ".7z");
+					move_uploaded_file($pack_file["tmp_name"], $file);
+
+					$file_content = read_definition_file($file); # todo: read and parse file
+
 					# todo: restrictions / validate file / read data from file
-					move_uploaded_file($_FILES["pack_file"]["tmp_name"], "uploads\\".$file);
+					###########################################################
 
 					$datetime = date("Y-m-d H:i:s");
 
