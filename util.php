@@ -17,7 +17,7 @@ function find_free_file($dir = "", $ext = "")
 	{
 		$file = rand().$ext;
 	} while(file_exists($dir . $file));
-	return $file;
+	return $dir . $file;
 }
 
 function find_free_directory($parent = "")
@@ -26,25 +26,65 @@ function find_free_directory($parent = "")
 	{
 		$dir = rand();
 	} while(is_dir($parent . $dir));
-	return $dir;
+	return $parent . $dir;
+}
+
+function ensure_upload_dir()
+{
+	$dir = upload_dir_path();
+	if (!is_dir($dir))
+	{
+		mkdir($dir);
+	}
+}
+
+function upload_dir_path()
+{
+	return rtrim(dirname(__FILE__), '/\\').DIRECTORY_SEPARATOR."uploads".DIRECTORY_SEPARATOR;
 }
 
 function read_definition_file($file)
 {
-	$dir = find_free_directory();
+	# create a temp directory
+	$dir = upload_dir_path() . find_free_directory();
 	mkdir($dir);
-	if (extract_archive($file, $dir) != 0)
+
+	# extract data
+	if (($retVal = archive_extract_file($file, "definition.ald", $dir)) != 0)
 	{
-		die ("Could not extract archive!");
+		# delete temp dir
+		rrmdir($dir);
+		die ("Could not extract archive '$file'to '$dir'!\n".$retVal);
 	}
-	$definition = file_get_contents($dir ."\\definition.ald");
-	rmdir($dir);
-	return $definiton;
+	$definition = file_get_contents($dir.DIRECTORY_SEPARATOR."definition.ald");
+
+	# delete temp dir
+	rrmdir($dir);
+
+	return $definition;
+}
+
+# SOURCE: http://www.php.net/manual/de/function.rmdir.php#108113
+# recursively remove a directory
+function rrmdir($dir) {
+    foreach(glob($dir . '/*') as $file) {
+        if(is_dir($file))
+            rrmdir($file);
+        else
+            unlink($file);
+    }
+    rmdir($dir);
 }
 
 function extract_archive($file, $dir)
 {
-	exec("7zip e $file -o$dir -y -aoa", NULL, $return_value);
+	exec("7za e ".escapeshellarg($file)." -o".escapeshellarg($dir)." -y -aoa", $arr, $return_value);
+	return $return_value;
+}
+
+function archive_extract_file($archive, $file, $dir)
+{
+	exec("7za e ".escapeshellarg($archive)." -y -aoa -o".escapeshellarg($dir)." ".escapeshellarg($file), $arr, $return_value);
 	return $return_value;
 }
 ?>
