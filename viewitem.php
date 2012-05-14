@@ -57,7 +57,7 @@
 					</td>
 				</tr>
 			</table>
-			<a href="<?php echo $item->file; ?>">Download</a>
+			<a href="/uploads/<?php echo $item->file; ?>">Download</a>
 			<h3>Description</h3>
 			<div>
 				<?php echo $item->description; ?>
