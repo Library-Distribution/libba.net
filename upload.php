@@ -97,7 +97,7 @@
 							</tr>
 							<tr>
 								<td>Package:</td>
-								<td><input type="file" name="pack_file" onchange="validateData()"/>
+								<td><input type="hidden" name="MAX_FILE_SIZE" value="104857600"/><input type="file" name="pack_file" onchange="validateData()"/>
 							</tr>
 							<tr class="form-header">
 								<td colspan="2">You:</td>
