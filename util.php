@@ -1,6 +1,4 @@
 <?php
-require_once("archive.php");
-
 function get_max_id($db_connection)
 {
 	$db_query = "SELECT id from $db_table_main ORDER BY id DESC LIMIT 1";
@@ -45,25 +43,117 @@ function upload_dir_path()
 	return rtrim(dirname(__FILE__), '/\\').DIRECTORY_SEPARATOR."uploads".DIRECTORY_SEPARATOR;
 }
 
-function read_definition_file($file)
+function read_package($package, $include_data = NULL)
 {
-	# create a temp directory
-	$dir = upload_dir_path() . find_free_directory(upload_dir_path());
-	mkdir($dir);
-
-	# extract data
-	if (($retVal = archive_extract_file($file, "definition.ald", $dir)) != 0)
+	static $all_data = NULL;
+	if ($all_data == NULL)
 	{
-		# delete temp dir
-		rrmdir($dir);
-		die ("Could not extract archive '$file'to '$dir'!\n".$retVal);
+		$all_data = array("unique-id", "name", "version", "type", "description", "authors", "tags");
 	}
-	$definition = file_get_contents($dir."definition.ald");
 
-	# delete temp dir
-	rrmdir($dir);
+	if ($include_data == NULL)
+	{
+		$include_data = $all_data;
+	}
 
-	return $definition;
+	$output = array();
+
+	$archive = new ZipArchive();
+	if ($archive->open($package) != TRUE)
+	{
+		$archive->close();
+		die ("Package file could not be opened!");
+	}
+
+	$doc = new DOMDocument();
+	$doc->loadXML($archive->getFromName("definition.ald"));
+
+	if (!$doc->schemaValidate("schema.xsd"))
+	{
+		die ("ERROR: package definition is not valid!");
+	}
+
+	$xp = new DOMXPath($doc);
+	$xp->registerNamespace("ald", "ald://package/schema/2012");
+
+	# check if all mentioned files are present
+	if (!package_check_for_files($archive, $xp->query("/*/ald:files/ald:doc/@ald:path"), $error_file)
+		|| !package_check_for_files($archive, $xp->query("/*/ald:files/ald:src/@ald:path"), $error_file)
+		|| !package_check_for_files($archive, $xp->query("@ald:logo-image"), $error_file))
+	{
+		$archive->close();
+		die ("Package references missing file: '" . $error_file . "'!");
+	}
+
+	if (in_array('unique-id', $include_data))
+	{
+		$output['name'] = $xp->query("@ald:unique-id")->item(0)->nodeValue;
+	}
+	if (in_array('name', $include_data))
+	{
+		$output['name'] = $xp->query("@ald:name")->item(0)->nodeValue;
+	}
+	if (in_array('version', $include_data))
+	{
+		$output['version'] = $xp->query("@ald:version")->item(0)->nodeValue;
+	}
+	if (in_array('type', $include_data))
+	{
+		$output['type'] = $xp->query("@ald:type")->item(0)->nodeValue;
+	}
+	if (in_array('description', $include_data))
+	{
+		$output['description'] = $xp->query("ald:description")->item(0)->nodeValue;
+	}
+	if (in_array('authors', $include_data))
+	{
+		$output['authors'] = array();
+		foreach ($xp->query("/*/ald:authors/ald:author") AS $author_node)
+		{
+			$author = array();
+
+			$author['name'] = get_first_attribute($xp, $author_node, "@ald:name");
+			$temp = get_first_attribute($xp, $author_node, "@ald:user-name") AND $author['user-name'] = $temp;
+			$temp = get_first_attribute($xp, $author_node, "@ald:homepage") AND $author['homepage'] = $temp;
+			$temp = get_first_attribute($xp, $author_node, "@ald:email") AND $author['email'] = $temp;
+
+			$output['authors'][] = $author;
+		}
+	}
+	if (in_array('tags', $include_data))
+	{
+		$output['tags'] = array();
+		foreach ($xp->query("/*/ald:tags/ald:tag") AS $tag_node)
+		{
+			$output['tags'][] = array('name' => get_first_attribute($xp, $tag_node, "@ald:name"));
+		}
+	}
+	# ...
+
+	$archive->close();
+	return $output;
+}
+
+function get_first_attribute($xp, $elem, $attr)
+{
+	foreach ($xp->query($attr, $elem) AS $node)
+	{
+		return $node->nodeValue;
+	}
+	return NULL;
+}
+
+function package_check_for_files($archive, $file_list, &$error_file = NULL)
+{
+	foreach ($file_list AS $file_entry)
+	{
+		if (!$archive->locateName($file_entry->nodeValue))
+		{
+			$error_file = $file_entry->nodeValue;
+			return false;
+		}
+	}
+	return true;
 }
 
 # SOURCE: http://www.php.net/manual/de/function.rmdir.php#108113
