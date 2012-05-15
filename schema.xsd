@@ -37,7 +37,6 @@
 		<xsd:complexType>
 			<xsd:sequence> <!-- a list of accepted version numbers for the lib -->
 				<xsd:element name="version" minOccurs="0" maxOccurs="unbounded" type="xsd:string"/> <!-- the version number is carried as element value -->
-				<xsd:any/>
 			</xsd:sequence>
 
 			<xsd:attribute use="required" type="xsd:string" name="name"/> <!-- the name of the required lib -->
@@ -52,7 +51,6 @@
 		<xsd:complexType>
 			<xsd:sequence> <!-- a list of accepted values for the requirement -->
 				<xsd:element name="value" minOccurs="0" maxOccurs="unbounded" type="xsd:string"/>
-				<xsd:any/>
 			</xsd:sequence>
 
 			<xsd:attribute use="required" name="type" type="ald:requirement-type"/> <!-- defines the type of requirement -->
@@ -137,10 +135,10 @@
 					Triggers can be run after installation, before and after update and before uninstall.
 					They consist of a command line to execute.
 				-->
-				<xsd:element name="links" minOccurs="0" maxOccurs="1"> <!-- the list of related links -->
+				<xsd:element name="links" minOccurs="1" maxOccurs="1"> <!-- the list of related links -->
 					<xsd:complexType>
 						<xsd:sequence>
-							<xsd:element ref="ald:link" minOccurs="1" maxOccurs="unbounded"/>
+							<xsd:element ref="ald:link" minOccurs="0" maxOccurs="unbounded"/>
 						</xsd:sequence>
 					</xsd:complexType>
 				</xsd:element>
