@@ -28,7 +28,7 @@ function find_free_directory($parent = "")
 	{
 		$dir = rand();
 	} while(is_dir($parent . $dir));
-	return $parent . $dir;
+	return $parent . $dir . DIRECTORY_SEPARATOR;
 }
 
 function ensure_upload_dir()
@@ -48,7 +48,7 @@ function upload_dir_path()
 function read_definition_file($file)
 {
 	# create a temp directory
-	$dir = upload_dir_path() . find_free_directory();
+	$dir = upload_dir_path() . find_free_directory(upload_dir_path());
 	mkdir($dir);
 
 	# extract data
@@ -58,7 +58,7 @@ function read_definition_file($file)
 		rrmdir($dir);
 		die ("Could not extract archive '$file'to '$dir'!\n".$retVal);
 	}
-	$definition = file_get_contents($dir.DIRECTORY_SEPARATOR."definition.ald");
+	$definition = file_get_contents($dir."definition.ald");
 
 	# delete temp dir
 	rrmdir($dir);
