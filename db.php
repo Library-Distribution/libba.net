@@ -6,9 +6,8 @@
 	function db_ensureConnection()
 	{
 		# settings for database
-		static $db_server = "localhost", $db_user = "root";
-		static $db_main = "adl_test";
-		require("db_pw.php"); # contains a variable declaration: 'static $db_pw = "password"'
+		static $db_server = "localhost";
+		require("db_cred.php"); # contains variable declarations for $db_pw, $db_user and $db_main
 
 		static $connection = false;
 		if (!$connection)
