@@ -55,7 +55,7 @@
 				<xsd:any/>
 			</xsd:sequence>
 
-			<xsd:attribute use="required" name="type" type="requirement-type"/> <!-- defines the type of requirement -->
+			<xsd:attribute use="required" name="type" type="ald:requirement-type"/> <!-- defines the type of requirement -->
 			<xsd:attribute use="optional" type="xsd:string" name="value"/> <!-- defines a single accepted value for the requirement -->
 			<xsd:attribute use="optional" type="xsd:string" name="min-value"/> <!-- defines the lower bound for a range of accepted values. 0 if omitted -->
 			<xsd:attribute use="optional" type="xsd:string" name="max-value"/> <!-- defines the upper bound for a range of accepted values. unbounded if omitted -->
@@ -86,6 +86,12 @@
 		</xsd:complexType>
 	</xsd:element>
 
+	<xsd:complexType name="file-list-type">
+		<xsd:sequence>
+			<xsd:element ref="ald:file" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
 	<!-- root -->
 	<xsd:element name="package">
 		<xsd:complexType>
@@ -94,48 +100,36 @@
 				<xsd:element name="authors" minOccurs="1" maxOccurs="1"> <!-- the list of authors being involved in this lib or app -->
 					<xsd:complexType>
 						<xsd:sequence>
-							<xsd:element ref="author" minOccurs="1" maxOccurs="unbounded"/>
+							<xsd:element ref="ald:author" minOccurs="1" maxOccurs="unbounded"/>
 						</xsd:sequence>
 					</xsd:complexType>
 				</xsd:element>
-				<xsd:element name="dependencies" minOccurs="0" maxOccurs="1"> <!-- the list of dependencies this package has -->
+				<xsd:element name="dependencies" minOccurs="1" maxOccurs="1"> <!-- the list of dependencies this package has -->
 					<xsd:complexType>
 						<xsd:sequence>
-							<xsd:element ref="dependency"/>
+							<xsd:element ref="ald:dependency" minOccurs="0" maxOccurs="unbounded"/>
 						</xsd:sequence>
 					</xsd:complexType>
 				</xsd:element>
-				<xsd:element name="requirements" minOccurs="0" maxOccurs="1"> <!-- the list of additional requirements for this package -->
+				<xsd:element name="requirements" minOccurs="1" maxOccurs="1"> <!-- the list of additional requirements for this package -->
 					<xsd:complexType>
 						<xsd:sequence>
-							<xsd:element ref="requirement"/>
+							<xsd:element ref="ald:requirement" minOccurs="0" maxOccurs="unbounded"/>
 						</xsd:sequence>
 					</xsd:complexType>
 				</xsd:element>
 				<xsd:element name="files" minOccurs="1" maxOccurs="1"> <!-- holds the lists of files to include -->
 					<xsd:complexType>
 						<xsd:sequence>
-							<xsd:element name="doc" minOccurs="0" maxOccurs="1"> <!-- the list of documentation files (optional) -->
-								<xsd:complexType>
-									<xsd:sequence>
-										<xsd:element ref="file" minOccurs="1" maxOccurs="unbounded"/>
-									</xsd:sequence>
-								</xsd:complexType>
-							</xsd:element>
-							<xsd:element name="src" minOccurs="1" maxOccurs="1"> <!-- the list of source files -->
-								<xsd:complexType>
-									<xsd:sequence>
-										<xsd:element ref="file" minOccurs="1" maxOccurs="unbounded"/>
-									</xsd:sequence>
-								</xsd:complexType>
-							</xsd:element>
+							<xsd:element name="doc" type="ald:file-list-type" minOccurs="1" maxOccurs="1"/> <!-- the list of documentation files -->
+							<xsd:element name="src" type="ald:file-list-type" minOccurs="1" maxOccurs="1"/> <!-- the list of source files -->
 						</xsd:sequence>
 					</xsd:complexType>
 				</xsd:element>
-				<xsd:element name="tags" minOccurs="0" maxOccurs="1"> <!-- the list of tags for the package -->
+				<xsd:element name="tags" minOccurs="1" maxOccurs="1"> <!-- the list of tags for the package -->
 					<xsd:complexType>
 						<xsd:sequence>
-							<xsd:element ref="tag" minOccurs="1" maxOccurs="unbounded"/>
+							<xsd:element ref="ald:tag" minOccurs="1" maxOccurs="unbounded"/>
 						</xsd:sequence>
 					</xsd:complexType>
 				</xsd:element>
@@ -146,14 +140,14 @@
 				<xsd:element name="links" minOccurs="0" maxOccurs="1"> <!-- the list of related links -->
 					<xsd:complexType>
 						<xsd:sequence>
-							<xsd:element ref="link" minOccurs="1" maxOccurs="unbounded"/>
+							<xsd:element ref="ald:link" minOccurs="1" maxOccurs="unbounded"/>
 						</xsd:sequence>
 					</xsd:complexType>
 				</xsd:element>
 			</xsd:sequence>
 
-			<xsd:attribute use="required" type="guid-type" name="unique-id"/> <!-- the unique ID of the package -->
-			<xsd:attribute use="required" type="pack-type" name="type"/> <!-- the type of the package -->
+			<xsd:attribute use="required" type="ald:guid-type" name="unique-id"/> <!-- the unique ID of the package -->
+			<xsd:attribute use="required" type="ald:pack-type" name="type"/> <!-- the type of the package -->
 			<xsd:attribute use="required" type="xsd:string" name="name"/> <!-- the name of the package -->
 			<xsd:attribute use="required" type="xsd:string" name="version"/> <!-- the current version of the package -->
 			<xsd:attribute use="optional" type="xsd:string" name="logo-image"/> <!-- the relative path to a logo image, if one is included -->
