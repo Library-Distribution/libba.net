@@ -36,8 +36,7 @@
 				<script type="text/javascript">
 					function validateData()
 					{
-						if (document.up.pack_name.value != ""
-							&& document.up.pack_file.value != ""
+						if (document.up.pack_file.value != ""
 							&& document.up.user_name.value != ""
 							&& document.up.user_pw.value != "")
 						{
@@ -70,34 +69,6 @@
 								<td colspan="2">Your application or library:</td>
 							</tr>
 							<tr>
-							<!-- todo: read from definition file -->
-								<td>Name:</td>
-								<td><input type="text" name="pack_name" onchange="validateData()"/></td>
-							</tr>
-							<!-- todo: read from definition file -->
-							<tr>
-								<td>Version:</td>
-								<td><input type="text" name="pack_version" onchange="validateData()"/></td>
-							</tr>
-							<!-- todo: read from definition file -->
-							<tr>
-								<td>Type:</td>
-								<td>
-									<input type="radio" name="pack_type" onchange="validateData()" value="app">Application</input><br />
-									<input type="radio" name="pack_type" onchange="validateData()" value="lib" checked="checked">Library or function</input>
-								</td>
-							</tr>
-							<!-- todo: read from definition file -->
-							<tr>
-								<td>Description:</td>
-								<td><textarea name="pack_description"></textarea></td>
-							</tr>
-							<!-- todo: read from definition file -->
-							<tr>
-								<td>Tags:</td>
-								<td><textarea name="pack_tags"></textarea>(separated by ";")</td>
-							</tr>
-							<tr>
 								<td>Package:</td>
 								<td><input type="hidden" name="MAX_FILE_SIZE" value="104857600"/><input type="file" name="pack_file" onchange="validateData()"/>
 							</tr>
@@ -125,43 +96,12 @@
 					require("users.php");
 					require("util.php");
 
-					# todo: read from definition file
-					$pack_name = $_POST["pack_name"];
-					$pack_version = $_POST["pack_version"];
-					$pack_type = $_POST["pack_type"];
-					$pack_description = $_POST["pack_description"];
-					$pack_tags = $_POST["pack_tags"];
-
 					# retrieve posted parameters
 					$pack_file = $_FILES["pack_file"];
 					$user_name = $_POST["user_name"];
 					$user_pw = $_POST["user_pw"];
 
-					# check if all required data is present
-					if (!isset($pack_name) || !isset($pack_type) || !isset($pack_file) || !isset($user_name) || !isset($user_pw) || !isset($pack_version) || !isset($pack_description) || !isset($pack_tags))
-					{
-						die("Error: you did not fill in all required fields!");
-					}
-
-					# connect to database server
-					$db_connection = db_ensureConnection();
-
-					# escape data to prevent SQL injection
-					$escaped_name = mysql_real_escape_string($pack_name, $db_connection);
-					$escaped_type = mysql_real_escape_string($pack_type, $db_connection);
-					$escaped_version = mysql_real_escape_string($pack_version, $db_connection);
-					$escaped_description = mysql_real_escape_string($pack_description, $db_connection);
-					$escaped_tags = mysql_real_escape_string($pack_tags, $db_connection);
-					$escaped_user = mysql_real_escape_string($user_name, $db_connection);
-
 					# todo: validate version string / convert to number
-
-					# validate type
-					if ($escaped_type != "app" && $escaped_type != "lib")
-					{
-						echo $escaped_type;
-						die ("Invalid type was specified.");
-					}
 
 					# validate user & password
 					validateLogin($user_name, $user_pw);
@@ -174,15 +114,42 @@
 					}
 
 					ensure_upload_dir(); # ensure the directory for uploads exists
-					$file = find_free_file(upload_dir_path(), ".7z");
+					$file = find_free_file(upload_dir_path(), ".zip");
 					move_uploaded_file($pack_file["tmp_name"], $file);
 
-					$file_content = read_definition_file($file); # todo: read and parse file
+					$data = read_package($file, array("name", "version", "type", "description", "tags")); # todo: read and parse file
+					$pack_name = $data['name']; $pack_version = $data['version']; $pack_type = $data['type'];
+					$pack_description = $data['description'];
+
+					$pack_tags = array();
+					foreach ($data['tags'] AS $tag)
+					{
+						$pack_tags[] = $tag['name'];
+					}
+					$pack_tags = implode(";", $pack_tags);
 
 					# todo: restrictions / validate file / read data from file
 					###########################################################
 
 					$datetime = date("Y-m-d H:i:s");
+
+					# connect to database server
+					$db_connection = db_ensureConnection();
+
+					# escape data to prevent SQL injection
+					$escaped_name = mysql_real_escape_string($pack_name, $db_connection);
+					$escaped_type = mysql_real_escape_string($pack_type, $db_connection);
+					$escaped_version = mysql_real_escape_string($pack_version, $db_connection);
+					$escaped_description = mysql_real_escape_string($pack_description, $db_connection);
+					$escaped_tags = mysql_real_escape_string($pack_tags, $db_connection);
+					$escaped_user = mysql_real_escape_string($user_name, $db_connection);
+
+					# validate type
+					if ($escaped_type != "app" && $escaped_type != "lib")
+					{
+						echo $escaped_type;
+						die ("Invalid type was specified.");
+					}
 
 					# check if there's any version of the app
 					$db_query = "SELECT user FROM $db_table_main WHERE name = '$escaped_name' LIMIT 1";
@@ -221,35 +188,22 @@
 					$db_query = "SELECT id FROM $db_table_main WHERE name = '$escaped_name' AND version = '$escaped_version' LIMIT 1";
 					$db_result = mysql_query($db_query, $db_connection)
 					or die ("Could not retrieve ID of uploaded item: " . mysql_error());
-
-					if ($db_result)
+					while ($db_entry = mysql_fetch_object($db_result))
 					{
-						while ($db_entry = mysql_fetch_object($db_result))
-						{
-							$id = $db_entry->id;
-						}
+						$id = $db_entry->id;
 					}
 					header("Location: " . $_SERVER['PHP_SELF'] . "?uploaded=success" . ((isset($id)) ? "&id=$id" : ""));
 				}
 				else if ($mode == "done")
 				{
 			?>
-					<b>Successfully uploaded!</b>
+					<b>Successfully uploaded!</b><br/>
 					<a href="index.php">Go to index</a><br />
 			<?php
-					if (isset($_GET["id"]))
+					if (!empty($_GET["id"]))
 					{
 						# todo: possibly emit more data, using the id (if present)
-						echo "<a href=\"viewitem.php?id=\"".$_GET["id"]."\">View uploaded app or library</a>";
-						flush();
-						sleep(10);
-						header("Location: viewitem.php?id=".$_GET["id"]);
-					}
-					else
-					{
-						flush();
-						sleep(10);
-						header("Location: index.php");
+						echo "<a href=\"viewitem.php?id=".$_GET["id"]."\">View uploaded app or library</a>";
 					}
 				}
 				else if ($mode == "error")
