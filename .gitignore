@@ -1,3 +1,4 @@
 db_cred.php
+build_db.php
 *.bak
 uploads/*
