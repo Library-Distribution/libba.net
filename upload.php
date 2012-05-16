@@ -131,6 +131,7 @@
 					# todo: restrictions / validate file / read data from file
 					###########################################################
 
+					date_default_timezone_set("UTC");
 					$datetime = date("Y-m-d H:i:s");
 
 					# connect to database server
