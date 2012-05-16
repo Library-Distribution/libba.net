@@ -65,6 +65,7 @@
 						if ($mode == "register")
 						{
 							$token = mt_rand();
+							date_default_timezone_set("UTC");
 							$joined = date("Y-m-d");
 
 							# check if already registered
