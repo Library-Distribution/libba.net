@@ -97,7 +97,7 @@
 						{
 							if (isset($_GET["token"]))
 							{
-								$token = $_GET["token"];
+								$token = mysql_real_escape_string($_GET["token"]);
 
 								$db_query = "SELECT activationToken FROM $db_table_users WHERE name = '$escaped_mail' AND activationToken = '$token' AND pw = '$pw'";
 								$db_result = mysql_query($db_query, $db_connection)
