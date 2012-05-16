@@ -111,6 +111,8 @@
 								$db_query = "UPDATE $db_table_users Set activationToken = '' WHERE name = '$mail' AND activationToken = '$token' AND pw = '$pw'";
 								mysql_query($db_query, $db_connection)
 								or die("Failed to reset activation token.");
+
+								echo "Your account was successfully activated.";
 							}
 						}
 						else if ($mode == "login")
