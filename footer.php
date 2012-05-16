@@ -1,5 +1,5 @@
 <div id="footer">
-	<img src="logo.png" class="footer-logo"/>
+	<img src="logo.png" class="logo"/>
 	<table>
 		<tr>
 			<td>
