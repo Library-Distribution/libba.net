@@ -148,7 +148,6 @@
 					# validate type
 					if ($escaped_type != "app" && $escaped_type != "lib")
 					{
-						echo $escaped_type;
 						die ("Invalid type was specified.");
 					}
 
@@ -185,7 +184,6 @@
 					mysql_query($db_query, $db_connection)
 					or die ("Could not add a new version to database!".mysql_error());
 
-					# todo:
 					$db_query = "SELECT id FROM $db_table_main WHERE name = '$escaped_name' AND version = '$escaped_version' LIMIT 1";
 					$db_result = mysql_query($db_query, $db_connection)
 					or die ("Could not retrieve ID of uploaded item: " . mysql_error());
@@ -193,18 +191,22 @@
 					{
 						$id = $db_entry->id;
 					}
-					header("Location: " . $_SERVER['PHP_SELF'] . "?uploaded=success" . ((isset($id)) ? "&id=$id" : ""));
+					$mode = "done";
 				}
-				else if ($mode == "done")
+				if ($mode == "done")
 				{
 			?>
 					<b>Successfully uploaded!</b><br/>
 					<a href="index.php">Go to index</a><br />
 			<?php
-					if (!empty($_GET["id"]))
+					if (!isset($id) && !empty($_GET["id"]))
+					{
+						$id = $_GET["id"];
+					}
+					if (isset($id))
 					{
 						# todo: possibly emit more data, using the id (if present)
-						echo "<a href=\"viewitem.php?id=".$_GET["id"]."\">View uploaded app or library</a>";
+						echo "<a href=\"viewitem.php?id=".$id."\">View uploaded app or library</a>";
 					}
 				}
 				else if ($mode == "error")
