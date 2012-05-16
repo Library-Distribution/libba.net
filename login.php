@@ -30,17 +30,22 @@
 			?>
 					<form action="<?php echo $_SERVER["REQUEST_URI"]; ?>" method="post">
 						<table>
-			<?php	if ($mode == "activate")
-					{
-			?>				<input type="hidden" name="mail" value="<?php echo $_GET["mail"]; ?>"/>				<?php
-					}
-					else
-					{
-			?>				<tr>
+			<?php	if ($mode == "activate") { ?>
+						<input type="hidden" name="nick" value="<?php echo $_GET["nick"]; ?>"/>
+			<?php 	} else { ?>
+							<tr>
+								<td>Nickname:</td>
+								<td><input type="text" name="nick"/></td>
+							</tr>
+			<?php		if ($mode == "register") {	?>
+							<tr>
 								<td>Email:</td>
 								<td><input type="text" name="mail"/></td>
 							</tr>
-			<?php } ?>
+				<?php
+						}
+					}
+				?>
 							<tr>
 								<td>Password:</td>
 								<td><input type="password" name="password"/></td>
@@ -54,36 +59,39 @@
 				}
 				else
 				{
-					if (isset($_POST["mail"]) && isset($_POST["password"]))
+					if (isset($_POST["nick"]) && isset($_POST["password"]))
 					{
 						require("db.php");
 						$db_connection = db_ensureConnection();
 
-						$mail = $_POST["mail"]; $pw = hash("sha256", $_POST["password"]);
-						$escaped_mail = mysql_real_escape_string($mail, $db_connection);
+						$nick = $_POST["nick"]; $pw = hash("sha256", $_POST["password"]);
+						$escaped_nick = mysql_real_escape_string($nick, $db_connection);
 
-						if ($mode == "register")
+						if ($mode == "register" && isset($_POST["mail"]))
 						{
+							$mail = $_POST["mail"];
+							$escaped_mail = mysql_real_escape_string($mail, $db_connection);
+
 							$token = mt_rand();
 							date_default_timezone_set("UTC");
 							$joined = date("Y-m-d");
 
 							# check if already registered
-							$db_query = "SELECT name FROM $db_table_users WHERE name = '$escaped_mail'";
+							$db_query = "SELECT nick FROM $db_table_users WHERE mail = '$escaped_mail' OR nick = '$escaped_nick'";
 							$db_result = mysql_query($db_query, $db_connection)
 							or die ("Failed to query for existing user.");
 
 							if (mysql_num_rows($db_result) > 0)
 							{
-								die ("User with this email is already registered.");
+								die ("User with this nickname or email is already registered.");
 							}
 
 							# register
-							$db_query = "INSERT INTO $db_table_users (name, pw, activationToken, joined) VALUES ('$escaped_mail', '$pw', '$token', '$joined')";
+							$db_query = "INSERT INTO $db_table_users (nick, mail, pw, activationToken, joined) VALUES ('$escaped_nick', '$escaped_mail', '$pw', '$token', '$joined')";
 							mysql_query($db_query, $db_connection)
 							or die ("Failed to save new user: " . mysql_error());
 
-							$url = "http://" . $_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'] . "?mail=$mail&mode=activate&token=$token";
+							$url = "http://" . $_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'] . "?nick=$nick&mode=activate&token=$token";
 							if (!mail($mail,
 								"Confirm your registration to ALD",
 								"To activate your account, go to <a href='$url'>$url</a>.",
@@ -99,16 +107,16 @@
 							{
 								$token = mysql_real_escape_string($_GET["token"]);
 
-								$db_query = "SELECT activationToken FROM $db_table_users WHERE name = '$escaped_mail' AND activationToken = '$token' AND pw = '$pw'";
+								$db_query = "SELECT activationToken FROM $db_table_users WHERE nick = '$escaped_nick' AND activationToken = '$token' AND pw = '$pw'";
 								$db_result = mysql_query($db_query, $db_connection)
 								or die("Failed to query user database: " . mysql_error());
 
 								if (mysql_num_rows($db_result) != 1)
 								{
-									die("User account with that mail, password and token could not be found.");
+									die("User account with that nick, password and token could not be found.");
 								}
 
-								$db_query = "UPDATE $db_table_users Set activationToken = '' WHERE name = '$mail' AND activationToken = '$token' AND pw = '$pw'";
+								$db_query = "UPDATE $db_table_users Set activationToken = '' WHERE nick = '$escaped_nick' AND activationToken = '$token' AND pw = '$pw'";
 								mysql_query($db_query, $db_connection)
 								or die("Failed to reset activation token.");
 

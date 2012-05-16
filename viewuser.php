@@ -35,14 +35,14 @@
 				{
 					# list of users
 					$start_index = $page_index * $page_itemcount;
-					$db_query = "SELECT name FROM $db_table_users ORDER BY name LIMIT $start_index,$page_itemcount";
+					$db_query = "SELECT nick FROM $db_table_users ORDER BY nick LIMIT $start_index,$page_itemcount";
 					$db_result = mysql_query($db_query, $db_connection)
 					or die ("ERROR: Failed to query for users.\n".mysql_error());
 
 					echo "<ul>";
 					while ($db_entry = mysql_fetch_object($db_result))
 					{
-						echo "<li><a href='?user=$db_entry->name'>$db_entry->name</a></li>";
+						echo "<li><a href='?user=$db_entry->nick'>$db_entry->nick</a></li>";
 					}
 					echo "</ul>";
 
@@ -52,7 +52,7 @@
 					}
 
 					# check if there are more items
-					$db_query = "SELECT name FROM $db_table_users ORDER BY name LIMIT ".($start_index + $page_itemcount).",1";
+					$db_query = "SELECT nick FROM $db_table_users ORDER BY nick LIMIT ".($start_index + $page_itemcount).",1";
 					$db_result = mysql_query($db_query, $db_connection)
 					or die ("ERROR: Could not query for more items.\n".mysql_error());
 					if (mysql_num_rows($db_result) > 0) # if so, show the "next" link
@@ -65,7 +65,7 @@
 					# user profile
 					$user = mysql_real_escape_string($user, $db_connection);
 
-					$db_query = "SELECT joined FROM $db_table_users WHERE name = '$user' LIMIT 1";
+					$db_query = "SELECT joined FROM $db_table_users WHERE nick = '$user' LIMIT 1";
 					$db_result = mysql_query($db_query, $db_connection)
 					or die ("ERROR: could not retrieve joined date.\n".mysql_error());
 					echo "Joined: <span class='joined-date'>".(mysql_fetch_object($db_result)->joined)."</span>";

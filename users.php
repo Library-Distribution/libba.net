@@ -7,7 +7,7 @@
 		$pw = hash("sha256", $pw);
 		$escaped_user = mysql_real_escape_string($user, $db_connection);
 
-		$db_query = "SELECT pw, activationToken FROM $db_table_users WHERE name = '$escaped_user'";
+		$db_query = "SELECT pw, activationToken FROM $db_table_users WHERE nick = '$escaped_user'";
 		$db_result = mysql_query($db_query, $db_connection)
 		or die ("Could not find the specified user name.");
 
