@@ -83,10 +83,11 @@
 							mysql_query($db_query, $db_connection)
 							or die ("Failed to save new user: " . mysql_error());
 
+							$url = "http://" . $_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'] . "?mail=$mail&mode=activate&token=$token";
 							if (!mail($mail,
 								"Confirm your registration to ALD",
-								"To activate your account, go to '" . __FILE__ . "?mail=$mail&mode=activate&token=$token'.",
-								"FROM: noreply@maulesel.ahk4.me"))
+								"To activate your account, go to <a href='$url'>$url</a>.",
+								"FROM: noreply@{$_SERVER['HTTP_HOST']}\r\nContent-type: text/html; charset=iso-8859-1"))
 							{
 								die("Failed to send mail to '$mail'!");
 							}
