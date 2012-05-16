@@ -12,7 +12,7 @@
 		or die ("Could not find the specified user name.");
 
 		$data = mysql_fetch_object($db_result);
-		if ($data->activationToken != "")
+		if ($data->activationToken)
 		{
 			die ("Account is currently deactivated.");
 		}
