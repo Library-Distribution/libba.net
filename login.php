@@ -99,7 +99,7 @@
 							{
 								$token = $_GET["token"];
 
-								$db_query = "SELECT token FROM $db_table_users WHERE name = '$escaped_mail' AND activationToken = '$token' AND pw = '$pw'";
+								$db_query = "SELECT activationToken FROM $db_table_users WHERE name = '$escaped_mail' AND activationToken = '$token' AND pw = '$pw'";
 								$db_result = mysql_query($db_query, $db_connection)
 								or die("Failed to query user database: " . mysql_error());
 
