@@ -7,6 +7,11 @@
 		$allowed_methods = array("get");
 
 		$content_type = get_preferred_mimetype($allowed_content_types, "application/json");
+		if ($content_type == NULL)
+		{
+			throw new HttpException(406, array("Content-type" => implode($allowed_content_types, ",")));
+		}
+
 		$method = strtolower($_SERVER['REQUEST_METHOD']);
 		if (!in_array($method, $allowed_methods))
 		{
