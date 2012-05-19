@@ -180,7 +180,7 @@
 					}
 
 					# add a database entry
-					$db_query = "INSERT INTO $db_table_main (name, type, version, file, user, description, tags, uploaded) VALUES ('$escaped_name', '$escaped_type', '$escaped_version', '".basename($file)."', '$escaped_user', '$escaped_description', '$escaped_tags', '$datetime')";
+					$db_query = "INSERT INTO $db_table_main (name, type, version, file, user, description, tags, uploaded) VALUES ('$escaped_name', '$escaped_type', '$escaped_version', '".basename($file)."', '" . user_get_id_by_nick($escaped_user) . "', '$escaped_description', '$escaped_tags', '$datetime')";
 					mysql_query($db_query, $db_connection)
 					or die ("Could not add a new version to database!".mysql_error());
 

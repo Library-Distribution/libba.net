@@ -73,6 +73,7 @@
 					$page_index = 0;
 				}
 				require("db.php");
+				require("users.php");
 
 				# connect to database server
 				$db_connection = db_ensureConnection();
@@ -113,19 +114,20 @@
 				}
 
 				$start_index = ($page_index) * $page_itemcount;
-				$db_query = "SELECT id, name, version, user FROM $db_table_main $db_query_cond ORDER BY name LIMIT $start_index,$page_itemcount";
+				$db_query = "SELECT id, name, version, HEX(user) FROM $db_table_main $db_query_cond ORDER BY name LIMIT $start_index,$page_itemcount";
 				$db_result = mysql_query($db_query, $db_connection)
 				or die ("Could not retrieve list of apps and libraries.".mysql_error());
 
 				$items = array();
-				while ($item = mysql_fetch_object($db_result))
+				while ($item = mysql_fetch_assoc($db_result))
 				{
-					$items[$item->name] = $item;
+					$items[$item['name']] = $item;
 				}
 
 				$last_letter = "";
 				foreach ($items as $item_name => $item)
 				{
+					$user = user_get_nick($item['HEX(user)']);
 					$current_letter = strtoupper(substr($item_name, 0, 1));
 					if (!ctype_alpha($current_letter))
 					{
@@ -139,7 +141,7 @@
 						}
 						echo "<div class='letter-container' id='items$current_letter'><span class='letter-item'>$current_letter</span><ul>";
 					}
-					echo "<li><a class='item' name='item$item->id' href='viewitem.php?id=$item->id'>$item_name</a> (v$item->version) by <a class='userlink' href='viewuser.php?user=$item->user'>$item->user</a></li>";
+					echo "<li><a class='item' name='item{$item['id']}' href='viewitem.php?id={$item['id']}'>$item_name</a> (v{$item['version']}) by <a class='userlink' href='viewuser.php?user=$user'>$user</a></li>";
 					$last_letter = $current_letter;
 				}
 				if (count($items) > 0)
