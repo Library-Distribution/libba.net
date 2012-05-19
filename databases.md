@@ -7,13 +7,13 @@ Describes the database structure required for this project
 holds the list of apps and libs being uploaded.
 
 #### columns
-* id (`int(11)`, `PRIMARY`, `AUTO_INCREMENT`)
+* id (`int(11)`, `PRIMARY`, `AUTO_INCREMENT`) - to be changed to GUID
 * name (`varchar(25)`)
 * authors (`tinytext`)
 * type (`varchar(3)`)
 * version (`varchar(11)`)
 * file (`varchar(100)`)
-* user (`varchar(15)`)
+* user (`binary(16)`)
 * description (`text`)
 * uploaded (`datetime`)
 * tags (`tinytext`)
@@ -23,7 +23,10 @@ holds the list of apps and libs being uploaded.
 holds the list of users, a sha256-hash of the password and the privileges they have.
 
 #### columns
-* name (`varchar(25)`)
+* id (`binary(16)`, `PRIMARY`)
+* nick (`varchar(25)`, `UNIQUE`)
+* mail (`varchar(25)`, `UNIQUE`)
 * pw (`varchar(64)`)
 * privileges (`int(1)`, default: `0`)
 * joined (`date`)
+* activationToken (`int(11)`)
