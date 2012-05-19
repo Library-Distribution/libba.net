@@ -3,22 +3,8 @@
 	require_once("db.php");
 	try
 	{
-		$allowed_content_types = array("application/json", "text/xml", "application/xml", "application/ald-package");
-		$allowed_methods = array("get");
+		$request_method = strtoupper($_SERVER['REQUEST_METHOD']);
 
-		$content_type = get_preferred_mimetype($allowed_content_types, "application/json");
-		if ($content_type == NULL)
-		{
-			throw new HttpException(406, array("Content-type" => implode($allowed_content_types, ",")));
-		}
-
-		$method = strtolower($_SERVER['REQUEST_METHOD']);
-		if (!in_array($method, $allowed_methods))
-		{
-			throw new HttpException(405, array("Allow" => explode(",", $allowed_methods)));
-		}
-
-		$db_connection = db_ensure_connection();
 		if (isset($_GET["id"]))
 		{
 		}
@@ -27,33 +13,39 @@
 		}
 		else
 		{
-			if ($content_type == "application/ald-package")
+			# validate request method
+			if ($request_method != "GET")
 			{
-				throw new HttpException(406, array("Content-type" => $allowed_content_types[0] . ","
-																	. $allowed_content_types[1] . ","
-																	. $allowed_content_types[2]));
+				throw new HttpException(405, array("Allow" => "GET"));
 			}
+			# validate accept header of request
+			$content_type = get_preferred_mimetype(array("application/json", "text/xml", "application/xml"), "application/json");
 
+			# connect to database server
+			$db_connection = db_ensure_connection();
+
+			# retrieve conditions for returned data from GET parameters
 			$db_cond = "";
 			if (isset($_GET["type"]))
 			{
-				$db_cond = "WHERE type = '" . mysql_real_escape_string($_GET["type"]) . "'";
+				$db_cond = "WHERE type = '" . mysql_real_escape_string($_GET["type"], $db_connection) . "'";
 			}
 			if (isset($_GET["user"]))
 			{
 				$db_cond .= ($db_cond) ? " AND" : " WHERE";
-				$db_cond .= " user = '" . mysql_real_escape_string($_GET["user"]) . "'";
+				$db_cond .= " user = '" . mysql_real_escape_string($_GET["user"], $db_connection) . "'";
 			}
 			if (isset($_GET["name"]))
 			{
 				$db_cond .= ($db_cond) ? " AND" : " WHERE";
-				$db_cond .= " name = '" . mysql_real_escape_string($_GET["name"]) . "'";
+				$db_cond .= " name = '" . mysql_real_escape_string($_GET["name"], $db_connection) . "'";
 			}
 
+			# retrieve data limits
 			$db_limit = "";
 			if (isset($_GET["count"]) && strtolower($_GET["count"]) != "all")
 			{
-				$db_limit = "LIMIT " . mysql_real_escape_string($_GET["count"]);
+				$db_limit = "LIMIT " . mysql_real_escape_string($_GET["count"], $db_connection);
 			}
 			if (isset($_GET["start"]))
 			{
@@ -61,9 +53,10 @@
 				{
 					$db_limit = "LIMIT 18446744073709551615"; # Source: http://dev.mysql.com/doc/refman/5.5/en/select.html
 				}
-				$db_limit .= " OFFSET " .  mysql_real_escape_string($_GET["start"]);
+				$db_limit .= " OFFSET " .  mysql_real_escape_string($_GET["start"], $db_connection);
 			}
 
+			# query data
 			$db_query = "SELECT name, id, version FROM $db_table_main $db_cond $db_limit";
 			$db_result = mysql_query($db_query, $db_connection);
 			if (!$db_result)
@@ -71,12 +64,14 @@
 				throw new HttpException(500);
 			}
 
+			# parse data to array
 			$data = array();
 			while ($item = mysql_fetch_assoc($db_result))
 			{
 				$data[] = $item;
 			}
 
+			# return content-type specific data
 			if ($content_type == "application/json")
 			{
 				$content = json_encode($data);
@@ -122,7 +117,7 @@
 					return $acceptLine[0];
 				}
 			}
-			return NULL;
+			throw new HttpException(406, array("Content-type" => implode($available, ",")));
 		}
 		return $default;
 	}
