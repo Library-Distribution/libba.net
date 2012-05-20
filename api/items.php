@@ -94,15 +94,15 @@
 	}
 	catch (HttpException $e)
 	{
-		header("HTTP/1.1 " . $e->code . " " . $e->getMessage());
-		if (is_array($e->headers))
+		header("HTTP/1.1 " . $e->getCode() . " " . $e->getMessage());
+		if (is_array($e->getHeaders()))
 		{
-			foreach ($e->headers AS $header => $value)
+			foreach ($e->getHeaders() AS $header => $value)
 			{
 				header($header . ": " . $value);
 			}
-			echo "ERROR: " . $e->code . " - " . $e->getMessage();
 		}
+		echo "ERROR: " . $e->getCode() . " - " . $e->getMessage();
 	}
 
 	function get_preferred_mimetype($available, $default)
