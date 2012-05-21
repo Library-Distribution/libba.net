@@ -1,19 +1,13 @@
 <?php
 	class HttpException extends Exception
 	{
-		private $code;
 		private $headers;
 
-		public function __construct($code, $headers = NULL)
+		public function __construct($code, $headers = NULL, $message = NULL)
 		{
 			$this->code = $code;
 			$this->headers = $headers;
-			parent::__construct(HttpException::getStatusMessage($code), $code);
-		}
-
-		public function getCode()
-		{
-			return $this->code;
+			parent::__construct(($message ? $message . " - " : "") . HttpException::getStatusMessage($code), $code);
 		}
 
 		public function getHeaders()
