@@ -68,7 +68,7 @@ function read_package($package, $include_data = NULL)
 	$doc = new DOMDocument();
 	$doc->loadXML($archive->getFromName("definition.ald"));
 
-	if (!$doc->schemaValidate("schema.xsd"))
+	if (!$doc->schemaValidate(dirname(__FILE__)."/schema.xsd"))
 	{
 		die ("ERROR: package definition is not valid!");
 	}
