@@ -87,7 +87,7 @@ function read_package($package, $include_data = NULL)
 
 	if (in_array('unique-id', $include_data))
 	{
-		$output['name'] = $xp->query("@ald:unique-id")->item(0)->nodeValue;
+		$output['id'] = $xp->query("@ald:unique-id")->item(0)->nodeValue;
 	}
 	if (in_array('name', $include_data))
 	{
