@@ -144,7 +144,7 @@
 				</xsd:element>
 			</xsd:sequence>
 
-			<xsd:attribute use="required" type="ald:guid-type" name="unique-id"/> <!-- the unique ID of the package -->
+			<xsd:attribute use="required" type="ald:guid-type" name="id"/> <!-- the unique ID of the package -->
 			<xsd:attribute use="required" type="ald:pack-type" name="type"/> <!-- the type of the package -->
 			<xsd:attribute use="required" type="xsd:string" name="name"/> <!-- the name of the package -->
 			<xsd:attribute use="required" type="xsd:string" name="version"/> <!-- the current version of the package -->
