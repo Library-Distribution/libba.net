@@ -116,7 +116,7 @@
 	}
 	catch (HttpException $e)
 	{
-		header("HTTP/1.1 " . $e->getCode() . " " . $e->getMessage());
+		header("HTTP/1.1 " . $e->getCode() . " " . HttpException::HttpException($e->getCode()));
 		if (is_array($e->getHeaders()))
 		{
 			foreach ($e->getHeaders() AS $header => $value)
