@@ -7,7 +7,7 @@
 		{
 			$this->code = $code;
 			$this->headers = $headers;
-			parent::__construct(HttpException::getStatusMessage($code) . ($message ? " - " . $message : ""), $code);
+			parent::__construct(HttpException::getStatusMessage($code) . ($message ? "<p>" . $message . "</p>" : ""), $code);
 		}
 
 		public function getHeaders()
