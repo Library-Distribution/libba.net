@@ -36,4 +36,23 @@
 		}
 		validateLogin($_SERVER["PHP_AUTH_USER"], $_SERVER["PHP_AUTH_PW"]);
 	}
+
+	function user_get_nick($id)
+	{
+		global $db_table_users;
+		$db_connection = db_ensure_connection();
+
+		$db_query = "SELECT nick FROM $db_table_users WHERE id = UNHEX('" . mysql_real_escape_string($id) . "')";
+		$db_result = mysql_query($db_query, $db_connection);
+		if (!$db_result)
+		{
+			throw new HttpException(500);
+		}
+
+		while ($data = mysql_fetch_object($db_result))
+		{
+			return $data->nick;
+		}
+		throw new HttpException(404);
+	}
 ?>
