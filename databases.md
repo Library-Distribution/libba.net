@@ -7,7 +7,7 @@ Describes the database structure required for this project
 holds the list of apps and libs being uploaded.
 
 #### columns
-* id (`int(11)`, `PRIMARY`, `AUTO_INCREMENT`) - to be changed to GUID
+* id (`binary(16)`, `PRIMARY`)
 * name (`varchar(25)`)
 * authors (`tinytext`)
 * type (`varchar(3)`)
