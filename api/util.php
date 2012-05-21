@@ -5,7 +5,7 @@
 	function validateLogin($user, $pw)
 	{
 		global $db_table_users;
-		$db_connection = db_ensureConnection();
+		$db_connection = db_ensure_connection();
 
 		$pw = hash("sha256", $pw);
 		$escaped_user = mysql_real_escape_string($user, $db_connection);
