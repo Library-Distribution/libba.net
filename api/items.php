@@ -71,7 +71,7 @@
 				}
 				else if ($content_type == "text/xml" || $content_type == "application/xml")
 				{
-					throw new HttpException(501, NULL, "JSON can already be provided");
+					throw new HttpException(501, NULL, "JSON can already be provided.");
 				}
 
 				header("HTTP/1.1 200 " . HttpException::getStatusMessage(200));
@@ -180,7 +180,7 @@
 	}
 	catch (HttpException $e)
 	{
-		header("HTTP/1.1 " . $e->getCode() . " " . HttpException::HttpException($e->getCode()));
+		header("HTTP/1.1 " . $e->getCode() . " " . HttpException::getStatusMessage($e->getCode()));
 		if (is_array($e->getHeaders()))
 		{
 			foreach ($e->getHeaders() AS $header => $value)
