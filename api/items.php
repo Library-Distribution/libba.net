@@ -71,6 +71,9 @@
 				}
 				else if ($content_type == "text/xml" || $content_type == "application/xml")
 				{
+					$content = "<ald:item xmlns:ald=\"ald://api/items/get/schema/2012\">";
+					# ...
+					$content .= "</ald:item>";
 					throw new HttpException(501, NULL, "JSON can already be provided.");
 				}
 
@@ -141,7 +144,7 @@
 				}
 				else if ($content_type == "text/xml" || $content_type == "application/xml")
 				{
-					$content = "<ald:item-list xmlns:ald=\"ald://package/schema/2012\">";
+					$content = "<ald:item-list xmlns:ald=\"ald://api/items/list/schema/2012\">";
 					foreach ($data AS $item)
 					{
 						 $content .= "<ald:item name=\"{$item['name']}\" version=\"{$item['version']}\" id=\"{$item['HEX(id)']}\"/>";
