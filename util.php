@@ -48,7 +48,7 @@ function read_package($package, $include_data = NULL)
 	static $all_data = NULL;
 	if ($all_data == NULL)
 	{
-		$all_data = array("unique-id", "name", "version", "type", "description", "authors", "tags");
+		$all_data = array("id", "name", "version", "type", "description", "authors", "tags");
 	}
 
 	if ($include_data == NULL)
@@ -85,9 +85,9 @@ function read_package($package, $include_data = NULL)
 		die ("Package references missing file: '" . $error_file . "'!");
 	}
 
-	if (in_array('unique-id', $include_data))
+	if (in_array('id', $include_data))
 	{
-		$output['id'] = $xp->query("@ald:unique-id")->item(0)->nodeValue;
+		$output['id'] = $xp->query("@ald:id")->item(0)->nodeValue;
 	}
 	if (in_array('name', $include_data))
 	{
