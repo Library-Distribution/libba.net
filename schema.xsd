@@ -5,7 +5,7 @@
 
 	<xsd:simpleType name="guid-type"> <!-- defines the type of a GUID -->
 		<xsd:restriction base="xsd:string">
-			<xsd:pattern value="\{[a-fA-F0-9]{8}-([a-fA-F\d]{4}\-){3}[a-fA-F0-9]{12}\}"/>
+			<xsd:pattern value="[a-fA-F0-9]{32}"/> <!-- update: do not use any format, just the raw number -->
 		</xsd:restriction>
 	</xsd:simpleType>
 
