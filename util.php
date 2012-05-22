@@ -59,16 +59,16 @@ function read_package($package, $include_data = NULL)
 	$output = array();
 
 	$archive = new ZipArchive();
-	if ($archive->open($package) != TRUE)
+	if (@$archive->open($package) != TRUE)
 	{
 		$archive->close();
 		die ("Package file could not be opened!");
 	}
 
 	$doc = new DOMDocument();
-	$doc->loadXML($archive->getFromName("definition.ald"));
+	@$doc->loadXML($archive->getFromName("definition.ald"));
 
-	if (!$doc->schemaValidate(dirname(__FILE__)."/schema.xsd"))
+	if (!@$doc->schemaValidate(dirname(__FILE__)."/schema.xsd"))
 	{
 		die ("ERROR: package definition is not valid!");
 	}
