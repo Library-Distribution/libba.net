@@ -15,7 +15,7 @@
 			header("Location: index.php");
 		}
 		
-		$db_query = "SELECT name, file, version, HEX(user), description, uploaded, tags FROM $db_table_main WHERE id = '$id' LIMIT 1";
+		$db_query = "SELECT name, file, version, HEX(user), description, uploaded, tags FROM $db_table_main WHERE id = UNHEX('$id') LIMIT 1";
 		$db_result = mysql_query($db_query, $db_connection)
 		or die ("ERROR: Failed to read data from database.\n".mysql_error());
 
@@ -65,16 +65,16 @@
 				<?php echo $item['description']; ?>
 			</div>
 			<?php
-				$db_query = "SELECT id, version FROM $db_table_main WHERE name = '{$item['name']}' AND version != '{$item['version']}' ORDER BY version";
+				$db_query = "SELECT HEX(id), version FROM $db_table_main WHERE name = '{$item['name']}' AND version != '{$item['version']}' ORDER BY version";
 				$db_result = mysql_query($db_query, $db_connection)
 				or die("ERROR: Could not query for other versions.\n" . mysql_error());
 
 				if (mysql_num_rows($db_result) > 0)
 				{
 					echo "<h3>Other versions:</h3><ul>";
-					while ($db_entry = mysql_fetch_object($db_result))
+					while ($db_entry = mysql_fetch_assoc($db_result))
 					{
-						echo "<li><a href='?id=$db_entry->id'>version $db_entry->version</a></li>";
+						echo "<li><a href='?id={$db_entry['HEX(id)']}'>version {$db_entry['version']}</a></li>";
 					}
 					echo "</ul>";
 				}

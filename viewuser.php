@@ -51,7 +51,7 @@
 						echo "<a class='next-previous' id='prev' href='?items=$page_itemcount&amp;page=".($page_index - 1)."'>Previous page</a>";
 					}
 
-					# check if there are more items
+					# check if there are more users
 					$db_query = "SELECT nick FROM $db_table_users ORDER BY nick LIMIT ".($start_index + $page_itemcount).",1";
 					$db_result = mysql_query($db_query, $db_connection)
 					or die ("ERROR: Could not query for more items.\n".mysql_error());
@@ -72,34 +72,33 @@
 					$user_entry = mysql_fetch_assoc($db_result);
 					echo "Joined: <span class='joined-date'>".($user_entry['joined'])."</span>";
 
-					$db_query = "SELECT name, id, version FROM $db_table_main WHERE user = UNHEX('{$user_entry['HEX(id)']}') AND type = 'lib' ORDER BY name, version DESC";
+					$db_query = "SELECT name, HEX(id), version FROM $db_table_main WHERE user = UNHEX('{$user_entry['HEX(id)']}') AND type = 'lib' ORDER BY name, version DESC";
 					$db_result = mysql_query($db_query, $db_connection)
 					or die ("ERROR: failed to query libraries.\n".mysql_error());
 					$uploaded = array();
 
 					echo "<h2>Libraries uploaded (".(mysql_num_rows($db_result)).") :</h2><ul>";
-					while ($db_entry = mysql_fetch_object($db_result))
+					while ($db_entry = mysql_fetch_assoc($db_result))
 					{
-						if (!in_array($db_entry->name, $uploaded))
+						if (!in_array($db_entry["name"], $uploaded))
 						{
-							$uploaded[] = $db_entry->name;
-							echo "<li><a href='viewitem.php?id=$db_entry->id'>$db_entry->name (v$db_entry->version)</a></li>";
-						}
+							$uploaded[] = $db_entry["name"];
+							echo "<li><a href='viewitem.php?id={$db_entry["HEX(id)"]}'>{$db_entry["name"]} (v{$db_entry["version"]})</a></li>";						}
 					}
 					echo "</ul>";
 
-					$db_query = "SELECT name, id, version FROM $db_table_main WHERE user = UNHEX('{$user_entry['HEX(id)']}') AND type = 'app' ORDER BY name, version DESC";
+					$db_query = "SELECT name, HEX(id), version FROM $db_table_main WHERE user = UNHEX('{$user_entry['HEX(id)']}') AND type = 'app' ORDER BY name, version DESC";
 					$db_result = mysql_query($db_query, $db_connection)
 					or die ("ERROR: failed to query libraries.\n".mysql_error());
 					$uploaded = array();
 
 					echo "<h2>Applications uploaded (".(mysql_num_rows($db_result)).") :</h2><ul>";
-					while ($db_entry = mysql_fetch_object($db_result))
+					while ($db_entry = mysql_fetch_assoc($db_result))
 					{
-						if (!in_array($db_entry->name, $uploaded))
+						if (!in_array($db_entry["name"], $uploaded))
 						{
-							$uploaded[] = $db_entry->name;
-							echo "<li><a href='viewitem.php?id=$db_entry->id'>$db_entry->name (v$db_entry->version)</a></li>";
+							$uploaded[] = $db_entry["name"];
+							echo "<li><a href='viewitem.php?id={$db_entry["HEX(id)"]}'>{$db_entry["name"]} (v{$db_entry["version"]})</a></li>";
 						}
 					}
 					echo "</ul>";

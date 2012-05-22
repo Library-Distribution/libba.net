@@ -114,7 +114,7 @@
 				}
 
 				$start_index = ($page_index) * $page_itemcount;
-				$db_query = "SELECT id, name, version, HEX(user) FROM $db_table_main $db_query_cond ORDER BY name LIMIT $start_index,$page_itemcount";
+				$db_query = "SELECT HEX(id), name, version, HEX(user) FROM $db_table_main $db_query_cond ORDER BY name LIMIT $start_index,$page_itemcount";
 				$db_result = mysql_query($db_query, $db_connection)
 				or die ("Could not retrieve list of apps and libraries.".mysql_error());
 
@@ -141,7 +141,7 @@
 						}
 						echo "<div class='letter-container' id='items$current_letter'><span class='letter-item'>$current_letter</span><ul>";
 					}
-					echo "<li><a class='item' name='item{$item['id']}' href='viewitem.php?id={$item['id']}'>$item_name</a> (v{$item['version']}) by <a class='userlink' href='viewuser.php?user=$user'>$user</a></li>";
+					echo "<li><a class='item' name='item{$item['HEX(id)']}' href='viewitem.php?id={$item['HEX(id)']}'>$item_name</a> (v{$item['version']}) by <a class='userlink' href='viewuser.php?user=$user'>$user</a></li>";
 					$last_letter = $current_letter;
 				}
 				if (count($items) > 0)
