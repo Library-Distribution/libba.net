@@ -55,4 +55,23 @@
 		}
 		throw new HttpException(404);
 	}
+
+	function user_get_id_by_nick($nick)
+	{
+		global $db_table_users;
+		$db_connection = db_ensure_connection();
+
+		$db_query = "SELECT HEX(id) FROM $db_table_users WHERE nick = '" . mysql_real_escape_string($nick) . "'";
+		$db_result = mysql_query($db_query, $db_connection);
+		if (!$db_result)
+		{
+			throw new HttpException(500);
+		}
+
+		while ($data = mysql_fetch_assoc($db_result))
+		{
+			return $data['HEX(id)'];
+		}
+		throw new HttpException(404);
+	}
 ?>
