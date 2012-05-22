@@ -39,7 +39,7 @@
 					$id = $_GET["id"];
 				}
 
-				$db_query = "SELECT *, HEX(user) FROM $db_table_main WHERE id = '$id'"; //UNHEX(REPLACE('$id', '-', ''))";
+				$db_query = "SELECT *, HEX(user) FROM $db_table_main WHERE id = UNHEX('$id')";
 				$db_result = mysql_query($db_query, $db_connection);
 				if (!$db_result)
 				{
@@ -120,7 +120,7 @@
 				}
 
 				# query data
-				$db_query = "SELECT name, id, version FROM $db_table_main $db_cond $db_limit";
+				$db_query = "SELECT name, HEX(id), version FROM $db_table_main $db_cond $db_limit";
 				$db_result = mysql_query($db_query, $db_connection);
 				if (!$db_result)
 				{
@@ -144,7 +144,7 @@
 					$content = "<ald:item-list xmlns:ald=\"ald://package/schema/2012\">";
 					foreach ($data AS $item)
 					{
-						 $content .= "<ald:item name=\"{$item['name']}\" version=\"{$item['version']}\" id=\"{$item['id']}\"/>";
+						 $content .= "<ald:item name=\"{$item['name']}\" version=\"{$item['version']}\" id=\"{$item['HEX(id)']}\"/>";
 					}
 					$content .= "</ald:item-list>";
 				}
