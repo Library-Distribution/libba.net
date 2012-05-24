@@ -166,6 +166,9 @@
 
 			if (isset($_FILES["package"]))
 			{
+				# validate accept header of request
+				$content_type = get_preferred_mimetype(array("application/json", "text/xml", "application/xml"), "application/json");
+
 				$pack_file = $_FILES["package"];
 
 				# connect to database server
@@ -261,6 +264,16 @@
 				}
 
 				header("HTTP/1.1 200 " . HttpException::getStatusMessage(200));
+				header("Content-type: $content_type");
+				if ($content_type == "application/json")
+				{
+					$content = "{ \"id\" : \"$pack_id\" }";
+				}
+				else if ($content_type == "text/xml" || $content_type == "application/xml")
+				{
+					$content = "<ald:item-id xmlns:ald='ald:/api/items/upload/schema/2012' id='$pack_id'/>";
+				}
+				echo $content;
 				exit;
 			}
 			throw new HttpException(400);
