@@ -1,20 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<?php
-		if (isset($_GET["uploaded"]))
-		{
-			if ($_GET["uploaded"] == "success")
-			{
-				$page_title = "Successfully uploaded.";
-				$mode = "done";
-			}
-			else if ($_GET["uploaded"] == "error")
-			{
-				$page_title = "Error while uploading.";
-				$mode = "error";
-			}
-		}
-		else if ($_POST && $_FILES)
+		if ($_POST && $_FILES)
 		{
 			$page_title = "Uploading...";
 			$mode = "process";
@@ -92,126 +79,41 @@
 				}
 				else if ($mode == "process")
 				{
-					require("db.php");
-					require("users.php");
-					require("util.php");
-
-					# retrieve posted parameters
-					$pack_file = $_FILES["pack_file"];
-					$user_name = $_POST["user_name"];
-					$user_pw = $_POST["user_pw"];
-
-					# todo: validate version string / convert to number
-
-					# validate user & password
-					validateLogin($user_name, $user_pw);
-
-					# upload and read file:
-					###########################################################
-					if ($pack_file["size"] > (100 * 1024 * 1024)) # 100 MB
+					if (isset($_FILES["package"]) && isset($_POST["user"]) && isset($_POST["password"]))
 					{
-						die ("File is too large ( > 100 MB ).");
-					}
+						$conn = curl_init();
 
-					ensure_upload_dir(); # ensure the directory for uploads exists
-					$file = find_free_file(upload_dir_path(), ".zip");
-					move_uploaded_file($pack_file["tmp_name"], $file);
+						curl_setopt($conn, CURLOPT_URL, "http://localhost/api/items.php"); # URL
+						curl_setopt($conn, CURLOPT_POST, true); # POST to the URL
+						curl_setopt($conn, CURLOPT_RETURNTRANSFER, true); # return data, do not directly print it
+						curl_setopt($conn, CURLOPT_HTTPAUTH, CURLAUTH_BASIC); # use HTTP BASIC Authentication
+						curl_setopt($conn, CURLOPT_USERPWD, $_POST["user"] . ":" . $_POST["password"]); # set auth data
+						curl_setopt($conn, CURLOPT_POSTFIELDS, array("package" => "@" . $_FILES["package"]["tmp_name"])); # file to upload (@)
+						curl_setopt($conn, CURLOPT_HTTPHEADER, array("Accept: application/json")); # response format
 
-					$data = read_package($file, array("name", "version", "type", "description", "tags")); # todo: read and parse file
-					$pack_name = $data['name']; $pack_version = $data['version']; $pack_type = $data['type'];
-					$pack_description = $data['description'];
+						$result = (($response = curl_exec($conn)) && (($code = curl_getinfo($conn, CURLINFO_HTTP_CODE)) == 200));
+						curl_close($conn);
 
-					$pack_tags = array();
-					foreach ($data['tags'] AS $tag)
-					{
-						$pack_tags[] = $tag['name'];
-					}
-					$pack_tags = implode(";", $pack_tags);
-
-					# todo: restrictions / validate file / read data from file
-					###########################################################
-
-					date_default_timezone_set("UTC");
-					$datetime = date("Y-m-d H:i:s");
-
-					# connect to database server
-					$db_connection = db_ensureConnection();
-
-					# escape data to prevent SQL injection
-					$escaped_name = mysql_real_escape_string($pack_name, $db_connection);
-					$escaped_type = mysql_real_escape_string($pack_type, $db_connection);
-					$escaped_version = mysql_real_escape_string($pack_version, $db_connection);
-					$escaped_description = mysql_real_escape_string($pack_description, $db_connection);
-					$escaped_tags = mysql_real_escape_string($pack_tags, $db_connection);
-					$escaped_user = mysql_real_escape_string($user_name, $db_connection);
-
-					# validate type
-					if ($escaped_type != "app" && $escaped_type != "lib")
-					{
-						die ("Invalid type was specified.");
-					}
-
-					# check if there's any version of the app
-					$db_query = "SELECT user FROM $db_table_main WHERE name = '$escaped_name' LIMIT 1";
-					$db_result = mysql_query($db_query, $db_connection)
-					or die ("Could not query for older versions!");
-					if ($db_result)
-					{
-						# if so, check if it's the same user as now
-						while ($db_entry = mysql_fetch_object($db_result))
+						if ($result)
 						{
-							if ($db_entry->user != $escaped_user)
+							$data = json_decode($response);
+							if (!$data)
 							{
-								die ("The user '$user_name' is not allowed to update the library or app '$pack_name'");
+								die ("Invalid response data: <i>$response</i>");
 							}
-						}
-					}
-
-					# check if this specific version had already been uploaded or not
-					$db_query = "SELECT id FROM $db_table_main WHERE name = '$escaped_name' AND version = '$escaped_version' LIMIT 1";
-					$db_result = mysql_query($db_query, $db_connection)
-					or die ("Could not query for package version!");
-					if ($db_result)
-					{
-						while ($db_entry = mysql_fetch_object($db_result))
-						{
-							die ("The specified version '$pack_version' of package '$pack_name' has already been uploaded!");
-						}
-					}
-
-					# add a database entry
-					$db_query = "INSERT INTO $db_table_main (name, type, version, file, user, description, tags, uploaded) VALUES ('$escaped_name', '$escaped_type', '$escaped_version', '".basename($file)."', '" . user_get_id_by_nick($escaped_user) . "', '$escaped_description', '$escaped_tags', '$datetime')";
-					mysql_query($db_query, $db_connection)
-					or die ("Could not add a new version to database!".mysql_error());
-
-					$db_query = "SELECT id FROM $db_table_main WHERE name = '$escaped_name' AND version = '$escaped_version' LIMIT 1";
-					$db_result = mysql_query($db_query, $db_connection)
-					or die ("Could not retrieve ID of uploaded item: " . mysql_error());
-					while ($db_entry = mysql_fetch_object($db_result))
-					{
-						$id = $db_entry->id;
-					}
-					$mode = "done";
-				}
-				if ($mode == "done")
-				{
 			?>
-					<b>Successfully uploaded!</b><br/>
-					<a href="index.php">Go to index</a><br />
+							<b>Successfully uploaded!</b><br/>
+							<a href="index.php">Go to index</a><br />
+							<a href="viewitem.php?id=<?php echo $data->id; ?>">View uploaded app or library</a>
 			<?php
-					if (!isset($id) && !empty($_GET["id"]))
-					{
-						$id = $_GET["id"];
+						}
+						else
+						{
+							die ("Failed to upload: $code<p>$response</p>");
+						}
 					}
-					if (isset($id))
-					{
-						# todo: possibly emit more data, using the id (if present)
-						echo "<a href=\"viewitem.php?id=".$id."\">View uploaded app or library</a>";
-					}
-				}
-				else if ($mode == "error")
-				{
-					# todo
+					else
+						die ("Failed to upload: required data is missing.");
 				}
 			?>
 		</div>
