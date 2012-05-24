@@ -238,6 +238,19 @@
 					throw new HttpException(409, NULL, "The specified version '$pack_version' of package '$pack_name' has already been uploaded!");
 				}
 
+				# check if item with this GUID had already been uploaded or not
+				$db_query = "SELECT HEX(id) FROM $db_table_main WHERE id = UNHEX('$pack_id')";
+				$db_result = mysql_query($db_query, $db_connection);
+				if (!$db_result)
+				{
+					throw new HttpException(500);
+				}
+
+				if (mysql_num_rows($db_result) > 0)
+				{
+					throw new HttpException(409, NULL, "An item with the specified GUID '$pack_id' has already been uploaded!");
+				}
+
 				# add the database entry
 				$db_query = "INSERT INTO $db_table_main (id, name, type, version, file, user, description, tags, uploaded)
 							VALUES (UNHEX('$pack_id'), '$escaped_name', '$escaped_type', '$escaped_version', '".basename($file)."', UNHEX('" . user_get_id_by_nick($user) . "'), '$escaped_description', '$escaped_tags', '$datetime')";
