@@ -36,9 +36,9 @@
 				<script type="text/javascript">
 					function validateData()
 					{
-						if (document.up.pack_file.value != ""
-							&& document.up.user_name.value != ""
-							&& document.up.user_pw.value != "")
+						if (document.up.package.value != ""
+							&& document.up.user.value != ""
+							&& document.up.password.value != "")
 						{
 							document.up.submit_btn.disabled = false;
 						}
@@ -70,18 +70,18 @@
 							</tr>
 							<tr>
 								<td>Package:</td>
-								<td><input type="hidden" name="MAX_FILE_SIZE" value="104857600"/><input type="file" name="pack_file" onchange="validateData()"/>
+								<td><input type="hidden" name="MAX_FILE_SIZE" value="78643200"/><input type="file" name="package" onchange="validateData()"/>
 							</tr>
 							<tr class="form-header">
 								<td colspan="2">You:</td>
 							</tr>
 							<tr>
 								<td>User name:</td>
-								<td><input type="text" name="user_name" onchange="validateData()"/></td>
+								<td><input type="text" name="user" onchange="validateData()"/></td>
 							</tr>
 							<tr>
 								<td>Password:</td>
-								<td><input type="password" name="user_pw" onchange="validateData()"/></td>
+								<td><input type="password" name="password" onchange="validateData()"/></td>
 							</tr>
 							<tr>
 								<td colspan="2"><input type="submit" name="submit_btn" disabled="disabled" value="Submit!"/></td>
