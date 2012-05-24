@@ -83,7 +83,7 @@
 					{
 						$conn = curl_init();
 
-						curl_setopt($conn, CURLOPT_URL, "http://localhost/api/items.php"); # URL
+						curl_setopt($conn, CURLOPT_URL, "http://{$_SERVER["SERVER_NAME"]}/api/items.php"); # URL
 						curl_setopt($conn, CURLOPT_POST, true); # POST to the URL
 						curl_setopt($conn, CURLOPT_RETURNTRANSFER, true); # return data, do not directly print it
 						curl_setopt($conn, CURLOPT_HTTPAUTH, CURLAUTH_BASIC); # use HTTP BASIC Authentication
