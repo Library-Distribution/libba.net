@@ -220,6 +220,23 @@
 		return $_SERVER["DOCUMENT_ROOT"] . DIRECTORY_SEPARATOR . "uploads" . DIRECTORY_SEPARATOR;
 	}
 
+	function get_preferred_mimetype($available, $default)
+	{
+		if (isset($_SERVER['HTTP_ACCEPT']))
+		{
+			foreach(explode(",", $_SERVER['HTTP_ACCEPT']) as $value)
+			{
+				$acceptLine = explode(";", $value);
+				if (in_array($acceptLine[0], $available))
+				{
+					return $acceptLine[0];
+				}
+			}
+			throw new HttpException(406, array("Content-type" => implode($available, ",")));
+		}
+		return $default;
+	}
+
 	# SOURCE: http://www.php.net/manual/de/function.rmdir.php#108113
 	# recursively remove a directory
 	function rrmdir($dir) {
