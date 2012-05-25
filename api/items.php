@@ -296,14 +296,6 @@
 	}
 	catch (HttpException $e)
 	{
-		header("HTTP/1.1 " . $e->getCode() . " " . HttpException::getStatusMessage($e->getCode()));
-		if (is_array($e->getHeaders()))
-		{
-			foreach ($e->getHeaders() AS $header => $value)
-			{
-				header($header . ": " . $value);
-			}
-		}
-		echo "ERROR: " . $e->getCode() . " - " . $e->getMessage();
+		handleHttpException($e);
 	}
 ?>
