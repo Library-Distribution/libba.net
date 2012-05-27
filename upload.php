@@ -91,10 +91,11 @@
 						curl_setopt($conn, CURLOPT_POSTFIELDS, array("package" => "@" . $_FILES["package"]["tmp_name"])); # file to upload (@)
 						curl_setopt($conn, CURLOPT_HTTPHEADER, array("Accept: application/json")); # response format
 
-						$result = (($response = curl_exec($conn)) && (($code = curl_getinfo($conn, CURLINFO_HTTP_CODE)) == 200));
+						$response = curl_exec($conn);
+						$code = curl_getinfo($conn, CURLINFO_HTTP_CODE);
 						curl_close($conn);
 
-						if ($result)
+						if ($response && $code == 200)
 						{
 							$data = json_decode($response);
 							if (!$data)
