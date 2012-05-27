@@ -74,7 +74,7 @@
 				$content = "<ald:item-list xmlns:ald=\"ald://api/items/list/schema/2012\">";
 				foreach ($data AS $item)
 				{
-					 $content .= "<ald:item name=\"{$item['name']}\" version=\"{$item['version']}\" id=\"{$item['id']}\"/>";
+					 $content .= "<ald:item ald:name=\"{$item['name']}\" ald:version=\"{$item['version']}\" ald:id=\"{$item['id']}\"/>";
 				}
 				$content .= "</ald:item-list>";
 			}
