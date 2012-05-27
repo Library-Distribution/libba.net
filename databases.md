@@ -9,7 +9,6 @@ holds the list of apps and libs being uploaded.
 #### columns
 * id (`binary(16)`, `PRIMARY`)
 * name (`varchar(25)`)
-* authors (`tinytext`)
 * type (`varchar(3)`)
 * version (`varchar(11)`)
 * file (`varchar(100)`)
