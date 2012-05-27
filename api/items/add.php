@@ -118,7 +118,7 @@
 				}
 				else if ($content_type == "text/xml" || $content_type == "application/xml")
 				{
-					$content = "<ald:item-id xmlns:ald='ald:/api/items/upload/schema/2012' id='$pack_id'/>";
+					$content = "<ald:item-id xmlns:ald='ald:/api/items/add/schema/2012' id='$pack_id'/>";
 				}
 
 				header("HTTP/1.1 200 " . HttpException::getStatusMessage(200));

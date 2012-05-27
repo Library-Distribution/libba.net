@@ -69,7 +69,7 @@
 				}
 				else if ($content_type == "text/xml" || $content_type == "application/xml")
 				{
-					$content = "<ald:item xmlns:ald=\"ald://api/items/get/schema/2012\">";
+					$content = "<ald:item xmlns:ald=\"ald://api/items/describe/schema/2012\">";
 					# ...
 					$content .= "</ald:item>";
 					throw new HttpException(501, NULL, "JSON can already be provided.");
