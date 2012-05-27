@@ -70,7 +70,7 @@
 					or die ("ERROR: could not retrieve joined date.\n".mysql_error());
 
 					$user_entry = mysql_fetch_assoc($db_result);
-					echo "<div id=\"user-gravatar\"><img width=\"200\" height=\"200\" src=\"http://gravatar.com/avatar/" . md5(strtolower(trim($user_entry["mail"]))) . "?s=200\"/></div>";
+					echo "<div id=\"user-gravatar\"><img width=\"200\" height=\"200\" src=\"http://gravatar.com/avatar/" . md5(strtolower(trim($user_entry["mail"]))) . "?s=200&d=mm\"/></div>";
 					echo "Joined: <span class='joined-date'>".($user_entry['joined'])."</span>";
 
 					$db_query = "SELECT name, HEX(id), version FROM $db_table_main WHERE user = UNHEX('{$user_entry['HEX(id)']}') AND type = 'lib' ORDER BY name, version DESC";
