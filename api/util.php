@@ -237,6 +237,14 @@
 		return $default;
 	}
 
+	function ensure_HTTPS()
+	{
+		if (!$_SERVER["HTTPS"])
+		{
+			throw new HttpException(403, NULL, "Must use HTTPS!");
+		}
+	}
+
 	function handleHttpException($e)
 	{
 		header("HTTP/1.1 " . $e->getCode() . " " . HttpException::getStatusMessage($e->getCode()));
