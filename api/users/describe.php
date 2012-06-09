@@ -27,7 +27,7 @@
 				if (mysql_num_rows($db_result) == 1)
 				{
 					$user = mysql_fetch_assoc($db_result);
-					if (!isset($_SERVER["PHP_AUTH_USER"]) || !isset($_SERVER["PHP_AUTH_PW"]) || $_SERVER["PHP_AUTH_USER"] != $_GET["name"] || hash("sh256", $_SERVER["PHP_AUTH_PW"]) != $user["pw"])
+					if (!isset($_SERVER["PHP_AUTH_USER"]) || !isset($_SERVER["PHP_AUTH_PW"]) || $_SERVER["PHP_AUTH_USER"] != $_GET["name"] || hash("sha256", $_SERVER["PHP_AUTH_PW"]) != $user["pw"])
 					{
 						$user["mail"] = md5($user["mail"]);
 					}
