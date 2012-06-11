@@ -160,6 +160,16 @@
 				$output['tags'][] = array('name' => get_first_attribute($xp, $tag_node, "@ald:name"));
 			}
 		}
+		if (in_array("links", $include_data))
+		{
+			$output["links"] = array();
+			foreach ($xp->query("/*/ald:links/ald:link") AS $link_node)
+			{
+				$output["links"][] = array( "name" => get_first_attribute($xp, $link_node, "@ald:name"),
+									"description" => get_first_attribute($xp, $link_node, "@ald:description"),
+									"href" => get_first_attribute($xp, $link_node, "@ald:href"));
+			}
+		}
 		# ...
 
 		$archive->close();
