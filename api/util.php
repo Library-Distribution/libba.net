@@ -70,7 +70,7 @@
 
 		while ($data = mysql_fetch_assoc($db_result))
 		{
-			return $data['HEX(id)'];
+			return $data["HEX(id)"];
 		}
 		throw new HttpException(404);
 	}
@@ -117,47 +117,47 @@
 			throw new HttpException(400, NULL, "Package references missing file: '" . $error_file . "'!");
 		}
 
-		if (in_array('id', $include_data))
+		if (in_array("id", $include_data))
 		{
-			$output['id'] = $xp->query("@ald:id")->item(0)->nodeValue;
+			$output["id"] = $xp->query("@ald:id")->item(0)->nodeValue;
 		}
-		if (in_array('name', $include_data))
+		if (in_array("name", $include_data))
 		{
-			$output['name'] = $xp->query("@ald:name")->item(0)->nodeValue;
+			$output["name"] = $xp->query("@ald:name")->item(0)->nodeValue;
 		}
-		if (in_array('version', $include_data))
+		if (in_array("version", $include_data))
 		{
-			$output['version'] = $xp->query("@ald:version")->item(0)->nodeValue;
+			$output["version"] = $xp->query("@ald:version")->item(0)->nodeValue;
 		}
-		if (in_array('type', $include_data))
+		if (in_array("type", $include_data))
 		{
-			$output['type'] = $xp->query("@ald:type")->item(0)->nodeValue;
+			$output["type"] = $xp->query("@ald:type")->item(0)->nodeValue;
 		}
-		if (in_array('description', $include_data))
+		if (in_array("description", $include_data))
 		{
-			$output['description'] = $xp->query("ald:description")->item(0)->nodeValue;
+			$output["description"] = $xp->query("ald:description")->item(0)->nodeValue;
 		}
-		if (in_array('authors', $include_data))
+		if (in_array("authors", $include_data))
 		{
-			$output['authors'] = array();
+			$output["authors"] = array();
 			foreach ($xp->query("/*/ald:authors/ald:author") AS $author_node)
 			{
 				$author = array();
 
-				$author['name'] = get_first_attribute($xp, $author_node, "@ald:name");
-				$temp = get_first_attribute($xp, $author_node, "@ald:user-name") AND $author['user-name'] = $temp;
-				$temp = get_first_attribute($xp, $author_node, "@ald:homepage") AND $author['homepage'] = $temp;
-				$temp = get_first_attribute($xp, $author_node, "@ald:email") AND $author['email'] = $temp;
+				$author["name"] = get_first_attribute($xp, $author_node, "@ald:name");
+				$temp = get_first_attribute($xp, $author_node, "@ald:user-name") AND $author["user-name"] = $temp;
+				$temp = get_first_attribute($xp, $author_node, "@ald:homepage") AND $author["homepage"] = $temp;
+				$temp = get_first_attribute($xp, $author_node, "@ald:email") AND $author["email"] = $temp;
 
-				$output['authors'][] = $author;
+				$output["authors"][] = $author;
 			}
 		}
-		if (in_array('tags', $include_data))
+		if (in_array("tags", $include_data))
 		{
-			$output['tags'] = array();
+			$output["tags"] = array();
 			foreach ($xp->query("/*/ald:tags/ald:tag") AS $tag_node)
 			{
-				$output['tags'][] = array('name' => get_first_attribute($xp, $tag_node, "@ald:name"));
+				$output["tags"][] = array("name" => get_first_attribute($xp, $tag_node, "@ald:name"));
 			}
 		}
 		if (in_array("links", $include_data))
@@ -232,9 +232,9 @@
 
 	function get_preferred_mimetype($available, $default)
 	{
-		if (isset($_SERVER['HTTP_ACCEPT']))
+		if (isset($_SERVER["HTTP_ACCEPT"]))
 		{
-			foreach(explode(",", $_SERVER['HTTP_ACCEPT']) as $value)
+			foreach(explode(",", $_SERVER["HTTP_ACCEPT"]) as $value)
 			{
 				$acceptLine = explode(";", $value);
 				if (in_array($acceptLine[0], $available))
@@ -271,7 +271,7 @@
 	# SOURCE: http://www.php.net/manual/de/function.rmdir.php#108113
 	# recursively remove a directory
 	function rrmdir($dir) {
-		foreach(glob($dir . '/*') as $file) {
+		foreach(glob($dir . "/*") as $file) {
 			if(is_dir($file))
 				rrmdir($file);
 			else
