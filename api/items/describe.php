@@ -65,14 +65,54 @@
 
 				if ($content_type == "application/json")
 				{
+					ksort($output);
 					$content = json_encode($output);
 				}
 				else if ($content_type == "text/xml" || $content_type == "application/xml")
 				{
-					$content = "<ald:item xmlns:ald=\"ald://api/items/describe/schema/2012\">";
+					$content = "<ald:item xmlns:ald=\"ald://api/items/describe/schema/2012\"";
 					# ...
+					foreach ($output AS $key => $value)
+					{
+						if (!is_array($value))
+						{
+							$content .= " ald:$key=\"$value\"";
+						}
+					}
+					$content .= ">";
+					if (isset($output["authors"]) && is_array($output["authors"]))
+					{
+						$content .= "<ald:authors>";
+						foreach ($output["authors"] AS $author)
+						{
+							$content .= "<ald:author ald:name=\"{$author["name"]}\""
+											. (isset($author["user-name"]) ? " ald:user-name=\"{$author["user-name"]}\"" : "")
+											. (isset($author["homepage"]) ? " ald:homepage=\"{$author["homepage"]}\"" : "")
+											. (isset($author["mail"]) ? " ald:mail=\"{$author["mail"]}\"" : "")
+									. "/>";
+						}
+						$content .= "</ald:authors>";
+					}
+					if (isset($output["tags"]) && is_array($output["tags"]))
+					{
+						$content .= "<ald:tags>";
+						foreach ($output["tags"] AS $tag)
+						{
+							$content .= "<ald:tag ald:name=\"{$tag}\"/>";
+						}
+						$content .= "</ald:tags>";
+					}
+					if (isset($output["links"]) && is_array($output["links"]))
+					{
+						$content .= "<ald:links>";
+						foreach ($output["links"] AS $link)
+						{
+							$content .= "<ald:link ald:name=\"{$link["name"]}\" ald:description=\"{$link["description"]}\" ald:href=\"{$link["href"]}\"/>";
+						}
+						$content .= "</ald:links>";
+					}
 					$content .= "</ald:item>";
-					throw new HttpException(501, NULL, "JSON can already be provided.");
+					#throw new HttpException(501, NULL, "JSON can already be provided.");
 				}
 
 				header("HTTP/1.1 200 " . HttpException::getStatusMessage(200));
