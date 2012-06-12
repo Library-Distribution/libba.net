@@ -32,7 +32,7 @@
 
 		public function getItemList($start = 0, $count = "all", $type = NULL, $user = NULL, $name = NULL)
 		{
-			return json_decode( $this->_Request( CURLOPT_HTTPGET, "/items/list.php?start=$start&count=$count" . ( $type != NULL ? "&type=$type" : "" ) . ( $user != NULL ? "&user=$user" : "" ) . ( $name != NULL ? "&name=$name" : "" ) ) );
+			return json_decode( $this->_Request( CURLOPT_HTTPGET, "/items/list.php?start=$start&count=$count" . ( $type != NULL ? "&type=$type" : "" ) . ( $user != NULL ? "&user=$user" : "" ) . ( $name != NULL ? "&name=$name" : "" ), array("Accept: application/json") ) );
 		}
 
 		public function uploadItem( $file, $user, $password )
