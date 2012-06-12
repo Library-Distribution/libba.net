@@ -30,10 +30,10 @@
 			return json_decode( $this->_Request( CURLOPT_HTTPGET, "/items/describe.php?name=$name &version=$version", array("Accept: application/json") ) );
 		}
 
-		public function getItemList($start = 0, $count = "all", $type = NULL, $user = NULL, $name = NULL, $tags = NULL)
+		public function getItemList($start = 0, $count = "all", $type = NULL, $user = NULL, $name = NULL, $tags = NULL, $latest = false)
 		{
 			return json_decode( $this->_Request( CURLOPT_HTTPGET
-										, "/items/list.php?start=$start&count=$count"
+										, "/items/list.php?start=$start&count=$count&latest=$latest"
 											. ( $type != NULL ? "&type=$type" : "" )
 											. ( $user != NULL ? "&user=$user" : "" )
 											. ( $name != NULL ? "&name=$name" : "" )
