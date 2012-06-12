@@ -31,6 +31,11 @@
 				$db_cond .= ($db_cond) ? " AND" : " WHERE";
 				$db_cond .= " name = '" . mysql_real_escape_string($_GET["name"], $db_connection) . "'";
 			}
+			if (isset($_GET["tags"]))
+			{
+				$db_cond .= ($db_cond) ? " AND" : " WHERE";
+				$db_cond .= " tags REGEXP '(^|;)" . mysql_real_escape_string($_GET["tags"], $db_connection) . "($|;)'";
+			}
 
 			# retrieve data limits
 			$db_limit = "";
