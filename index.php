@@ -39,9 +39,9 @@
 			$user = $_GET["user"];
 			$page_title .= " by $user";
 		}
-		if (isset($_GET["tag"]))
+		if (isset($_GET["tags"]))
 		{
-			$tag = $_GET["tag"];
+			$tags = $_GET["tags"];
 		}
 
 		$page_itemcount = (empty($_GET["items"])) ? 20 : $_GET["items"];
@@ -72,63 +72,34 @@
 				{
 					$page_index = 0;
 				}
-				require("db.php");
-				require("users.php");
+				require_once("ALD.php");
 
-				# connect to database server
-				$db_connection = db_ensureConnection();
-				$page_itemcount = mysql_real_escape_string($page_itemcount, $db_connection);
+				$item_type = ($mode == "apps" ? "app" : ($mode == "libs" ? "lib" : ""));
+				$start_index = $page_index * $page_itemcount;
 
-				$db_query_cond = "";
-				if ($mode == "apps")
-				{
-					$db_query_cond = "WHERE type = 'app'";
-				}
-				else if ($mode == "libs")
-				{
-					$db_query_cond = "WHERE type = 'lib'";
-				}
-				if (!empty($user))
-				{
-					$user = mysql_real_escape_string($user, $db_connection);
-					if ($db_query_cond == "")
-					{
-						$db_query_cond = "WHERE user = '$user'";
-					}
-					else
-					{
-						$db_query_cond .= " AND user = '$user'";
-					}
-				}
-				if (isset($tag))
-				{
-					$tag = mysql_real_escape_string($tag, $db_connection);
-					if ($db_query_cond == "")
-					{
-						$db_query_cond = "WHERE tags REGEXP '(^|;)$tag($|;)'";
-					}
-					else
-					{
-						$db_query_cond .= " AND tags REGEXP '(^|;)$tag($|;)'";
-					}
-				}
-
-				$start_index = ($page_index) * $page_itemcount;
-				$db_query = "SELECT HEX(id), name, version, HEX(user) FROM $db_table_main $db_query_cond ORDER BY name LIMIT $start_index,$page_itemcount";
-				$db_result = mysql_query($db_query, $db_connection)
-				or die ("Could not retrieve list of apps and libraries.".mysql_error());
-
-				$items = array();
-				while ($item = mysql_fetch_assoc($db_result))
-				{
-					$items[$item['name']] = $item;
-				}
+				$api = new ALD("http://{$_SERVER["SERVER_NAME"]}/api");
+				$items = $api->getItemList($start_index, $page_itemcount + 1, isset($item_type) ? $item_type : NULL, !empty($user) ? $user : NULL, NULL, isset($tags) ? explode("|", $tags) : NULL, true);
+				# TODO: name not supported by this page
 
 				$last_letter = "";
-				foreach ($items as $item_name => $item)
+				$i = 0;
+				foreach ($items as $item)
 				{
-					$user = user_get_nick($item['HEX(user)']);
-					$current_letter = strtoupper(substr($item_name, 0, 1));
+					$i++;
+					if ($i > $page_itemcount)
+					{
+						break;
+					}
+
+					try
+					{
+						$user = $api->getItemById($item->id)->user;
+					}
+					catch (HttpException $e)
+					{
+						$user = "[failure]";
+					}
+					$current_letter = strtoupper(substr($item->name, 0, 1));
 					if (!ctype_alpha($current_letter))
 					{
 						$current_letter = ".#?1";
@@ -141,7 +112,7 @@
 						}
 						echo "<div class='letter-container' id='items$current_letter'><span class='letter-item'>$current_letter</span><ul>";
 					}
-					echo "<li><a class='item' name='item{$item['HEX(id)']}' href='viewitem.php?id={$item['HEX(id)']}'>$item_name</a> (v{$item['version']}) by <a class='userlink' href='viewuser.php?user=$user'>$user</a></li>";
+					echo "<li><a class='item' name='item$item->id' href='viewitem.php?id=$item->id'>$item->name</a> (v$item->version) by <a class='userlink' href='viewuser.php?user=$user'>$user</a></li>";
 					$last_letter = $current_letter;
 				}
 				if (count($items) > 0)
@@ -158,16 +129,9 @@
 					echo "<a class='next-previous' id='prev' href='?items=$page_itemcount&amp;page=".($page_index - 1)."'>Previous page</a>";
 				}
 
-				if (count($items) > 0)
+				if (count($items) > $page_itemcount)
 				{
-					# check if there are more items
-					$db_query = "SELECT id FROM $db_table_main $db_query_cond ORDER BY name LIMIT ".($start_index + $page_itemcount).",1";
-					$db_result = mysql_query($db_query, $db_connection)
-					or die ("ERROR: Could not query for more items\n".mysql_error());
-					if (mysql_num_rows($db_result) > 0) # if so, show the "next" link
-					{
-						echo "<a class='next-previous' id='next' href='?items=$page_itemcount&amp;page=".($page_index + 1)."'>Next page</a>";
-					}
+					echo "<a class='next-previous' id='next' href='?items=$page_itemcount&amp;page=".($page_index + 1)."'>Next page</a>";
 				}
 			?>
 		</div>
