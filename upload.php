@@ -81,37 +81,22 @@
 				{
 					if (isset($_FILES["package"]) && isset($_POST["user"]) && isset($_POST["password"]))
 					{
-						$conn = curl_init();
+						require_once("ALD.php");
 
-						curl_setopt($conn, CURLOPT_URL, "http://{$_SERVER["SERVER_NAME"]}/api/items/add.php"); # URL
-						curl_setopt($conn, CURLOPT_POST, true); # POST to the URL
-						curl_setopt($conn, CURLOPT_RETURNTRANSFER, true); # return data, do not directly print it
-						curl_setopt($conn, CURLOPT_HTTPAUTH, CURLAUTH_BASIC); # use HTTP BASIC Authentication
-						curl_setopt($conn, CURLOPT_USERPWD, $_POST["user"] . ":" . $_POST["password"]); # set auth data
-						curl_setopt($conn, CURLOPT_POSTFIELDS, array("package" => "@" . $_FILES["package"]["tmp_name"])); # file to upload (@)
-						curl_setopt($conn, CURLOPT_HTTPHEADER, array("Accept: application/json")); # response format
-
-						$response = curl_exec($conn);
-						$code = curl_getinfo($conn, CURLINFO_HTTP_CODE);
-						curl_close($conn);
-
-						if ($response && $code == 200)
+						try
 						{
-							$data = json_decode($response);
-							if (!$data)
-							{
-								die ("Invalid response data: <i>$response</i>");
-							}
+							$conn = new ALD("http://{$_SERVER["SERVER_NAME"]}/api");
+							$id = $conn->uploadItem($_FILES["package"]["tmp_name"], $_POST["user"], $_POST["password"]);
+						}
+						catch (HttpException $e)
+						{
+							die ("Failed to upload: {$e->code}<p>{$e->message}</p>");
+						}
 			?>
-							<b>Successfully uploaded!</b><br/>
-							<a href="index.php">Go to index</a><br />
-							<a href="viewitem.php?id=<?php echo $data->id; ?>">View uploaded app or library</a>
+						<b>Successfully uploaded!</b><br/>
+						<a href="index.php">Go to index</a><br />
+						<a href="viewitem.php?id=<?php echo $id; ?>">View uploaded app or library</a>
 			<?php
-						}
-						else
-						{
-							die ("Failed to upload: $code<p>$response</p>");
-						}
 					}
 					else
 						die ("Failed to upload: required data is missing.");
