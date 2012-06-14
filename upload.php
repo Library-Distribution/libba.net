@@ -85,7 +85,7 @@
 
 						try
 						{
-							$conn = new ALD("http://{$_SERVER["SERVER_NAME"]}/api");
+							$conn = new ALD("https://ahk4.net/user/maulesel/api"); # hardcoded URL to ensure HTTPS is always used
 							$id = $conn->uploadItem($_FILES["package"]["tmp_name"], $_POST["user"], $_POST["password"]);
 						}
 						catch (HttpException $e)
