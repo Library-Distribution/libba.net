@@ -36,6 +36,11 @@
 				$db_cond .= ($db_cond) ? " AND" : " WHERE";
 				$db_cond .= " tags REGEXP '(^|;)" . mysql_real_escape_string($_GET["tags"], $db_connection) . "($|;)'";
 			}
+			if (isset($_GET["default"]) && $_GET["default"] && strtolower($_GET["default"]) != "false")
+			{
+				$db_cond .= ($db_cond) ? " AND" : " WHERE";
+				$db_cond .= " default_include = '1'";
+			}
 			$latest_only = isset($_GET["latest"]) && $_GET["latest"] && strtolower($_GET["latest"]) != "false";
 
 			# retrieve data limits
