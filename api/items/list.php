@@ -36,12 +36,7 @@
 				$db_cond .= ($db_cond) ? " AND" : " WHERE";
 				$db_cond .= " tags REGEXP '(^|;)" . mysql_real_escape_string($_GET["tags"], $db_connection) . "($|;)'";
 			}
-			$latest_only = false;
-			if (isset($_GET["latest"]) && $_GET["latest"] && strtolower($_GET["latest"]) != "false")
-			{
-				$latest_only = true;
-				$db_cond .= " ORDER BY name, version DESC";
-			}
+			$latest_only = isset($_GET["latest"]) && $_GET["latest"] && strtolower($_GET["latest"]) != "false";
 
 			# retrieve data limits
 			$db_limit = "";
@@ -68,14 +63,20 @@
 
 			# parse data to array
 			$data = array();
-			$versions = array();
+			if ($latest_only)
+			{
+				$versions = array();
+			}
 			while ($item = mysql_fetch_assoc($db_result))
 			{
-				if (isset($versions[$item["name"]]) && $versions[$item["name"]] > $item["version"])
+				if ($latest_only)
 				{
-					continue;
+					if (isset($versions[$item["name"]]) && $versions[$item["name"]] > $item["version"])
+					{
+						continue;
+					}
+					$versions[$item["name"]] = $item["version"];
 				}
-				$versions[$item["name"]] = $item["version"];
 
 				$item["id"] = $item["HEX(id)"];
 				unset($item["HEX(id)"]);
