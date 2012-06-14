@@ -100,7 +100,7 @@
 		$doc = new DOMDocument();
 		@$doc->loadXML($archive->getFromName("definition.ald"));
 
-		if (!@$doc->schemaValidate($_SERVER["DOCUMENT_ROOT"] . DIRECTORY_SEPARATOR . "schema.xsd"))
+		if (!$doc->schemaValidate(dirname(__DIR__) . "/schema.xsd")) # $_SERVER["DOCUMENT_ROOT"] . DIRECTORY_SEPARATOR . "schema.xsd")) # temporary disabled because of ahk4.net config issue
 		{
 			throw new HttpException(400, NULL, "Package definition is not valid!");
 		}
@@ -227,7 +227,8 @@
 
 	function upload_dir_path()
 	{
-		return $_SERVER["DOCUMENT_ROOT"] . DIRECTORY_SEPARATOR . "uploads" . DIRECTORY_SEPARATOR;
+		#return $_SERVER["DOCUMENT_ROOT"] . DIRECTORY_SEPARATOR . "uploads" . DIRECTORY_SEPARATOR; # temporary disabled because of ahk4.net configuration issue
+		return dirname(__DIR__) . "/uploads/";
 	}
 
 	function get_preferred_mimetype($available, $default)
