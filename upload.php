@@ -90,7 +90,7 @@
 						}
 						catch (HttpException $e)
 						{
-							die ("Failed to upload: {$e->code}<p>{$e->message}</p>");
+							die ("Failed to upload: {$e->getCode()}<p>{$e->getMessage()}</p>");
 						}
 			?>
 						<b>Successfully uploaded!</b><br/>
