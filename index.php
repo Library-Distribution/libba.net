@@ -77,7 +77,7 @@
 				$item_type = ($mode == "apps" ? "app" : ($mode == "libs" ? "lib" : ""));
 				$start_index = $page_index * $page_itemcount;
 
-				$api = new ALD("http://{$_SERVER["SERVER_NAME"]}/api");
+				$api = new ALD((isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]) ? "https://{$_SERVER["SERVER_NAME"]}/user/maulesel/api" : "http://{$_SERVER["SERVER_NAME"]}/api");
 				$items = $api->getItemList($start_index, $page_itemcount + 1, isset($item_type) ? $item_type : NULL, !empty($user) ? $user : NULL, NULL, isset($tags) ? explode("|", $tags) : NULL, true);
 				# TODO: name not supported by this page
 
