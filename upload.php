@@ -1,17 +1,21 @@
+<?php
+	if (!isset($_SERVER["HTTPS"]) || !$_SERVER["HTTPS"])
+	{
+		header("Location: https://ahk4.net/user/maulesel/upload.php");
+	}
+	if ($_POST && $_FILES)
+	{
+		$page_title = "Uploading...";
+		$mode = "process";
+	}
+	else
+	{
+		$page_title = "Upload a new library or application";
+		$mode = "start";
+	}
+?>
 <!DOCTYPE html>
 <html>
-	<?php
-		if ($_POST && $_FILES)
-		{
-			$page_title = "Uploading...";
-			$mode = "process";
-		}
-		else
-		{
-			$page_title = "Upload a new library or application";
-			$mode = "start";
-		}
-	?>
 	<head>
 		<link rel="stylesheet" href="default.css"/>
 		<link rel="stylesheet" href="upload.css"/>
