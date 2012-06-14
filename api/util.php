@@ -30,6 +30,10 @@
 
 	function user_basic_auth($realm)
 	{
+		if (!isset($_SERVER["HTTPS"]) || !$_SERVER["HTTPS"])
+		{
+			throw new HttpException(403, NULL, "Must use HTTPS for authenticated APIs");
+		}
 		if (empty($_SERVER["PHP_AUTH_USER"]) || empty($_SERVER["PHP_AUTH_PW"]))
 		{
 			throw new HttpException(401, array("WWW-Authenticate" => "Basic realm=\"$realm\""));

@@ -31,6 +31,11 @@
 
 					if (isset($_SERVER["PHP_AUTH_USER"]) && isset($_SERVER["PHP_AUTH_PW"]))
 					{
+						if (!isset($_SERVER["HTTPS"]) || !$_SERVER["HTTPS"])
+						{
+							throw new HttpException(403, NULL, "Must use HTTPS for authenticated APIs");
+						}
+
 						$password_hash = hash("sha256", $_SERVER["PHP_AUTH_PW"]);
 
 						if ($_SERVER["PHP_AUTH_USER"] == $user["name"] && $password_hash == $user["pw"]) # user requests information about himself - OK.
