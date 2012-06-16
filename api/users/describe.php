@@ -17,7 +17,7 @@
 				# connect to database server
 				$db_connection = db_ensure_connection();
 
-				$db_query = "SELECT nick, mail, pw, privileges, joined FROM $db_table_users WHERE nick = '" . mysql_real_escape_string($_GET["name"], $db_connection) . "'";
+				$db_query = "SELECT name, mail, pw, privileges, joined FROM $db_table_users WHERE name = '" . mysql_real_escape_string($_GET["name"], $db_connection) . "'";
 				$db_result = mysql_query($db_query, $db_connection);
 				if (!$db_result)
 				{
@@ -44,7 +44,7 @@
 						}
 						else
 						{
-							$db_query = "SELECT pw, privileges FROM $db_table_users WHERE nick = '" . mysql_real_escape_string($_SERVER["PHP_AUTH_USER"], $db_connection) . "'";
+							$db_query = "SELECT pw, privileges FROM $db_table_users WHERE name = '" . mysql_real_escape_string($_SERVER["PHP_AUTH_USER"], $db_connection) . "'";
 							$db_result = mysql_query($db_query, $db_connection);
 							if (!$db_result)
 							{
@@ -69,12 +69,11 @@
 
 					if ($content_type == "application/json")
 					{
-						$user["name"] = $user["nick"]; unset($user["nick"]);
 						$content = json_encode($user);
 					}
 					else if ($content_type == "text/xml" || $content_type == "application/xml")
 					{
-						$content = "<ald:user xmlns:ald=\"ald://api/users/describe/schema/2012\" ald:name=\"{$user["nick"]}\" ald:mail=\"{$user["mail"]}\" ald:joined=\"{$user["joined"]}\" ald:privileges=\"{$user["privileges"]}\"/>";
+						$content = "<ald:user xmlns:ald=\"ald://api/users/describe/schema/2012\" ald:name=\"{$user["name"]}\" ald:mail=\"{$user["mail"]}\" ald:joined=\"{$user["joined"]}\" ald:privileges=\"{$user["privileges"]}\"/>";
 					}
 
 					header("HTTP/1.1 200 " . HttpException::getStatusMessage(200));

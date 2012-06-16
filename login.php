@@ -31,11 +31,11 @@
 					<form action="<?php echo $_SERVER["REQUEST_URI"]; ?>" method="post">
 						<table>
 			<?php	if ($mode == "activate") { ?>
-						<input type="hidden" name="nick" value="<?php echo $_GET["nick"]; ?>"/>
+						<input type="hidden" name="name" value="<?php echo $_GET["name"]; ?>"/>
 			<?php 	} else { ?>
 							<tr>
 								<td>Nickname:</td>
-								<td><input type="text" name="nick"/></td>
+								<td><input type="text" name="name"/></td>
 							</tr>
 			<?php		if ($mode == "register") {	?>
 							<tr>
@@ -59,13 +59,13 @@
 				}
 				else
 				{
-					if (isset($_POST["nick"]) && isset($_POST["password"]))
+					if (isset($_POST["name"]) && isset($_POST["password"]))
 					{
 						require("db.php");
 						$db_connection = db_ensureConnection();
 
-						$nick = $_POST["nick"]; $pw = hash("sha256", $_POST["password"]);
-						$escaped_nick = mysql_real_escape_string($nick, $db_connection);
+						$name = $_POST["name"]; $pw = hash("sha256", $_POST["password"]);
+						$escaped_name = mysql_real_escape_string($name, $db_connection);
 
 						if ($mode == "register" && isset($_POST["mail"]))
 						{
@@ -77,7 +77,7 @@
 							$joined = date("Y-m-d");
 
 							# check if already registered
-							$db_query = "SELECT nick FROM $db_table_users WHERE mail = '$escaped_mail' OR nick = '$escaped_nick'";
+							$db_query = "SELECT name FROM $db_table_users WHERE mail = '$escaped_mail' OR name = '$escaped_name'";
 							$db_result = mysql_query($db_query, $db_connection)
 							or die ("Failed to query for existing user.");
 
@@ -87,11 +87,11 @@
 							}
 
 							# register
-							$db_query = "INSERT INTO $db_table_users (nick, mail, pw, activationToken, joined) VALUES ('$escaped_nick', '$escaped_mail', '$pw', '$token', '$joined')";
+							$db_query = "INSERT INTO $db_table_users (name, mail, pw, activationToken, joined) VALUES ('$escaped_name', '$escaped_mail', '$pw', '$token', '$joined')";
 							mysql_query($db_query, $db_connection)
 							or die ("Failed to save new user: " . mysql_error());
 
-							$url = "http://" . $_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'] . "?nick=$nick&mode=activate&token=$token";
+							$url = "http://" . $_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'] . "?name=$name&mode=activate&token=$token";
 							if (!mail($mail,
 								"Confirm your registration to ALD",
 								"To activate your account, go to <a href='$url'>$url</a>.",
@@ -107,16 +107,16 @@
 							{
 								$token = mysql_real_escape_string($_GET["token"]);
 
-								$db_query = "SELECT activationToken FROM $db_table_users WHERE nick = '$escaped_nick' AND activationToken = '$token' AND pw = '$pw'";
+								$db_query = "SELECT activationToken FROM $db_table_users WHERE name = '$escaped_name' AND activationToken = '$token' AND pw = '$pw'";
 								$db_result = mysql_query($db_query, $db_connection)
 								or die("Failed to query user database: " . mysql_error());
 
 								if (mysql_num_rows($db_result) != 1)
 								{
-									die("User account with that nick, password and token could not be found.");
+									die("User account with that name, password and token could not be found.");
 								}
 
-								$db_query = "UPDATE $db_table_users Set activationToken = '' WHERE nick = '$escaped_nick' AND activationToken = '$token' AND pw = '$pw'";
+								$db_query = "UPDATE $db_table_users Set activationToken = '' WHERE name = '$escaped_name' AND activationToken = '$token' AND pw = '$pw'";
 								mysql_query($db_query, $db_connection)
 								or die("Failed to reset activation token.");
 

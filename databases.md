@@ -23,7 +23,7 @@ holds the list of users, a sha256-hash of the password and the privileges they h
 
 #### columns
 * id (`binary(16)`, `PRIMARY`)
-* nick (`varchar(25)`, `UNIQUE`)
+* name (`varchar(25)`, `UNIQUE`)
 * mail (`varchar(25)`, `UNIQUE`)
 * pw (`varchar(64)`)
 * privileges (`int(1)`, default: `0`)

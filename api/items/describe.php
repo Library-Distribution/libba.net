@@ -55,7 +55,7 @@
 
 				$output = $data;
 				$output["uploaded"] = $db_entry["uploaded"];
-				$output["user"] = user_get_nick($db_entry["HEX(user)"]);
+				$output["user"] = user_get_name($db_entry["HEX(user)"]);
 				$tag_list  = array();
 				foreach ($data["tags"] AS $tag)
 				{

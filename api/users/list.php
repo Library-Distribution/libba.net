@@ -31,7 +31,7 @@
 			}
 
 			# query for data:
-			$db_query = "SELECT nick FROM $db_table_users $db_limit";
+			$db_query = "SELECT name FROM $db_table_users $db_limit";
 			$db_result = mysql_query($db_query, $db_connection);
 			if (!$db_result)
 			{
@@ -42,7 +42,7 @@
 			$data = array();
 			while ($item = mysql_fetch_assoc($db_result))
 			{
-				$data[] = $item["nick"];
+				$data[] = $item["name"];
 			}
 
 			# return content-type specific data

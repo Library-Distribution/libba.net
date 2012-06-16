@@ -90,17 +90,17 @@
 				$item["userID"] = $item["HEX(user)"];
 				if (!isset($users[$item["userID"]]))
 				{
-					$db_query = "SELECT nick FROM $db_table_users WHERE id = UNHEX('" . $item["userID"] . "')";
+					$db_query = "SELECT name FROM $db_table_users WHERE id = UNHEX('" . $item["userID"] . "')";
 					$db_result2 = mysql_query($db_query, $db_connection);
 					if (!$db_result2)
 					{
-						throw new HttpException(500, NULL, mysql_error());
+						throw new HttpException(500);
 					}
 					if (mysql_num_rows($db_result2) != 1)
 					{
 						throw new HttpException(404);
 					}
-					$users[$item["userID"]] = mysql_fetch_object($db_result2)->nick;
+					$users[$item["userID"]] = mysql_fetch_object($db_result2)->name;
 				}
 				$item["user"] = $users[$item["userID"]];
 				unset($item["HEX(user)"]);

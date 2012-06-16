@@ -7,7 +7,7 @@
 		$pw = hash("sha256", $pw);
 		$escaped_user = mysql_real_escape_string($user, $db_connection);
 
-		$db_query = "SELECT pw, activationToken FROM $db_table_users WHERE nick = '$escaped_user'";
+		$db_query = "SELECT pw, activationToken FROM $db_table_users WHERE name = '$escaped_user'";
 		$db_result = mysql_query($db_query, $db_connection)
 		or die ("Could not find the specified user name.");
 
@@ -27,13 +27,13 @@
 		global $db_table_users;
 		$db_connection = db_ensureConnection();
 
-		$db_query = "SELECT nick FROM $db_table_users WHERE id = UNHEX('" . mysql_real_escape_string($id) . "')";
+		$db_query = "SELECT name FROM $db_table_users WHERE id = UNHEX('" . mysql_real_escape_string($id) . "')";
 		$db_result = mysql_query($db_query, $db_connection)
 		or die ("Could not find the user name.");
 
 		while ($data = mysql_fetch_object($db_result))
 		{
-			return $data->nick;
+			return $data->name;
 		}
 	}
 
@@ -42,7 +42,7 @@
 		global $db_table_users;
 		$db_connection = db_ensureConnection();
 
-		$db_query = "SELECT HEX(id) FROM $db_table_users WHERE nick = '" . mysql_real_escape_string($nick) . "'";
+		$db_query = "SELECT HEX(id) FROM $db_table_users WHERE name = '" . mysql_real_escape_string($nick) . "'";
 		$db_result = mysql_query($db_query, $db_connection)
 		or die ("Could not find the user ID.");
 
