@@ -87,7 +87,7 @@
 							}
 
 							# register
-							$db_query = "INSERT INTO $db_table_users (name, mail, pw, activationToken, joined) VALUES ('$escaped_name', '$escaped_mail', '$pw', '$token', '$joined')";
+							$db_query = "INSERT INTO $db_table_users (id, name, mail, pw, activationToken, joined) VALUES (UNHEX(REPLACE(UUID(), '-', '')), '$escaped_name', '$escaped_mail', '$pw', '$token', '$joined')";
 							mysql_query($db_query, $db_connection)
 							or die ("Failed to save new user: " . mysql_error());
 
