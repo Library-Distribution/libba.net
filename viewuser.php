@@ -129,7 +129,7 @@
 							if (!in_array($item->name, $uploaded))
 							{
 								$uploaded[] = $item->name;
-								echo "<li><a href='viewitem?id={$item->id}'>{$item->name} (v{$item->version})</a></li>";
+								echo "<li><a href='viewitem?id=$item->id'>$item->name (v$item->version)</a></li>";
 							}
 						}
 						echo "</ul>";
@@ -147,7 +147,7 @@
 							if (!in_array($item->name, $uploaded))
 							{
 								$uploaded[] = $item->name;
-								echo "<li><a href='viewitem?id={$item->id}'>{$item->name} (v{$item->version})</a></li>";
+								echo "<li><a href='viewitem?id=$item->id'>$item->name (v$item->version)</a></li>";
 							}
 						}
 						echo "</ul>";
