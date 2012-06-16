@@ -5,28 +5,20 @@
 		exit;
 	}
 
-	require("db.php");
-	require("users.php");
+	require_once("sortArray.php");
+	require_once("ALD.php");
 
-	$db_connection = db_ensureConnection();
+	$api = new ALD(!empty($_SERVER["HTTPS"]) ? "https://{$_SERVER["SERVER_NAME"]}/user/maulesel/api" : "http://{$_SERVER["SERVER_NAME"]}/api");
 
-	$page_title = "";
-	$id = mysql_real_escape_string($_GET["id"], $db_connection);
-
-	$db_query = "SELECT name, file, version, HEX(user), description, uploaded, tags FROM $db_table_main WHERE id = UNHEX('$id') LIMIT 1";
-	$db_result = mysql_query($db_query, $db_connection)
-	or die ("ERROR: Failed to read data from database.\n".mysql_error());
-
-	while ($db_entry = mysql_fetch_assoc($db_result))
+	try
 	{
-		$item = $db_entry;
-		$page_title = "\"{$db_entry['name']}\" (v{$db_entry['version']})";
+		$item = $api->getItemById($_GET["id"]);
 	}
-	if (!isset($item))
+	catch (HttpException $e)
 	{
-		die ("Could not find this item!");
+		die ("Could not find this item!"); # TODO: more info
 	}
-	$user = user_get_nick($item['HEX(user)']);
+	$page_title = "\"$item->name\" (v$item->version)";
 ?>
 <!DOCTYPE html>
 <html>
@@ -41,17 +33,17 @@
 			<table>
 				<tr>
 					<td>Uploaded by:</td>
-					<td><a href="viewuser?user=<?php echo $user; ?>"><?php echo $user; ?></a></td>
+					<td><a href="viewuser?user=<?php echo $item->user; ?>"><?php echo $item->user; ?></a></td>
 				</tr>
 				<tr>
 					<td>Uploaded:</td>
-					<td><?php echo $item['uploaded']; ?></td>
+					<td><?php echo $item->uploaded; ?></td>
 				</tr>
 				<tr>
 					<td>Tags:</td>
 					<td>
 						<?php
-							foreach (explode(";", $item['tags']) AS $tag)
+							foreach ($item->tags AS $tag)
 							{
 								echo "<a href='index?tag=$tag'>$tag</a> ";
 							}
@@ -59,22 +51,24 @@
 					</td>
 				</tr>
 			</table>
-			<a href="/uploads/<?php echo $item['file']; ?>">Download</a>
 			<h3>Description</h3>
 			<div>
-				<?php echo $item['description']; ?>
+				<?php echo $item->description; ?>
 			</div>
 			<?php
-				$db_query = "SELECT HEX(id), version FROM $db_table_main WHERE name = '{$item['name']}' AND version != '{$item['version']}' ORDER BY version";
-				$db_result = mysql_query($db_query, $db_connection)
-				or die("ERROR: Could not query for other versions.\n" . mysql_error());
 
-				if (mysql_num_rows($db_result) > 0)
+				$versions = $api->getItemList(0, "all", NULL, NULL, $item->name);
+				$versions = sortArray($versions, array("version" => true));
+
+				if (count($versions) > 1) # 1 as the version on this page is included
 				{
 					echo "<h3>Other versions:</h3><ul>";
-					while ($db_entry = mysql_fetch_assoc($db_result))
+					foreach ($versions AS $version)
 					{
-						echo "<li><a href='?id={$db_entry['HEX(id)']}'>version {$db_entry['version']}</a></li>";
+						if ($version->version != $item->version)
+						{
+							echo "<li><a href='?id=$version->id'>version $version->version</a></li>";
+						}
 					}
 					echo "</ul>";
 				}
