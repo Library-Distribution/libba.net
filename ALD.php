@@ -12,7 +12,7 @@
 
 		public function getUserList( $start = 0, $count = "all" )
 		{
-			return json_decode( $this->Request( CURLOPT_HTTPGET, "/users/list?start=$start&count=count", array("Accept: application/json") ) );
+			return json_decode( $this->_Request( CURLOPT_HTTPGET, "/users/list?start=$start&count=$count", array("Accept: application/json") ) );
 		}
 
 		public function getUser( $name, $request_user = NULL, $request_password = NULL )
