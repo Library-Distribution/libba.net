@@ -12,28 +12,28 @@
 
 		public function getUserList( $start = 0, $count = "all" )
 		{
-			return json_decode( $this->Request( CURLOPT_HTTPGET, "/users/list.php?start=$start&count=count", array("Accept: application/json") ) );
+			return json_decode( $this->Request( CURLOPT_HTTPGET, "/users/list?start=$start&count=count", array("Accept: application/json") ) );
 		}
 
 		public function getUser( $name, $request_user = NULL, $request_password = NULL )
 		{
-			return json_decode( $this->_Request( CURLOPT_HTTPGET, "/users/describe.php?name=$name", array("Accept: application/json"), NULL, $request_user, $request_password) );
+			return json_decode( $this->_Request( CURLOPT_HTTPGET, "/users/describe/name/$name", array("Accept: application/json"), NULL, $request_user, $request_password) );
 		}
 
 		public function getItemById( $id )
 		{
-			return json_decode( $this->_Request( CURLOPT_HTTPGET, "/items/describe.php?id=$id", array("Accept: application/json") ) );
+			return json_decode( $this->_Request( CURLOPT_HTTPGET, "/items/describe/id/$id", array("Accept: application/json") ) );
 		}
 
 		public function getItem($name, $version)
 		{
-			return json_decode( $this->_Request( CURLOPT_HTTPGET, "/items/describe.php?name=$name &version=$version", array("Accept: application/json") ) );
+			return json_decode( $this->_Request( CURLOPT_HTTPGET, "/items/describe/name/$name/$version", array("Accept: application/json") ) );
 		}
 
 		public function getItemList($start = 0, $count = "all", $type = NULL, $user = NULL, $name = NULL, $tags = NULL, $latest = false)
 		{
 			return json_decode( $this->_Request( CURLOPT_HTTPGET
-										, "/items/list.php?start=$start&count=$count&latest=$latest"
+										, "/items/list?start=$start&count=$count&latest=$latest"
 											. ( $type != NULL ? "&type=$type" : "" )
 											. ( $user != NULL ? "&user=$user" : "" )
 											. ( $name != NULL ? "&name=$name" : "" )
@@ -43,7 +43,7 @@
 
 		public function uploadItem( $file, $user, $password )
 		{
-			return json_decode( $this->_Request( CURLOPT_POST, "/items/add.php", array("Accept: application/json"), array("package" => "@$file"), $user, $password) )->id;
+			return json_decode( $this->_Request( CURLOPT_POST, "/items/add", array("Accept: application/json"), array("package" => "@$file"), $user, $password) )->id;
 		}
 
 		private function _Request($method, $url, $header, $data = NULL, $user = NULL, $password = NULL)
