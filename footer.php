@@ -1,19 +1,19 @@
 <div id="footer">
-	<a href="index.php"><img src="logo.png" class="logo"/></a>
+	<a href="index"><img src="logo.png" class="logo"/></a>
 	<table>
 		<tr>
 			<td>
 				<ul>
-					<li><a href="index.php">Start page</a></li>
-					<li><a href="help.php">Help</a></li>
-					<li><a href="about.php">About</a></li>
+					<li><a href="index">Start page</a></li>
+					<li><a href="help">Help</a></li>
+					<li><a href="about">About</a></li>
 				</ul>
 			</td>
 			<td>
 				<ul>
-					<li><a href="viewuser.php">Users</a></li>
-					<li><a href="login.php?mode=login">Login</a> or <a href="login.php?mode=register">Register</a></li>
-					<li><a href="upload.php">Upload a new app or lib</a></li>
+					<li><a href="viewuser">Users</a></li>
+					<li><a href="login?mode=login">Login</a> or <a href="login.php?mode=register">Register</a></li>
+					<li><a href="upload">Upload a new app or lib</a></li>
 				</ul>
 			</td>
 			<td>

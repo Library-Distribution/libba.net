@@ -1,7 +1,7 @@
 <?php
 	if (!isset($_SERVER["HTTPS"]) || !$_SERVER["HTTPS"])
 	{
-		header("Location: https://ahk4.net/user/maulesel/upload.php");
+		header("Location: https://ahk4.net/user/maulesel/upload");
 	}
 	if ($_POST && $_FILES)
 	{
