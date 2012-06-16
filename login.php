@@ -61,8 +61,8 @@
 				{
 					if (isset($_POST["name"]) && isset($_POST["password"]))
 					{
-						require("db.php");
-						$db_connection = db_ensureConnection();
+						require_once("api/db.php");
+						$db_connection = db_ensure_connection();
 
 						$name = $_POST["name"]; $pw = hash("sha256", $_POST["password"]);
 						$escaped_name = mysql_real_escape_string($name, $db_connection);
