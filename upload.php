@@ -1,5 +1,5 @@
 <?php
-	if (!isset($_SERVER["HTTPS"]) || !$_SERVER["HTTPS"])
+	if ((!isset($_SERVER["HTTPS"]) || !$_SERVER["HTTPS"]) && $_SERVER["SERVER_ADDR"] != "127.0.0.1")
 	{
 		header("Location: https://ahk4.net/user/maulesel/upload");
 	}
