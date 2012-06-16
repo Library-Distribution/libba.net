@@ -17,7 +17,7 @@
 				# connect to database server
 				$db_connection = db_ensure_connection();
 
-				$db_query = "SELECT name, mail, pw, privileges, joined FROM $db_table_users WHERE name = '" . mysql_real_escape_string($_GET["name"], $db_connection) . "'";
+				$db_query = "SELECT name, HEX(id), mail, pw, privileges, joined FROM $db_table_users WHERE name = '" . mysql_real_escape_string($_GET["name"], $db_connection) . "'";
 				$db_result = mysql_query($db_query, $db_connection);
 				if (!$db_result)
 				{
@@ -66,6 +66,7 @@
 						$user["mail"] = md5($user["mail"]);
 					}
 					unset($user["pw"]);
+					$user["id"] = $user["HEX(id)"]; unset($user["HEX(id)"]);
 
 					if ($content_type == "application/json")
 					{
@@ -73,7 +74,7 @@
 					}
 					else if ($content_type == "text/xml" || $content_type == "application/xml")
 					{
-						$content = "<ald:user xmlns:ald=\"ald://api/users/describe/schema/2012\" ald:name=\"{$user["name"]}\" ald:mail=\"{$user["mail"]}\" ald:joined=\"{$user["joined"]}\" ald:privileges=\"{$user["privileges"]}\"/>";
+						$content = "<ald:user xmlns:ald=\"ald://api/users/describe/schema/2012\" ald:name=\"{$user["name"]}\" ald:mail=\"{$user["mail"]}\" ald:joined=\"{$user["joined"]}\" ald:privileges=\"{$user["privileges"]}\" ald:id=\"{$user["id"]}\"/>";
 					}
 
 					header("HTTP/1.1 200 " . HttpException::getStatusMessage(200));
