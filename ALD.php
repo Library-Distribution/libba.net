@@ -17,17 +17,17 @@
 
 		public function getUser( $name, $request_user = NULL, $request_password = NULL )
 		{
-			return json_decode( $this->_Request( CURLOPT_HTTPGET, "/users/describe/name/$name", array("Accept: application/json"), NULL, $request_user, $request_password) );
+			return json_decode( $this->_Request( CURLOPT_HTTPGET, "/users/describe/$name", array("Accept: application/json"), NULL, $request_user, $request_password) );
 		}
 
 		public function getItemById( $id )
 		{
-			return json_decode( $this->_Request( CURLOPT_HTTPGET, "/items/describe/id/$id", array("Accept: application/json") ) );
+			return json_decode( $this->_Request( CURLOPT_HTTPGET, "/items/describe/$id", array("Accept: application/json") ) );
 		}
 
 		public function getItem($name, $version)
 		{
-			return json_decode( $this->_Request( CURLOPT_HTTPGET, "/items/describe/name/$name/$version", array("Accept: application/json") ) );
+			return json_decode( $this->_Request( CURLOPT_HTTPGET, "/items/describe/$name/$version", array("Accept: application/json") ) );
 		}
 
 		public function getItemList($start = 0, $count = "all", $type = NULL, $user = NULL, $name = NULL, $tags = NULL, $latest = false)
