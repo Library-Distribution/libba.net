@@ -31,7 +31,7 @@
 			}
 
 			# query for data:
-			$db_query = "SELECT name FROM $db_table_users $db_limit";
+			$db_query = "SELECT name, HEX(id) FROM $db_table_users $db_limit";
 			$db_result = mysql_query($db_query, $db_connection);
 			if (!$db_result)
 			{
@@ -42,7 +42,8 @@
 			$data = array();
 			while ($item = mysql_fetch_assoc($db_result))
 			{
-				$data[] = $item["name"];
+				$item["id"] = $item["HEX(id)"]; unset($item["HEX(id)"]);
+				$data[] = $item;
 			}
 
 			# return content-type specific data
@@ -55,7 +56,7 @@
 				$content = "<ald:user-list xmlns:ald=\"ald://api/users/list/schema/2012\">";
 				foreach ($data AS $item)
 				{
-					$content .= "<ald:user ald:name=\"$item\" />";
+					$content .= "<ald:user ald:name=\"{$item["name"]}\" ald:id=\"{$item["id"]}\"/>";
 				}
 				$content .= "</ald:user-list>";
 			}
