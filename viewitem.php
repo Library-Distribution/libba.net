@@ -1,35 +1,35 @@
+<?php
+	if (!isset($_GET["id"]))
+	{
+		header("Location: index");
+		exit;
+	}
+
+	require("db.php");
+	require("users.php");
+
+	$db_connection = db_ensureConnection();
+
+	$page_title = "";
+	$id = mysql_real_escape_string($_GET["id"], $db_connection);
+
+	$db_query = "SELECT name, file, version, HEX(user), description, uploaded, tags FROM $db_table_main WHERE id = UNHEX('$id') LIMIT 1";
+	$db_result = mysql_query($db_query, $db_connection)
+	or die ("ERROR: Failed to read data from database.\n".mysql_error());
+
+	while ($db_entry = mysql_fetch_assoc($db_result))
+	{
+		$item = $db_entry;
+		$page_title = "\"{$db_entry['name']}\" (v{$db_entry['version']})";
+	}
+	if (!isset($item))
+	{
+		die ("Could not find this item!");
+	}
+	$user = user_get_nick($item['HEX(user)']);
+?>
 <!DOCTYPE html>
 <html>
-	<?php
-		require("db.php");
-		require("users.php");
-		$db_connection = db_ensureConnection();
-
-		$page_title = "";
-		if (isset($_GET["id"]))
-		{
-			$id = mysql_real_escape_string($_GET["id"], $db_connection);
-		}
-		else
-		{
-			header("Location: index.php");
-		}
-		
-		$db_query = "SELECT name, file, version, HEX(user), description, uploaded, tags FROM $db_table_main WHERE id = UNHEX('$id') LIMIT 1";
-		$db_result = mysql_query($db_query, $db_connection)
-		or die ("ERROR: Failed to read data from database.\n".mysql_error());
-
-		while ($db_entry = mysql_fetch_assoc($db_result))
-		{
-			$item = $db_entry;
-			$page_title = "\"{$db_entry['name']}\" (v{$db_entry['version']})";
-		}
-		if (!isset($item))
-		{
-			die ("Could not find this item!");
-		}
-		$user = user_get_nick($item['HEX(user)']);
-	?>
 	<head>
 		<link rel="stylesheet" href="default.css"/>
 		<title><?php echo $page_title; ?></title>
@@ -41,7 +41,7 @@
 			<table>
 				<tr>
 					<td>Uploaded by:</td>
-					<td><a href="viewuser.php?user=<?php echo $user; ?>"><?php echo $user; ?></a></td>
+					<td><a href="viewuser?user=<?php echo $user; ?>"><?php echo $user; ?></a></td>
 				</tr>
 				<tr>
 					<td>Uploaded:</td>
@@ -53,7 +53,7 @@
 						<?php
 							foreach (explode(";", $item['tags']) AS $tag)
 							{
-								echo "<a href='index.php?tag=$tag'>$tag</a> ";
+								echo "<a href='index?tag=$tag'>$tag</a> ";
 							}
 						?>
 					</td>

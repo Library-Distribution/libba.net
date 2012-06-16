@@ -1,23 +1,27 @@
-<!DOCTYPE html>
-<html>
-	<?php
-		$page_title = "View users";
-		if (isset($_GET["user"]))
-		{
-			$user = $_GET["user"];
-			$page_title = "User: $user";
-		}
+<?php
+	$page_title = "View users";
+	if (isset($_GET["user"]))
+	{
+		$user = $_GET["user"];
+		$page_title = "User: $user";
+	}
+	else
+	{
 		$page_index = 0;
 		if (isset($_GET["page"]))
 		{
 			$page_index = $_GET["page"];
 		}
+
 		$page_itemcount = 15;
 		if (isset($_GET["items"]))
 		{
 			$page_itemcount = $_GET["items"];
 		}
-	?>
+	}
+?>
+<!DOCTYPE html>
+<html>
 	<head>
 		<link rel="stylesheet" href="default.css"/>
 		<title><?php echo $page_title; ?></title>
@@ -29,10 +33,11 @@
 			<?php
 				require("db.php");
 				$db_connection = db_ensureConnection();
-				$page_itemcount = mysql_real_escape_string($page_itemcount, $db_connection);
 
 				if (!isset($user))
 				{
+					$page_itemcount = mysql_real_escape_string($page_itemcount, $db_connection);
+
 					# list of users
 					$start_index = $page_index * $page_itemcount;
 					$db_query = "SELECT name FROM $db_table_users ORDER BY name LIMIT $start_index,$page_itemcount";
@@ -84,7 +89,7 @@
 						if (!in_array($db_entry["name"], $uploaded))
 						{
 							$uploaded[] = $db_entry["name"];
-							echo "<li><a href='viewitem.php?id={$db_entry["HEX(id)"]}'>{$db_entry["name"]} (v{$db_entry["version"]})</a></li>";						}
+							echo "<li><a href='viewitem?id={$db_entry["HEX(id)"]}'>{$db_entry["name"]} (v{$db_entry["version"]})</a></li>";						}
 					}
 					echo "</ul>";
 
@@ -99,7 +104,7 @@
 						if (!in_array($db_entry["name"], $uploaded))
 						{
 							$uploaded[] = $db_entry["name"];
-							echo "<li><a href='viewitem.php?id={$db_entry["HEX(id)"]}'>{$db_entry["name"]} (v{$db_entry["version"]})</a></li>";
+							echo "<li><a href='viewitem?id={$db_entry["HEX(id)"]}'>{$db_entry["name"]} (v{$db_entry["version"]})</a></li>";
 						}
 					}
 					echo "</ul>";
