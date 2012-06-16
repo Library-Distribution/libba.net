@@ -104,7 +104,7 @@
 						}
 						echo "<div class='letter-container' id='items$current_letter'><span class='letter-item'>$current_letter</span><ul>";
 					}
-					echo "<li><a class='item' name='item$item->id' href='viewitem.php?id=$item->id'>$item->name</a> (v$item->version) by <a class='userlink' href='viewuser.php?user=$item->user'>$item->user</a></li>";
+					echo "<li><a class='item' name='item$item->id' href='viewitem?id=$item->id'>$item->name</a> (v$item->version) by <a class='userlink' href='viewuser?user=$item->user'>$item->user</a></li>";
 					$last_letter = $current_letter;
 				}
 				if (count($items) > 0)
