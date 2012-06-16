@@ -24,7 +24,7 @@
 			if (isset($_GET["user"]))
 			{
 				$db_cond .= ($db_cond) ? " AND" : " WHERE";
-				$db_cond .= " user = '" . mysql_real_escape_string($_GET["user"], $db_connection) . "'";
+				$db_cond .= " user = UNHEX('" . user_get_id_by_name($_GET["user"]) . "')";
 			}
 			if (isset($_GET["name"]))
 			{
