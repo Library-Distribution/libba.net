@@ -1,4 +1,30 @@
 <?php
+	# This function was taken from http://www.the-art-of-web.com/php/sortarray/ (2012/06/06) and has been created by Thomas Heuer (Germany). Thanks a lot for this!
+	#It has been modified by me (maul.esel) to use objects instead of arrays and to allow both ascending and descending sorting.
+	function sortArray($data, $field)
+	{
+		if (!is_array($field))
+		{
+			$field = array($field => false);
+		}
+		usort($data, function($a, $b) use($field)
+		{
+			$retval = 0;
+			foreach($field as $fieldname => $direction)
+			{
+				if($retval == 0)
+				{
+					if (!$direction)
+						$retval = strnatcasecmp($a->$fieldname, $b->$fieldname);
+					else
+						$retval = strnatcasecmp($b->$fieldname, $a->$fieldname);
+				}
+			}
+			return $retval;
+		});
+		return $data;
+	}
+
 	$page_title = "View users";
 	if (isset($_GET["user"]))
 	{
@@ -31,83 +57,101 @@
 		<h1 id="page-title"><?php echo $page_title; ?></h1>
 		<div id="page-content">
 			<?php
-				require("db.php");
-				$db_connection = db_ensureConnection();
+				require_once("ALD.php");
+				$api = new ALD(!empty($_SERVER["HTTPS"]) ? "https://{$_SERVER["SERVER_NAME"]}/user/maulesel/api" : "http://{$_SERVER["SERVER_NAME"]}/api");
 
-				if (!isset($user))
+				if (!isset($user)) # output a list of users
 				{
-					$page_itemcount = mysql_real_escape_string($page_itemcount, $db_connection);
-
-					# list of users
 					$start_index = $page_index * $page_itemcount;
-					$db_query = "SELECT name FROM $db_table_users ORDER BY name LIMIT $start_index,$page_itemcount";
-					$db_result = mysql_query($db_query, $db_connection)
-					or die ("ERROR: Failed to query for users.\n".mysql_error());
-
-					echo "<ul>";
-					while ($db_entry = mysql_fetch_object($db_result))
+					try
 					{
-						echo "<li><a href='?user=$db_entry->name'>$db_entry->name</a></li>";
+						$users = $api->getUserList($start_index, $page_itemcount + 1);
 					}
-					echo "</ul>";
-
-					if ($page_index > 0)
+					catch (HttpException $e)
 					{
-						echo "<a class='next-previous' id='prev' href='?items=$page_itemcount&amp;page=".($page_index - 1)."'>Previous page</a>";
+						echo $e->getMessage();
 					}
 
-					# check if there are more users
-					$db_query = "SELECT name FROM $db_table_users ORDER BY name LIMIT ".($start_index + $page_itemcount).",1";
-					$db_result = mysql_query($db_query, $db_connection)
-					or die ("ERROR: Could not query for more items.\n".mysql_error());
-					if (mysql_num_rows($db_result) > 0) # if so, show the "next" link
+					if (isset($users))
 					{
-						echo "<a class='next-previous' id='next' href='?items=$page_itemcount&amp;page=".($page_index + 1)."'>Next page</a>";
-					}
-				}
-				else
-				{
-					# user profile
-					$user = mysql_real_escape_string($user, $db_connection);
+						sortArray($users, "name");
 
-					$db_query = "SELECT joined, mail, HEX(id) FROM $db_table_users WHERE name = '$user' LIMIT 1";
-					$db_result = mysql_query($db_query, $db_connection)
-					or die ("ERROR: could not retrieve joined date.\n".mysql_error());
-
-					$user_entry = mysql_fetch_assoc($db_result);
-					echo "<div id=\"user-gravatar\"><img width=\"200\" height=\"200\" src=\"http://gravatar.com/avatar/" . md5(strtolower(trim($user_entry["mail"]))) . "?s=200&d=mm\"/></div>";
-					echo "Joined: <span class='joined-date'>".($user_entry['joined'])."</span>";
-
-					$db_query = "SELECT name, HEX(id), version FROM $db_table_main WHERE user = UNHEX('{$user_entry['HEX(id)']}') AND type = 'lib' ORDER BY name, version DESC";
-					$db_result = mysql_query($db_query, $db_connection)
-					or die ("ERROR: failed to query libraries.\n".mysql_error());
-					$uploaded = array();
-
-					echo "<h2>Libraries uploaded (".(mysql_num_rows($db_result)).") :</h2><ul>";
-					while ($db_entry = mysql_fetch_assoc($db_result))
-					{
-						if (!in_array($db_entry["name"], $uploaded))
+						if (count($users) > 0)
 						{
-							$uploaded[] = $db_entry["name"];
-							echo "<li><a href='viewitem?id={$db_entry["HEX(id)"]}'>{$db_entry["name"]} (v{$db_entry["version"]})</a></li>";						}
-					}
-					echo "</ul>";
+							echo "<ul>";
 
-					$db_query = "SELECT name, HEX(id), version FROM $db_table_main WHERE user = UNHEX('{$user_entry['HEX(id)']}') AND type = 'app' ORDER BY name, version DESC";
-					$db_result = mysql_query($db_query, $db_connection)
-					or die ("ERROR: failed to query libraries.\n".mysql_error());
-					$uploaded = array();
+							$i = 0;
+							foreach ($users AS $user)
+							{
+								$i++;
+								if ($i > $page_itemcount)
+								{
+									break;
+								}
+								echo "<li><a href='?user=$user->name'>$user->name</a></li>";
+							}
 
-					echo "<h2>Applications uploaded (".(mysql_num_rows($db_result)).") :</h2><ul>";
-					while ($db_entry = mysql_fetch_assoc($db_result))
-					{
-						if (!in_array($db_entry["name"], $uploaded))
+							echo "</ul>";
+						}
+						else
 						{
-							$uploaded[] = $db_entry["name"];
-							echo "<li><a href='viewitem?id={$db_entry["HEX(id)"]}'>{$db_entry["name"]} (v{$db_entry["version"]})</a></li>";
+							echo "No more users found";
+						}
+
+						if ($page_index > 0)
+						{
+							echo "<a class='next-previous' id='prev' href='?items=$page_itemcount&amp;page=".($page_index - 1)."'>Previous page</a>";
+						}
+
+						# check if there are more users
+						if (count($users) > $page_itemcount)
+						{
+							echo "<a class='next-previous' id='next' href='?items=$page_itemcount&amp;page=".($page_index + 1)."'>Next page</a>";
 						}
 					}
-					echo "</ul>";
+				}
+				else # output a user profile
+				{
+					$user_data = $api->getUser($user);
+
+					echo "<div id=\"user-gravatar\"><img width=\"200\" height=\"200\" src=\"http://gravatar.com/avatar/{$user_data->mail}?s=200&d=mm\"/></div>";
+					echo "Joined: <span class='joined-date'>$user_data->joined</span>";
+
+					$items = $api->getItemList(0, "all", "lib", $user);
+					$items = sortArray($items, array("name" => false, "version" => true));
+
+					if ($item_count = count($items))
+					{
+						echo "<h2>Libraries uploaded ($item_count) :</h2><ul>";
+						$uploaded = array();
+						foreach ($items AS $item)
+						{
+							if (!in_array($item->name, $uploaded))
+							{
+								$uploaded[] = $item->name;
+								echo "<li><a href='viewitem?id={$item->id}'>{$item->name} (v{$item->version})</a></li>";
+							}
+						}
+						echo "</ul>";
+					}
+
+					$items = $api->getItemList(0, "all", "app", $user);
+					$items = sortArray($items, array("name" => false, "version" => true));
+
+					if ($item_count = count($items))
+					{
+						echo "<h2>Applications uploaded ($item_count) :</h2><ul>";
+						$uploaded = array();
+						foreach ($items AS $item)
+						{
+							if (!in_array($item->name, $uploaded))
+							{
+								$uploaded[] = $item->name;
+								echo "<li><a href='viewitem?id={$item->id}'>{$item->name} (v{$item->version})</a></li>";
+							}
+						}
+						echo "</ul>";
+					}
 				}
 			?>
 		</div>
