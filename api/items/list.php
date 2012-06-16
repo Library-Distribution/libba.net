@@ -59,7 +59,7 @@
 			}
 
 			# query data
-			$db_query = "SELECT name, HEX(id), version FROM $db_table_main $db_cond $db_limit";
+			$db_query = "SELECT name, HEX(id), version, HEX(user) FROM $db_table_main $db_cond $db_limit";
 			$db_result = mysql_query($db_query, $db_connection);
 			if (!$db_result)
 			{
@@ -68,6 +68,7 @@
 
 			# parse data to array
 			$data = array();
+			$users = array();
 			if ($latest_only)
 			{
 				$versions = array();
@@ -85,6 +86,25 @@
 
 				$item["id"] = $item["HEX(id)"];
 				unset($item["HEX(id)"]);
+
+				$item["userID"] = $item["HEX(user)"];
+				if (!isset($users[$item["userID"]]))
+				{
+					$db_query = "SELECT nick FROM $db_table_users WHERE id = UNHEX('" . $item["userID"] . "')";
+					$db_result2 = mysql_query($db_query, $db_connection);
+					if (!$db_result2)
+					{
+						throw new HttpException(500, NULL, mysql_error());
+					}
+					if (mysql_num_rows($db_result2) != 1)
+					{
+						throw new HttpException(404);
+					}
+					$users[$item["userID"]] = mysql_fetch_object($db_result2)->nick;
+				}
+				$item["user"] = $users[$item["userID"]];
+				unset($item["HEX(user)"]);
+
 				$data[] = $item;
 			}
 
@@ -98,7 +118,7 @@
 				$content = "<ald:item-list xmlns:ald=\"ald://api/items/list/schema/2012\">";
 				foreach ($data AS $item)
 				{
-					$content .= "<ald:item ald:name=\"{$item['name']}\" ald:version=\"{$item['version']}\" ald:id=\"{$item['id']}\"/>";
+					$content .= "<ald:item ald:name=\"{$item['name']}\" ald:version=\"{$item['version']}\" ald:id=\"{$item['id']}\" ald:user-id=\"{$item['userID']}\" ald:user=\"{$item['user']}\"/>";
 				}
 				$content .= "</ald:item-list>";
 			}

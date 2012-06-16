@@ -16,7 +16,9 @@
 					<xsd:complexType>
 						<xsd:attribute use="required" type="xsd:string" name="name"/>
 						<xsd:attribute use="required" type="xsd:string" name="version"/>
+						<xsd:attribute use="required" type="xsd:string" name="user"/>
 						<xsd:attribute use="required" type="ald:guid-type" name="id"/>
+						<xsd:attribute use="required" type="ald:guid-type" name="user-id"/>
 					</xsd:complexType>
 				</xsd:element>
 			</xsd:sequence>
