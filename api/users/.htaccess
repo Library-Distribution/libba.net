@@ -1,0 +1,6 @@
+RewriteEngine On
+
+RewriteRule ^list$ list.php [L]
+
+RewriteRule ^describe/id/([0-9a-zA-Z]+)$ describe.php?id=$1 [L]
+RewriteRule ^describe/name/(.+)$ describe.php?name=$1 [L]

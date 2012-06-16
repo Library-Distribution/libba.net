@@ -1,0 +1,10 @@
+RewriteEngine On
+
+RewriteRule ^add$ add.php [L]
+RewriteRule ^list$ list.php [L]
+
+RewriteRule ^describe/id/([0-9a-zA-Z]+)$ describe.php?id=$1 [L]
+RewriteRule ^describe/name/(.+)/(.+)$ describe.php?name=$1&version=$2 [L]
+
+RewriteRule ^remove/id/([0-9a-zA-Z]+)$ remove.php?id=$1 [L]
+RewriteRule ^remove/name/(.+)/(.+)$ remove.php?name=$1&version=$2 [L]
