@@ -16,7 +16,7 @@
 	}
 	catch (HttpException $e)
 	{
-		die ("Could not find this item!"); # TODO: more info
+		die ("Failed to retrieve information about this item.<p>{$e->getMessage()}</p>");
 	}
 	$page_title = "\"$item->name\" (v$item->version)";
 ?>
