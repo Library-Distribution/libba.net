@@ -1,0 +1,21 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+			xmlns:ald="ald://api/users/describe/schema/2012"
+			attributeFormDefault="qualified" elementFormDefault="qualified"
+			targetNamespace="ald://api/users/describe/schema/2012">
+
+	<xsd:simpleType name="guid-type"> <!-- defines the type of a GUID -->
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[a-fA-F0-9]{32}"/> <!-- update: do not use any format, just the raw number -->
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:element name="user">
+		<xsd:complexType>
+			<xsd:attribute use="required" name="name" type="xsd:string"/>
+			<xsd:attribute use="required" name="mail" type="xsd:string"/>
+			<xsd:attribute use="required" name="joined" type="xsd:string"/>
+			<xsd:attribute use="required" name="privileges" type="xsd:integer"/>
+			<xsd:attribute use="required" name="id" type="ald:guid-type"/>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>
