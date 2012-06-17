@@ -71,7 +71,7 @@
 				{
 					# if so, check if it's the same user as now
 					$db_entry = mysql_fetch_assoc($db_result);
-					if (user_get_nick($db_entry["HEX(user)"]) != $user)
+					if (user_get_name($db_entry["HEX(user)"]) != $user)
 					{
 						throw new HttpException(403, NULL, "The user '$user' is not allowed to update the library or app '$pack_name'");
 					}
