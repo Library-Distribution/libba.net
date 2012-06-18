@@ -23,6 +23,18 @@
 		</xsd:restriction>
 	</xsd:simpleType>
 
+	<xsd:simpleType name="internetURL">
+		<xsd:restriction base="xsd:anyURI">
+			<xsd:pattern value="^https?:\/\/"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="schemaURL">
+		<xsd:restriction base="xsd:anyURI">
+			<xsd:pattern value="^(https?|ald):\/\/"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
 	<xsd:element name="version"> <!-- defines a version of a dependency or requirement -->
 		<xsd:complexType>
 			<xsd:sequence>
@@ -122,7 +134,7 @@
 
 			<xsd:attribute use="required" type="xsd:string" name="name"/> <!-- a short name for what the link points to -->
 			<xsd:attribute use="required" type="xsd:string" name="description"/> <!-- a description of what the link points to -->
-			<xsd:attribute use="required" type="xsd:anyURI" name="href"/> <!-- the URL the link points to -->
+			<xsd:attribute use="required" type="ald:internetURL" name="href"/> <!-- the URL the link points to -->
 			<xsd:anyAttribute/>
 		</xsd:complexType>
 	</xsd:element>
@@ -134,7 +146,7 @@
 			</xsd:sequence>
 
 			<xsd:attribute use="required" type="xsd:string" name="namespace"/> <!-- a string identifying the client using this or the usage for the included data -->
-			<xsd:attribute use="optional" type="xsd:string" name="schema"/> <!-- an optional schema URL which can be used for checking the content -->
+			<xsd:attribute use="optional" type="ald:schemaURL" name="schema"/> <!-- an optional schema URL which can be used for checking the content -->
 			<xsd:anyAttribute/>
 		</xsd:complexType>
 	</xsd:element>
