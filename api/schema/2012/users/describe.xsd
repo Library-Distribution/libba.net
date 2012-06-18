@@ -14,7 +14,7 @@
 			<xsd:attribute use="required" name="name" type="xsd:string"/>
 			<xsd:attribute use="required" name="mail" type="xsd:string"/>
 			<xsd:attribute use="required" name="joined" type="xsd:string"/>
-			<xsd:attribute use="required" name="privileges" type="xsd:integer"/>
+			<xsd:attribute use="required" name="privileges" type="xsd:nonNegativeInteger"/>
 			<xsd:attribute use="required" name="id" type="ald:guid-type"/>
 		</xsd:complexType>
 	</xsd:element>
