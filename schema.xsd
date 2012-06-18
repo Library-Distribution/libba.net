@@ -23,8 +23,45 @@
 		</xsd:restriction>
 	</xsd:simpleType>
 
+	<xsd:element name="version"> <!-- defines a version of a dependency or requirement -->
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ald:customdata" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+
+			<xsd:attribute use="required" type="xsd:string" name="value"/> <!-- carries the version number -->
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:group name="version-switch"> <!-- defines several ways to validate a version -->
+		<xsd:choice>
+			<xsd:element ref="ald:version"/> <!-- the only accepted version number -->
+			<xsd:element name="version-list"> <!-- a list of accepted version numbers -->
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element ref="ald:version" minOccurs="1" maxOccurs="unbounded"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="version-range"> <!-- a range of accepted version numbers -->
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element ref="ald:customdata" minOccurs="0" maxOccurs="unbounded"/>
+					</xsd:sequence>
+
+					<xsd:attribute use="required" type="xsd:string" name="min-version"/> <!-- the lower bound of a range of accepted version numbers for the lib. -->
+					<xsd:attribute use="required" type="xsd:string" name="max-version"/> <!-- the upper bound of a range of accepted version numbers for the lib. -->
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:choice>
+	</xsd:group>
+
 	<xsd:element name="author"> <!-- defines data of an author who wrote this lib or app -->
 		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ald:customdata" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+
 			<xsd:attribute use="required" type="xsd:string" name="name"/> <!-- the name to identify the author. Can be same as user-name -->
 			<xsd:attribute use="optional" type="xsd:string" name="user-name"/> <!-- the AHK forums user name -->
 			<xsd:attribute use="optional" type="xsd:string" name="homepage"/> <!-- an URL to a homepage of the author -->
@@ -35,34 +72,32 @@
 
 	<xsd:element name="dependency"> <!-- defines a library required for this lib or app to work -->
 		<xsd:complexType>
-			<xsd:sequence> <!-- a list of accepted version numbers for the lib -->
-				<xsd:element name="version" minOccurs="0" maxOccurs="unbounded" type="xsd:string"/> <!-- the version number is carried as element value -->
+			<xsd:sequence>
+				<xsd:group ref="ald:version-switch" minOccurs="1" maxOccurs="1"/> <!-- defines the version(s) of this dependency that are accepted -->
 			</xsd:sequence>
 
 			<xsd:attribute use="required" type="xsd:string" name="name"/> <!-- the name of the required lib -->
-			<xsd:attribute use="optional" type="xsd:string" name="version"/> <!-- one specific version the lib must have -->
-			<xsd:attribute use="optional" type="xsd:string" name="min-version"/> <!-- the lower bound of a range of accepted version numbers for the lib. 0 if omitted -->
-			<xsd:attribute use="optional" type="xsd:string" name="max-version"/> <!-- the upper bound of a range of accepted version numbers for the lib. unbounded if omitted -->
 			<xsd:anyAttribute/>
 		</xsd:complexType>
 	</xsd:element>
 
 	<xsd:element name="requirement"> <!-- defines an additional requirement the lib has -->
 		<xsd:complexType>
-			<xsd:sequence> <!-- a list of accepted values for the requirement -->
-				<xsd:element name="value" minOccurs="0" maxOccurs="unbounded" type="xsd:string"/>
+			<xsd:sequence>
+				<xsd:group ref="ald:version-switch" minOccurs="1" maxOccurs="1"/> <!-- defines the version(s) of this requirement that are accepted -->
 			</xsd:sequence>
 
 			<xsd:attribute use="required" name="type" type="ald:requirement-type"/> <!-- defines the type of requirement -->
-			<xsd:attribute use="optional" type="xsd:string" name="value"/> <!-- defines a single accepted value for the requirement -->
-			<xsd:attribute use="optional" type="xsd:string" name="min-value"/> <!-- defines the lower bound for a range of accepted values. 0 if omitted -->
-			<xsd:attribute use="optional" type="xsd:string" name="max-value"/> <!-- defines the upper bound for a range of accepted values. unbounded if omitted -->
 			<xsd:anyAttribute/>
 		</xsd:complexType>
 	</xsd:element>
 
 	<xsd:element name="file"> <!-- defines a file being included -->
 		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ald:customdata" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+
 			<xsd:attribute name="path" use="required" type="xsd:string"/> <!-- the path to the file -->
 			<xsd:anyAttribute/>
 		</xsd:complexType>
@@ -70,6 +105,10 @@
 
 	<xsd:element name="tag"> <!-- defines a tag for the package -->
 		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ald:customdata" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+
 			<xsd:attribute name="name" use="required" type="xsd:string"/> <!-- the name of the tag -->
 			<xsd:anyAttribute/>
 		</xsd:complexType>
@@ -77,9 +116,25 @@
 
 	<xsd:element name="link"> <!-- defines a link related to the package -->
 		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ald:customdata" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+
 			<xsd:attribute use="required" type="xsd:string" name="name"/> <!-- a short name for what the link points to -->
 			<xsd:attribute use="required" type="xsd:string" name="description"/> <!-- a description of what the link points to -->
 			<xsd:attribute use="required" type="xsd:anyURI" name="href"/> <!-- the URL the link points to -->
+			<xsd:anyAttribute/>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="customdata"> <!-- allows users to include custom data in the package which can be read by ALD clients -->
+		<xsd:complexType mixed="true">
+			<xsd:sequence>
+				<xsd:any minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+
+			<xsd:attribute use="required" type="xsd:string" name="namespace"/> <!-- a string identifying the client using this or the usage for the included data -->
+			<xsd:attribute use="optional" type="xsd:string" name="schema"/> <!-- an optional schema URL which can be used for checking the content -->
 			<xsd:anyAttribute/>
 		</xsd:complexType>
 	</xsd:element>
