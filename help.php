@@ -35,7 +35,7 @@
 				<p>
 					Until marmoreal is really capable of doing so, you must create the package yourself.
 					It's only a ZIP file containing the required files plus a XML file called <cite>definition.ald</cite>.
-					It must be valid according to <a href="schema.xsd">this XSD schema</a>.
+					It must be valid according to <a href="schema/2012/package.xsd">this XSD schema</a>.
 				</p>
 			</div>
 			<h2 class="question">?</h2>
