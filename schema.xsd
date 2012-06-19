@@ -142,7 +142,7 @@
 	<xsd:element name="customdata"> <!-- allows users to include custom data in the package which can be read by ALD clients -->
 		<xsd:complexType mixed="true">
 			<xsd:sequence>
-				<xsd:any minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:any minOccurs="0" maxOccurs="unbounded" processContents="lax"/>
 			</xsd:sequence>
 
 			<xsd:attribute use="required" type="xsd:string" name="namespace"/> <!-- a string identifying the client using this or the usage for the included data -->
