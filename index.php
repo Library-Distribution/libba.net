@@ -73,6 +73,7 @@
 					$page_index = 0;
 				}
 				require_once("ALD.php");
+				require_once("sortArray.php");
 
 				$item_type = ($mode == "apps" ? "app" : ($mode == "libs" ? "lib" : ""));
 				$start_index = $page_index * $page_itemcount;
@@ -83,6 +84,7 @@
 
 				$last_letter = "";
 				$i = 0;
+				$items = sortArray($items, "name");
 				foreach ($items as $item)
 				{
 					$i++;
