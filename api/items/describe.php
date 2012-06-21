@@ -94,6 +94,28 @@
 						}
 						$content .= "</ald:authors>";
 					}
+					if (isset($output["dependencies"]) && is_array($output["dependencies"]))
+					{
+						$content .= "<ald:dependencies>";
+						foreach ($output["dependencies"] AS $dependency)
+						{
+							$content .= "<ald:dependency ald:name=\"{$dependency["name"]}\">"
+										. (isset($dependency["version"]) ? "<ald:version ald:value=\"{$dependency["version"]}\"/>"
+										: (isset($dependency["version-range"]) ? "<ald:version-range ald:min-value=\"{$dependency["version-range"]["min"]}\" ald:max-value=\"{$dependency["version-range"]["max"]}\"/>"
+										: ""));
+							if (isset($dependency["version-list"]) && is_array($dependency["version-list"]))
+							{
+								$content .= "<ald:version-list>";
+								foreach ($dependency["version-list"] AS $version)
+								{
+									$content .= "<ald:version ald:value=\"$version\"/>";
+								}
+								$content .= "</ald:version-list>";
+							}
+							$content .=  "</ald:dependency>";
+						}
+						$content .= "</ald:dependencies>";
+					}
 					if (isset($output["tags"]) && is_array($output["tags"]))
 					{
 						$content .= "<ald:tags>";
