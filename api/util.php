@@ -164,24 +164,7 @@
 				$dependency = array();
 
 				$dependency["name"] = get_first_attribute($xp, $dep_node, "@ald:name");
-				if ($list = $xp->query("ald:version-list", $dep_node)->item(0))
-				{
-					$dependency["version-list"] = array();
-					foreach ($xp->query("ald:version/@ald:value", $range) AS $version)
-					{
-						$dependency["version-list"][] = $version->nodeValue;
-					}
-				}
-				else if ($range = $xp->query("ald:version-range", $dep_node)->item(0))
-				{
-					$dependency["version-range"] = array();
-					$temp = get_first_attribute($xp, $range, "@ald:min-version") AND $dependency["version-range"]["min"] = $temp;
-					$temp = get_first_attribute($xp, $range, "@ald:max-version") AND $dependency["version-range"]["max"] = $temp;
-				}
-				else
-				{
-					$dependency["version"] = $xp->query("ald:version/@ald:value", $dep_node)->item(0)->nodeValue;
-				}
+				read_version_switch($xp, $dep_node, $dependency);
 
 				$output["dependencies"][] = $dependency;
 			}
@@ -219,6 +202,28 @@
 			return $node->nodeValue;
 		}
 		return NULL;
+	}
+
+	function read_version_switch($xp, $node, &$output)
+	{
+		if ($list = $xp->query("ald:version-list", $node)->item(0))
+		{
+			$output["version-list"] = array();
+			foreach ($xp->query("ald:version/@ald:value", $range) AS $version)
+			{
+				$output["version-list"][] = $version->nodeValue;
+			}
+		}
+		else if ($range = $xp->query("ald:version-range", $node)->item(0))
+		{
+			$output["version-range"] = array();
+			$temp = get_first_attribute($xp, $range, "@ald:min-version") AND $output["version-range"]["min"] = $temp;
+			$temp = get_first_attribute($xp, $range, "@ald:max-version") AND $output["version-range"]["max"] = $temp;
+		}
+		else
+		{
+			$output["version"] = $xp->query("ald:version/@ald:value", $node)->item(0)->nodeValue;
+		}
 	}
 
 	function package_check_for_files($archive, $file_list, &$error_file = NULL)
