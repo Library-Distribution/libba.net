@@ -104,7 +104,7 @@
 		$doc = new DOMDocument();
 		@$doc->loadXML($archive->getFromName("definition.ald"));
 
-		if (!@$doc->schemaValidate(dirname(__DIR__) . "/schema.xsd")) # $_SERVER["DOCUMENT_ROOT"] . DIRECTORY_SEPARATOR . "schema.xsd")) # temporary disabled because of ahk4.net config issue
+		if (!@$doc->schemaValidate(dirname(__DIR__) . "/schema/2012/package.xsd")) # $_SERVER["DOCUMENT_ROOT"] . DIRECTORY_SEPARATOR . "schema.xsd")) # temporary disabled because of ahk4.net config issue
 		{
 			throw new HttpException(400, NULL, "Package definition is not valid!");
 		}
