@@ -84,7 +84,7 @@
 		static $all_data = NULL;
 		if ($all_data == NULL)
 		{
-			$all_data = array("id", "name", "version", "type", "description", "authors", "tags");
+			$all_data = array("id", "name", "version", "type", "description", "authors", "dependencies", "tags");
 		}
 
 		if ($include_data == NULL)
@@ -156,6 +156,38 @@
 				$output["authors"][] = $author;
 			}
 		}
+		if (in_array("dependencies", $include_data))
+		{
+			$output["dependencies"] = array();
+			foreach ($xp->query("/*/ald:dependencies/ald:dependency") AS $dep_node)
+			{
+				$dependency = array();
+
+				$dependency["name"] = get_first_attribute($xp, $dep_node, "@ald:name");
+				if ($list = $xp->query("ald:version-list", $dep_node)->item(0))
+				{
+					$dependency["version-list"] = array();
+					foreach ($xp->query("ald:version/@ald:value", $range) AS $version)
+					{
+						$dependency["version-list"][] = $version->nodeValue;
+					}
+				}
+				else if ($range = $xp->query("ald:version-range", $dep_node)->item(0))
+				{
+					$dependency["version-range"] = array();
+					$temp = get_first_attribute($xp, $range, "@ald:min-version") AND $dependency["version-range"]["min"] = $temp;
+					$temp = get_first_attribute($xp, $range, "@ald:max-version") AND $dependency["version-range"]["max"] = $temp;
+				}
+				else
+				{
+					$dependency["version"] = $xp->query("ald:version/@ald:value", $dep_node)->item(0)->nodeValue;
+				}
+
+				$output["dependencies"][] = $dependency;
+			}
+		}
+		# requirements
+		# files
 		if (in_array("tags", $include_data))
 		{
 			$output["tags"] = array();
