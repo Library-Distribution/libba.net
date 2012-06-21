@@ -103,6 +103,15 @@
 						}
 						$content .= "</ald:dependencies>";
 					}
+					if (isset($output["requirements"]) && is_array($output["requirements"]))
+					{
+						$content .= "<ald:requirements>";
+						foreach ($output["requirements"] AS $requirement)
+						{
+							$content .= "<ald:requirement ald:type=\"{$requirement["type"]}\">" . xml_version_switch($requirement) . "</ald:requirement>";
+						}
+						$content .= "</ald:requirements>";
+					}
 					if (isset($output["tags"]) && is_array($output["tags"]))
 					{
 						$content .= "<ald:tags>";
