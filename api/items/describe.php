@@ -99,20 +99,7 @@
 						$content .= "<ald:dependencies>";
 						foreach ($output["dependencies"] AS $dependency)
 						{
-							$content .= "<ald:dependency ald:name=\"{$dependency["name"]}\">"
-										. (isset($dependency["version"]) ? "<ald:version ald:value=\"{$dependency["version"]}\"/>"
-										: (isset($dependency["version-range"]) ? "<ald:version-range ald:min-value=\"{$dependency["version-range"]["min"]}\" ald:max-value=\"{$dependency["version-range"]["max"]}\"/>"
-										: ""));
-							if (isset($dependency["version-list"]) && is_array($dependency["version-list"]))
-							{
-								$content .= "<ald:version-list>";
-								foreach ($dependency["version-list"] AS $version)
-								{
-									$content .= "<ald:version ald:value=\"$version\"/>";
-								}
-								$content .= "</ald:version-list>";
-							}
-							$content .=  "</ald:dependency>";
+							$content .= "<ald:dependency ald:name=\"{$dependency["name"]}\">" . xml_version_switch($dependency) . "</ald:dependency>";
 						}
 						$content .= "</ald:dependencies>";
 					}
@@ -156,5 +143,28 @@
 	catch (HttpException $e)
 	{
 		handleHttpException($e);
+	}
+
+	function xml_version_switch($data)
+	{
+		$content = "";
+		if (isset($data["version"]))
+		{
+			$content .= "<ald:version ald:value=\"{$data["version"]}\"/>";
+		}
+		else if (isset($data["version-range"]))
+		{
+			$content .= "<ald:version-range ald:min-value=\"{$data["version-range"]["min"]}\" ald:max-value=\"{$data["version-range"]["max"]}\"/>";
+		}
+		else if (isset($data["version-list"]) && is_array($data["version-list"]))
+		{
+			$content .= "<ald:version-list>";
+			foreach ($data["version-list"] AS $version)
+			{
+				$content .= "<ald:version ald:value=\"$version\"/>";
+			}
+			$content .= "</ald:version-list>";
+		}
+		return $content;
 	}
 ?>
