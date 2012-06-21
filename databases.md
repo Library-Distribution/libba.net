@@ -10,7 +10,7 @@ holds the list of apps and libs being uploaded.
 * id (`binary(16)`, `PRIMARY`)
 * name (`varchar(25)`)
 * type (`varchar(3)`)
-* version (`varchar(11)`)
+* version (`varchar(50)`)
 * file (`varchar(100)`)
 * user (`binary(16)`)
 * description (`text`)
