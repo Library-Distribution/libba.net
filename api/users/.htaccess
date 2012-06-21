@@ -4,3 +4,6 @@ RewriteRule ^list$ list.php [L]
 
 RewriteRule ^describe\/([0-9a-fA-F]{32})$ describe.php?id=$1 [L]
 RewriteRule ^describe\/(.+)$ describe.php?name=$1 [L]
+
+RewriteRule ^modify\/([0-9a-fA-F]{32})$ modify.php?id=$1 [L]
+RewriteRule ^modify\/(.+)$ modify.php?name=$1 [L]
