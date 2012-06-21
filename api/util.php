@@ -84,7 +84,7 @@
 		static $all_data = NULL;
 		if ($all_data == NULL)
 		{
-			$all_data = array("id", "name", "version", "type", "description", "authors", "dependencies", "tags");
+			$all_data = array("id", "name", "version", "type", "description", "authors", "dependencies", "requirements", "tags");
 		}
 
 		if ($include_data == NULL)
@@ -169,7 +169,19 @@
 				$output["dependencies"][] = $dependency;
 			}
 		}
-		# requirements
+		if (in_array("requirements", $include_data))
+		{
+			$output["requirements"] = array();
+			foreach ($xp->query("/*/ald:requirements/ald:requirement") AS $req_node)
+			{
+				$requirement = array();
+
+				$requirement["type"] = get_first_attribute($xp, $req_node, "@ald:type");
+				read_version_switch($xp, $req_node, $requirement);
+
+				$output["requirements"][] = $requirement;
+			}
+		}
 		# files
 		if (in_array("tags", $include_data))
 		{
