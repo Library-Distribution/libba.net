@@ -45,11 +45,11 @@
 
 			# retrieve data limits
 			$db_limit = "";
-			if (isset($_GET["count"]) && strtolower($_GET["count"]) != "all")
+			if (isset($_GET["count"]) && strtolower($_GET["count"]) != "all" && !$latest_only) # if "latest" is set, the data is shortened after being filtered
 			{
 				$db_limit = "LIMIT " . mysql_real_escape_string($_GET["count"], $db_connection);
 			}
-			if (isset($_GET["start"]))
+			if (isset($_GET["start"]) && !$latest_only) # if "latest" is set, the data is shortened after being filtered
 			{
 				if (!$db_limit)
 				{
@@ -69,21 +69,8 @@
 			# parse data to array
 			$data = array();
 			$users = array();
-			if ($latest_only)
-			{
-				$versions = array();
-			}
 			while ($item = mysql_fetch_assoc($db_result))
 			{
-				if ($latest_only)
-				{
-					if (isset($versions[$item["name"]]) && $versions[$item["name"]] > $item["version"])
-					{
-						continue;
-					}
-					$versions[$item["name"]] = $item["version"];
-				}
-
 				$item["id"] = $item["HEX(id)"];
 				unset($item["HEX(id)"]);
 
@@ -96,6 +83,46 @@
 				unset($item["HEX(user)"]);
 
 				$data[] = $item;
+			}
+
+			if ($latest_only)
+			{
+				$versions = array();
+				foreach ($data AS $index => $item) # go through all items and filter
+				{
+					$name = $item["name"];
+					if (isset($versions[$name])) # a version of this item has already been processed
+					{
+						if ($versions[$name] > $item["version"]) # the other version is larger - delete the current item from output
+						{
+							unset($data[$index]);
+						}
+						else # the other version is lower - find it in the $data array and delete it from there
+						{
+							$old_index = searchSubArray($data, array("name" => $name, "version" => $versions[$name]));
+							unset($data[$old_index]);
+							$versions[$name] = $item["version"]; # indicate this version as the latest being processed
+						}
+					}
+					else # no version has yet been processed, indicate this one as first
+						$versions[$item["name"]] = $item["version"];
+				}
+				sort($data); # sort to have a continuing index
+
+				# shorten data as specified by parameters
+				$offset = 0;
+				if (isset($_GET["start"]))
+				{
+					$offset = $_GET["start"];
+				}
+				if (isset($_GET["count"]) && strtolower($_GET["count"]) != "all")
+				{
+					$data = array_slice($data, $offset, $_GET["count"]);
+				}
+				else
+				{
+					$data = array_slice($data, $offset);
+				}
 			}
 
 			# return content-type specific data
