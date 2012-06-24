@@ -105,7 +105,7 @@
 						}
 					}
 					else # no version has yet been processed, indicate this one as first
-						$versions[$item["name"]] = $item["version"];
+						$versions[$name] = $item["version"];
 				}
 				sort($data); # sort to have a continuing index
 
