@@ -26,6 +26,11 @@
 				throw new HttpException(400);
 			}
 
+			if ($id != User::getID($_SERVER["PHP_AUTH_USER"]))
+			{
+				throw new HttpException(403);
+			}
+
 			if (!empty($_POST["name"]))
 			{
 				if (User::existsName($_POST["name"]))
