@@ -12,7 +12,7 @@
 			if (isset($_GET["id"]) || (isset($_GET["name"]) && isset($_GET["version"])))
 			{
 				# validate accept header of request
-				$content_type = get_preferred_mimetype(array("application/json", "text/xml", "application/xml"), "application/json");
+				$content_type = get_preferred_mimetype(array("application/json", "text/xml", "application/xml", "application/x-ald-package"), "application/json");
 
 				# connect to database server
 				$db_connection = db_ensure_connection();
@@ -39,7 +39,15 @@
 					$id = mysql_real_escape_string($_GET["id"], $db_connection);
 				}
 
-				$db_query = "SELECT *, HEX(user) FROM $db_table_main WHERE id = UNHEX('$id')";
+				if ($content_type == "application/x-ald-package")
+				{
+					$db_query = "SELECT file FROM $db_table_main WHERE id = UNHEX('$id')";
+				}
+				else
+				{
+					$db_query = "SELECT *, HEX(user) FROM $db_table_main WHERE id = UNHEX('$id')";
+				}
+
 				$db_result = mysql_query($db_query, $db_connection);
 				if (!$db_result)
 				{
@@ -50,6 +58,18 @@
 					throw new HttpException(404);
 				}
 				$db_entry = mysql_fetch_assoc($db_result);
+
+				if ($content_type == "application/x-ald-package")
+				{
+					$file = dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . "uploads" . DIRECTORY_SEPARATOR . $db_entry["file"];
+					header("HTTP/1.1 200 " . HttpException::getStatusMessage(200));
+					header("Content-Type: $content_type");
+					header("Content-Length: " . filesize($file));
+					header("Content-Disposition: attachment; filename=$id.alp");
+					header("Content-MD5: " . base64_encode(md5_file($file)));
+					@readfile($file);
+					exit;
+				}
 
 				$data = read_package(upload_dir_path() . $db_entry["file"]);
 
@@ -131,7 +151,6 @@
 						$content .= "</ald:links>";
 					}
 					$content .= "</ald:item>";
-					#throw new HttpException(501, NULL, "JSON can already be provided.");
 				}
 
 				header("HTTP/1.1 200 " . HttpException::getStatusMessage(200));
