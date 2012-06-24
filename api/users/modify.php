@@ -21,6 +21,10 @@
 			{
 				$id = mysql_real_escape_string($_GET["id"], $db_connection);
 			}
+			else
+			{
+				throw new HttpException(400);
+			}
 
 			if (!empty($_POST["name"]))
 			{
