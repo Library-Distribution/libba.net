@@ -2,6 +2,7 @@
 	require_once("../HttpException.php");
 	require_once("../db.php");
 	require_once("../util.php");
+	require_once("../User.php");
 
 	try
 	{
@@ -24,7 +25,7 @@
 			if (isset($_GET["user"]))
 			{
 				$db_cond .= ($db_cond) ? " AND" : " WHERE";
-				$db_cond .= " user = UNHEX('" . user_get_id_by_name($_GET["user"]) . "')";
+				$db_cond .= " user = UNHEX('" . User::getID($_GET["user"]) . "')";
 			}
 			if (isset($_GET["name"]))
 			{
@@ -77,7 +78,7 @@
 				$item["userID"] = $item["HEX(user)"];
 				if (!isset($users[$item["userID"]]))
 				{
-					$users[$item["userID"]] = user_get_name($item["userID"]);
+					$users[$item["userID"]] = User::getName($item["userID"]);
 				}
 				$item["user"] = $users[$item["userID"]];
 				unset($item["HEX(user)"]);

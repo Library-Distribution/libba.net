@@ -2,6 +2,7 @@
 	require_once("../HttpException.php");
 	require_once("../db.php");
 	require_once("../util.php");
+	require_once("../User.php");
 
 	try
 	{
@@ -76,7 +77,7 @@
 				$output = $data;
 				$output["uploaded"] = $db_entry["uploaded"];
 				$output["userID"] = $db_entry["HEX(user)"];
-				$output["user"] = user_get_name($db_entry["HEX(user)"]);
+				$output["user"] = User::getName($db_entry["HEX(user)"]);
 				$tag_list  = array();
 				foreach ($data["tags"] AS $tag)
 				{

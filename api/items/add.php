@@ -71,7 +71,7 @@
 				{
 					# if so, check if it's the same user as now
 					$db_entry = mysql_fetch_assoc($db_result);
-					if (user_get_name($db_entry["HEX(user)"]) != $user)
+					if (User::getName($db_entry["HEX(user)"]) != $user)
 					{
 						throw new HttpException(403, NULL, "The user '$user' is not allowed to update the library or app '$pack_name'");
 					}
@@ -105,7 +105,7 @@
 
 				# add the database entry
 				$db_query = "INSERT INTO $db_table_main (id, name, type, version, file, user, description, tags, uploaded)
-							VALUES (UNHEX('$pack_id'), '$escaped_name', '$escaped_type', '$escaped_version', '".basename($file)."', UNHEX('" . user_get_id_by_name($user) . "'), '$escaped_description', '$escaped_tags', '$datetime')";
+							VALUES (UNHEX('$pack_id'), '$escaped_name', '$escaped_type', '$escaped_version', '".basename($file)."', UNHEX('" . User::getID($user) . "'), '$escaped_description', '$escaped_tags', '$datetime')";
 				$db_result = mysql_query($db_query, $db_connection);
 				if (!$db_result)
 				{

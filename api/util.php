@@ -1,33 +1,7 @@
 <?php
 	require_once("db.php");
 	require_once("HttpException.php");
-
-	/* [deprecated] */
-	function validateLogin($user, $pw)
-	{
-		global $db_table_users;
-		$db_connection = db_ensure_connection();
-
-		$pw = hash("sha256", $pw);
-		$escaped_user = mysql_real_escape_string($user, $db_connection);
-
-		$db_query = "SELECT pw, activationToken FROM $db_table_users WHERE name = '$escaped_user'";
-		$db_result = mysql_query($db_query, $db_connection);
-		if (!$db_result)
-		{
-			throw new HttpException(500);
-		}
-
-		$data = mysql_fetch_object($db_result);
-		if ($data->activationToken)
-		{
-			throw new HttpException(403, NULL, "Account is currently deactivated.");
-		}
-		if ($data->pw != $pw)
-		{
-			throw new HttpException(403, NULL, "Invalid credentials were specified.");
-		}
-	}
+	require_once("User.php");
 
 	function user_basic_auth($realm)
 	{
@@ -39,47 +13,7 @@
 		{
 			throw new HttpException(401, array("WWW-Authenticate" => "Basic realm=\"$realm\""));
 		}
-		validateLogin($_SERVER["PHP_AUTH_USER"], $_SERVER["PHP_AUTH_PW"]);
-	}
-
-	/* [deprecated] */
-	function user_get_name($id)
-	{
-		global $db_table_users;
-		$db_connection = db_ensure_connection();
-
-		$db_query = "SELECT name FROM $db_table_users WHERE id = UNHEX('" . mysql_real_escape_string($id) . "')";
-		$db_result = mysql_query($db_query, $db_connection);
-		if (!$db_result)
-		{
-			throw new HttpException(500);
-		}
-
-		while ($data = mysql_fetch_object($db_result))
-		{
-			return $data->name;
-		}
-		throw new HttpException(404);
-	}
-
-	/* [deprecated] */
-	function user_get_id_by_name($name)
-	{
-		global $db_table_users;
-		$db_connection = db_ensure_connection();
-
-		$db_query = "SELECT HEX(id) FROM $db_table_users WHERE name = '" . mysql_real_escape_string($name) . "'";
-		$db_result = mysql_query($db_query, $db_connection);
-		if (!$db_result)
-		{
-			throw new HttpException(500);
-		}
-
-		while ($data = mysql_fetch_assoc($db_result))
-		{
-			return $data["HEX(id)"];
-		}
-		throw new HttpException(404);
+		User::validateLogin($_SERVER["PHP_AUTH_USER"], $_SERVER["PHP_AUTH_PW"]);
 	}
 
 	function read_package($package, $include_data = NULL)
