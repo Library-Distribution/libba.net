@@ -2,6 +2,7 @@
 	require_once("../util.php");
 	require_once("../HttpException.php");
 	require_once("../db.php");
+	require_once("../User.php");
 
 	try
 	{
@@ -14,18 +15,7 @@
 
 			if (!empty($_GET["name"]))
 			{
-				$db_query = "SELECT HEX(id) FROM $db_table_users WHERE name = '" . mysql_real_escape_string($_GET["name"], $db_connection) . "'";
-				$db_result = mysql_query($db_query, $db_connection);
-				if (!$db_result)
-				{
-					throw new HttpException(500, NULL, "Failed to get user ID.");
-				}
-				if (mysql_num_rows($db_result) != 1)
-				{
-					throw new HttpException(404, NULL, "Unknown user name.");
-				}
-				$obj = mysql_fetch_assoc($db_result);
-				$id = $obj["HEX(id)"];
+				$id = User::getID($_GET["name"]);
 			}
 			else if (!empty($_GET["id"]))
 			{
@@ -34,6 +24,11 @@
 
 			if (!empty($_POST["name"]))
 			{
+				if (User::existsName($_POST["name"]))
+				{
+					throw new HttpException(409, NULL, "User name already taken");
+				}
+
 				$db_query = "UPDATE $db_table_users Set name = '" . mysql_real_escape_string($_POST["name"], $db_connection) . "' WHERE id = UNHEX('$id')";
 				$db_result = mysql_query($db_query, $db_connection);
 				if (!$db_result)
