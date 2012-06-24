@@ -42,6 +42,11 @@
 			}
 			if (!empty($_POST["mail"]))
 			{
+				if (User::existsMail($_POST["mail"]))
+				{
+					throw new HttpException(409, NULL, "Mail address already taken");
+				}
+
 				$mail = mysql_real_escape_string($_POST["mail"], $db_connection);
 				$token = mt_rand();
 

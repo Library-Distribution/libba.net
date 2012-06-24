@@ -18,6 +18,20 @@ class User
 		return mysql_num_rows($db_result) == 1;
 	}
 
+	public static function existsMail($mail)
+	{
+		global $db_table_users;
+		$db_connection = db_ensure_connection();
+
+		$db_query = "SELECT id FROM $db_table_users WHERE mail = '" . mysql_real_escape_string($mail) . "'";
+		$db_result = mysql_query($db_query, $db_connection);
+		if (!$db_result)
+		{
+			throw new HttpException(500);
+		}
+		return mysql_num_rows($db_result) == 1;
+	}
+
 	public static function validateLogin($user, $pw)
 	{
 		global $db_table_users;
