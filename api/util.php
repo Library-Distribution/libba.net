@@ -2,6 +2,7 @@
 	require_once("db.php");
 	require_once("HttpException.php");
 
+	/* [deprecated] */
 	function validateLogin($user, $pw)
 	{
 		global $db_table_users;
@@ -41,6 +42,7 @@
 		validateLogin($_SERVER["PHP_AUTH_USER"], $_SERVER["PHP_AUTH_PW"]);
 	}
 
+	/* [deprecated] */
 	function user_get_name($id)
 	{
 		global $db_table_users;
@@ -60,6 +62,7 @@
 		throw new HttpException(404);
 	}
 
+	/* [deprecated] */
 	function user_get_id_by_name($name)
 	{
 		global $db_table_users;
