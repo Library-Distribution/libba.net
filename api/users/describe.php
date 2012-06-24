@@ -15,24 +15,11 @@
 			# connect to database server
 			$db_connection = db_ensure_connection();
 
-			if (isset($_GET["name"]))
+			if (!empty($_GET["name"]))
 			{
-				$db_query = "SELECT HEX(id) FROM $db_table_users WHERE name = '" . mysql_real_escape_string($_GET["name"]) . "'";
-				$db_result = mysql_query($db_query, $db_connection);
-				if (!$db_result)
-				{
-					throw new HttpException(500);
-				}
-
-				if (mysql_num_rows($db_result) != 1)
-				{
-					throw new HttpException(404);
-				}
-
-				$db_entry = mysql_fetch_assoc($db_result);
-				$id = $db_entry["HEX(id)"];
+				$id = User::getID($_GET["name"]);
 			}
-			else if (isset($_GET["id"]))
+			else if (!empty($_GET["id"]))
 			{
 				$id = mysql_real_escape_string($_GET["id"], $db_connection);
 			}
