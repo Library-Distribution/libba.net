@@ -42,15 +42,22 @@
 				$db_cond .= ($db_cond) ? " AND" : " WHERE";
 				$db_cond .= " default_include = '1'";
 			}
-			$latest_only = isset($_GET["latest"]) && $_GET["latest"] && strtolower($_GET["latest"]) != "false";
+			if (isset($_GET["level"]))
+			{
+				$level = strtolower($_GET["level"]);
+				if (!in_array($level, array("latest", "first")))
+				{
+					throw new HttpException(400);
+				}
+			}
 
 			# retrieve data limits
 			$db_limit = "";
-			if (isset($_GET["count"]) && strtolower($_GET["count"]) != "all" && !$latest_only) # if "latest" is set, the data is shortened after being filtered
+			if (isset($_GET["count"]) && strtolower($_GET["count"]) != "all" && !isset($level)) # if level ("latest" or "first") is set, the data is shortened after being filtered
 			{
 				$db_limit = "LIMIT " . mysql_real_escape_string($_GET["count"], $db_connection);
 			}
-			if (isset($_GET["start"]) && !$latest_only) # if "latest" is set, the data is shortened after being filtered
+			if (isset($_GET["start"]) && !isset($level)) # if level ("latest" or "first") is set, the data is shortened after being filtered
 			{
 				if (!$db_limit)
 				{
@@ -86,7 +93,7 @@
 				$data[] = $item;
 			}
 
-			if ($latest_only)
+			if (isset($level))
 			{
 				$versions = array();
 				foreach ($data AS $index => $item) # go through all items and filter
@@ -94,15 +101,15 @@
 					$name = $item["name"];
 					if (isset($versions[$name])) # a version of this item has already been processed
 					{
-						if ($versions[$name] > $item["version"]) # the other version is larger - delete the current item from output
+						if (($level == "latest" && $versions[$name] > $item["version"]) || ($level == "first" && $versions[$name] < $item["version"])) # the other version is higher/lower - delete the current item from output
 						{
 							unset($data[$index]);
 						}
-						else # the other version is lower - find it in the $data array and delete it from there
+						else # the other version is lower/higher - find it in the $data array and delete it from there
 						{
-							$old_index = searchSubArray($data, array("name" => $name, "version" => $versions[$name]));
-							unset($data[$old_index]);
-							$versions[$name] = $item["version"]; # indicate this version as the latest being processed
+							$other_index = searchSubArray($data, array("name" => $name, "version" => $versions[$name]));
+							unset($data[$other_index]);
+							$versions[$name] = $item["version"]; # indicate this version as the latest / oldest being processed
 						}
 					}
 					else # no version has yet been processed, indicate this one as first
