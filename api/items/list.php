@@ -3,6 +3,7 @@
 	require_once("../db.php");
 	require_once("../util.php");
 	require_once("../User.php");
+	require_once("../semver.php");
 
 	try
 	{
@@ -101,7 +102,7 @@
 					$name = $item["name"];
 					if (isset($versions[$name])) # a version of this item has already been processed
 					{
-						if (($level == "latest" && $versions[$name] > $item["version"]) || ($level == "first" && $versions[$name] < $item["version"])) # the other version is higher/lower - delete the current item from output
+						if (($level == "latest" && semver_compare($versions[$name], $item["version"]) == 1) || ($level == "first" && semver_compare($versions[$name], $item["version"]) == -1)) # the other version is higher/lower - delete the current item from output
 						{
 							unset($data[$index]);
 						}
