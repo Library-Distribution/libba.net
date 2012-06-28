@@ -43,10 +43,10 @@
 				$db_cond .= ($db_cond) ? " AND" : " WHERE";
 				$db_cond .= " default_include = '1'";
 			}
-			if (isset($_GET["level"]))
+			if (isset($_GET["version"]))
 			{
-				$level = strtolower($_GET["level"]);
-				if (!in_array($level, array("latest", "first")))
+				$version = strtolower($_GET["version"]);
+				if (!in_array($version, array("latest", "first")))
 				{
 					throw new HttpException(400);
 				}
@@ -54,11 +54,11 @@
 
 			# retrieve data limits
 			$db_limit = "";
-			if (isset($_GET["count"]) && strtolower($_GET["count"]) != "all" && !isset($level)) # if level ("latest" or "first") is set, the data is shortened after being filtered
+			if (isset($_GET["count"]) && strtolower($_GET["count"]) != "all" && !isset($version)) # if version ("latest" or "first") is set, the data is shortened after being filtered
 			{
 				$db_limit = "LIMIT " . mysql_real_escape_string($_GET["count"], $db_connection);
 			}
-			if (isset($_GET["start"]) && !isset($level)) # if level ("latest" or "first") is set, the data is shortened after being filtered
+			if (isset($_GET["start"]) && !isset($version)) # if version ("latest" or "first") is set, the data is shortened after being filtered
 			{
 				if (!$db_limit)
 				{
@@ -94,7 +94,7 @@
 				$data[] = $item;
 			}
 
-			if (isset($level))
+			if (isset($version))
 			{
 				$versions = array();
 				foreach ($data AS $index => $item) # go through all items and filter
@@ -102,7 +102,7 @@
 					$name = $item["name"];
 					if (isset($versions[$name])) # a version of this item has already been processed
 					{
-						if (($level == "latest" && semver_compare($versions[$name], $item["version"]) == 1) || ($level == "first" && semver_compare($versions[$name], $item["version"]) == -1)) # the other version is higher/lower - delete the current item from output
+						if (($version == "latest" && semver_compare($versions[$name], $item["version"]) == 1) || ($version == "first" && semver_compare($versions[$name], $item["version"]) == -1)) # the other version is higher/lower - delete the current item from output
 						{
 							unset($data[$index]);
 						}
