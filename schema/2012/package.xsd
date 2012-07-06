@@ -35,7 +35,47 @@
 		</xsd:restriction>
 	</xsd:simpleType>
 
-	<xsd:element name="version"> <!-- defines a version of a dependency or requirement -->
+	<!-- I. VERSIONING -->
+	<!-- a. semantic versioning -->
+	<xsd:simpleType name="semverType">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="(\d+)\.(\d+).(\d+)(\-([0-9A-Za-z\-]+\.)*([0-9A-Za-z\-]+))?(\+([0-9A-Za-z\-]+\.)*([0-9A-Za-z\-]+))?"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:complexType name="semanticVersion"> <!-- defines a version of a dependency -->
+		<xsd:sequence>
+			<xsd:element ref="ald:customdata" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+
+		<xsd:attribute use="required" name="value" type="ald:semverType"/>
+	</xsd:complexType>
+
+	<xsd:group name="semantic-version-switch"> <!-- defines several ways to validate a version -->
+		<xsd:choice>
+			<xsd:element name="version" type="ald:semanticVersion"/> <!-- the only accepted version number -->
+			<xsd:element name="version-list"> <!-- a list of accepted version numbers -->
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="version" type="ald:semanticVersion" minOccurs="1" maxOccurs="unbounded"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="version-range"> <!-- a range of accepted version numbers -->
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element ref="ald:customdata" minOccurs="0" maxOccurs="unbounded"/>
+					</xsd:sequence>
+
+					<xsd:attribute use="required" type="ald:semverType" name="min-version"/> <!-- the lower bound of a range of accepted version numbers for the lib. -->
+					<xsd:attribute use="required" type="ald:semverType" name="max-version"/> <!-- the upper bound of a range of accepted version numbers for the lib. -->
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:choice>
+	</xsd:group>
+
+	<!-- b. lax versioning -->
+	<xsd:element name="version"> <!-- defines a version of requirement -->
 		<xsd:complexType>
 			<xsd:sequence>
 				<xsd:element ref="ald:customdata" minOccurs="0" maxOccurs="unbounded"/>
@@ -67,6 +107,7 @@
 			</xsd:element>
 		</xsd:choice>
 	</xsd:group>
+	<!-- END OF VERSIONING -->
 
 	<xsd:element name="author"> <!-- defines data of an author who wrote this lib or app -->
 		<xsd:complexType>
@@ -85,7 +126,7 @@
 	<xsd:element name="dependency"> <!-- defines a library required for this lib or app to work -->
 		<xsd:complexType>
 			<xsd:sequence>
-				<xsd:group ref="ald:version-switch" minOccurs="1" maxOccurs="1"/> <!-- defines the version(s) of this dependency that are accepted -->
+				<xsd:group ref="ald:semantic-version-switch" minOccurs="1" maxOccurs="1"/> <!-- defines the version(s) of this dependency that are accepted -->
 			</xsd:sequence>
 
 			<xsd:attribute use="required" type="xsd:string" name="name"/> <!-- the name of the required lib -->
@@ -214,7 +255,7 @@
 			<xsd:attribute use="required" type="ald:guid-type" name="id"/> <!-- the unique ID of the package -->
 			<xsd:attribute use="required" type="ald:pack-type" name="type"/> <!-- the type of the package -->
 			<xsd:attribute use="required" type="xsd:string" name="name"/> <!-- the name of the package -->
-			<xsd:attribute use="required" type="xsd:string" name="version"/> <!-- the current version of the package -->
+			<xsd:attribute use="required" type="ald:semverType" name="version"/> <!-- the current version of the package -->
 			<xsd:attribute use="optional" type="xsd:string" name="logo-image"/> <!-- the relative path to a logo image, if one is included -->
 			<xsd:anyAttribute/>
 		</xsd:complexType>
