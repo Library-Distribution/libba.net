@@ -30,11 +30,11 @@
 			return json_decode( $this->_Request( CURLOPT_HTTPGET, "/items/describe/$name/$version", array("Accept: application/json") ) );
 		}
 
-		public function getItemList($start = 0, $count = "all", $type = NULL, $user = NULL, $name = NULL, $tags = NULL, $level = NULL)
+		public function getItemList($start = 0, $count = "all", $type = NULL, $user = NULL, $name = NULL, $tags = NULL, $version = NULL)
 		{
 			return json_decode( $this->_Request( CURLOPT_HTTPGET
 										, "/items/list?start=$start&count=$count"
-											. ( $level != NULL ? "&level=$level" : "" )
+											. ( $version != NULL ? "&version=$version" : "" )
 											. ( $type != NULL ? "&type=$type" : "" )
 											. ( $user != NULL ? "&user=$user" : "" )
 											. ( $name != NULL ? "&name=$name" : "" )
