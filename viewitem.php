@@ -23,7 +23,7 @@
 
 	function semver_sort($a, $b)
 	{
-		return semver_compare($a["version"], $b["version"]);
+		return semver_compare($b->version, $a->version);
 	}
 ?>
 <!DOCTYPE html>
