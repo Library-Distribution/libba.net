@@ -7,6 +7,7 @@
 
 	require_once("sortArray.php");
 	require_once("ALD.php");
+	require_once("api/semver.php");
 
 	$api = new ALD(!empty($_SERVER["HTTPS"]) ? "https://{$_SERVER["SERVER_NAME"]}/user/maulesel/api" : "http://{$_SERVER["SERVER_NAME"]}/api");
 
@@ -19,6 +20,11 @@
 		die ("Failed to retrieve information about this item.<p>{$e->getMessage()}</p>");
 	}
 	$page_title = "\"$item->name\" (v$item->version)";
+
+	function semver_sort($a, $b)
+	{
+		return semver_compare($a["version"], $b["version"]);
+	}
 ?>
 <!DOCTYPE html>
 <html>
@@ -58,7 +64,7 @@
 			<?php
 
 				$versions = $api->getItemList(0, "all", NULL, NULL, $item->name);
-				$versions = sortArray($versions, array("version" => true));
+				usort($versions, "semver_sort"); # sort by "version" field, following semver rules
 
 				if (count($versions) > 1) # 1 as the version on this page is included
 				{
