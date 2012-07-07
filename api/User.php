@@ -32,7 +32,7 @@ class User
 		return mysql_num_rows($db_result) == 1;
 	}
 
-	public static function validateLogin($user, $pw)
+	public static function validateLogin($user, $pw, $throw = true)
 	{
 		global $db_table_users;
 		$db_connection = db_ensure_connection();
@@ -44,18 +44,31 @@ class User
 		$db_result = mysql_query($db_query, $db_connection);
 		if (!$db_result)
 		{
+			if (!$throw)
+			{
+				return false;
+			}
 			throw new HttpException(500);
 		}
 
 		$data = mysql_fetch_object($db_result);
 		if ($data->activationToken)
 		{
+			if (!$throw)
+			{
+				return false;
+			}
 			throw new HttpException(403, NULL, "Account is currently deactivated.");
 		}
 		if ($data->pw != $pw)
 		{
+			if (!$throw)
+			{
+				return false;
+			}
 			throw new HttpException(403, NULL, "Invalid credentials were specified.");
 		}
+		return true;
 	}
 
 	public static function getName($id)
