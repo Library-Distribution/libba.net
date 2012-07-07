@@ -2,6 +2,7 @@
 	require_once("../HttpException.php");
 	require_once("../db.php");
 	require_once("../util.php");
+	require_once("../User.php");
 
 	try
 	{
@@ -46,7 +47,6 @@
 					{
 						throw new HttpException(403, NULL, "Must use HTTPS for authenticated APIs");
 					}
-
 					$password_hash = hash("sha256", $_SERVER["PHP_AUTH_PW"]);
 
 					if ($_SERVER["PHP_AUTH_USER"] == $user["name"] && $password_hash == $user["pw"]) # user requests information about himself - OK.
@@ -55,21 +55,8 @@
 					}
 					else
 					{
-						$db_query = "SELECT pw, privileges FROM $db_table_users WHERE name = '" . mysql_real_escape_string($_SERVER["PHP_AUTH_USER"], $db_connection) . "'";
-						$db_result = mysql_query($db_query, $db_connection);
-						if (!$db_result)
-						{
-							throw new HttpException(500);
-						}
-
-						if (mysql_num_rows($db_result) == 1)
-						{
-							$request_user = mysql_fetch_assoc($db_result);
-							if ($request_user["privileges"] > 0 && $password_hash == $request_user["pw"]) # user has advanced privileges - OK.
-							{
-								$encrypt_mail = false;
-							}
-						}
+						User::validateLogin($_SERVER["PHP_AUTH_USER"], $_SERVER["PHP_AUTH_PW"]); # check if correct credentials specified
+						$encrypt_mail =  !User::hasPrivilege($_SERVER["PHP_AUTH_USER"], User::PRIVILEGE_USER_MANAGE) && !User::hasPrivilege($_SERVER["PHP_AUTH_USER"], User::PRIVILEGE_ADMIN)) # admin and user moderators may request this, too
 					}
 				}
 				if ($encrypt_mail)
