@@ -5,7 +5,7 @@
 
 	function user_basic_auth($realm)
 	{
-		if (!isset($_SERVER["HTTPS"]) || !$_SERVER["HTTPS"])
+		if ((!isset($_SERVER["HTTPS"]) || !$_SERVER["HTTPS"]) && $_SERVER["SERVER_ADDR"] != "127.0.0.1")
 		{
 			throw new HttpException(403, NULL, "Must use HTTPS for authenticated APIs");
 		}
