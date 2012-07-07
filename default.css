@@ -89,6 +89,39 @@ a:hover
 	font-style: italic;
 }
 
+/* error messages */
+.error-message
+{
+	border: solid red 1px;
+	padding: 10px;
+	background-color: lightyellow;
+}
+.error-message .message
+{
+	text-align: center;
+	font-style: italic;
+	font-size: 120%;
+	font-weight: bold;
+	color: red;
+}
+.error-message .message:before
+{
+	content: 'An error occured: ';
+	font-weight: bold;
+	font-size: 120%;
+	color: black;
+	font-style: normal
+}
+.error-message .description
+{
+	border-top: solid red 1px;
+	border-bottom: solid red 1px;
+	margin-top: 5px;
+	padding: 5px;
+	text-align: justify;
+	font-style: italic;
+}
+
 /* "next" and "previous" links */
 .next-previous
 {
