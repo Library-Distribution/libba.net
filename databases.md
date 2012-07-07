@@ -17,6 +17,7 @@ holds the list of apps and libs being uploaded.
 * uploaded (`datetime`)
 * tags (`tinytext`)
 * default_include (`BOOLEAN`, default: `0`)
+* reviewed (`BOOLEAN`, default: `0`)
 
 ### table: `users`
 holds the list of users, a sha256-hash of the password and the privileges they have.
