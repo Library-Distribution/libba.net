@@ -4,11 +4,11 @@ require_once("HttpException.php");
 
 class User
 {
-	public const PRIVILEGE_NONE = 0;
-	public const PRIVILEGE_USER_MANAGE = 2;
-	public const PRIVILEGE_REVIEW = 4;
-	public const PRIVILEGE_DEFAULT_INCLUDE = 8;
-	public const PRIVILEGE_ADMIN = 16;
+	const PRIVILEGE_NONE = 0;
+	const PRIVILEGE_USER_MANAGE = 2;
+	const PRIVILEGE_REVIEW = 4;
+	const PRIVILEGE_DEFAULT_INCLUDE = 8;
+	const PRIVILEGE_ADMIN = 16;
 
 	public static function hasPrivilegeById($id, $privilege)
 	{
