@@ -43,6 +43,11 @@
 				$db_cond .= ($db_cond) ? " AND" : " WHERE";
 				$db_cond .= " default_include = '1'";
 			}
+			if (!isset($_GET["unreviewed"]) || !$_GET["unreviewed"] && strtolower($_GET["unreviewed"]) == "false")
+			{
+				$db_cond .= ($db_cond) ? " AND" : " WHERE";
+				$db_cond .= " reviewed = '1'";
+			}
 			if (isset($_GET["version"]))
 			{
 				$version = strtolower($_GET["version"]);
