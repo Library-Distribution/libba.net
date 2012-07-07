@@ -57,6 +57,10 @@
 						?>
 					</td>
 				</tr>
+				<tr>
+					<td>Reviewed:</td>
+					<td><?php echo "<span style=\"font-weight: bolder; color: " . ($item->reviewed ? "green\">Yes" : "red\">No") . "</span>"; ?></td>
+				</tr>
 			</table>
 			<h3>Description</h3>
 			<div>
