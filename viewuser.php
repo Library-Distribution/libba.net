@@ -1,4 +1,5 @@
 <?php
+	session_start();
 	require_once("sortArray.php");
 
 	$page_title = "View users";

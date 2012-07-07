@@ -1,4 +1,5 @@
 <?php
+	session_start();
 	if (empty($_SERVER["HTTPS"]) && $_SERVER["SERVER_ADDR"] != "127.0.0.1")
 	{
 		header("Location: https://ahk4.net/user/maulesel/upload");
