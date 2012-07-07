@@ -39,7 +39,7 @@
 	<!-- a. semantic versioning -->
 	<xsd:simpleType name="semverType">
 		<xsd:restriction base="xsd:string">
-			<xsd:pattern value="(\d+)\.(\d+).(\d+)(\-([0-9A-Za-z\-]+\.)*([0-9A-Za-z\-]+))?(\+([0-9A-Za-z\-]+\.)*([0-9A-Za-z\-]+))?"/>
+			<xsd:pattern value="(\d+)\.(\d+)\.(\d+)(\-([0-9A-Za-z\-]+\.)*([0-9A-Za-z\-]+))?(\+([0-9A-Za-z\-]+\.)*([0-9A-Za-z\-]+))?"/>
 		</xsd:restriction>
 	</xsd:simpleType>
 
