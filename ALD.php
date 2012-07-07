@@ -12,22 +12,22 @@
 
 		public function getUserList( $start = 0, $count = "all" )
 		{
-			return json_decode( $this->_Request( CURLOPT_HTTPGET, "/users/list?start=$start&count=$count", array("Accept: application/json") ) );
+			return json_decode( $this->_Request( CURLOPT_HTTPGET, "/users/list?start=$start&count=$count", array("Accept: application/json") ), true );
 		}
 
 		public function getUser( $name, $request_user = NULL, $request_password = NULL )
 		{
-			return json_decode( $this->_Request( CURLOPT_HTTPGET, "/users/describe/$name", array("Accept: application/json"), NULL, $request_user, $request_password) );
+			return json_decode( $this->_Request( CURLOPT_HTTPGET, "/users/describe/$name", array("Accept: application/json"), NULL, $request_user, $request_password), true );
 		}
 
 		public function getItemById( $id )
 		{
-			return json_decode( $this->_Request( CURLOPT_HTTPGET, "/items/describe/$id", array("Accept: application/json") ) );
+			return json_decode( $this->_Request( CURLOPT_HTTPGET, "/items/describe/$id", array("Accept: application/json") ), true );
 		}
 
 		public function getItem($name, $version)
 		{
-			return json_decode( $this->_Request( CURLOPT_HTTPGET, "/items/describe/$name/$version", array("Accept: application/json") ) );
+			return json_decode( $this->_Request( CURLOPT_HTTPGET, "/items/describe/$name/$version", array("Accept: application/json") ), true );
 		}
 
 		public function getItemList($start = 0, $count = "all", $type = NULL, $user = NULL, $name = NULL, $tags = NULL, $version = NULL)
@@ -39,7 +39,7 @@
 											. ( $user != NULL ? "&user=$user" : "" )
 											. ( $name != NULL ? "&name=$name" : "" )
 											. ( $tags != NULL ? "&tags=" . implode("|", $tags) : "" )
-										, array("Accept: application/json") ) );
+										, array("Accept: application/json") ), true );
 		}
 
 		public function uploadItem( $file, $user, $password )

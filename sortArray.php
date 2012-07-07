@@ -15,9 +15,9 @@ function sortArray($data, $field)
 			if($retval == 0)
 			{
 				if (!$direction)
-					$retval = strnatcasecmp($a->$fieldname, $b->$fieldname);
+					$retval = strnatcasecmp($a[$fieldname], $b[$fieldname]);
 				else
-					$retval = strnatcasecmp($b->$fieldname, $a->$fieldname);
+					$retval = strnatcasecmp($b[$fieldname], $a[$fieldname]);
 			}
 		}
 		return $retval;

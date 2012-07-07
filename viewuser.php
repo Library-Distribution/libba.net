@@ -65,7 +65,7 @@
 								{
 									break;
 								}
-								echo "<li><a href='?user=$user->name'>$user->name</a></li>";
+								echo "<li><a href='?user={$user['name']}'>{$user['name']}</a></li>";
 							}
 
 							echo "</ul>";
@@ -91,8 +91,8 @@
 				{
 					$user_data = $api->getUser($user);
 
-					echo "<div id=\"user-gravatar\"><img width=\"200\" height=\"200\" src=\"http://gravatar.com/avatar/{$user_data->mail}?s=200&d=mm\"/></div>";
-					echo "Joined: <span class='joined-date'>$user_data->joined</span>";
+					echo "<div id=\"user-gravatar\"><img width=\"200\" height=\"200\" src=\"http://gravatar.com/avatar/{$user_data['mail']}?s=200&d=mm\"/></div>";
+					echo "Joined: <span class='joined-date'>{$user_data['joined']}</span>";
 
 					$items = $api->getItemList(0, "all", "lib", $user);
 					$items = sortArray($items, array("name" => false, "version" => true));
@@ -103,10 +103,10 @@
 						$uploaded = array();
 						foreach ($items AS $item)
 						{
-							if (!in_array($item->name, $uploaded))
+							if (!in_array($item['name'], $uploaded))
 							{
-								$uploaded[] = $item->name;
-								echo "<li><a href='viewitem?id=$item->id'>$item->name (v$item->version)</a></li>";
+								$uploaded[] = $item['name'];
+								echo "<li><a href='viewitem?id={$item['id']}'>{$item['name']} (v{$item['version']})</a></li>";
 							}
 						}
 						echo "</ul>";
@@ -121,10 +121,10 @@
 						$uploaded = array();
 						foreach ($items AS $item)
 						{
-							if (!in_array($item->name, $uploaded))
+							if (!in_array($item['name'], $uploaded))
 							{
-								$uploaded[] = $item->name;
-								echo "<li><a href='viewitem?id=$item->id'>$item->name (v$item->version)</a></li>";
+								$uploaded[] = $item['name'];
+								echo "<li><a href='viewitem?id={$item['id']}'>{$item['name']} (v{$item['version']})</a></li>";
 							}
 						}
 						echo "</ul>";
