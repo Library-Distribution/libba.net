@@ -1,11 +1,11 @@
 <?php
 function semver_validate($version)
 {
-	return !!preg_match('/^(\d+)\.(\d+).(\d+)(\-([0-9A-Za-z\-]+\.)*([0-9A-Za-z\-]+))?(\+([0-9A-Za-z\-]+\.)*([0-9A-Za-z\-]+))?$/', $version);
+	return !!preg_match('/^(\d+)\.(\d+)\.(\d+)(\-([0-9A-Za-z\-]+\.)*([0-9A-Za-z\-]+))?(\+([0-9A-Za-z\-]+\.)*([0-9A-Za-z\-]+))?$/', $version);
 }
 function semver_parts($version, &$parts)
 {
-	return !!preg_match('/^(?P<major>\d+)\.(?P<minor>\d+).(?P<patch>\d+)(\-\K)?(?P<prerelease>([0-9A-Za-z\-]+\.)*([0-9A-Za-z\-]+))?(\+\K)?(?P<build>([0-9A-Za-z\-]+\.)*([0-9A-Za-z\-]+))?$/', $version, $parts);
+	return !!preg_match('/^(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)(\-\K)?(?P<prerelease>([0-9A-Za-z\-]+\.)*([0-9A-Za-z\-]+))?(\+\K)?(?P<build>([0-9A-Za-z\-]+\.)*([0-9A-Za-z\-]+))?$/', $version, $parts);
 }
 function semver_compare($version1, $version2)
 {
