@@ -12,7 +12,16 @@
 			<td>
 				<ul>
 					<li><a href="viewuser">Users</a></li>
-					<li><a href="login?mode=login">Login</a> or <a href="login.php?mode=register">Register</a></li>
+					<li>
+					<?php if (isset($_SESSION) && !empty($_SESSION["user"])) {	?>
+						<a href="login?mode=logout">Logout</a>
+					<?php } else { ?>
+						<a href="login?mode=login">Login</a> or <a href="login.php?mode=register">Register</a>
+					<?php } ?>
+					</li>
+					<?php if (isset($_SESSION) && !empty($_SESSION["user"]) && !empty($_SESSION["privileges"]) && $_SESSION["privileges"] > 0) { ?>
+						<li><a href="moderator">Moderator control panel</a></li>
+					<?php } ?>
 					<li><a href="upload">Upload a new app or lib</a></li>
 				</ul>
 			</td>
