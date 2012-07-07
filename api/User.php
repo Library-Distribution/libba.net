@@ -51,6 +51,15 @@ class User
 			throw new HttpException(500);
 		}
 
+		if (mysql_num_rows($db_result) != 1)
+		{
+			if (!$throw)
+			{
+				return false;
+			}
+			throw new HttpException(403, NULL, "User not found");
+		}
+
 		$data = mysql_fetch_object($db_result);
 		if ($data->activationToken)
 		{
