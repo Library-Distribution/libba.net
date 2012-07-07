@@ -102,6 +102,7 @@
 				$output["uploaded"] = $db_entry["uploaded"];
 				$output["userID"] = $db_entry["HEX(user)"];
 				$output["user"] = User::getName($db_entry["HEX(user)"]);
+				$output["reviewed"] = $db_entry["reviewed"] == 1;
 				$tag_list  = array();
 				foreach ($data["tags"] AS $tag)
 				{
@@ -122,7 +123,7 @@
 					{
 						if (!is_array($value))
 						{
-							$content .= " ald:$key=\"$value\"";
+							$content .= " ald:$key=\"" . (is_bool($value) ? ($value ? "true" : "false") : $value) . "\"";
 						}
 					}
 					$content .= ">";
