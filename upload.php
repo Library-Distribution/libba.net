@@ -14,6 +14,7 @@
 		$page_title = "Upload a new library or application";
 		$mode = "start";
 	}
+	$logged_in = isset($_SESSION["user"]);
 ?>
 <!DOCTYPE html>
 <html>
@@ -22,7 +23,7 @@
 		<link rel="stylesheet" href="upload.css"/>
 		<title><?php echo $page_title; ?></title>
 		<?php
-			if ($mode == "start")
+			if ($mode == "start" && !$logged_in)
 			{
 		?>
 				<script type="text/javascript">
@@ -53,7 +54,7 @@
 				{
 			?>
 					Fill in the following fields:
-					<form name="up" action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post" enctype="multipart/form-data">
+					<form name="up" action="<?php echo $_SERVER["REQUEST_URI"]; ?>" method="post" enctype="multipart/form-data">
 						<table width="100%">
 							<col width="25%"/>
 							<col width="75%"/>
@@ -64,6 +65,8 @@
 								<td>Package:</td>
 								<td><input type="hidden" name="MAX_FILE_SIZE" value="78643200"/><input type="file" name="package" onchange="validateData()"/>
 							</tr>
+			<?php
+					if (!$logged_in) { ?>
 							<tr class="form-header">
 								<td colspan="2">You:</td>
 							</tr>
@@ -75,8 +78,9 @@
 								<td>Password:</td>
 								<td><input type="password" name="password" onchange="validateData()"/></td>
 							</tr>
+					<?php } ?>
 							<tr>
-								<td colspan="2"><input type="submit" name="submit_btn" disabled="disabled" value="Submit!"/></td>
+								<td colspan="2"><input type="submit" name="submit_btn" <?php echo !$logged_in ? "disabled=\"disabled\"" : "" ?> value="Submit!"/></td>
 							</tr>
 						</table>
 					</form>
@@ -84,27 +88,33 @@
 				}
 				else if ($mode == "process")
 				{
-					if (isset($_FILES["package"]) && isset($_POST["user"]) && isset($_POST["password"]))
+					if (isset($_FILES["package"]) && ((isset($_POST["user"]) && isset($_POST["password"])) || isset($_SESSION["user"])))
 					{
-						require_once("ALD.php");
+						$user = isset($_POST["user"]) ? $_POST["user"] : $_SESSION["user"];
+						$password = isset($_POST["password"]) ? $_POST["password"] : $_SESSION["password"];
 
+						require_once("ALD.php");
 						try
 						{
-							$conn = new ALD("https://ahk4.net/user/maulesel/api"); # hardcoded URL to ensure HTTPS is always used
-							$id = $conn->uploadItem($_FILES["package"]["tmp_name"], $_POST["user"], $_POST["password"]);
+							$conn = new ALD($_SERVER["SERVER_ADDR"] == "127.0.0.1" ? "http://localhost/api" : "https://ahk4.net/user/maulesel/api"); # hardcoded URL to ensure HTTPS is always used
+							$id = $conn->uploadItem($_FILES["package"]["tmp_name"], $user, $password);
 						}
 						catch (HttpException $e)
 						{
-							die ("Failed to upload: {$e->getCode()}<p>{$e->getMessage()}</p>");
+							echo "Failed to upload: {$e->getCode()}<p>{$e->getMessage()}</p>";
+							$error = true;
 						}
+						if (!isset($error))
+						{
 			?>
-						<b>Successfully uploaded!</b><br/>
-						<a href="index.php">Go to index</a><br />
-						<a href="viewitem.php?id=<?php echo $id; ?>">View uploaded app or library</a>
+							<b>Successfully uploaded!</b><br/>
+							<a href="index">Go to index</a><br />
+							<a href="viewitem?id=<?php echo $id; ?>">View uploaded app or library</a>
 			<?php
+						}
 					}
 					else
-						die ("Failed to upload: required data is missing.");
+						echo "Failed to upload: required data is missing.";
 				}
 			?>
 		</div>
