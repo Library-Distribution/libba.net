@@ -176,12 +176,23 @@
 			if ($should_redirect)
 			{
 				echo "<meta http-equiv=\"REFRESH\" content=\"10;url=$redirect\">";
+		?>
+				<script type="text/javascript">
+					$seconds = 9;
+					function updateTime()
+					{
+						document.getElementById("sec").innerHTML = $seconds--;
+					}
+				</script>
+		<?php
 			}
 		?>
 	</head>
-	<body>
+	<body <?php echo $should_redirect ? "onload=\"setInterval(updateTime, 999)\"" : ""; ?>>
+
 		<?php require("header.php"); ?>
 		<h1 id="page-title"><?php echo $page_title; ?></h1>
+
 		<div id="page-content">
 			<?php
 				if (empty($_POST) && $mode != "logout")
@@ -228,11 +239,12 @@
 					}
 					if ($should_redirect)
 					{
-						echo "Redirecting to <a href=\"$redirect\">$redirect</a> in 10 seconds...";
+						echo "Redirecting to <a href=\"$redirect\">$redirect</a> in <span id=\"sec\">10</span> seconds...";
 					}
 				}
 			?>
 		</div>
+
 		<?php require("footer.php"); ?>
 	</body>
 </html>
