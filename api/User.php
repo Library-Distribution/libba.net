@@ -108,5 +108,24 @@ class User
 		}
 		throw new HttpException(404, NULL, "User not found");
 	}
+
+	public static function getPrivileges($id)
+	{
+		global $db_table_users;
+		$db_connection = db_ensure_connection();
+
+		$db_query = "SELECT privileges FROM $db_table_users WHERE id = UNHEX('" . mysql_real_escape_string($id) . "')";
+		$db_result = mysql_query($db_query, $db_connection);
+		if (!$db_result)
+		{
+			throw new HttpException(500);
+		}
+
+		while ($data = mysql_fetch_assoc($db_result))
+		{
+			return $data["privileges"];
+		}
+		throw new HttpException(404, NULL, "User not found");
+	}
 }
 ?>
