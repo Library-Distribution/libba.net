@@ -25,7 +25,7 @@
 		else if ($mode == "logout")
 		{
 			$page_title = "Logged out";
-			unset($_SESSION["privileges"]); unset($_SESSION["user"]); # unset here as session_destroy() seems to have no effect on currently loaded page
+			unset($_SESSION["privileges"]); unset($_SESSION["user"]); unset($_SESSION["password"]); # unset here as session_destroy() seems to have no effect on currently loaded page
 			session_destroy();
 		}
 		$should_redirect = false;
@@ -141,6 +141,7 @@
 						try
 						{
 							$_SESSION["user"] = $name;
+							$_SESSION["password"] = $_POST["password"];
 							$_SESSION["privileges"] = User::getPrivileges(User::getID($name));
 						}
 						catch (HttpException $e)
