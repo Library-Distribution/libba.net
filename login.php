@@ -56,23 +56,27 @@
 
 					# check if already registered
 					$db_query = "SELECT name FROM $db_table_users WHERE mail = '$escaped_mail' OR name = '$escaped_name'";
-					$db_result = mysql_query($db_query, $db_connection)
-					or die ("Failed to query for existing user.");
+					if (!$db_result = mysql_query($db_query, $db_connection))
+					{
+						$message = "Could not access user database";
+						$error_description = "The attempt to check if a user with the same name or email already exists failed. The error message was: \"" . mysql_error . "\".";
+						break;
+					}
 
 					if (mysql_num_rows($db_result) > 0)
 					{
-						$message = "User with this nickname or email is already registered.";
+						$message = "Registration not possible: duplicate user";
+						$error_description = "A user with this nickname (\"$name\") or email (\"$mail\") is already registered. Duplicate names or mail addresses are not allowed.";
 						break;
-						#die ("User with this nickname or email is already registered."); # TODO: output in body
 					}
 
 					# register
 					$db_query = "INSERT INTO $db_table_users (id, name, mail, pw, activationToken, joined) VALUES (UNHEX(REPLACE(UUID(), '-', '')), '$escaped_name', '$escaped_mail', '$pw', '$token', '$joined')";
 					if (!mysql_query($db_query, $db_connection))
 					{
-						$message = "Failed to save new user: " . mysql_error(); # TODO: stop here
+						$message = "Registration not possible: server error";
+						$error_description = "The registration of user \"$name\" failed. The error message was: \"" . mysql_error . "\".";
 						break;
-						#die ("Failed to save new user: " . mysql_error()); # TODO: output in body
 					}
 
 					$url = "http://" . $_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'] . "?name=$name&mode=activate&token=$token&redirect=" . urlencode($redirect);
@@ -81,60 +85,62 @@
 						"To activate your account, go to <a href='$url'>$url</a>.",
 						"FROM: noreply@{$_SERVER['HTTP_HOST']}\r\nContent-type: text/html; charset=iso-8859-1"))
 					{
-						# TODO: remove db entry
 						$message = "Failed to send account activation mail to '$mail'!";
+						$error_message = "An account has been created, but the activation mail could not be sent. Therefore the account was deleted again.";
+
+						$db_query = "DELETE FROM $db_table_users WHERE name = '$escaped_name'";
+						if (!$db_result = mysql_query($db_query, $db_connection))
+						{
+							$message = "User account deletion failed";
+							$error_description = "The attempt to send the activation mail for the new account failed. Also, the deactivated account could not be deleted. ";
+						}
 						break;
-						#die("Failed to send mail to '$mail'!"); # TODO: output in body
 					}
 
 					$error = false;
 					$message = "An activation mail was sent to the supplied mail address. Open the included link to activate your account.";
 					$page_title = "Successfully registered!";
-					#echo "An activation mail was sent to the supplied mail address. Open the included link to activate your account."; # TODO: output in body
 				}
 				else if ($mode == "activate")
 				{
 					if (isset($_GET["token"]))
 					{
 						$page_title = "Activation failed"; # assume failure, reset on success
-
 						$token = mysql_real_escape_string($_GET["token"]);
 
 						$db_query = "SELECT activationToken FROM $db_table_users WHERE name = '$escaped_name' AND activationToken = '$token' AND pw = '$pw'";
 						if (!$db_result = mysql_query($db_query, $db_connection))
 						{
-							$message = "Failed to query user database: " . mysql_error();
+							$message = "Could not validate activation token";
+							$error_description = "Failed to validate the activation token. The error message was: \"" . mysql_error . "\". Until the token is cleared, the account is still deactivated.";
 							break;
-							#die("Failed to query user database: " . mysql_error()); # TODO: output in body
 						}
 
 						if (mysql_num_rows($db_result) != 1)
 						{
-							$message = "User account with that name, password and token could not be found.";
+							$message = "Account not found";
+							$error_description = "A user account with that user name ($name), password and token could not be found. Therefore it could not be activated.";
 							break;
-							#die("User account with that name, password and token could not be found."); # TODO: output in body
 						}
 
 						$db_query = "UPDATE $db_table_users Set activationToken = '' WHERE name = '$escaped_name' AND activationToken = '$token' AND pw = '$pw'";
 						if (!mysql_query($db_query, $db_connection))
 						{
-							$message = "Failed to reset activation token.";
+							$message = "Could not reset activation token";
+							$error_description = "Failed to empty the activation token. The error message was: \"" . mysql_error . "\". Until the token is cleared, the account is still deactivated.";
 							break;
-							#die("Failed to reset activation token."); # TODO: output in body
 						}
 
 						$message = "Your account was successfully activated.";
 						$page_title = "Account activated!";
 						$error = false;
-						#echo "Your account was successfully activated."; # TODO: output in body
 					}
 				}
 				else if ($mode == "login")
 				{
 					$page_title = "Login failed"; # assume failure, reset on success
 					$should_redirect = false;
-					# ...
-					#echo "NOT YET IMPLEMENTED / NOT REQUIRED!";
+
 					require_once("api/User.php");
 					if (User::validateLogin($_POST["name"], $_POST["password"], false))
 					{
@@ -146,8 +152,11 @@
 						}
 						catch (HttpException $e)
 						{
+							unset($_SESSION["privileges"]); unset($_SESSION["user"]); unset($_SESSION["password"]); # unset here as session_destroy() seems to have no effect on currently loaded page
 							session_destroy();
-							$message = "Failed retrieving user data! ({$e->getMessage()})";
+
+							$message = "Could not login";
+							$error_description = "Could not retrieve the required user data for a login. The exception message was: \"{$e->getMessage()}\".";
 							break;
 						}
 
@@ -156,7 +165,11 @@
 						$should_redirect = true;
 					}
 					else
+					{
 						$message = "Could not login";
+						$error_description = "The given credentials were not valid.";
+						break;
+					}
 				}
 			}
 
@@ -231,7 +244,8 @@
 				{
 					if ($error)
 					{
-						echo "An error occured" . (!empty($message) ? ": $message" : "!");
+						$error_message = $message;
+						require("error.php");
 					}
 					else if (!empty($message))
 					{
