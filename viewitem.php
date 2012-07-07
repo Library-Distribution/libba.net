@@ -52,7 +52,7 @@
 						<?php
 							foreach ($item->tags AS $tag)
 							{
-								echo "<a href='index?tag=$tag'>$tag</a> ";
+								echo "<a href='index?tags=$tag'>$tag</a> ";
 							}
 						?>
 					</td>
