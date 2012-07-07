@@ -4,6 +4,54 @@ require_once("HttpException.php");
 
 class User
 {
+	public const PRIVILEGE_NONE = 0;
+	public const PRIVILEGE_USER_MANAGE = 2;
+	public const PRIVILEGE_REVIEW = 4;
+	public const PRIVILEGE_DEFAULT_INCLUDE = 8;
+	public const PRIVILEGE_ADMIN = 16;
+
+	public static function hasPrivilegeById($id, $privilege)
+	{
+		global $db_table_users;
+		$db_connection = db_ensure_connection();
+
+		$db_query = "SELECT privileges FROM $db_table_users WHERE id = UNHEX('" . mysql_real_escape_string($id, $db_connection) . "')";
+		$db_result = mysql_query($db_query, $db_connection);
+		if (!$db_result)
+		{
+			throw new HttpException(500);
+		}
+
+		if (mysql_num_rows($db_result) != 1)
+		{
+			throw new HttpException(404, NULL, "User not found");
+		}
+
+		$data = mysql_fetch_object($db_result);
+		return (((int)$data->privileges) & $privilege) == $privilege;
+	}
+
+	public static function hasPrivilege($name, $privilege)
+	{
+		global $db_table_users;
+		$db_connection = db_ensure_connection();
+
+		$db_query = "SELECT privileges FROM $db_table_users WHERE name = '" .  mysql_real_escape_string($name, $db_connection) . "'";
+		$db_result = mysql_query($db_query, $db_connection);
+		if (!$db_result)
+		{
+			throw new HttpException(500);
+		}
+
+		if (mysql_num_rows($db_result) != 1)
+		{
+			throw new HttpException(404, NULL, "User not found");
+		}
+
+		$data = mysql_fetch_object($db_result);
+		return (((int)$data->privileges) & $privilege) == $privilege;
+	}
+
 	public static function existsName($name)
 	{
 		global $db_table_users;
