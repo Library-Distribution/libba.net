@@ -35,6 +35,12 @@
 		</xsd:restriction>
 	</xsd:simpleType>
 
+	<xsd:simpleType name="word-string">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="(\w|_)+"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
 	<!-- I. VERSIONING -->
 	<!-- a. semantic versioning -->
 	<xsd:simpleType name="semverType">
@@ -75,7 +81,7 @@
 	</xsd:group>
 
 	<!-- b. lax versioning -->
-	<xsd:element name="version"> <!-- defines a version of requirement -->
+	<xsd:element name="version"> <!-- defines a version of a requirement -->
 		<xsd:complexType>
 			<xsd:sequence>
 				<xsd:element ref="ald:customdata" minOccurs="0" maxOccurs="unbounded"/>
@@ -117,7 +123,7 @@
 
 			<xsd:attribute use="required" type="xsd:string" name="name"/> <!-- the name to identify the author. Can be same as user-name -->
 			<xsd:attribute use="optional" type="xsd:string" name="user-name"/> <!-- the AHK forums user name -->
-			<xsd:attribute use="optional" type="xsd:string" name="homepage"/> <!-- an URL to a homepage of the author -->
+			<xsd:attribute use="optional" type="ald:internetURL" name="homepage"/> <!-- an URL to a homepage of the author -->
 			<xsd:attribute use="optional" type="xsd:string" name="email"/> <!-- an email address of the author -->
 			<xsd:anyAttribute/>
 		</xsd:complexType>
@@ -151,7 +157,7 @@
 				<xsd:element ref="ald:customdata" minOccurs="0" maxOccurs="unbounded"/>
 			</xsd:sequence>
 
-			<xsd:attribute name="path" use="required" type="xsd:string"/> <!-- the path to the file -->
+			<xsd:attribute name="path" use="required" type="xsd:string"/> <!-- the (internal) path to the file -->
 			<xsd:anyAttribute/>
 		</xsd:complexType>
 	</xsd:element>
@@ -162,7 +168,7 @@
 				<xsd:element ref="ald:customdata" minOccurs="0" maxOccurs="unbounded"/>
 			</xsd:sequence>
 
-			<xsd:attribute name="name" use="required" type="xsd:string"/> <!-- the name of the tag -->
+			<xsd:attribute name="name" use="required" type="ald:word-string"/> <!-- the name of the tag -->
 			<xsd:anyAttribute/>
 		</xsd:complexType>
 	</xsd:element>
