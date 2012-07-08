@@ -3,6 +3,7 @@
 	require_once("../db.php");
 	require_once("../util.php");
 	require_once("../User.php");
+	require_once("../semver.php");
 
 	try
 	{
