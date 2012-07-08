@@ -57,7 +57,7 @@ class User
 		global $db_table_users;
 		$db_connection = db_ensure_connection();
 
-		$db_query = "SELECT id FROM $db_table_users WHERE name = '" . mysql_real_escape_string($name) . "'";
+		$db_query = "SELECT id FROM $db_table_users WHERE name = '" . mysql_real_escape_string($name, $db_connection) . "'";
 		$db_result = mysql_query($db_query, $db_connection);
 		if (!$db_result)
 		{
@@ -71,7 +71,7 @@ class User
 		global $db_table_users;
 		$db_connection = db_ensure_connection();
 
-		$db_query = "SELECT id FROM $db_table_users WHERE mail = '" . mysql_real_escape_string($mail) . "'";
+		$db_query = "SELECT id FROM $db_table_users WHERE mail = '" . mysql_real_escape_string($mail, $db_connection) . "'";
 		$db_result = mysql_query($db_query, $db_connection);
 		if (!$db_result)
 		{
@@ -133,7 +133,7 @@ class User
 		global $db_table_users;
 		$db_connection = db_ensure_connection();
 
-		$db_query = "SELECT name FROM $db_table_users WHERE id = UNHEX('" . mysql_real_escape_string($id) . "')";
+		$db_query = "SELECT name FROM $db_table_users WHERE id = UNHEX('" . mysql_real_escape_string($id, $db_connection) . "')";
 		$db_result = mysql_query($db_query, $db_connection);
 		if (!$db_result)
 		{
@@ -152,7 +152,7 @@ class User
 		global $db_table_users;
 		$db_connection = db_ensure_connection();
 
-		$db_query = "SELECT HEX(id) FROM $db_table_users WHERE name = '" . mysql_real_escape_string($name) . "'";
+		$db_query = "SELECT HEX(id) FROM $db_table_users WHERE name = '" . mysql_real_escape_string($name, $db_connection) . "'";
 		$db_result = mysql_query($db_query, $db_connection);
 		if (!$db_result)
 		{
@@ -171,7 +171,7 @@ class User
 		global $db_table_users;
 		$db_connection = db_ensure_connection();
 
-		$db_query = "SELECT activationToken FROM $db_table_users WHERE name = '" . mysql_real_escape_string($name) . "'";
+		$db_query = "SELECT activationToken FROM $db_table_users WHERE name = '" . mysql_real_escape_string($name, $db_connection) . "'";
 		$db_result = mysql_query($db_query, $db_connection);
 		if (!$db_result)
 		{
@@ -190,7 +190,7 @@ class User
 		global $db_table_users;
 		$db_connection = db_ensure_connection();
 
-		$db_query = "SELECT privileges FROM $db_table_users WHERE id = UNHEX('" . mysql_real_escape_string($id) . "')";
+		$db_query = "SELECT privileges FROM $db_table_users WHERE id = UNHEX('" . mysql_real_escape_string($id, $db_connection) . "')";
 		$db_result = mysql_query($db_query, $db_connection);
 		if (!$db_result)
 		{
