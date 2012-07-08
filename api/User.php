@@ -185,6 +185,25 @@ class User
 		throw new HttpException(404, NULL, "User not found");
 	}
 
+	public static function setToken($name, $token)
+	{
+		global $db_table_users;
+		$db_connection = db_ensure_connection();
+
+		$db_query = "UPDATE $db_table_users  Set activationToken = '" . mysql_real_escape_string($token, $db_connection) . "' WHERE name = '" . mysql_real_escape_string($name, $db_connection) . "'";
+		$db_result = mysql_query($db_query, $db_connection);
+		if (!$db_result)
+		{
+			throw new HttpException(500);
+		}
+
+		while ($data = mysql_fetch_object($db_result))
+		{
+			return $data->activationToken;
+		}
+		throw new HttpException(404, NULL, "User not found");
+	}
+
 	public static function getPrivileges($id)
 	{
 		global $db_table_users;
