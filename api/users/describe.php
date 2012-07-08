@@ -56,7 +56,7 @@
 					else
 					{
 						User::validateLogin($_SERVER["PHP_AUTH_USER"], $_SERVER["PHP_AUTH_PW"]); # check if correct credentials specified
-						$encrypt_mail =  !User::hasPrivilege($_SERVER["PHP_AUTH_USER"], User::PRIVILEGE_USER_MANAGE) && !User::hasPrivilege($_SERVER["PHP_AUTH_USER"], User::PRIVILEGE_ADMIN)) # admin and user moderators may request this, too
+						$encrypt_mail =  !User::hasPrivilege($_SERVER["PHP_AUTH_USER"], User::PRIVILEGE_USER_MANAGE) && !User::hasPrivilege($_SERVER["PHP_AUTH_USER"], User::PRIVILEGE_ADMIN); # admin and user moderators may request this, too
 					}
 				}
 				if ($encrypt_mail)
