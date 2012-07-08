@@ -30,7 +30,7 @@
 						$db_version_cond = ""; # read all and filter below
 					}
 
-					$db_query = "SELECT HEX(id) FROM $db_table_main WHERE name = '" . mysql_real_escape_string($_GET["name"], $db_connection) . "' $db_version_cond";
+					$db_query = "SELECT HEX(id), version FROM $db_table_main WHERE name = '" . mysql_real_escape_string($_GET["name"], $db_connection) . "' $db_version_cond";
 					$db_result = mysql_query($db_query, $db_connection);
 
 					if (!$db_result)
