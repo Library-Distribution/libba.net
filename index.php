@@ -10,10 +10,11 @@
 		# mode		"apps", "libs"			Only show applications or libraries in the listing. Omit to show both.
 		# items		any integer >= 1		Show the specified amount of items on a page. Omit to use 20.
 		# user		any valid user name		Only show items by the specified user. Omit to show items by all users.
-		# todo: time (newer than, older than)
 
 		$page_title = "Browse ";
 		$mode = "";
+		$default_only = false;
+
 		if (isset($_GET["mode"]))
 		{
 			$mode = $_GET["mode"];
@@ -43,6 +44,11 @@
 		if (isset($_GET["tags"]))
 		{
 			$tags = $_GET["tags"];
+		}
+		if (isset($_GET["default"]) && $_GET["default"] && strtolower($_GET["default"]) != "false")
+		{
+			$default_only = true;
+			$page_title .= " (lib standard)";
 		}
 
 		$page_itemcount = (empty($_GET["items"])) ? 20 : $_GET["items"];
@@ -80,8 +86,7 @@
 				$start_index = $page_index * $page_itemcount;
 
 				$api = new ALD((isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]) ? "https://{$_SERVER["SERVER_NAME"]}/user/maulesel/api" : "http://{$_SERVER["SERVER_NAME"]}/api");
-				$items = $api->getItemList($start_index, $page_itemcount + 1, isset($item_type) ? $item_type : NULL, !empty($user) ? $user : NULL, NULL, isset($tags) ? explode("|", $tags) : NULL, "latest");
-				# TODO: name not supported by this page
+				$items = $api->getItemList($start_index, $page_itemcount + 1, isset($item_type) ? $item_type : NULL, !empty($user) ? $user : NULL, NULL, isset($tags) ? explode("|", $tags) : NULL, "latest", $default_only);
 
 				$last_letter = "";
 				$i = 0;
