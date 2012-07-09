@@ -30,7 +30,7 @@
 			return json_decode( $this->_Request( CURLOPT_HTTPGET, "/items/describe/$name/$version", array("Accept: application/json") ), true );
 		}
 
-		public function getItemList($start = 0, $count = "all", $type = NULL, $user = NULL, $name = NULL, $tags = NULL, $version = NULL, $default_only = false)
+		public function getItemList($start = 0, $count = "all", $type = NULL, $user = NULL, $name = NULL, $tags = NULL, $version = NULL, $default_only = false, $unreviewed = false)
 		{
 			return json_decode( $this->_Request( CURLOPT_HTTPGET
 										, "/items/list?start=$start&count=$count"
@@ -39,7 +39,8 @@
 											. ( $user != NULL ? "&user=$user" : "" )
 											. ( $name != NULL ? "&name=$name" : "" )
 											. ( $tags != NULL ? "&tags=" . implode("|", $tags) : "" )
-											. ( $default_only ? "&default=true" : "")
+											. ( $default_only ? "&default=true" : "" )
+											. ( $unreviewed ? "&unreviewed=true" : "" )
 										, array("Accept: application/json") ), true );
 		}
 
