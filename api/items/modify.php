@@ -81,7 +81,7 @@
 						throw new HttpException(400);
 					}
 
-					$db_query = "UPDATE $db_table_main Set reviewed = '" . mysql_real_escape_string($_POST["reviewed"]) . "' WHERE id = '$id'";
+					$db_query = "UPDATE $db_table_main Set reviewed = '" . mysql_real_escape_string($_POST["reviewed"]) . "' WHERE id = UNHEX('$id')";
 					if (!mysql_query($db_query, $db_connection))
 					{
 						throw new HttpException(500);
@@ -91,18 +91,18 @@
 						throw new HttpException(404);
 					}
 				}
-				if (!empty($_POST["default_include"]))
+				if (!empty($_POST["default"]))
 				{
 					if (!User::hasPrivilege($_SERVER["PHP_AUTH_USER"], User::PRIVILEGE_DEFAULT_INCLUDE))
 					{
 						throw new HttpException(403);
 					}
-					if (!in_array((int)$_POST["reviewed"], array(0, 1)))
+					if (!in_array((int)$_POST["default"], array(0, 1)))
 					{
 						throw new HttpException(400);
 					}
 
-					$db_query = "UPDATE $db_table_main Set default_include = '" . mysql_real_escape_string($_POST["default_include"]) . "' WHERE id = '$id'";
+					$db_query = "UPDATE $db_table_main Set default_include = '" . mysql_real_escape_string($_POST["default"]) . "' WHERE id = UNHEX('$id')";
 					if (!mysql_query($db_query, $db_connection))
 					{
 						throw new HttpException(500);
