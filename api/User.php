@@ -197,11 +197,10 @@ class User
 			throw new HttpException(500);
 		}
 
-		while ($data = mysql_fetch_object($db_result))
+		if (mysql_affected_rows() != 1)
 		{
-			return $data->activationToken;
+			throw new HttpException(404, NULL, "User not found");
 		}
-		throw new HttpException(404, NULL, "User not found");
 	}
 
 	public static function getPrivileges($id)
