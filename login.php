@@ -5,7 +5,7 @@
 	$page_title = "";
 	$mode = isset($_GET["mode"]) ? $_GET["mode"] : "register"; # maybe change default later
 	$error = true;
-	$redirect = (empty($_GET["redirect"])) ? "/index" : urldecode($_GET["redirect"]);
+	$redirect = (empty($_GET["redirect"])) ? "index" : urldecode($_GET["redirect"]);
 	$should_redirect = true;
 
 	if (empty($_POST))
