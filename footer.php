@@ -14,9 +14,9 @@
 					<li><a href="viewuser">Users</a></li>
 					<li>
 					<?php if (isset($_SESSION) && !empty($_SESSION["user"])) {	?>
-						<a href="login?mode=logout">Logout</a>
+						<a href="login?mode=logout&redirect=<?php echo $_SERVER["REQUEST_URI"]; ?>">Logout</a>
 					<?php } else { ?>
-						<a href="login?mode=login">Login</a> or <a href="login.php?mode=register">Register</a>
+						<a href="login?mode=login&redirect=<?php echo $_SERVER["REQUEST_URI"]; ?>">Login</a> or <a href="login.php?mode=register&redirect=<?php echo $_SERVER["REQUEST_URI"]; ?>">Register</a>
 					<?php } ?>
 					</li>
 					<?php if (isset($_SESSION) && !empty($_SESSION["user"]) && !empty($_SESSION["privileges"]) && $_SESSION["privileges"] > 0) { ?>
