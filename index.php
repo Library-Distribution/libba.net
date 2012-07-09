@@ -51,6 +51,10 @@
 			$page_title .= " (lib standard)";
 		}
 
+		require_once("api/User.php");
+		$logged_in = isset($_SESSION["user"]);
+		$unreviewed = isset($_GET["unrev"]) && $_GET["unrev"] && strtolower($_GET["unrev"]) != "false" && $logged_in && User::hasPrivilege($_SESSION["user"], User::PRIVILEGE_REVIEW);
+
 		$page_itemcount = (empty($_GET["items"])) ? 20 : $_GET["items"];
 	?>
 	<head>
@@ -86,7 +90,14 @@
 				$start_index = $page_index * $page_itemcount;
 
 				$api = new ALD((isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]) ? "https://{$_SERVER["SERVER_NAME"]}/user/maulesel/api" : "http://{$_SERVER["SERVER_NAME"]}/api");
-				$items = $api->getItemList($start_index, $page_itemcount + 1, isset($item_type) ? $item_type : NULL, !empty($user) ? $user : NULL, NULL, isset($tags) ? explode("|", $tags) : NULL, "latest", $default_only);
+				$items = $api->getItemList($start_index, $page_itemcount + 1, isset($item_type) ? $item_type : NULL, !empty($user) ? $user : NULL, NULL, isset($tags) ? explode("|", $tags) : NULL, "latest", $default_only, $unreviewed);
+
+				if (!$unreviewed && $logged_in && User::hasPrivilege($_SESSION["user"], User::PRIVILEGE_REVIEW))
+				{
+					require_once("combineURL.php");
+					$url = combineURL($_SERVER['REQUEST_URI'], array("unrev" => true));
+					echo "<a id='unreviewed-link' href='$url'>Show unreviewed items</a>";
+				}
 
 				$last_letter = "";
 				$i = 0;

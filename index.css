@@ -11,3 +11,27 @@
 	border-bottom-width: 5px;
 	padding: 5px;
 }
+
+a#unreviewed-link
+{
+	display: inline-block;
+	padding: 10px;
+	border: solid gray 2px;
+	float: right;
+	color: darkred;
+	font-weight: bold;
+	margin: 3px;
+	background-color: #e88;
+}
+a#unreviewed-link:hover
+{
+	text-decoration: none;
+	color: darkred;
+	border: ridge gray 3px;
+	margin: 2px;
+	background-color: #e77;
+}
+a#unreviewed-link + *
+{
+	clear: right
+}
