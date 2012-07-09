@@ -72,7 +72,7 @@
 			$code = curl_getinfo($conn, CURLINFO_HTTP_CODE);
 			curl_close($conn);
 
-			if ($code == 200)
+			if ($code >= 200 && $code < 300)
 			{
 				return $response;
 			}
