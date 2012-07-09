@@ -70,7 +70,7 @@
 						throw new HttpException(404);
 					}
 				}
-				if (!empty($_POST["reviewed"]))
+				if (isset($_POST["reviewed"]))
 				{
 					if (!User::hasPrivilege($_SERVER["PHP_AUTH_USER"], User::PRIVILEGE_REVIEW))
 					{
@@ -91,7 +91,7 @@
 						throw new HttpException(404);
 					}
 				}
-				if (!empty($_POST["default"]))
+				if (isset($_POST["default"]))
 				{
 					if (!User::hasPrivilege($_SERVER["PHP_AUTH_USER"], User::PRIVILEGE_DEFAULT_INCLUDE))
 					{
