@@ -2,7 +2,9 @@
 	session_start();
 	require_once("sortArray.php");
 
+	$logged_in = isset($_SESSION["user"]);
 	$page_title = "View users";
+
 	if (isset($_GET["user"]))
 	{
 		$user = $_GET["user"];
@@ -90,6 +92,25 @@
 				else # output a user profile
 				{
 					$user_data = $api->getUser($user);
+
+					if ($logged_in)
+					{
+						require_once("api/User.php");
+						if (User::hasPrivilege($_SESSION["user"], User::PRIVILEGE_USER_MANAGE))
+						{
+							$redirect_url = urlencode($_SERVER["REQUEST_URI"]);
+							echo "<div class=\"menu\">User management<ul class=\"admin-menu\">";
+							if (!User::getToken($user))
+							{
+								echo "<a href='moderator-action.php?user={$user_data['name']}&action=suspend&value=1&return_error=true&redirect=$redirect_url'><li><span style=\"font-weight: bold; color: red\">Suspend</span> user</li></a>";
+							}
+							else
+							{
+								echo "<a href='moderator-action.php?user={$user_data['name']}&action=suspend&value=-1&return_error=true&redirect=$redirect_url'><li><span style=\"font-weight: bold; color: green\">Unsuspend</span> user</li></a>";
+							}
+							echo "</ul></div>";
+						}
+					}
 
 					echo "<div id=\"user-gravatar\"><img width=\"200\" height=\"200\" src=\"http://gravatar.com/avatar/{$user_data['mail']}?s=200&d=mm\"/></div>";
 					echo "Joined: <span class='joined-date'>{$user_data['joined']}</span>";
