@@ -20,9 +20,6 @@
 						<a href="login?mode=login&redirect=<?php echo $redirect_url; ?>">Login</a> or <a href="login.php?mode=register&redirect=<?php echo $redirect_url; ?>">Register</a>
 					<?php } ?>
 					</li>
-					<?php if (isset($_SESSION) && !empty($_SESSION["user"]) && !empty($_SESSION["privileges"]) && $_SESSION["privileges"] > 0) { ?>
-						<li><a href="moderator">Moderator control panel</a></li>
-					<?php } ?>
 					<li><a href="upload">Upload a new app or lib</a></li>
 				</ul>
 			</td>
