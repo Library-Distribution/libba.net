@@ -45,7 +45,7 @@
 			}
 
 			$db_cond .= ($db_cond) ? " AND" : " WHERE";
-			if (!isset($_GET["unreviewed"]) || !$_GET["unreviewed"] && strtolower($_GET["unreviewed"]) == "false")
+			if (!isset($_GET["unreviewed"]) || !$_GET["unreviewed"] || strtolower($_GET["unreviewed"]) == "false")
 			{
 				$db_cond .= " reviewed = '1'";
 			}
