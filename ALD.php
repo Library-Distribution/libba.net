@@ -48,6 +48,17 @@
 			return json_decode( $this->_Request( CURLOPT_POST, "/items/add", array("Accept: application/json"), array("package" => "@$file"), $user, $password) )->id;
 		}
 
+		public function modifyItemById( $id, $request_user, $request_password, $reviewed = NULL, $default = NULL, $user = NULL )
+		{
+			$data = array();
+
+			$reviewed != NULL && $data["reviewed"] = $reviewed;
+			$default != NULL && $data["default"] = $default;
+			$user != NULL && $data["user"] = $user;
+
+			$this->_Request( CURLOPT_HTTPGET, "/items/modify/$id", array("Accept: application/json"), $data, $request_user, $request_password );
+		}
+
 		private function _Request($method, $url, $header, $data = NULL, $user = NULL, $password = NULL)
 		{
 			$conn = curl_init();
