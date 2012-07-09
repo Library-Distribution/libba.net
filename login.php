@@ -10,6 +10,9 @@
 
 	if (empty($_POST))
 	{
+		$should_redirect = false;
+		$error = false;
+
 		if ($mode == "login")
 		{
 			$page_title = "Login";
@@ -27,9 +30,8 @@
 			$page_title = "Logged out";
 			unset($_SESSION["privileges"]); unset($_SESSION["user"]); unset($_SESSION["password"]); # unset here as session_destroy() seems to have no effect on currently loaded page
 			session_destroy();
+			$should_redirect = true;
 		}
-		$should_redirect = false;
-		$error = false;
 	}
 	else
 	{
