@@ -5,22 +5,24 @@
 		header("Location: index");
 		exit;
 	}
+	$id = $_GET["id"];
 
 	require_once("sortArray.php");
 	require_once("ALD.php");
 	require_once("api/semver.php");
 
 	$api = new ALD(!empty($_SERVER["HTTPS"]) ? "https://{$_SERVER["SERVER_NAME"]}/user/maulesel/api" : "http://{$_SERVER["SERVER_NAME"]}/api");
-
 	try
 	{
-		$item = $api->getItemById($_GET["id"]);
+		$item = $api->getItemById($id);
 	}
 	catch (HttpException $e)
 	{
 		die ("Failed to retrieve information about this item.<p>{$e->getMessage()}</p>");
 	}
+
 	$page_title = "\"{$item['name']}\" (v{$item['version']})";
+	$logged_in = isset($_SESSION["user"]);
 
 	function semver_sort($a, $b)
 	{
@@ -37,6 +39,42 @@
 		<?php require("header.php"); ?>
 		<h1 id="page-title"><?php echo $page_title; ?></h1>
 		<div id="page-content">
+			<?php
+				if ($logged_in)
+				{
+					require_once("api/User.php");
+					$redirect_url = urlencode($_SERVER["REQUEST_URI"]);
+					if (User::hasPrivilege($_SESSION["user"], User::PRIVILEGE_REVIEW))
+					{
+						# insert review items
+						echo "<div class=\"menu\">Code Review<ul class=\"admin-menu\">";
+						if ($item['reviewed'])
+						{
+							echo "<a href='moderator-action.php?id=$id&action=review&value=0&return_error=true&redirect=$redirect_url'><li>Mark as <span style=\"font-weight: bold;\">unreviewed</span></li></a>";
+						}
+						else
+						{
+							echo "<a href='moderator-action.php?id=$id&action=review&value=1&return_error=true&redirect=$redirect_url'><li>Mark as <span style=\"font-weight: bold; color: green\">secure and stable</span></li></a>";
+						}
+						echo "<a href='moderator-action.php?id=$id&action=review&value=-1&return_error=true&redirect=$redirect_url'><li>Mark as <span style=\"font-weight: bold; color: red\">unsecure or unstable</span></li></a>";
+						echo "</ul></div>";
+					}
+					if (User::hasPrivilege($_SESSION["user"], User::PRIVILEGE_DEFAULT_INCLUDE) && $item['type'] == "lib" && $item['reviewed'])
+					{
+						# insert default_include items
+						echo "<div class=\"menu\">Library standard<ul class=\"admin-menu\">";
+						if ($item['default'])
+						{
+							echo "<a href='moderator-action.php?id=$id&action=default&value=0&return_error=true&redirect=$redirect_url'><li><span style=\"font-weight: bold; color: red\">Remove</span></li></a>";
+						}
+						else
+						{
+							echo "<a href='moderator-action.php?id=$id&action=default&value=1&return_error=true&redirect=$redirect_url'><li><span style=\"font-weight: bold; color: green\">Add</span></li></a>";
+						}
+						echo "</ul></div>";
+					}
+				}
+			?>
 			<table>
 				<tr>
 					<td>Uploaded by:</td>
@@ -69,17 +107,23 @@
 			<?php
 
 				$versions = $api->getItemList(0, "all", NULL, NULL, $item['name']);
+
+				# remove the current item from the array
+				require_once("api/util.php");
+				$index = searchSubArray($versions, array("id" => $item["id"]));
+				if ($index !== NULL)
+				{
+					unset($versions[$index]);
+				}
+
 				usort($versions, "semver_sort"); # sort by "version" field, following semver rules
 
-				if (count($versions) > 1) # 1 as the version on this page is included
+				if (count($versions) > 0)
 				{
 					echo "<h3>Other versions:</h3><ul>";
 					foreach ($versions AS $version)
 					{
-						if ($version['version'] != $item['version'])
-						{
-							echo "<li><a href='?id={$version['id']}'>version {$version['version']}</a></li>";
-						}
+						echo "<li><a href='?id={$version['id']}'>version {$version['version']}</a></li>";
 					}
 					echo "</ul>";
 				}

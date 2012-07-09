@@ -122,6 +122,63 @@ a:hover
 	font-style: italic;
 }
 
+/* admin menus */
+.admin-menu
+{
+	list-style-type: none;
+	border-style: none;
+	width: 225px;
+}
+.admin-menu li
+{
+	padding: 3px;
+	margin: 0.4em;
+	border-left: solid gray 1px
+}
+.admin-menu
+{
+	display: none;
+	position: relative;
+	left: -45px;
+}
+div.menu:hover > .admin-menu
+{
+	display: block
+}
+div.menu:hover
+{
+	border: solid gray 1px;
+	border-top: ridge gray 3px;
+	margin-left: 4px;
+	margin-right: 4px
+}
+div.menu
+{
+	float: right;
+	clear: left;
+	border-style: ridge;
+	width: 225px;
+	padding: 3px;
+	margin: 2px;
+}
+div.menu a
+{
+	color: black;
+	margin: 0px;
+	padding: 0px
+}
+div.menu a:hover
+{
+	text-decoration: none;
+	cursor: pointer
+}
+.admin-menu li:hover
+{
+	border: solid gray 1px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+
 /* "next" and "previous" links */
 .next-previous
 {
