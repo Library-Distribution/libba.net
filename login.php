@@ -213,7 +213,7 @@
 				if (empty($_POST) && $mode != "logout")
 				{
 			?>
-					<form action="<?php echo $_SERVER["REQUEST_URI"]; ?>" method="post">
+					<form action="<?php echo htmlentities($_SERVER["REQUEST_URI"]); ?>" method="post">
 						<table>
 			<?php	if ($mode == "activate") { ?>
 						<input type="hidden" name="name" value="<?php echo $_GET["name"]; ?>"/>
