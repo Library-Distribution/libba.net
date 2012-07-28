@@ -149,8 +149,9 @@
 						try
 						{
 							$_SESSION["user"] = $name;
+							$_SESSION["userID"] = User::getID($name);
 							$_SESSION["password"] = $_POST["password"];
-							$_SESSION["privileges"] = User::getPrivileges(User::getID($name));
+							$_SESSION["privileges"] = User::getPrivileges($_SESSION["userID"]);
 						}
 						catch (HttpException $e)
 						{
