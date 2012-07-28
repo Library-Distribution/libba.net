@@ -16,7 +16,7 @@ body
 table
 {
 	border-collapse: collapse;
-	empty-cells=show;
+	empty-cells: show;
 }
 
 /* default link styling */
