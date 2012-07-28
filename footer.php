@@ -1,5 +1,5 @@
 <div id="footer">
-	<a href="index"><img src="logo.png" class="logo"/></a>
+	<a href="index"><img src="logo.png" alt="ALD logo" class="logo"/></a>
 	<table>
 		<tr>
 			<td>
@@ -15,9 +15,9 @@
 					<li><a href="viewuser">Users</a></li>
 					<li>
 					<?php if (isset($_SESSION) && !empty($_SESSION["user"])) {	?>
-						<a href="login?mode=logout&redirect=<?php echo $redirect_url; ?>">Logout</a>
+						<a href="login?mode=logout&amp;redirect=<?php echo $redirect_url; ?>">Logout</a>
 					<?php } else { ?>
-						<a href="login?mode=login&redirect=<?php echo $redirect_url; ?>">Login</a> or <a href="login.php?mode=register&redirect=<?php echo $redirect_url; ?>">Register</a>
+						<a href="login?mode=login&amp;redirect=<?php echo $redirect_url; ?>">Login</a> or <a href="login.php?mode=register&amp;redirect=<?php echo $redirect_url; ?>">Register</a>
 					<?php } ?>
 					</li>
 					<li><a href="upload">Upload a new app or lib</a></li>

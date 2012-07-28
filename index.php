@@ -58,8 +58,8 @@
 		$page_itemcount = (empty($_GET["items"])) ? 20 : $_GET["items"];
 	?>
 	<head>
-		<link rel="stylesheet" href="default.css"/>
-		<link rel="stylesheet" href="index.css"/>
+		<link rel="stylesheet" type="text/css" href="default.css"/>
+		<link rel="stylesheet" type="text/css" href="index.css"/>
 		<title><?php echo $page_title; ?></title>
 	</head>
 	<body>
@@ -123,7 +123,7 @@
 						}
 						echo "<div class='letter-container' id='items$current_letter'><span class='letter-item'>$current_letter</span><ul>";
 					}
-					echo "<li><a class='item' name='item{$item['id']}' href='viewitem?id={$item['id']}'>{$item['name']}</a> (v{$item['version']}) by <a class='userlink' href='viewuser?user={$item['user']}'>{$item['user']}</a></li>";
+					echo "<li id='item{$item['id']}'><a class='item' href='viewitem?id={$item['id']}'>{$item['name']}</a> (v{$item['version']}) by <a class='userlink' href='viewuser?user={$item['user']}'>{$item['user']}</a></li>";
 					$last_letter = $current_letter;
 				}
 				if (count($items) > 0)
