@@ -144,14 +144,19 @@
 					$should_redirect = false;
 
 					require_once("api/User.php");
+					require_once("ALD.php");
+
 					if (User::validateLogin($_POST["name"], $_POST["password"], false))
 					{
 						try
 						{
+							$api = new ALD(!empty($_SERVER["HTTPS"]) ? "https://{$_SERVER["SERVER_NAME"]}/user/maulesel/api" : "http://{$_SERVER["SERVER_NAME"]}/api");
+							$user = $api->getUser($name);
+
 							$_SESSION["user"] = $name;
-							$_SESSION["userID"] = User::getID($name);
+							$_SESSION["userID"] = $user["id"];
 							$_SESSION["password"] = $_POST["password"];
-							$_SESSION["privileges"] = User::getPrivileges($_SESSION["userID"]);
+							$_SESSION["privileges"] = $user["privileges"];
 						}
 						catch (HttpException $e)
 						{

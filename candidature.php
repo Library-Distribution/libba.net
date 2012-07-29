@@ -5,7 +5,6 @@
 	require_once("smartypants/smartypants.php");
 	require_once("api/db.php");
 	require_once("db2.php");
-	require_once("api/User.php");
 	require_once("ALD.php");
 	require_once("privilege.php");
 
@@ -96,10 +95,10 @@
 			$lib = $api->getItemById($candidature["HEX(libid)"]);
 			$candidature["libname"] = $lib["name"];
 			$candidature["libversion"] = $lib["version"];
-			$candidature["username"] = User::getName($candidature["HEX(userid)"]);
+			$candidature["username"] = $api->getUserById($candidature["HEX(userid)"])["name"];
 			if ($candidature["closed"])
 			{
-				$candidature["closed-by"] = User::getName($candidature["HEX(`closed-by`)"]);
+				$candidature["closed-by"] = $api->getUserById($candidature["HEX(`closed-by`)"])["name"];
 			}
 
 			$comments = array();
@@ -113,7 +112,7 @@
 			}
 			while ($comment = mysql_fetch_assoc($db_result))
 			{
-				$comment["user"] = User::getName($comment["HEX(user)"]);
+				$comment["user"] = $api->getUserById($comment["HEX(user)"])["name"];
 				$comments[] = $comment;
 			}
 
@@ -188,7 +187,7 @@
 				$candidature["lib-name"] = $lib["name"];
 				$candidature["lib-version"] = $lib["version"];
 
-				$candidature["user"] = User::getName($candidature["HEX(userid)"]);
+				$candidature["user"] = $api->getUserById($candidature["HEX(userid)"])["name"];
 
 				$candidatures[] = $candidature;
 			}
