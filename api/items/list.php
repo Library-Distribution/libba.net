@@ -44,15 +44,22 @@
 				$db_cond .= " default_include = '1'";
 			}
 
-			$db_cond .= ($db_cond) ? " AND" : " WHERE";
-			if (!isset($_GET["unreviewed"]) || !$_GET["unreviewed"] || strtolower($_GET["unreviewed"]) == "false")
+			# reviewed and unreviewed items
+			# ================================ #
+			$db_cond .= ($db_cond) ? " AND " : " WHERE ";
+			if (isset($_GET["reviewed"]) && in_array(strtolower($_GET["reviewed"]), array("no", "false", "-1")))
 			{
-				$db_cond .= " reviewed = '1'";
+				$db_cond .= "reviewed = '0'";
 			}
-			else
+			else if (isset($_GET["reviewed"]) && in_array(strtolower($_GET["reviewed"]), array("both", 0)))
 			{
-				$db_cond .= " reviewed != '-1'";
+				$db_cond .= "reviewed = '0' OR reviewed = '1'";
 			}
+			else # default (use "yes", "true", "+1" or "1")
+			{
+				$db_cond .= "reviewed = '1'";
+			}
+			# ================================ #
 
 			if (isset($_GET["version"]))
 			{
