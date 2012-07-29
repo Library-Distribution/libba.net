@@ -95,12 +95,12 @@
 
 					if ($logged_in)
 					{
-						require_once("api/User.php");
+						require_once("privilege.php");
 						if (hasPrivilege($_SESSION["privileges"], PRIVILEGE_USER_MANAGE))
 						{
 							$redirect_url = urlencode($_SERVER["REQUEST_URI"]);
 							echo "<div class=\"menu\">User management<ul class=\"admin-menu\">";
-							if (!User::getToken($user))
+							if ($user_data["enabled"])
 							{
 								echo "<a href='moderator-action.php?user={$user_data['name']}&action=suspend&value=1&return_error=true&redirect=$redirect_url'><li><span style=\"font-weight: bold; color: red\">Suspend</span> user</li></a>";
 							}
