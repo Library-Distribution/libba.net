@@ -102,7 +102,11 @@
 			</table>
 			<h3>Description</h3>
 			<div>
-				<?php echo $item['description']; ?>
+				<?php
+					require_once("markdown/markdown.php");
+					require_once("smartypants/smartypants.php");
+					echo SmartyPants(Markdown($item['description']));
+				?>
 			</div>
 			<?php
 
