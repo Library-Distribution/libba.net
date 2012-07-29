@@ -16,6 +16,7 @@
 			<xsd:attribute use="required" name="joined" type="xsd:string"/>
 			<xsd:attribute use="required" name="privileges" type="xsd:nonNegativeInteger"/>
 			<xsd:attribute use="required" name="id" type="ald:guid-type"/>
+			<xsd:attribute use="required" name="enabled" type="xsd:boolean"/>
 		</xsd:complexType>
 	</xsd:element>
 </xsd:schema>

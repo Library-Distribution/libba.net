@@ -29,7 +29,7 @@
 				throw new HttpException(400);
 			}
 
-			$db_query = "SELECT name, mail, pw, privileges, joined FROM $db_table_users WHERE id = UNHEX('$id')";
+			$db_query = "SELECT name, mail, pw, privileges, joined, activationToken FROM $db_table_users WHERE id = UNHEX('$id')";
 			$db_result = mysql_query($db_query, $db_connection);
 			if (!$db_result)
 			{
@@ -65,6 +65,7 @@
 				}
 				unset($user["pw"]);
 				$user["id"] = $id;
+				$user["enabled"] = !$user["activationToken"]; unset($user["activationToken"]);
 
 				if ($content_type == "application/json")
 				{
@@ -72,7 +73,7 @@
 				}
 				else if ($content_type == "text/xml" || $content_type == "application/xml")
 				{
-					$content = "<ald:user xmlns:ald=\"ald://api/users/describe/schema/2012\" ald:name=\"{$user["name"]}\" ald:mail=\"{$user["mail"]}\" ald:joined=\"{$user["joined"]}\" ald:privileges=\"{$user["privileges"]}\" ald:id=\"{$user["id"]}\"/>";
+					$content = "<ald:user xmlns:ald=\"ald://api/users/describe/schema/2012\" ald:name=\"{$user["name"]}\" ald:mail=\"{$user["mail"]}\" ald:joined=\"{$user["joined"]}\" ald:privileges=\"{$user["privileges"]}\" ald:id=\"{$user["id"]}\" ald:enabled=\"" . ($user["enabled"] ? "true" : "false") . "\"/>";
 				}
 
 				header("HTTP/1.1 200 " . HttpException::getStatusMessage(200));
