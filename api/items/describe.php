@@ -101,8 +101,7 @@
 
 				$output = $data;
 				$output["uploaded"] = $db_entry["uploaded"];
-				$output["userID"] = $db_entry["HEX(user)"];
-				$output["user"] = User::getName($db_entry["HEX(user)"]);
+				$output["user"] = array("name" => User::getName($db_entry["HEX(user)"]), "id" => $db_entry["HEX(user)"]);
 				$output["reviewed"] = $db_entry["reviewed"] == 1;
 				$output["default"] = $db_entry["default_include"] == 1;
 				$tag_list  = array();
@@ -128,6 +127,7 @@
 							$content .= " ald:$key=\"" . (is_bool($value) ? ($value ? "true" : "false") : $value) . "\"";
 						}
 					}
+					$content .= " ald:userID=\"{$output["user"]["id"]}\" ald:user=\"{$output["user"]["name"]}\"";
 					$content .= ">";
 					if (isset($output["authors"]) && is_array($output["authors"]))
 					{

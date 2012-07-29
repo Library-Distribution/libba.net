@@ -111,12 +111,11 @@
 				$item["id"] = $item["HEX(id)"];
 				unset($item["HEX(id)"]);
 
-				$item["userID"] = $item["HEX(user)"];
-				if (!isset($users[$item["userID"]]))
+				if (!isset($users[$item["HEX(user)"]]))
 				{
-					$users[$item["userID"]] = User::getName($item["userID"]);
+					$users[$item["HEX(user)"]] = User::getName($item["HEX(user)"]);
 				}
-				$item["user"] = $users[$item["userID"]];
+				$item["user"] = array("name" => $users[$item["HEX(user)"]], "id" => $item["HEX(user)"]);
 				unset($item["HEX(user)"]);
 
 				$data[] = $item;
@@ -172,7 +171,7 @@
 				$content = "<ald:item-list xmlns:ald=\"ald://api/items/list/schema/2012\">";
 				foreach ($data AS $item)
 				{
-					$content .= "<ald:item ald:name=\"{$item['name']}\" ald:version=\"{$item['version']}\" ald:id=\"{$item['id']}\" ald:user-id=\"{$item['userID']}\" ald:user=\"{$item['user']}\"/>";
+					$content .= "<ald:item ald:name=\"{$item['name']}\" ald:version=\"{$item['version']}\" ald:id=\"{$item['id']}\" ald:user-id=\"{$item['user']['id']}\" ald:user=\"{$item['user']['name']}\"/>";
 				}
 				$content .= "</ald:item-list>";
 			}
