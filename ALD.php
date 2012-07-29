@@ -20,6 +20,11 @@
 			return json_decode( $this->_Request( CURLOPT_HTTPGET, "/users/describe/$name", array("Accept: application/json"), NULL, $request_user, $request_password), true );
 		}
 
+		public function getUserById( $id, $request_user = NULL, $request_password = NULL )
+		{
+			return json_decode( $this->_Request( CURLOPT_HTTPGET, "/users/describe/$id", array("Accept: application/json"), NULL, $request_user, $request_password), true );
+		}
+
 		public function getItemById( $id )
 		{
 			return json_decode( $this->_Request( CURLOPT_HTTPGET, "/items/describe/$id", array("Accept: application/json") ), true );
