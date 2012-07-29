@@ -82,7 +82,7 @@
 			<table>
 				<tr>
 					<td>Uploaded by:</td>
-					<td><a href="viewuser?user=<?php echo $item['user']; ?>"><?php echo $item['user']; ?></a></td>
+					<td><a href="viewuser?user=<?php echo $item['user']['name']; ?>"><?php echo $item['user']['name']; ?></a></td>
 				</tr>
 				<tr>
 					<td>Uploaded:</td>
