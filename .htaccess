@@ -5,6 +5,7 @@ RewriteEngine On
 #RewriteRule ^index/(\d+)$ index.php?page=$1 [S=1] # CSS + relative link issue!
 
 RewriteRule ^about$ about.php [L]
+RewriteRule ^candidatures$ candidature.php [L]
 RewriteRule ^help$ help.php [L]
 RewriteRule ^index$ index.php [L]
 RewriteRule ^login$ login.php [L]

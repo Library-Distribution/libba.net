@@ -1,0 +1,80 @@
+#candidature, #candidature-comments, #candidature-list
+{
+	border-collapse: separate;
+	border-spacing: 10px;
+	width: 100%;
+}
+#candidature-list
+{
+	border-spacing: 1px;
+}
+#candidature-list tr > td:first-of-type
+{
+	width: 2.5%;
+	text-align: center
+}
+
+#candidature-list td.cand-open
+{
+	background-color: lightgreen;
+}
+#candidature-list td.cand-closed
+{
+	background-color: #FF6666;
+}
+#candidature td, #candidature-comments td, #candidature-list td
+{
+	border: solid teal 2px;
+	padding: 3px;
+	background-color: lightblue;
+	text-align: justify;
+}
+#candidature tr > td:first-of-type, #candidature-comments tr > td:first-of-type
+{
+	font-weight: bold;
+	width: 15%;
+}
+#candidature #candidature-text
+{
+	font-weight: normal;
+	width: auto;
+	padding: 10px;
+}
+.vote
+{
+	padding: 5px;
+	margin: 3px;
+	background-color: lightblue;
+	border: outset teal 3px;
+
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+
+	display: inline-block;
+}
+.downvote
+{
+	background-color: darkred;
+	border-color: red;
+	color: white;
+}
+.upvote
+{
+	background-color: darkgreen;
+	border-color: green;
+	color: white;
+}
+#votes
+{
+	float: right;
+}
+#votes + *
+{
+	clear: right;
+}
+div.vote-option
+{
+	width: 30%;
+	display: inline-block
+}
