@@ -7,9 +7,8 @@
 	require_once("db2.php");
 	require_once("api/User.php");
 	require_once("ALD.php");
+	require_once("privilege.php");
 
-	$logged_in = isset($_SESSION["userID"]);
-	$can_close = $logged_in && (($_SESSION["privileges"] & User::PRIVILEGE_DEFAULT_INCLUDE) == User::PRIVILEGE_DEFAULT_INCLUDE);
 	$db_connection = db_ensure_connection();
 
 	for ($i = 0; $i < 1; $i++)
@@ -20,6 +19,8 @@
 		if (isset($_GET["id"]))
 		{
 			$id = mysql_real_escape_string($_GET["id"], $db_connection);
+			$logged_in = isset($_SESSION["userID"]);
+			$can_close = $logged_in && hasPrivilege($_SESSION["privileges"], PRIVILEGE_STDLIB);
 
 			if (!empty($_POST) && $logged_in)
 			{

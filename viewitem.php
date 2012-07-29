@@ -42,9 +42,10 @@
 			<?php
 				if ($logged_in)
 				{
-					require_once("api/User.php");
+					require_once("privilege.php");
+
 					$redirect_url = urlencode($_SERVER["REQUEST_URI"]);
-					if (User::hasPrivilege($_SESSION["user"], User::PRIVILEGE_REVIEW))
+					if (hasPrivilege($_SESSION["privileges"], PRIVILEGE_REVIEW))
 					{
 						# insert review items
 						/*
@@ -61,7 +62,7 @@
 						echo "</ul></div>";
 						*/
 					}
-					if (User::hasPrivilege($_SESSION["user"], User::PRIVILEGE_DEFAULT_INCLUDE) && $item['type'] == "lib" && $item['reviewed'])
+					if (hasPrivilege($_SESSION["privileges"], PRIVILEGE_STDLIB) && $item['type'] == "lib" && $item['reviewed'])
 					{
 						# insert default_include items
 						/*

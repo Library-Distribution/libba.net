@@ -4,6 +4,7 @@
 	require_once("api/HttpException.php");
 	require_once("ALD.php");
 	require_once("api/User.php");
+	require_once("privilege.php");
 
 	if (!isset($_GET["action"]))
 	{
@@ -28,7 +29,7 @@
 			User::validateLogin($_SESSION["user"], $_SESSION["password"]);
 			##########################################
 
-			if (!User::hasPrivilege($_SESSION["user"], User::PRIVILEGE_USER_MANAGE))
+			if (!hasPrivilege($_SESSION["privileges"], PRIVILEGE_USER_MANAGE))
 			{
 				throw new HttpException(403);
 			}

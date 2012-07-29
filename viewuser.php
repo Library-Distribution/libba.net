@@ -96,7 +96,7 @@
 					if ($logged_in)
 					{
 						require_once("api/User.php");
-						if (User::hasPrivilege($_SESSION["user"], User::PRIVILEGE_USER_MANAGE))
+						if (hasPrivilege($_SESSION["privileges"], PRIVILEGE_USER_MANAGE))
 						{
 							$redirect_url = urlencode($_SERVER["REQUEST_URI"]);
 							echo "<div class=\"menu\">User management<ul class=\"admin-menu\">";
