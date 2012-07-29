@@ -28,7 +28,7 @@
 		else if ($mode == "logout")
 		{
 			$page_title = "Logged out";
-			unset($_SESSION["privileges"]); unset($_SESSION["user"]); unset($_SESSION["password"]); # unset here as session_destroy() seems to have no effect on currently loaded page
+			unset($_SESSION["privileges"]); unset($_SESSION["user"]); unset($_SESSION["userID"]); unset($_SESSION["password"]); # unset here as session_destroy() seems to have no effect on currently loaded page
 			session_destroy();
 			$should_redirect = true;
 		}
@@ -155,7 +155,7 @@
 						}
 						catch (HttpException $e)
 						{
-							unset($_SESSION["privileges"]); unset($_SESSION["user"]); unset($_SESSION["password"]); # unset here as session_destroy() seems to have no effect on currently loaded page
+							unset($_SESSION["privileges"]); unset($_SESSION["user"]); unset($_SESSION["userID"]); unset($_SESSION["password"]); # unset here as session_destroy() seems to have no effect on currently loaded page
 							session_destroy();
 
 							$message = "Could not login";
