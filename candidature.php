@@ -9,6 +9,7 @@
 	require_once("ALD.php");
 
 	$logged_in = isset($_SESSION["userID"]);
+	$can_close = $logged_in && User::hasPrivilege($_SESSION["user"], User::PRIVILEGE_DEFAULT_INCLUDE);
 	$db_connection = db_ensure_connection();
 
 	for ($i = 0; $i < 1; $i++)
@@ -54,8 +55,25 @@
 						$error_description = "Could not save your last comment on this thread. MySQL error was: '" . mysql_error() . "'";
 						break;
 					}
-					header("Location: " . $_SERVER["REQUEST_URI"]); # reload to clear POST data and avoid repost of comment
 				}
+				else if (isset($_POST["accept"]) || isset($_POST["réject"]))
+				{
+					if ($can_close)
+					{
+						$db_query = "UPDATE $db_table_candidatures Set closed = '1', closed-by = UNHEX('{$_SESSION["userID"]}'), closed-date = NOW(), closed-comment = '" . mysql_real_escape_string($_POST["closecomment"]) . "' WHERE id = '$id'";
+						$db_result = mysql_query($db_query, $db_connection);
+						if (!$db_result)
+						{
+							$error_message = "Failed to close this thread: MySQL error";
+							$error_description = "Could not close the thread. MySQL error was: '" . mysql_error() . "'";
+							break;
+						}
+
+						$db_query = "UPDATE $db_table_main Set default_include = '1' WHERE id = UNHEX('')"; # todo
+						# TODO
+					}
+				}
+				header("Location: " . $_SERVER["REQUEST_URI"]); # reload to clear POST data and avoid repost of comment
 			}
 
 			$db_query = "SELECT *, HEX(libid), HEX(userid), HEX(`closed-by`) FROM $db_table_candidatures WHERE id = '$id'";
@@ -234,22 +252,48 @@
 										<td>
 											<form action="#" method="post">
 												<textarea name="newcomment" style="width: 99.5%"></textarea>
-												<?php if ($can_vote) { ?>
+						<?php
+												if ($can_vote)
+												{
+						?>
 													<div class="vote-option"><input type="radio" name="vote" value="-1"> &dArr; Vote down &dArr; </input></div>
 													<div class="vote-option"><input type="radio" name="vote" value="0" checked="checked">&lArr; neutral &rArr; </input></div>
 													<div class="vote-option"><input type="radio" name="vote" value="1"> &uArr; Vote up &uArr; </input></div>
-												<?php } ?>
-												<input type="submit" value="Submit" style="float: right"></input>
+						<?php
+												}
+						?>
+												<input type="submit" value="Submit" style="float: right"/>
 											</form>
 										</td>
 									</tr>
 						<?php
+									if ($can_close)
+									{
+						?>
+										<tr>
+											<td><a href="viewuser?team=stdlb">Stdlib team</a></td>
+											<td>
+												<form action="#" method="post" style="text-align: center">
+													<textarea name="closecomment" style="width: 99.5%"></textarea>
+													<input style="width: 49%; display: inline-block" type="submit" value="accept" name="accept"/>
+													<input style="width: 49%; display: inline-block" type="submit" value="reject" name="reject"/>
+												</form>
+											</td>
+										</tr>
+						<?php
+									}
 								}
 							}
 							else
 							{
 								echo "<tr><td><a href=\"viewuser.php?user={$candidature["closed-by"]}\">{$candidature["closed-by"]}</a><hr/>{$candidature["closed-date"]}</td>"
 									. "<td id=\"close-comment\" class=\"" . ( /* todo: get if included in stdlib or not */ "") . "\">" . SmartyPants(Markdown($candidature["closed-comment"])) . "</td></tr>";
+								/*
+								if ($can_close && !$in_standard)
+								{
+									reopen for discussion
+								}
+								*/
 							}
 						?>
 					</table>
