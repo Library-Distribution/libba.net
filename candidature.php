@@ -95,10 +95,12 @@
 			$lib = $api->getItemById($candidature["HEX(libid)"]);
 			$candidature["libname"] = $lib["name"];
 			$candidature["libversion"] = $lib["version"];
-			$candidature["username"] = $api->getUserById($candidature["HEX(userid)"])["name"];
+			$temp = $api->getUserById($candidature["HEX(userid)"]);
+			$candidature["username"] = $temp["name"];
 			if ($candidature["closed"])
 			{
-				$candidature["closed-by"] = $api->getUserById($candidature["HEX(`closed-by`)"])["name"];
+				$temp = $api->getUserById($candidature["HEX(`closed-by`)"]);
+				$candidature["closed-by"] = $temp["name"];
 			}
 
 			$comments = array();
@@ -112,7 +114,8 @@
 			}
 			while ($comment = mysql_fetch_assoc($db_result))
 			{
-				$comment["user"] = $api->getUserById($comment["HEX(user)"])["name"];
+				$temp = $api->getUserById($comment["HEX(user)"]);
+				$comment["user"] = $temp["name"];
 				$comments[] = $comment;
 			}
 
@@ -187,7 +190,8 @@
 				$candidature["lib-name"] = $lib["name"];
 				$candidature["lib-version"] = $lib["version"];
 
-				$candidature["user"] = $api->getUserById($candidature["HEX(userid)"])["name"];
+				$temp = $api->getUserById($candidature["HEX(userid)"]);
+				$candidature["user"] = $temp["name"];
 
 				$candidatures[] = $candidature;
 			}

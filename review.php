@@ -51,7 +51,8 @@
 			$comments = array();
 			while ($comment = mysql_fetch_assoc($db_result))
 			{
-				$comment["user"] = $api->getUserById($comment["HEX(user)"])["name"];
+				$temp = $api->getUserById($comment["HEX(user)"]);
+				$comment["user"] = $temp["name"];
 				$comments[] = $comment;
 			}
 
