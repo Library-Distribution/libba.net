@@ -47,6 +47,7 @@
 					if (User::hasPrivilege($_SESSION["user"], User::PRIVILEGE_REVIEW))
 					{
 						# insert review items
+						/*
 						echo "<div class=\"menu\">Code Review<ul class=\"admin-menu\">";
 						if ($item['reviewed'])
 						{
@@ -58,10 +59,12 @@
 						}
 						echo "<a href='moderator-action.php?id=$id&amp;action=review&amp;value=-1&amp;return_error=true&amp;redirect=$redirect_url'><li>Mark as <span style=\"font-weight: bold; color: red\">unsecure or unstable</span></li></a>";
 						echo "</ul></div>";
+						*/
 					}
 					if (User::hasPrivilege($_SESSION["user"], User::PRIVILEGE_DEFAULT_INCLUDE) && $item['type'] == "lib" && $item['reviewed'])
 					{
 						# insert default_include items
+						/*
 						echo "<div class=\"menu\">Library standard<ul class=\"admin-menu\">";
 						if ($item['default'])
 						{
@@ -72,6 +75,7 @@
 							echo "<a href='moderator-action.php?id=$id&amp;action=default&amp;value=1&amp;return_error=true&amp;redirect=$redirect_url'><li><span style=\"font-weight: bold; color: green\">Add</span></li></a>";
 						}
 						echo "</ul></div>";
+						*/
 					}
 				}
 			?>
