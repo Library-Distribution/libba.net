@@ -38,11 +38,21 @@
 				$db_cond .= ($db_cond) ? " AND" : " WHERE";
 				$db_cond .= " tags REGEXP '(^|;)" . mysql_real_escape_string($_GET["tags"], $db_connection) . "($|;)'";
 			}
-			if (isset($_GET["default"]) && $_GET["default"] && strtolower($_GET["default"]) != "false")
+
+			# items in or not in the stdlib
+			# ================================ #
+			if (isset($_GET["stdlib"]) && in_array(strtolower($_GET["stdlib"]), array("no", "false", "-1")))
 			{
-				$db_cond .= ($db_cond) ? " AND" : " WHERE";
-				$db_cond .= " default_include = '1'";
+				$db_cond .= ($db_cond) ? " AND " : " WHERE ";
+				$db_cond .= "default_include = '0'";
 			}
+			else if (isset($_GET["stdlib"]) && in_array(strtolower($_GET["stdlib"]), array("yes", "true", "+1", "1")))
+			{
+				$db_cond .= ($db_cond) ? " AND" : " WHERE ";
+				$db_cond .= "default_include = '1'";
+			}
+			/* else {} */ # default (use "both" or "0") - leave empty so both match
+			# ================================ #
 
 			# reviewed and unreviewed items
 			# ================================ #
@@ -51,7 +61,7 @@
 			{
 				$db_cond .= "reviewed = '0'";
 			}
-			else if (isset($_GET["reviewed"]) && in_array(strtolower($_GET["reviewed"]), array("both", 0)))
+			else if (isset($_GET["reviewed"]) && in_array(strtolower($_GET["reviewed"]), array("both", "0")))
 			{
 				$db_cond .= "reviewed = '0' OR reviewed = '1'";
 			}
