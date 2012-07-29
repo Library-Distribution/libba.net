@@ -1,0 +1,34 @@
+#review-list, #review-comments
+{
+	border-collapse: separate;
+	border-spacing: 10px;
+	width: 100%;
+}
+#review-list
+{
+	border-spacing: 1px;
+}
+#review-list tr > td:first-of-type
+{
+	width: 2.5%;
+	text-align: center;
+}
+#review-list td
+{
+	border: solid teal 2px;
+	padding: 3px;
+	background-color: lightblue;
+	text-align: justify;
+}
+#review td, #review-comments td, #review-list td
+{
+	border: solid teal 2px;
+	padding: 3px;
+	background-color: lightblue;
+	text-align: justify;
+}
+#review tr > td:first-of-type, #review-comments tr > td:first-of-type
+{
+	font-weight: bold;
+	width: 15%;
+}
