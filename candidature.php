@@ -9,7 +9,7 @@
 	require_once("ALD.php");
 
 	$logged_in = isset($_SESSION["userID"]);
-	$can_close = $logged_in && User::hasPrivilege($_SESSION["user"], User::PRIVILEGE_DEFAULT_INCLUDE);
+	$can_close = $logged_in && (($_SESSION["privileges"] & User::PRIVILEGE_DEFAULT_INCLUDE) == User::PRIVILEGE_DEFAULT_INCLUDE);
 	$db_connection = db_ensure_connection();
 
 	for ($i = 0; $i < 1; $i++)
