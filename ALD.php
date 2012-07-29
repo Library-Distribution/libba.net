@@ -35,7 +35,7 @@
 			return json_decode( $this->_Request( CURLOPT_HTTPGET, "/items/describe/$name/$version", array("Accept: application/json") ), true );
 		}
 
-		public function getItemList($start = 0, $count = "all", $type = NULL, $user = NULL, $name = NULL, $tags = NULL, $version = NULL, $stdlib = "both", $reviewed = "yes", $request_user = NULL, $request_password = NULL)
+		public function getItemList($start = 0, $count = "all", $type = NULL, $user = NULL, $name = NULL, $tags = NULL, $version = NULL, $stdlib = "both", $reviewed = "yes")
 		{
 			return json_decode( $this->_Request( CURLOPT_HTTPGET
 										, "/items/list?start=$start&count=$count&stdlib=$stdlib&reviewed=$reviewed"
@@ -44,7 +44,7 @@
 											. ( $user != NULL ? "&user=$user" : "" )
 											. ( $name != NULL ? "&name=$name" : "" )
 											. ( $tags != NULL ? "&tags=" . implode("|", $tags) : "" )
-										, array("Accept: application/json"), NULL, $request_user, $request_password ), true );
+										, array("Accept: application/json") ), true );
 		}
 
 		public function uploadItem( $file, $user, $password )
