@@ -1,28 +1,48 @@
 <?php
 	session_start();
+
 	require_once("sortArray.php");
+	require_once("ALD.php");
 
+	$api = new ALD(!empty($_SERVER["HTTPS"]) ? "https://{$_SERVER["SERVER_NAME"]}/user/maulesel/api" : "http://{$_SERVER["SERVER_NAME"]}/api");
 	$logged_in = isset($_SESSION["user"]);
-	$page_title = "View users";
+	$error = true;
 
-	if (isset($_GET["user"]))
+	for ($i = 0; $i < 1; $i++)
 	{
-		$user = $_GET["user"];
-		$page_title = "User: $user";
-	}
-	else
-	{
-		$page_index = 0;
-		if (isset($_GET["page"]))
+		if (isset($_GET["user"]))
 		{
-			$page_index = $_GET["page"];
-		}
+			$user = $_GET["user"];
+			$page_title = "User: $user";
+			$user_data = $api->getUser($user);
 
-		$page_itemcount = 15;
-		if (isset($_GET["items"]))
-		{
-			$page_itemcount = $_GET["items"];
+			$libs = $api->getItemList(0, "all", "lib", $user, NULL, NULL, "latest");
+			$libs = sortArray($libs, array("name" => false, "version" => true));
+
+			$apps = $api->getItemList(0, "all", "app", $user, NULL, NULL, "latest");
+			$apps = sortArray($apps, array("name" => false, "version" => true));
 		}
+		else
+		{
+			$page_title = "View users";
+
+			$page_index = !empty($_GET["page"]) ? (int)$_GET["page"] : 0;
+			$page_itemcount = !empty($_GET["items"]) ? (int)$_GET["items"] : 15;
+			$start_index = $page_index * $page_itemcount;
+
+			try
+			{
+				$users = $api->getUserList($start_index, $page_itemcount + 1);
+			}
+			catch (HttpException $e)
+			{
+				$error_message = "Failed to get user list: API error";
+				$error_description = "The list of users could not be retrieved. API error was: '{$e->getMessage()}'";
+				break;
+			}
+			$users = sortArray($users, "name");
+		}
+		$error = false;
 	}
 ?>
 <!DOCTYPE html>
@@ -34,63 +54,43 @@
 		<h1 id="page-title"><?php echo $page_title; ?></h1>
 		<div id="page-content">
 			<?php
-				require_once("ALD.php");
-				$api = new ALD(!empty($_SERVER["HTTPS"]) ? "https://{$_SERVER["SERVER_NAME"]}/user/maulesel/api" : "http://{$_SERVER["SERVER_NAME"]}/api");
-
-				if (!isset($user)) # output a list of users
+				if ($error)
 				{
-					$start_index = $page_index * $page_itemcount;
-					try
+					require("error.php");
+				}
+				else if (!isset($user)) # output a list of users
+				{
+					echo "<ul>";
+					$i = 0;
+					foreach ($users AS $user)
 					{
-						$users = $api->getUserList($start_index, $page_itemcount + 1);
+						$i++;
+						if ($i > $page_itemcount)
+						{
+							break;
+						}
+						echo "<li><a href='?user={$user['name']}'>{$user['name']}</a></li>";
 					}
-					catch (HttpException $e)
+					echo "</ul>";
+
+					if (count($users) == 0)
 					{
-						echo $e->getMessage();
+						echo "No users found";
 					}
 
-					if (isset($users))
+					if ($page_index > 0)
 					{
-						sortArray($users, "name");
+						echo "<a class='next-previous' id='prev' href='?items=$page_itemcount&amp;page=".($page_index - 1)."'>Previous page</a>";
+					}
 
-						if (count($users) > 0)
-						{
-							echo "<ul>";
-
-							$i = 0;
-							foreach ($users AS $user)
-							{
-								$i++;
-								if ($i > $page_itemcount)
-								{
-									break;
-								}
-								echo "<li><a href='?user={$user['name']}'>{$user['name']}</a></li>";
-							}
-
-							echo "</ul>";
-						}
-						else
-						{
-							echo "No more users found";
-						}
-
-						if ($page_index > 0)
-						{
-							echo "<a class='next-previous' id='prev' href='?items=$page_itemcount&amp;page=".($page_index - 1)."'>Previous page</a>";
-						}
-
-						# check if there are more users
-						if (count($users) > $page_itemcount)
-						{
-							echo "<a class='next-previous' id='next' href='?items=$page_itemcount&amp;page=".($page_index + 1)."'>Next page</a>";
-						}
+					# check if there are more users
+					if (count($users) > $page_itemcount)
+					{
+						echo "<a class='next-previous' id='next' href='?items=$page_itemcount&amp;page=".($page_index + 1)."'>Next page</a>";
 					}
 				}
 				else # output a user profile
 				{
-					$user_data = $api->getUser($user);
-
 					if ($logged_in)
 					{
 						require_once("privilege.php");
@@ -111,40 +111,23 @@
 					}
 
 					echo "<div id=\"user-gravatar\"><img width=\"200\" height=\"200\" src=\"http://gravatar.com/avatar/{$user_data['mail']}?s=200&d=mm\"/></div>";
-					echo "Joined: <span class='joined-date'>{$user_data['joined']}</span>";
 
-					$items = $api->getItemList(0, "all", "lib", $user);
-					$items = sortArray($items, array("name" => false, "version" => true));
-
-					if ($item_count = count($items))
+					if ($item_count = count($libs))
 					{
 						echo "<h2>Libraries uploaded ($item_count) :</h2><ul>";
-						$uploaded = array();
-						foreach ($items AS $item)
+						foreach ($libs AS $lib)
 						{
-							if (!in_array($item['name'], $uploaded))
-							{
-								$uploaded[] = $item['name'];
-								echo "<li><a href='viewitem?id={$item['id']}'>{$item['name']} (v{$item['version']})</a></li>";
-							}
+							echo "<li><a href='viewitem?id={$lib['id']}'>{$lib['name']} (v{$lib['version']})</a></li>";
 						}
 						echo "</ul>";
 					}
 
-					$items = $api->getItemList(0, "all", "app", $user);
-					$items = sortArray($items, array("name" => false, "version" => true));
-
-					if ($item_count = count($items))
+					if ($item_count = count($apps))
 					{
 						echo "<h2>Applications uploaded ($item_count) :</h2><ul>";
-						$uploaded = array();
-						foreach ($items AS $item)
+						foreach ($apps AS $app)
 						{
-							if (!in_array($item['name'], $uploaded))
-							{
-								$uploaded[] = $item['name'];
-								echo "<li><a href='viewitem?id={$item['id']}'>{$item['name']} (v{$item['version']})</a></li>";
-							}
+							echo "<li><a href='viewitem?id={$app['id']}'>{$app['name']} (v{$app['version']})</a></li>";
 						}
 						echo "</ul>";
 					}
