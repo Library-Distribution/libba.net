@@ -4,3 +4,6 @@
 [submodule "smartypants"]
 	path = smartypants
 	url = https://github.com/michelf/php-smartypants.git
+[submodule "htmlpurifier"]
+	path = htmlpurifier
+	url = http://repo.or.cz/r/htmlpurifier.git
