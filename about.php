@@ -1,9 +1,11 @@
-<?php session_start(); ?>
+﻿<?php
+	session_start();
+	$page_title = "About ALD";
+?>
 <!DOCTYPE html>
 <html>
 	<head>
-		<link rel="stylesheet" href="default.css"/>
-		<title>About</title>
+		<?php require("templates/html.head.php"); ?>
 	</head>
 	<body>
 		<?php require("header.php"); ?>

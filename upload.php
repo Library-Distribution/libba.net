@@ -19,9 +19,8 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<link rel="stylesheet" href="default.css"/>
-		<link rel="stylesheet" href="upload.css"/>
-		<title><?php echo $page_title; ?></title>
+		<?php require("templates/html.head.php"); ?>
+		<link rel="stylesheet" type="text/css" href="upload.css"/>
 		<?php
 			if ($mode == "start" && !$logged_in)
 			{

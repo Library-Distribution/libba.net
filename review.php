@@ -68,9 +68,8 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<link rel="stylesheet" type="text/css" href="default.css"/>
+		<?php require("templates/html.head.php"); ?>
 		<link rel="stylesheet" type="text/css" href="review.css"/>
-		<title><?php echo $page_title; ?></title>
 	</head>
 	<body>
 		<?php require("header.php"); ?>

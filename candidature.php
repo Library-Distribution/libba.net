@@ -202,11 +202,8 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title><?php echo $page_title; ?></title>
-
-		<link rel="stylesheet" type="text/css" href="<?php echo isset($id) ? "../" : ""; ?>default.css"/>
-		<link rel="stylesheet" type="text/css" href="<?php echo isset($id) ? "../" : ""; ?>candidature.css"/>
-		<!-- css stuff etc. -->
+		<?php require("templates/html.head.php"); ?>
+		<link rel="stylesheet" type="text/css" href="candidature.css"/>
 	</head>
 	<body>
 		<?php require("header.php"); ?>

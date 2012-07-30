@@ -191,9 +191,9 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<link rel="stylesheet" href="default.css"/>
-		<title><?php echo $page_title; ?></title>
 		<?php
+			require("templates/html.head.php");
+
 			if ($should_redirect)
 			{
 				echo "<meta http-equiv=\"REFRESH\" content=\"10;url=$redirect\">";
