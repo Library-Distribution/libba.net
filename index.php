@@ -1,141 +1,43 @@
-<?php session_start(); ?>
+﻿<?php
+	session_start();
+	$page_title = "ALD - AutoHotkey Library Distribution system";
+?>
 <!DOCTYPE html>
 <html>
-	<?php
-		# 'GET' parameters:
-		# Name		possible values			Meaning
-		###########################################################################################################
-		# page		any integer >= 0		Show the page with specified index. Omit to show the main page.
-		#									The parameters below only have effect when this is one is present.
-		# mode		"apps", "libs"			Only show applications or libraries in the listing. Omit to show both.
-		# items		any integer >= 1		Show the specified amount of items on a page. Omit to use 20.
-		# user		any valid user name		Only show items by the specified user. Omit to show items by all users.
-
-		$page_title = "Browse ";
-		$mode = "";
-		$default_only = false;
-
-		if (isset($_GET["mode"]))
-		{
-			$mode = $_GET["mode"];
-			if ($mode == "apps")
-			{
-				$page_title .= "applications";
-			}
-			else if ($mode == "libs")
-			{
-				$page_title .= "libraries";
-			}
-		}
-		else
-		{
-			$page_title .= "libraries and applications";
-		}
-
-		if (isset($_GET["page"]))
-		{
-			$page_index = $_GET["page"];
-		}
-		if (isset($_GET["user"]))
-		{
-			$user = $_GET["user"];
-			$page_title .= " by $user";
-		}
-		if (isset($_GET["tags"]))
-		{
-			$tags = $_GET["tags"];
-		}
-		if (isset($_GET["default"]) && $_GET["default"] && strtolower($_GET["default"]) != "false")
-		{
-			$default_only = true;
-			$page_title .= " (lib standard)";
-		}
-
-		$logged_in = isset($_SESSION["user"]);
-		$page_itemcount = (empty($_GET["items"])) ? 20 : $_GET["items"];
-	?>
 	<head>
-		<link rel="stylesheet" type="text/css" href="default.css"/>
+		<?php require("templates/html.head.php"); ?>
 		<link rel="stylesheet" type="text/css" href="index.css"/>
-		<title><?php echo $page_title; ?></title>
 	</head>
 	<body>
 		<?php require("header.php"); ?>
-		<h1 id="page-title"><?php echo $page_title; ?></h1>
-		<div id="page-content">
-			<?php
-				if (!isset($page_index) && !isset($_GET["items"]) && !isset($user) && !isset($tag))
-				{
-			?>
-					<p>
-						<span class="text-first-word">Welcome</span> to <b><abbr>ALD</abbr></b>, the <b>A</b>utoHotkey <b>L</b>ibrary <b>D</b>istribution system.
-						This is a standardized system for distribution of code you have written in AutoHotkey.
-						By uploading your code here, you can make it accessible for every AutoHotkey user.
-						See the list below for apps and libraries already available,
-						or check out the manual to see how you can upload your own software.
-					</p>
-			<?php
-				}
-				if (!isset($page_index))
-				{
-					$page_index = 0;
-				}
-				require_once("ALD.php");
-				require_once("sortArray.php");
+		<!--div id="page-content"-->
+			<div id="vert1"></div><div id="vert2"></div>
+			<div id="horz1"></div><div id="horz2"></div>
 
-				$item_type = ($mode == "apps" ? "app" : ($mode == "libs" ? "lib" : ""));
-				$start_index = $page_index * $page_itemcount;
+			<a href="about" title="Get to know the AutoHotkey Library Distribution"><img id="logo" alt="ALD-logo" src="logo.png"/></a>
 
-				$api = new ALD((isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]) ? "https://{$_SERVER["SERVER_NAME"]}/user/maulesel/api" : "http://{$_SERVER["SERVER_NAME"]}/api");
-				$items = $api->getItemList($start_index, $page_itemcount + 1, isset($item_type) ? $item_type : NULL, !empty($user) ? $user : NULL, NULL, isset($tags) ? explode("|", $tags) : NULL, "latest", $default_only);
+			<a href="https://github.com/maul-esel/ALD" title="Developed on github"><img alt="github" src="Octocat.png" id="github"/></a>
+			<a href="http://trello.com" title="Planned on trello"><img alt="trello" src="trello.png" id="trello"/></a>
 
-				$last_letter = "";
-				$i = 0;
-				$items = sortArray($items, "name");
-				foreach ($items as $item)
-				{
-					$i++;
-					if ($i > $page_itemcount)
-					{
-						break;
-					}
+			<a href="http://php.net" title="Written in PHP"><img src="http://www.php.net/images/logos/php-med-trans.png" alt="php" id="php"/></a>
+			<a href="http://mysql.com" title="Storing data using MySQL"><img alt="MySQL" src="http://upload.wikimedia.org/wikipedia/de/1/1f/Logo_MySQL.svg" id="MySQL"/></a>
+			<a href="http://apache.org" title="Running on Apache"><img alt="apache" src="http://www.apache.org/images/feather-small.gif" id="apache"/></a>
 
-					$current_letter = strtoupper(substr($item['name'], 0, 1));
-					if (!ctype_alpha($current_letter))
-					{
-						$current_letter = ".#?1";
-					}
-					if ($current_letter != $last_letter)
-					{
-						if ($last_letter != "")
-						{
-							echo "</ul></div>";
-						}
-						echo "<div class='letter-container' id='items$current_letter'><span class='letter-item'>$current_letter</span><ul>";
-					}
-					echo "<li id='item{$item['id']}'><a class='item' href='viewitem?id={$item['id']}'>{$item['name']}</a> (v{$item['version']}) by <a class='userlink' href='viewuser?user={$item['user']['name']}'>{$item['user']['name']}</a></li>";
-					$last_letter = $current_letter;
-				}
-				if (count($items) > 0)
-				{
-					echo "</ul></div>";
-				}
-				else
-				{
-					echo "<b>No items found that match your query.</b>";
-				}
+			<a href="http://validator.w3.org/check/refererer" title="Uses HTML5">
+				<img alt="W3C HTML" src="http://www.w3.org/html/logo/downloads/HTML5_Logo_128.png" id="html-check"/>
+			</a>
+			<a href="http://jigsaw.w3.org/css-validator/check/referer" title="Valid CSS">
+				<img alt="CSS is valid!" src="http://jigsaw.w3.org/css-validator/images/vcss-blue" id="css-check"/>
+			</a>
 
-				if ($page_index > 0)
-				{
-					echo "<a class='next-previous' id='prev' href='?items=$page_itemcount&amp;page=".($page_index - 1)."'>Previous page</a>";
-				}
+			<h1>ALD &mdash;<br/>AutoHotkey Library Distribution system</h1>
 
-				if (count($items) > $page_itemcount)
-				{
-					echo "<a class='next-previous' id='next' href='?items=$page_itemcount&amp;page=".($page_index + 1)."'>Next page</a>";
-				}
-			?>
-		</div>
+			<div id="short1">Share your AutoHotkey work &mdash; in an easy and comfortable way</div>
+			<div id="short2">Get all the libraries you need &mdash; fast, reliable and always up-to-date</div>
+
+			<div id="long1">Uploading your work is as simple as 1-2-3. Your code is available to all users easily. You can make it into the standard library for AutoHotkey.</div>
+			<div id="long2">Get a set of libraries for everyday use. Enhance AutoHotkey with specialized pieces of code. Code review and careful selection for the standard lib ensure you get always the best.</div>
+		<!--/div-->
 		<?php require("footer.php"); ?>
 	</body>
 </html>

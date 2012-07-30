@@ -1,0 +1,181 @@
+body
+{
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	left: 0%;
+	right: 0%;
+	padding: 0px;
+	margin: 0px;
+	background-color: white
+}
+#logo
+{
+	position: absolute;
+	left: 45%;
+	top: 30%;
+	overflow: hidden;
+
+	width: 25%;
+
+	border-radius: 50%;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	-ms-border-radius: 50%;
+	-o-border-radius: 50%;
+
+	border: solid gray 2px;
+}
+#vert1, #vert2, #horz1, #horz2
+{
+	position: absolute;
+	/*background-color: lightgray;*/
+}
+#vert1, #vert2
+{
+	width: 10%;
+	border-left: solid gray 1px;
+	border-right: solid gray 1px;
+	left: 52.5%;
+}
+#vert1
+{
+	top: 0%;
+	height: 33%;
+	background-image: linear-gradient(left, #EEE 0%, #BBB 60%, #888 75%, #BBB 85%, #EEE 100%);
+	background-image: -moz-linear-gradient(left, #EEE 0%, #BBB 60%, #888 75%, #BBB 85%, #EEE 100%);
+	background-image: -webkit-linear-gradient(left, #EEE 0%, #BBB 60%, #888 75%, #BBB 85%, #EEE 100%);
+	background-image: -ms-linear-gradient(left, #EEE 0%, #BBB 60%, #888 75%, #BBB 85%, #EEE 100%);
+	background-image: -o-linear-gradient(left, #EEE 0%, #BBB 60%, #888 75%, #BBB 85%, #EEE 100%);
+}
+#vert2
+{
+	bottom: 0%;
+	height: 27%;
+	background-image: linear-gradient(left, #EEE 0%, #BBB 15%, #888 25%, #BBB 40%, #EEE 100%);
+	background-image: -moz-linear-gradient(left, #EEE 0%, #BBB 15%, #888 25%, #BBB 40%, #EEE 100%);
+	background-image: -webkit-linear-gradient(left, #EEE 0%, #BBB 15%, #888 25%, #BBB 40%, #EEE 100%);
+	background-image: -ms-linear-gradient(left, #EEE 0%, #BBB 15%, #888 25%, #BBB 40%, #EEE 100%);
+	background-image: -o-linear-gradient(left, #EEE 0%, #BBB 15%, #888 25%, #BBB 40%, #EEE 100%);
+}
+#horz1, #horz2
+{
+	height: 35%;
+	border-top: solid gray 1px;
+	border-bottom: solid gray 1px;
+}
+#horz1
+{
+	left: 0%;
+	top: 35%;
+	width: 50%;
+	background-image: linear-gradient(top, #EEE 0%, #BBB 15%, #888 25%, #BBB 40%, #EEE 100%);
+	background-image: -moz-linear-gradient(top, #EEE 0%, #BBB 15%, #888 25%, #BBB 40%, #EEE 100%);
+	background-image: -webkit-linear-gradient(top, #EEE 0%, #BBB 15%, #888 25%, #BBB 40%, #EEE 100%);
+	background-image: -ms-linear-gradient(top, #EEE 0%, #BBB 15%, #888 25%, #BBB 40%, #EEE 100%);
+	background-image: -o-linear-gradient(top, #EEE 0%, #BBB 15%, #888 25%, #BBB 40%, #EEE 100%);
+}
+#horz2
+{
+	right: 0%;
+	top: 35%;
+	width: 35%;
+	background-image: linear-gradient(top, #EEE 0%, #BBB 60%, #888 75%, #BBB 85%, #EEE 100%);
+	background-image: -moz-linear-gradient(top, #EEE 0%, #BBB 60%, #888 75%, #BBB 85%, #EEE 100%);
+	background-image: -webkit-linear-gradient(top, #EEE 0%, #BBB 60%, #888 75%, #BBB 85%, #EEE 100%);
+	background-image: -ms-linear-gradient(top, #EEE 0%, #BBB 60%, #888 75%, #BBB 85%, #EEE 100%);
+	background-image: -o-linear-gradient(top, #EEE 0%, #BBB 60%, #888 75%, #BBB 85%, #EEE 100%);
+}
+#short1, #short2
+{
+	position: absolute;
+	font-size: 150%
+}
+#short1
+{
+	left: 22.5%;
+	top: 55%;
+	width: 22.5%;
+	text-align: right;
+}
+#short2
+{
+	left: 70%;
+	top: 37.5%;
+	width: 27.5%
+}
+#long1, #long2
+{
+	position: absolute;
+	text-align: justify;
+	top: 75%;
+	width: 20%
+}
+#long1
+{
+	left: 30%;
+}
+#long2
+{
+	left: 65%
+}
+
+h1
+{
+	position: absolute;
+	left: 22%;
+	top: 15%;
+	width: 30%;
+	text-align: right;
+}
+
+#trello, #github
+{
+	position: absolute;
+	max-width: 10%;
+	left: 3%
+}
+#trello
+{
+	top: 70%
+}
+#github
+{
+	top: 52.5%
+}
+
+/* software */
+#php, #MySQL, #apache
+{
+	position: absolute;
+	bottom: 4%;
+	width: 5%;
+}
+#apache
+{
+	left: 0%
+}
+#MySQL
+{
+	left: 7.5%
+}
+#php
+{
+	left: 15%
+}
+
+/* HTML and CSS validity */
+#html-check, #css-check
+{
+	position: absolute;
+	right: 1px;
+	width: 5%
+}
+#html-check
+{
+	bottom: 8%;
+}
+#css-check
+{
+	bottom: 4%;
+}

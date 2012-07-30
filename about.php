@@ -8,7 +8,6 @@
 		<?php require("templates/html.head.php"); ?>
 	</head>
 	<body>
-		<?php require("header.php"); ?>
 		<h1 id="page-title">About</h1>
 		<div id="page-content">
 			<p>
@@ -20,6 +19,6 @@
 				Many thanks for this wonderful work!
 			</p>
 		</div>
-		<?php require("footer.php"); ?>
+		<?php require("footer.php"); require("header.php"); ?>
 	</body>
 </html>

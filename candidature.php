@@ -206,7 +206,6 @@
 		<link rel="stylesheet" type="text/css" href="candidature.css"/>
 	</head>
 	<body>
-		<?php require("header.php"); ?>
 		<h1 id="page-title"><?php echo $page_title; ?></h1>
 		<div id="page-content">
 			<?php
@@ -326,6 +325,6 @@
 				}
 			?>
 		</div>
-		<?php require("footer.php"); ?>
+		<?php require("footer.php"); require("header.php"); ?>
 	</body>
 </html>

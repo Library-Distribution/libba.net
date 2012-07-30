@@ -61,9 +61,9 @@
 		?>
 				<link rel="stylesheet" type="text/css" href="viewitem.list.css"/>
 		<?php } ?>
+		<link rel="stylesheet" type="text/css" href="header.css"/>
 	</head>
 	<body>
-		<?php require("header.php"); ?>
 		<h1 id="page-title"><?php echo $page_title; ?></h1>
 		<div id="page-content">
 			<?php
@@ -215,7 +215,7 @@
 			}
 			?>
 		</div>
-		<?php require("footer.php"); ?>
+		<?php require("header.php"); require("footer.php"); ?>
 	</body>
 </html>
 <?php

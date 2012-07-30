@@ -8,7 +8,6 @@
 		<?php require("templates/html.head.php"); ?>
 	</head>
 	<body>
-		<?php require("header.php"); ?>
 		<h1 id="page-title">ALD help page</h1>
 		<div id="page-content">
 			<h2 class="question">What is this?</h2>
@@ -44,6 +43,6 @@
 			<h2 class="question">?</h2>
 			<div class="answer"></div>
 		</div>
-		<?php require("footer.php"); ?>
+		<?php require("footer.php"); require("header.php"); ?>
 	</body>
 </html>

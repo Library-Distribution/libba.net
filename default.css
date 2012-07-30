@@ -5,80 +5,10 @@ body
 	font-family: QuicksandBook, sans-serif;
 }
 
-#header, #footer, #page-content
-{
-	width: 95%;
-	margin: auto;
-	display: inline-block;
-	padding: 5px;
-}
-
 table
 {
 	border-collapse: collapse;
 	empty-cells: show;
-}
-
-/* default link styling */
-a, a:visited
-{
-	text-decoration: none;
-	color: navy;
-}
-
-a:hover
-{
-	text-decoration: underline;
-	color: darkred;
-}
-
-/* header and footer styles */
-#header, #footer
-{
-	padding: 2px;
-	background-color: green;
-	color: lightgray;
-}
-
-#header
-{
-	vertical-align: middle;
-}
-
-#header a, #footer a
-{
-	color: lightgray;
-}
-
-.logo
-{
-	width: 100px;
-	height: 100px;
-	float: left;
-}
-
-#header h1
-{
-	text-align: center;
-}
-
-#footer table
-{
-	width: 100%;
-	vertical-align: middle;
-	display: inline
-}
-
-#footer table td
-{
-	width: 28%;
-}
-
-/* the page title */
-#page-title
-{
-	text-align: center;
-	font-size: 200%;
 }
 
 /* highlight first word in paragraph */
@@ -89,7 +19,45 @@ a:hover
 	font-style: italic;
 }
 
-/* error messages */
+/* the page title */
+#page-title
+{
+	position: relative;
+	top: 100px;
+	text-align: center;
+	font-size: 200%;
+}
+
+#page-content
+{
+	margin: auto;
+	display: inline-block;
+	padding: 5px;
+	position: absolute;
+	top: 175px;
+	left: 0%;
+	right: 0%;
+	padding-bottom: 3%
+}
+
+/***********************************
+ * DEFAULT LINK STYLING
+ ***********************************/
+a, a:visited
+{
+	text-decoration: none;
+	color: navy;
+}
+a:hover
+{
+	text-decoration: underline;
+	color: darkred;
+}
+/* END OF DEFAULT LINK STYLING */
+
+/***********************************
+ * ERROR MESSAGE STYLING
+ ***********************************/
 .error-message
 {
 	border: solid red 1px;
@@ -121,25 +89,25 @@ a:hover
 	text-align: justify;
 	font-style: italic;
 }
+/* END OF ERROR MESSAGE STYLING */
 
-/* admin menus */
+/***********************************
+ * ADMIN MENU STYLING
+ ***********************************/
 .admin-menu
 {
 	list-style-type: none;
 	border-style: none;
 	width: 225px;
+	display: none;
+	position: relative;
+	left: -45px;
 }
 .admin-menu li
 {
 	padding: 3px;
 	margin: 0.4em;
 	border-left: solid gray 1px
-}
-.admin-menu
-{
-	display: none;
-	position: relative;
-	left: -45px;
 }
 div.menu:hover > .admin-menu
 {
@@ -178,11 +146,14 @@ div.menu a:hover
 	padding-top: 2px;
 	padding-bottom: 2px;
 }
+/* END OF ADMIN MENU STYLING */
 
-/* "next" and "previous" links */
+/***********************************
+ * "NEXT" & "PREVIOUS" LINK STYLING
+ ***********************************/
 .next-previous
 {
-display:inline-block
+	display:inline-block
 }
 #next
 {
@@ -200,3 +171,112 @@ display:inline-block
 {
 	content: ' << ';
 }
+/* END OF "NEXT" & "PREVIOUS" LINK STYLING */
+
+
+/***********************************
+ * HEADER & FOOTER STYLING
+ ***********************************/
+#footer, #header
+{
+	position: fixed;
+	left: 0%;
+	right: 0%;
+	background-color: #EEE
+}
+#header
+{
+	top: 0%;
+	height: 75px;
+	border-bottom: ridge gray 2px;
+}
+#footer
+{
+	bottom: 0%;
+	height: 2%;
+	border-top: ridge gray 2px;
+	padding: 3px;
+	font-size: 80%;
+}
+
+/* elements in header */
+#navigation
+{
+	float: left;
+	position: fixed;
+	top: 0%
+}
+#header-logo, #navigation a.nav-link, #site-name
+{
+	display: table-cell;
+	margin: 0px;
+}
+#navigation a.nav-link
+{
+	padding: 20px;
+	width: 75px;
+	height: 75px;
+	text-align: center;
+	background-image: linear-gradient(top, lightgray 0%, gray 100%);
+	background-image: -moz-linear-gradient(top, lightgray 0%, gray 100%);
+	background-image: -webkit-linear-gradient(top, lightgray 0%, gray 100%);
+	background-image: -ms-linear-gradient(top, lightgray 0%, gray 100%);
+	background-image: -o-linear-gradient(top, lightgray 0%, gray 100%);
+	border: solid gray 1px;
+}
+#site-name
+{
+	font-size: 150%;
+	text-align: center;
+	padding-left: 20px;
+	padding-right: 20px;
+	vertical-align: center;
+	font-weight: bolder;
+}
+#navigation a.nav-link:hover
+{
+	background-image: linear-gradient(top, #DDD 0%, #888 100%);
+	background-image: -moz-linear-gradient(top, #DDD 0%, #888 100%);
+	background-image: -webkit-linear-gradient(top, #DDD 0%, #888 100%);
+	background-image: -ms-linear-gradient(top, #DDD 0%, #888 100%);
+	background-image: -o-linear-gradient(top, #DDD 0%, #888 100%);
+	text-decoration: none;
+}
+#header-logo
+{
+	width: 70px;
+	padding: 1.5px;
+	padding-right: 0px;
+	float: left;
+}
+#header-login
+{
+	position: fixed;
+	width: 100px;
+	top: 0%;
+	right: 27.5%;
+	background-color: gray;
+	padding: 10px;
+	text-align: center;
+	border-bottom-right-radius: 10px;
+	border-bottom-left-radius: 10px;
+}
+#header-ahk
+{
+	position: fixed;
+	right: 1%;
+	top: 1%;
+	width: 25%;
+}
+/* elements in footer */
+#footer #copyright
+{
+	float: right
+}
+#footer a
+{
+	display: inline-block;
+	padding-left: 3px;
+	padding-right: 25px;
+}
+/* END OF HEADER & FOOTER STYLING */

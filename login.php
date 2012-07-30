@@ -210,8 +210,6 @@
 		?>
 	</head>
 	<body <?php echo $should_redirect ? "onload=\"setInterval(updateTime, 999)\"" : ""; ?>>
-
-		<?php require("header.php"); ?>
 		<h1 id="page-title"><?php echo $page_title; ?></h1>
 
 		<div id="page-content">
@@ -267,6 +265,6 @@
 			?>
 		</div>
 
-		<?php require("footer.php"); ?>
+		<?php require("footer.php"); require("header.php"); ?>
 	</body>
 </html>
