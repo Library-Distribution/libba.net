@@ -55,7 +55,7 @@
 <html>
 	<head>
 		<link rel="stylesheet" type="text/css" href="default.css"/>
-		<?php if (!isset($id)) { ?><link rel="stylesheet" type="text/css" href="index.css"/><?php } ?>
+		<?php if (!isset($id)) { ?><link rel="stylesheet" type="text/css" href="viewitem.list.css"/><?php } ?>
 		<title><?php echo $page_title; ?></title>
 	</head>
 	<body>
