@@ -2,16 +2,16 @@
 	session_start();
 
 	require_once("ALD.php");
+
 	$api = new ALD((isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]) ? "https://{$_SERVER["SERVER_NAME"]}/user/maulesel/api" : "http://{$_SERVER["SERVER_NAME"]}/api");
 	$logged_in = isset($_SESSION["user"]);
 
 	if (isset($_GET["id"]))
 	{
 		require_once("api/db.php");
+		require_once("db2.php");
 
 		$db_connection = db_ensure_connection();
-		$db_table_review_comments = "site_review_comments";
-
 		$id = mysql_real_escape_string($_GET["id"], $db_connection);
 		$error = true;
 
