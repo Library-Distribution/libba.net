@@ -1,6 +1,6 @@
 ﻿<div id="header">
 	<div id="navigation">
-		<div><img alt="ALD logo" src="logo.png" id="header-logo"/></div>
+		<div><img alt="ALD logo" src="images/logo.png" id="header-logo"/></div>
 		<div id="site-name">ALD</div>
 
 		<a class="nav-link" href="index">Home</a>
@@ -22,6 +22,6 @@
 		?>
 		</div>
 
-		<a href="http://l.autohotkey.net" title="Created for AutoHotkey"><img alt="AHK" src="ahk_logo.png" id="header-ahk"/></a>
+		<a href="http://l.autohotkey.net" title="Created for AutoHotkey"><img alt="AHK" src="images/AutoHotkey.png" id="header-ahk"/></a>
 	</div>
 </div>

@@ -14,10 +14,10 @@
 			<div id="vert1"></div><div id="vert2"></div>
 			<div id="horz1"></div><div id="horz2"></div>
 
-			<a href="about" title="Get to know the AutoHotkey Library Distribution"><img id="logo" alt="ALD-logo" src="logo.png"/></a>
+			<a href="about" title="Get to know the AutoHotkey Library Distribution"><img id="logo" alt="ALD-logo" src="images/logo.png"/></a>
 
-			<a href="https://github.com/maul-esel/ALD" title="Developed on github"><img alt="github" src="Octocat.png" id="github"/></a>
-			<a href="http://trello.com" title="Planned on trello"><img alt="trello" src="trello.png" id="trello"/></a>
+			<a href="https://github.com/maul-esel/ALD" title="Developed on github"><img alt="github" src="images/github.png" id="github"/></a>
+			<a href="http://trello.com" title="Planned on trello"><img alt="trello" src="images/trello.png" id="trello"/></a>
 
 			<a href="http://php.net" title="Written in PHP"><img src="http://www.php.net/images/logos/php-med-trans.png" alt="php" id="php"/></a>
 			<a href="http://mysql.com" title="Storing data using MySQL"><img alt="MySQL" src="http://upload.wikimedia.org/wikipedia/de/1/1f/Logo_MySQL.svg" id="MySQL"/></a>
