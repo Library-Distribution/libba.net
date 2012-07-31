@@ -5,8 +5,21 @@
 	
 	function user_input_process($raw)
 	{
+		static $purifier, $purifier_config;
+
+		if (!$purifier_config)
+		{
+			$purifier_config = HTMLPurifier_Config::createDefault();
+			# $purifier_config->set('HTML', 'Doctype', 'HTML'); # not yet supported
+			# todo: URL filter
+		}
+		if (!$purifier)
+		{
+			$purifier = new HTMLPurifier($purifier_config);
+		}
+
 		$text = SmartyPants(Markdown($raw));
-		# todo: purify
+		$text = $purifier->purify($text);
 		return $text;
 	}
 

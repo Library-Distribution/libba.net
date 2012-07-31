@@ -296,6 +296,7 @@
 							}
 						?>
 					</table>
+					<a href="http://htmlpurifier.org/"><img src="http://htmlpurifier.org/live/art/powered.png" alt="Powered by HTML Purifier" border="0" /></a>
 			<?php
 				}
 				else
