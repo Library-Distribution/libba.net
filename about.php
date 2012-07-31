@@ -18,6 +18,17 @@
 				For better visual presentation, <a href="http://andrewpaglinawan.com/#quicksand">Andrew Paglinawan's &quot;Quicksand&quot; font</a> is used. It is licensed under the <a href="font/license.txt">SIL Open Font License, Version 1.1</a>.
 				Many thanks for this wonderful work!
 			</p>
+			<p>
+				The icons used throughout the site are taken from the <em>GLYPHICONS FREE</em> icon set by Jan Kovařík. It is licensed under the <a href="images/CC%20BY%203.txt">Creative Commons Attribution 3.0 Unported</a> license and available at <a href="http://glyphicons.com">glyphicons.com</a>.
+				Thanks for these wonderful icons!
+			</p>
+			<p>
+				ALD makes use of 3rd party software:
+				<ul>
+					<li>Thanks to <a href="http://michelf.ca">Michel Fortin</a> for <a href="http://michelf.ca/projects/php-markdown/">PHP Markdown Extra</a> (<a href="markdown/License.txt">license</a>) and <a href="http://michelf.ca/projects/php-smartypants/">PHP SmartyPants</a> (<a href="smartypants/License.txt">license</a>).</li>
+					<li>Thanks to <a href="http://ezyang.com/">Edward Z. Yang</a> for <a href="http://htmlpurifier.org">HTMLPurifier</a> (<a href="htmlpurifier/LICENSE">license</a>).</li>
+				</ul>
+			</p>
 		</div>
 		<?php require("footer.php"); require("header.php"); ?>
 	</body>
