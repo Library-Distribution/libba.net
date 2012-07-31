@@ -230,7 +230,7 @@ div.menu a:hover
 	text-align: center;
 	padding-left: 20px;
 	padding-right: 20px;
-	vertical-align: center;
+	vertical-align: middle;
 	font-weight: bolder;
 }
 #navigation a.nav-link:hover
@@ -255,7 +255,7 @@ div.menu a:hover
 	width: 100px;
 	top: 0%;
 	right: 27.5%;
-	background-color: gray;
+	background-color: #AAA;
 	padding: 10px;
 	text-align: center;
 	border-bottom-right-radius: 10px;
