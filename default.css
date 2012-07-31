@@ -242,6 +242,34 @@ div.menu a:hover
 	background-image: -o-linear-gradient(top, #DDD 0%, #888 100%);
 	text-decoration: none;
 }
+
+.nav-link:before
+{
+	margin: 0px;
+	display: inline-table;
+	text-align: center;
+}
+.nav-link:first-of-type:before
+{
+	content: url('images/home.png');
+}
+.nav-link:nth-of-type(2):before
+{
+	content: url('images/items.png');
+}
+.nav-link:nth-of-type(3):before
+{
+	content: url('images/users.png');
+}
+.nav-link:nth-of-type(4):before
+{
+	content: url('images/help.png');
+}
+.nav-link:nth-of-type(5):before
+{
+	content: url('images/activity/upload.png');
+}
+
 #header-logo
 {
 	width: 70px;
