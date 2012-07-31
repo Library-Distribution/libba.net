@@ -1,8 +1,7 @@
 <?php
 	session_start();
 
-	require_once("markdown/markdown.php");
-	require_once("smartypants/smartypants.php");
+	require_once("user_input.php");
 	require_once("api/db.php");
 	require_once("db2.php");
 	require_once("ALD.php");
@@ -230,7 +229,7 @@
 							<td><?php echo $candidature["date"]; ?></td>
 						</tr>
 						<tr>
-							<td colspan="2" id="candidature-text"><?php echo SmartyPants(Markdown($candidature["text"])); ?></td>
+							<td colspan="2" id="candidature-text"><?php echo user_input_process($candidature["text"]); ?></td>
 						</tr>
 					</table>
 					<div id="votes"><div class="vote upvote">+<?php echo $up_vote_count; ?></div><div class="vote downvote">-<?php echo $down_vote_count; ?></div><div class="vote"><?php echo ($total_vote_count > 0 ? "+" : "-") . $total_vote_count; ?> votes</div></div>
@@ -240,7 +239,7 @@
 							foreach ($comments AS $comment)
 							{
 								echo "<tr><td><a href=\"viewuser.php?user={$comment["user"]}\">{$comment["user"]}</a><hr/>{$comment["date"]}</td>"
-									. "<td>" . SmartyPants(Markdown($comment["comment"])) . (!empty($comment["vote"]) ? "<div class=\"vote\" style=\"float: right\">+1</div>" : "") . "</td></tr>";
+									. "<td>" . user_input_process($comment["comment"]) . (!empty($comment["vote"]) ? "<div class=\"vote\" style=\"float: right\">+1</div>" : "") . "</td></tr>";
 							}
 							if (!$candidature["closed"])
 							{
@@ -287,7 +286,7 @@
 							else
 							{
 								echo "<tr><td><a href=\"viewuser.php?user={$candidature["closed-by"]}\">{$candidature["closed-by"]}</a><hr/>{$candidature["closed-date"]}</td>"
-									. "<td id=\"close-comment\" class=\"" . ( /* todo: get if included in stdlib or not */ "") . "\">" . SmartyPants(Markdown($candidature["closed-comment"])) . "</td></tr>";
+									. "<td id=\"close-comment\" class=\"" . ( /* todo: get if included in stdlib or not */ "") . "\">" . user_input_process($candidature["closed-comment"]) . "</td></tr>";
 								/*
 								if ($can_close && !$in_standard)
 								{

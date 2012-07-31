@@ -33,8 +33,7 @@
 				header("Location: " . $_SERVER["REQUEST_URI"]);
 			}
 
-			require_once("markdown/markdown.php");
-			require_once("smartypants/smartypants.php");
+			require_once("user_input.php");
 
 			$item = $api->getItemById($id);
 			$page_title = $item["name"] . " (v{$item["version"]}) | Code review";
@@ -89,7 +88,7 @@
 			<?php
 						foreach ($comments AS $comment)
 						{
-							echo "<tr><td><a href=\"viewuser?user={$comment["user"]}\">{$comment["user"]}</a><hr/>{$comment["date"]}</td><td>" . SmartyPants(Markdown($comment["comment"])) . "</td></tr>";
+							echo "<tr><td><a href=\"viewuser?user={$comment["user"]}\">{$comment["user"]}</a><hr/>{$comment["date"]}</td><td>" . user_input_process($comment["comment"]) . "</td></tr>";
 						}
 						if (!$item["reviewed"])
 						{
