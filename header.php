@@ -4,8 +4,8 @@
 		<div id="site-name">ALD</div>
 
 		<a class="nav-link" href="index">Home</a>
-		<a class="nav-link" href="viewitem">Code</a>
-		<a class="nav-link" href="viewuser">Users</a>
+		<a class="nav-link" href="items">Code</a>
+		<a class="nav-link" href="users">Users</a>
 		<a class="nav-link" href="help">Help</a>
 		<a class="nav-link" href="upload">Upload</a>
 	</div>
@@ -14,7 +14,7 @@
 	<?php
 		if (isset($_SESSION["user"]))
 		{
-			echo "Welcome<br/><a href=\"viewuser?user={$_SESSION["user"]}\">{$_SESSION["user"]}</a>!<hr/><a href=\"login?mode=logout\">Logout</a>";
+			echo "Welcome<br/><a href=\"users?user={$_SESSION["user"]}\">{$_SESSION["user"]}</a>!<hr/><a href=\"login?mode=logout\">Logout</a>";
 		}
 		else
 		{

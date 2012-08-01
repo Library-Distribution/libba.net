@@ -210,7 +210,7 @@
 				{
 					$achievements[] = array("text" => "$user's library {$lib["name"]} v{$lib["version"]} is part of the standard lib for AutoHotkey",
 											"image" => "images/achievements/stdlib.png",
-											"link" => "viewitem?id=" . $lib["id"]);
+											"link" => "items?id=" . $lib["id"]);
 				}
 			}
 			else if ($mode == "activity")
@@ -245,11 +245,11 @@
 				{
 					$id = $item["id"];
 					$retrieved_items[$id] = $api->getItemById($id);
-					$activity[] = array("header" => "$user uploaded <a href=\"viewitem?id=$id\">{$item["name"]} (v{$item["version"]})</a>",
+					$activity[] = array("header" => "$user uploaded <a href=\"items?id=$id\">{$item["name"]} (v{$item["version"]})</a>",
 										"text" => $retrieved_items[$id]["description"],
 										"image" => "images/activity/upload.png",
 										"date" => $retrieved_items[$id]["uploaded"],
-										"link" => "viewitem?id=$id");
+										"link" => "items?id=$id");
 				}
 
 				# get review comments
@@ -299,7 +299,7 @@
 					$item = isset($retrieved_items[$id])
 								? $retrieved_items[$id]
 								: ($retrieved_items[$id] = $api->getItemById($id));
-					$activity[] = array("header" => "$user proposed <a href=\"viewitem?id=$id\">{$item["name"]} (v{$item["version"]})</a> for the stdlib",
+					$activity[] = array("header" => "$user proposed <a href=\"items?id=$id\">{$item["name"]} (v{$item["version"]})</a> for the stdlib",
 										"text" => $candidature["text"],
 										"image" => "images/activity/candidature.png",
 										"date" => $candidature["date"],
@@ -309,12 +309,11 @@
 					{
 						$user = $api->getUserById($candidature["HEX(`closed-by`)"]);
 						$accepted = $item["default"] ? "accepted" : "rejected";
-						$activity[] = array("header" => "The stdlib candidature for {$item["name"]} v{$item["version"]} has been $accepted by <a href=\"viewuser?user={$user["name"]}\">{$user["name"]}</a>",
+						$activity[] = array("header" => "The stdlib candidature for {$item["name"]} v{$item["version"]} has been $accepted by <a href=\"users?user={$user["name"]}\">{$user["name"]}</a>",
 											"text" => $candidature["closed-comment"],
 											"image" => "images/activity/candidature-$accepted.png",
 											"date" => $candidature["closed-date"],
 											"link" => "candidatures?id={$candidature["id"]}#closecomment");
-						# todo: difference between accepted & rejected
 					}
 				}
 
@@ -515,7 +514,7 @@
 							echo "<h2>$set_name uploaded ($item_count)</h2>";
 							foreach ($set AS $item)
 							{
-								echo "<a href='viewitem?id={$item['id']}' class=\"user-item\">{$item['name']} (v{$item['version']})</a>";
+								echo "<a href='items?id={$item['id']}' class=\"user-item\">{$item['name']} (v{$item['version']})</a>";
 							}
 						}
 					}

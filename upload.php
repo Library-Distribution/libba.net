@@ -108,7 +108,7 @@
 			?>
 							<b>Successfully uploaded!</b><br/>
 							<a href="index">Go to index</a><br />
-							<a href="viewitem?id=<?php echo $id; ?>">View uploaded app or library</a>
+							<a href="items?id=<?php echo $id; ?>">View uploaded app or library</a>
 			<?php
 						}
 					}

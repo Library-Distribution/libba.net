@@ -93,7 +93,7 @@
 							}
 							echo "<div class='letter-container' id='items$current_letter'><span class='letter-item'>$current_letter</span><ul>";
 						}
-						echo "<li id='item{$item['id']}'><a class='item' href='?id={$item['id']}'>{$item['name']}</a> (v{$item['version']}) by <a class='userlink' href='viewuser?user={$item['user']['name']}'>{$item['user']['name']}</a></li>";
+						echo "<li id='item{$item['id']}'><a class='item' href='?id={$item['id']}'>{$item['name']}</a> (v{$item['version']}) by <a class='userlink' href='users?user={$item['user']['name']}'>{$item['user']['name']}</a></li>";
 						$last_letter = $current_letter;
 					}
 					if (count($items) > 0)
@@ -160,7 +160,7 @@
 			<table>
 				<tr>
 					<td>Uploaded by:</td>
-					<td><a href="viewuser?user=<?php echo $item['user']['name']; ?>"><?php echo $item['user']['name']; ?></a></td>
+					<td><a href="users?user=<?php echo $item['user']['name']; ?>"><?php echo $item['user']['name']; ?></a></td>
 				</tr>
 				<tr>
 					<td>Uploaded:</td>
