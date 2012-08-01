@@ -1,8 +1,11 @@
 # database design
-Describes the database structure required for this project
+Describes the database structure required for this project.
+For local testing, name the database `adl_test`.
 
-## database: `adl_test`
+**Note:** All database and table names are defined in 2 files, `api/db.php` and `db2.php`,
+so they can be changed easily.
 
+## backend
 ### table: `main`
 holds the list of apps and libs being uploaded.
 
@@ -30,3 +33,14 @@ holds the list of users, a sha256-hash of the password and the privileges they h
 * privileges (`int(1)`, default: `0`)
 * joined (`date`)
 * activationToken (`int(11)`)
+
+## website
+### table: `site_user_profile`
+holds user profile data specific to the web UI, unrelated to the data backend.
+
+#### columns
+* id (`binary(16)`, `PRIMARY`)
+* mail (`varchar(25), `UNIQUE`)
+* show_mail (`ENUM('hidden', 'members', 'public')`)
+* allow_mails (`ENUM('moderators', 'members', 'public')`)
+* site_theme (`ENUM('default')`)

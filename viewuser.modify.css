@@ -1,0 +1,8 @@
+form table
+{
+	text-align: left;
+}
+form table tr td select
+{
+	width: 100%
+}

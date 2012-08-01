@@ -1,0 +1,49 @@
+﻿.activity-item
+{
+	width: 95%;
+	display: inline-block;
+	background-color: #BBB;
+	text-align: left;
+	border: solid #999 1px;
+	margin: 5px;
+	padding: 10px;
+
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-ms-border-radius: 5px;
+	-o-border-radius: 5px;
+}
+.activity-item:hover
+{
+	background-color: #CCC;
+}
+.activity-item img.activity-icon
+{
+	width: 5%;
+	margin: 5px;
+	float: left;
+	vertical-align: middle;
+}
+.activity-item .activity-footer
+{
+	font-size: 90%;
+	text-align: right;
+	color: #333;
+	width: 100%;
+	vertical-align: bottom;
+}
+.activity-item .activity-body
+{
+	width: 90%;
+	padding: 5px;
+	background-color: white;
+	float: right;
+
+	border: solid gray 1px;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-ms-border-radius: 5px;
+	-o-border-radius: 5px;
+}
