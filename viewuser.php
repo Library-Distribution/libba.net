@@ -16,7 +16,16 @@
 		if (isset($_GET["user"]))
 		{
 			$user = $_GET["user"];
-			$user_data = $api->getUser($user);
+			try
+			{
+				$user_data = $api->getUser($user);
+			}
+			catch (HttpException $e)
+			{
+				$error_message = "Failed to retrieve user: API error";
+				$error_description = "User data could not be retrieved. API error was: '{$e->getMessage()}' (code: {$e->getCode()})";
+				break;
+			}
 			$page_title = $user;
 			$possible_modes = array("profile" => "Profile",
 									"activity" => "Activity",
@@ -167,17 +176,34 @@
 			}
 			else if ($mode == "items")
 			{
-				$libs = $api->getItemList(0, "all", "lib", $user, NULL, NULL, "latest");
+				try
+				{
+					$libs = $api->getItemList(0, "all", "lib", $user, NULL, NULL, "latest");
+					$apps = $api->getItemList(0, "all", "app", $user, NULL, NULL, "latest");
+				}
+				catch (HttpException $e)
+				{
+					$error_message = "Failed to retrieve uploaded items: API error";
+					$error_description = "Uploaded items could not be retrieved. API error was: '{$e->getMessage()}' (code: {$e->getCode()})";
+					break;
+				}
 				$libs = sortArray($libs, array("name" => false, "version" => true));
-
-				$apps = $api->getItemList(0, "all", "app", $user, NULL, NULL, "latest");
 				$apps = sortArray($apps, array("name" => false, "version" => true));
 			}
 			else if ($mode == "achievements")
 			{
 				$achievements = array();
 
-				$libs = $api->getItemList(0, "all", "lib", $user, NULL, NULL, NULL, "yes");
+				try
+				{
+					$libs = $api->getItemList(0, "all", "lib", $user, NULL, NULL, NULL, "yes");
+				}
+				catch (HttpException $e)
+				{
+					$error_message = "Failed to retrieve acheivements: API error";
+					$error_description = "Libraries in stdlb coud not be retrieved. API error was: '{$e->getMessage()}' (code: {$e->getCode()})";
+					break;
+				}
 				$libs = sortArray($libs, array("name" => false, "version" => true));
 
 				foreach ($libs as $lib)
@@ -205,7 +231,16 @@
 									"link" => "user=$user");
 
 				# get items uploaded
-				$items = $api->getItemList(0, "all", NULL, $user);
+				try
+				{
+					$items = $api->getItemList(0, "all", NULL, $user);
+				}
+				catch (HttpException $e)
+				{
+					$error_message = "Failed to retrieve activity: API error";
+					$error_description = "Could not get items uploaded. API error was: '{$e->getMessage()}' (code: {$e->getCode()})";
+					break;
+				}
 				foreach ($items AS $item)
 				{
 					$id = $item["id"];
