@@ -3,6 +3,7 @@
 
 	require_once("api/HttpException.php");
 	require_once("ALD.php");
+	require_once("get_API_URL.php");
 	require_once("api/User.php");
 	require_once("privilege.php");
 
@@ -42,13 +43,13 @@
 		}
 		else if ($action == "review")
 		{
-			$api = new ALD($_SERVER["SERVER_ADDR"] == "127.0.0.1" ? "http://localhost/api" : "https://ahk4.net/user/maulesel/api"); # hardcoded URL to ensure HTTPS is always used
+			$api = new ALD(get_API_URL(true));
 			$api->modifyItemById($_GET["id"], $_SESSION["user"], $_SESSION["password"], $_GET["value"]);
 		}
 		else if ($action == "default")
 		{
-			$api = new ALD($_SERVER["SERVER_ADDR"] == "127.0.0.1" ? "http://localhost/api" : "https://ahk4.net/user/maulesel/api"); # hardcoded URL to ensure HTTPS is always used
-			$api->modifyItemById($_GET["id"], $_SESSION["user"], $_SESSION["password"], NULL, $_GET["value"]) . "<br/>";
+			$api = new ALD(get_API_URL(true));
+			$api->modifyItemById($_GET["id"], $_SESSION["user"], $_SESSION["password"], NULL, $_GET["value"]);
 		}
 		else
 		{

@@ -2,10 +2,11 @@
 	session_start();
 
 	require_once("ALD.php");
+	require_once("get_API_URL.php");
 	require_once("sortArray.php");
 
 	$logged_in = isset($_SESSION["user"]);
-	$api = new ALD(!empty($_SERVER["HTTPS"]) ? "https://{$_SERVER["SERVER_NAME"]}/user/maulesel/api" : "http://{$_SERVER["SERVER_NAME"]}/api");
+	$api = new ALD(get_API_URL());
 
 	if (isset($_GET["id"])) # output an item
 	{

@@ -145,12 +145,13 @@
 
 					require_once("api/User.php");
 					require_once("ALD.php");
+					require_once("get_API_URL.php");
 
 					if (User::validateLogin($_POST["name"], $_POST["password"], false))
 					{
 						try
 						{
-							$api = new ALD(!empty($_SERVER["HTTPS"]) ? "https://{$_SERVER["SERVER_NAME"]}/user/maulesel/api" : "http://{$_SERVER["SERVER_NAME"]}/api");
+							$api = new ALD(get_API_URL());
 							$user = $api->getUser($name);
 
 							$_SESSION["user"] = $name;

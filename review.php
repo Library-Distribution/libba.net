@@ -2,8 +2,9 @@
 	session_start();
 
 	require_once("ALD.php");
+	require_once("get_API_URL.php");
 
-	$api = new ALD((isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]) ? "https://{$_SERVER["SERVER_NAME"]}/user/maulesel/api" : "http://{$_SERVER["SERVER_NAME"]}/api");
+	$api = new ALD(get_API_URL());
 	$logged_in = isset($_SESSION["user"]);
 
 	if (isset($_GET["id"]))

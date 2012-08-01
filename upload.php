@@ -92,9 +92,10 @@
 						$password = isset($_POST["password"]) ? $_POST["password"] : $_SESSION["password"];
 
 						require_once("ALD.php");
+						require_once("get_API_URL.php");
 						try
 						{
-							$conn = new ALD($_SERVER["SERVER_ADDR"] == "127.0.0.1" ? "http://localhost/api" : "https://ahk4.net/user/maulesel/api"); # hardcoded URL to ensure HTTPS is always used
+							$conn = new ALD(get_API_URL(true));
 							$id = $conn->uploadItem($_FILES["package"]["tmp_name"], $user, $password);
 						}
 						catch (HttpException $e)

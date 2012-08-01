@@ -3,10 +3,11 @@
 
 	require_once("sortArray.php");
 	require_once("ALD.php");
+	require_once("get_API_URL.php");
 	require_once("user_input.php");
 	require_once("privilege.php");
 
-	$api = new ALD(!empty($_SERVER["HTTPS"]) ? "https://{$_SERVER["SERVER_NAME"]}/user/maulesel/api" : "http://{$_SERVER["SERVER_NAME"]}/api"); # todo: use HTTPS
+	$api = new ALD(get_API_URL(true));
 	$logged_in = isset($_SESSION["user"]);
 	$error = true;
 
@@ -380,15 +381,13 @@
 		<?php }  ?>
 	</head>
 	<body>
-		<h1 id="page-title">
-			<?php
+		<h1 id="page-title"><?php
 				if (isset($user))
 				{
 					echo "<img alt=\"$user's avatar\" id=\"user-gravatar\" src=\"http://gravatar.com/avatar/{$user_data['mail']}?s=50&amp;d=mm\"/>";
 				}
-				echo "<div>$page_title</div>";
-			?>
-		</h1>
+				echo $page_title;
+			?></h1>
 		<div id="page-content">
 			<?php
 				if ($error)

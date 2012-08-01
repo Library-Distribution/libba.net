@@ -5,13 +5,14 @@
 	require_once("api/db.php");
 	require_once("db2.php");
 	require_once("ALD.php");
+	require_once("get_API_URL.php");
 	require_once("privilege.php");
 
 	$db_connection = db_ensure_connection();
 
 	for ($i = 0; $i < 1; $i++)
 	{
-		$api = new ALD(!empty($_SERVER["HTTPS"]) ? "https://{$_SERVER["SERVER_NAME"]}/user/maulesel/api" : "http://{$_SERVER["SERVER_NAME"]}/api");
+		$api = new ALD(get_API_URL());
 		$error = true; # assume error here, reset on success
 
 		if (isset($_GET["id"]))
