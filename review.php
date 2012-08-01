@@ -53,6 +53,7 @@
 			{
 				$temp = $api->getUserById($comment["HEX(user)"]);
 				$comment["user"] = $temp["name"];
+				$comment["user-mail"] = $temp["mail"];
 				$comments[] = $comment;
 			}
 
@@ -89,7 +90,7 @@
 			<?php
 						foreach ($comments AS $comment)
 						{
-							echo "<tr><td><a href=\"viewuser?user={$comment["user"]}\">{$comment["user"]}</a><hr/>{$comment["date"]}</td><td>" . user_input_process($comment["comment"]) . "</td></tr>";
+							echo "<tr><td><img alt=\"avatar\" src=\"http://gravatar.com/avatar/{$comment['user-mail']}?s=50&amp;d=mm\" class=\"comment-avatar\"/><br/><a href=\"viewuser?user={$comment["user"]}\">{$comment["user"]}</a><hr/>{$comment["date"]}</td><td>" . user_input_process($comment["comment"]) . "</td></tr>";
 						}
 						if (!$item["reviewed"])
 						{

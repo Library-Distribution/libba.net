@@ -78,3 +78,11 @@ div.vote-option
 	width: 30%;
 	display: inline-block
 }
+
+#candidature-comments tr > td:first-of-type
+{
+	text-align: center;
+}
+.comment-avatar
+{
+	display: inline-block;

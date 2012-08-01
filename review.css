@@ -32,3 +32,12 @@
 	font-weight: bold;
 	width: 15%;
 }
+
+#review-comments tr > td:first-of-type
+{
+	text-align: center;
+}
+.comment-avatar
+{
+	display: inline-block;
+}

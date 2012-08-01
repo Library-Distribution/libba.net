@@ -116,6 +116,7 @@
 			{
 				$temp = $api->getUserById($comment["HEX(user)"]);
 				$comment["user"] = $temp["name"];
+				$comment["user-mail"] = $temp["mail"];
 				$comments[] = $comment;
 			}
 
@@ -239,7 +240,7 @@
 						<?php
 							foreach ($comments AS $comment)
 							{
-								echo "<tr><td><a href=\"viewuser.php?user={$comment["user"]}\">{$comment["user"]}</a><hr/>{$comment["date"]}</td>"
+								echo "<tr><td><img alt=\"avatar\" src=\"http://gravatar.com/avatar/{$comment['user-mail']}?s=50&amp;d=mm\" class=\"comment-avatar\"/><br/><a href=\"viewuser.php?user={$comment["user"]}\">{$comment["user"]}</a><hr/>{$comment["date"]}</td>"
 									. "<td>" . user_input_process($comment["comment"]) . (!empty($comment["vote"]) ? "<div class=\"vote\" style=\"float: right\">+1</div>" : "") . "</td></tr>";
 							}
 							if (!$candidature["closed"])
