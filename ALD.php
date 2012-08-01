@@ -25,6 +25,17 @@
 			return json_decode( $this->_Request( CURLOPT_HTTPGET, "/users/describe/$id", array("Accept: application/json"), NULL, $request_user, $request_password), true );
 		}
 
+		public function modifyUser( $name, $password, $new_name = NULL, $new_mail = NULL, $new_password = NULL)
+		{
+			$data = array();
+
+			$new_name != NULL && $data["name"] = $new_name;
+			$new_mail != NULL && $data["mail"] = $new_mail;
+			$new_password != NULL && $data["password"] = $new_password;
+
+			$this->_Request( CURLOPT_HTTPGET, "/users/modify/$name", array(), $data, $name, $password );
+		}
+
 		public function getItemById( $id )
 		{
 			return json_decode( $this->_Request( CURLOPT_HTTPGET, "/items/describe/$id", array("Accept: application/json") ), true );
