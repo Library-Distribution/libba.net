@@ -12,13 +12,16 @@
 
 	<div id="header-login">
 	<?php
+		$redirect = (str_replace("?" . $_SERVER["QUERY_STRING"], "", $_SERVER["REQUEST_URI"]) == "/login")
+						? "index"
+						: urlencode($_SERVER["REQUEST_URI"]);
 		if (isset($_SESSION["user"]))
 		{
-			echo "Welcome<br/><a href=\"users?user={$_SESSION["user"]}\">{$_SESSION["user"]}</a>!<hr/><a href=\"login?mode=logout\">Logout</a>";
+			echo "Welcome<br/><a href=\"users?user={$_SESSION["user"]}\">{$_SESSION["user"]}</a>!<hr/><a href=\"login?mode=logout&amp;redirect=$redirect\">Logout</a>";
 		}
 		else
 		{
-			echo "Welcome!<hr/><a href=\"login?mode=login\">Login</a><hr/><a href=\"login?mode=register\">Register</a>";
+			echo "Welcome!<hr/><a href=\"login?mode=login&amp;redirect=$redirect\">Login</a><hr/><a href=\"login?mode=register&amp:redirect=$redirect\">Register</a>";
 		}
 	?>
 	</div>
