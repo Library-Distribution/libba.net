@@ -104,9 +104,8 @@
 		<h3>Description</h3>
 		<div>
 			<?php
-				require_once("../markdown/markdown.php");
-				require_once("../smartypants/smartypants.php");
-				echo SmartyPants(Markdown($item['description']));
+				require_once("../user_input.php");
+				echo user_input_process($item['description']);
 			?>
 		</div>
 		<?php
