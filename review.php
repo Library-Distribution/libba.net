@@ -128,7 +128,7 @@
 			<?php
 						foreach ($items AS $item)
 						{
-							echo "<tr><td><a href=\"?id={$item["id"]}\">&gt;&gt;</a></td><td><a href=\"items?name={$item["name"]}&version=latest\">{$item["name"]}</a></td><td>{$item["version"]}</td><td><a href=\"users/{$item["user"]["name"]}/profile\">{$item["user"]["name"]}</a></td></tr>";
+							echo "<tr><td><a href=\"?id={$item["id"]}\">&gt;&gt;</a></td><td><a href=\"items/{$item["name"]}/latest\">{$item["name"]}</a></td><td>{$item["version"]}</td><td><a href=\"users/{$item["user"]["name"]}/profile\">{$item["user"]["name"]}</a></td></tr>";
 						}
 			?>
 						</tbody>

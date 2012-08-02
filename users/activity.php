@@ -65,11 +65,11 @@
 		{
 			$id = $item["id"];
 			$retrieved_items[$id] = $api->getItemById($id);
-			$activity[] = array("header" => "$user uploaded <a href=\"items?id=$id\">{$item["name"]} (v{$item["version"]})</a>",
+			$activity[] = array("header" => "$user uploaded <a href=\"items/$id\">{$item["name"]} (v{$item["version"]})</a>",
 								"text" => $retrieved_items[$id]["description"],
 								"image" => "images/activity/upload.png",
 								"date" => $retrieved_items[$id]["uploaded"],
-								"link" => "items?id=$id");
+								"link" => "items/$id");
 		}
 
 		# get review comments
@@ -119,7 +119,7 @@
 			$item = isset($retrieved_items[$id])
 						? $retrieved_items[$id]
 						: ($retrieved_items[$id] = $api->getItemById($id));
-			$activity[] = array("header" => "$user proposed <a href=\"items?id=$id\">{$item["name"]} (v{$item["version"]})</a> for the stdlib",
+			$activity[] = array("header" => "$user proposed <a href=\"items/$id\">{$item["name"]} (v{$item["version"]})</a> for the stdlib",
 								"text" => $candidature["text"],
 								"image" => "images/activity/candidature.png",
 								"date" => $candidature["date"],

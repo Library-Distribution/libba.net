@@ -48,7 +48,7 @@
 		{
 			$achievements[] = array("text" => "$user's library {$lib["name"]} v{$lib["version"]} is part of the standard lib for AutoHotkey",
 									"image" => "images/achievements/stdlib.png",
-									"link" => "items?id=" . $lib["id"]);
+									"link" => "items/" . $lib["id"]);
 		}
 		$error = false;
 	}

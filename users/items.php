@@ -75,7 +75,7 @@
 							echo "<h2>$set_name uploaded ($item_count)</h2>";
 							foreach ($set AS $item)
 							{
-								echo "<a href='items?id={$item['id']}' class=\"user-item\">{$item['name']} (v{$item['version']})</a>";
+								echo "<a href='items/{$item['id']}' class=\"user-item\">{$item['name']} (v{$item['version']})</a>";
 							}
 						}
 					}
