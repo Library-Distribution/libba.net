@@ -99,7 +99,7 @@
 					<?php
 						foreach ($item['tags'] AS $tag)
 						{
-							echo "<a href='index?tags=$tag'>$tag</a> ";
+							echo "<a href='./?tags=$tag'>$tag</a> ";
 						}
 					?>
 				</td>
