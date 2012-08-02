@@ -46,11 +46,10 @@
 	}
 
 	header('Content-Type: image/jpeg');
-	if (!imagepng($image, "test.png"))
+	if (!imagepng($image))
 	{
 		header("HTTP/1.1 500 Server error");
 		exit;
 	}
-	imagepng($image);
 	imagedestroy($image);
 ?>
