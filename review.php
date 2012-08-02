@@ -71,7 +71,7 @@
 <html>
 	<head>
 		<?php require("templates/html.head.php"); ?>
-		<link rel="stylesheet" type="text/css" href="review.css"/>
+		<link rel="stylesheet" type="text/css" href="style/review.css"/>
 	</head>
 	<body>
 		<h1 id="page-title"><?php echo $page_title; ?></h1>

@@ -253,23 +253,23 @@ div.menu a:hover
 }
 .nav-link:first-of-type:before
 {
-	content: url('images/home.png');
+	content: url('../images/home.png');
 }
 .nav-link:nth-of-type(2):before
 {
-	content: url('images/items.png');
+	content: url('../images/items.png');
 }
 .nav-link:nth-of-type(3):before
 {
-	content: url('images/users.png');
+	content: url('../images/users.png');
 }
 .nav-link:nth-of-type(4):before
 {
-	content: url('images/help.png');
+	content: url('../images/help.png');
 }
 .nav-link:nth-of-type(5):before
 {
-	content: url('images/activity/upload.png');
+	content: url('../images/activity/upload.png');
 }
 
 #header-logo

@@ -20,7 +20,7 @@
 <html>
 	<head>
 		<?php require("templates/html.head.php"); ?>
-		<link rel="stylesheet" type="text/css" href="upload.css"/>
+		<link rel="stylesheet" type="text/css" href="style/upload.css"/>
 		<?php
 			if ($mode == "start" && !$logged_in)
 			{
