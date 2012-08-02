@@ -224,7 +224,7 @@
 						</tr>
 						<tr>
 							<td>User:</td>
-							<td><a href="users/<?php echo $candidature["username"]; ?>"><?php echo $candidature["username"]; ?></a></td>
+							<td><a href="users/<?php echo $candidature["username"]; ?>/profile"><?php echo $candidature["username"]; ?></a></td>
 						</tr>
 						<tr>
 							<td>Applied:</td>
@@ -240,7 +240,7 @@
 						<?php
 							foreach ($comments AS $comment)
 							{
-								echo "<tr><td><img alt=\"avatar\" src=\"http://gravatar.com/avatar/{$comment['user-mail']}?s=50&amp;d=mm\" class=\"comment-avatar\"/><br/><a href=\"users/{$comment["user"]}\">{$comment["user"]}</a><hr/>{$comment["date"]}</td>"
+								echo "<tr><td><img alt=\"avatar\" src=\"http://gravatar.com/avatar/{$comment['user-mail']}?s=50&amp;d=mm\" class=\"comment-avatar\"/><br/><a href=\"users/{$comment["user"]}/profile\">{$comment["user"]}</a><hr/>{$comment["date"]}</td>"
 									. "<td>" . user_input_process($comment["comment"]) . (!empty($comment["vote"]) ? "<div class=\"vote\" style=\"float: right\">+1</div>" : "") . "</td></tr>";
 							}
 							if (!$candidature["closed"])
@@ -249,7 +249,7 @@
 								{
 						?>
 									<tr>
-										<td><a href="users/<?php echo $_SESSION["user"]; ?>">You</a><hr/>Now</td>
+										<td><a href="users/<?php echo $_SESSION["user"]; ?>/profile">You</a><hr/>Now</td>
 										<td>
 											<form action="#" method="post">
 												<textarea name="newcomment" style="width: 99.5%"></textarea>
@@ -287,7 +287,7 @@
 							}
 							else
 							{
-								echo "<tr><td><a href=\"users/{$candidature["closed-by"]}\">{$candidature["closed-by"]}</a><hr/>{$candidature["closed-date"]}</td>"
+								echo "<tr><td><a href=\"users/{$candidature["closed-by"]}/profile\">{$candidature["closed-by"]}</a><hr/>{$candidature["closed-date"]}</td>"
 									. "<td id=\"close-comment\" class=\"" . ( /* todo: get if included in stdlib or not */ "") . "\">" . user_input_process($candidature["closed-comment"]) . "</td></tr>";
 								/*
 								if ($can_close && !$in_standard)
@@ -318,7 +318,7 @@
 						<?php
 							foreach ($candidatures AS $cand)
 							{
-								echo "<tr><td><a href=\"?id={$cand["id"]}\">&gt;&gt;</a></td><td><a href=\"items?id={$cand["HEX(libid)"]}\">{$cand["lib-name"]} (v{$cand["lib-version"]})</a></td><td><a href=\"users/{$cand["user"]}\">{$cand["user"]}</a></td><td>{$cand["date"]}</td><td class=\"" . ($cand["closed"] ? "cand-closed" : "cand-open") . "\">" . ($cand["closed"] ? "closed" : "open") . "</td></tr>";
+								echo "<tr><td><a href=\"?id={$cand["id"]}\">&gt;&gt;</a></td><td><a href=\"items?id={$cand["HEX(libid)"]}\">{$cand["lib-name"]} (v{$cand["lib-version"]})</a></td><td><a href=\"users/{$cand["user"]}/profile\">{$cand["user"]}</a></td><td>{$cand["date"]}</td><td class=\"" . ($cand["closed"] ? "cand-closed" : "cand-open") . "\">" . ($cand["closed"] ? "closed" : "open") . "</td></tr>";
 							}
 						?>
 						</tbody>

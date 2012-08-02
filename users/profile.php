@@ -26,7 +26,7 @@
 		}
 		catch (HttpException $e)
 		{
-			$error_message = "Failed to retrieve user: API error";
+			$error_message = "Failed to retrieve user '$user': API error";
 			$error_description = "User data could not be retrieved. API error was: '{$e->getMessage()}' (code: {$e->getCode()})";
 			break;
 		}
