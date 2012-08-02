@@ -21,7 +21,7 @@
 		}
 		else
 		{
-			echo "Welcome!<hr/><a href=\"login?mode=login&amp;redirect=$redirect\">Login</a><hr/><a href=\"login?mode=register&amp:redirect=$redirect\">Register</a>";
+			echo "Welcome!<hr/><a href=\"login?mode=login&amp;redirect=$redirect\">Login</a><hr/><a href=\"login?mode=register&amp;redirect=$redirect\">Register</a>";
 		}
 	?>
 	</div>
