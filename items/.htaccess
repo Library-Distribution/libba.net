@@ -1,0 +1,9 @@
+AddDefaultCharset UTF-8
+
+DirectoryIndex list.php
+
+RewriteEngine On
+
+RewriteRule ^([0-9a-fA-F]{32})$ view.php?id=$1              [L]
+RewriteRule ^([^/]+)/([^/]+)$   view.php?name=$1&version=$2 [L]
+#RewriteRule ^([^/]+)$           list.php?name=$1            [L]
