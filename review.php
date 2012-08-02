@@ -1,4 +1,5 @@
 <?php
+	ob_start();
 	session_start();
 
 	require_once("ALD.php");
@@ -128,7 +129,7 @@
 			<?php
 						foreach ($items AS $item)
 						{
-							echo "<tr><td><a href=\"?id={$item["id"]}\">&gt;&gt;</a></td><td><a href=\"items/{$item["name"]}/latest\">{$item["name"]}</a></td><td>{$item["version"]}</td><td><a href=\"users/{$item["user"]["name"]}/profile\">{$item["user"]["name"]}</a></td></tr>";
+							echo "<tr><td><a href=\"./{$item["id"]}\">&gt;&gt;</a></td><td><a href=\"items/{$item["name"]}/latest\">{$item["name"]}</a></td><td>{$item["version"]}</td><td><a href=\"users/{$item["user"]["name"]}/profile\">{$item["user"]["name"]}</a></td></tr>";
 						}
 			?>
 						</tbody>
@@ -140,3 +141,8 @@
 		<?php require("footer.php"); require("header.php"); ?>
 	</body>
 </html>
+<?php
+	require_once("rewriter.php");
+	echo rewrite();
+	ob_end_flush();
+?>

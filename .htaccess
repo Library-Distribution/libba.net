@@ -9,5 +9,8 @@ RewriteRule ^candidatures$ candidature.php [L]
 RewriteRule ^help$ help.php [L]
 RewriteRule ^index$ index.php [L]
 RewriteRule ^login$ login.php [L]
-RewriteRule ^review$ review.php [L]
 RewriteRule ^upload$ upload.php [L]
+
+RewriteRule ^reviews$ /reviews/                      [R=301] # add a trailing slash
+RewriteRule ^reviews/$ review.php                        [L] # the list of reviews
+RewriteRule ^reviews/([0-9a-fA-F]{32})$ review.php?id=$1 [L] # a specific review
