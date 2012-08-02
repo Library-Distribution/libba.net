@@ -1,0 +1,14 @@
+AddDefaultCharset utf-8
+
+RewriteEngine On
+
+RewriteRule ^$ list.php [L]
+
+RewriteRule ^(.+)/profile$      profile.php?user=$1 [L]
+RewriteRule ^(.+)/activity$     activity.php?user=$1 [L]
+RewriteRule ^(.+)/items$        items.php?user=$1 [L]
+RewriteRule ^(.+)/achievements$ achievements.php?user=$1 [L]
+RewriteRule ^(.+)/modify$       modify.php?user=$1 [L]
+#RewriteRule ^(.+)/suspend$      suspend.php?user=$1 [L]
+
+RedirectMatch 301 ^/([^/]+)$    /$1/profile

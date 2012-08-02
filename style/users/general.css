@@ -18,27 +18,27 @@
 
 #user-navigation > a:first-child > div:before
 {
-	content: url('images/profile.png');
+	content: url('../../images/profile.png');
 }
 #user-navigation > a:nth-child(2) > div:before
 {
-	content: url('images/activity/activity.png');
+	content: url('../../images/activity/activity.png');
 }
 #user-navigation > a:nth-child(3) > div:before
 {
-	content: url('images/items.png');
+	content: url('../../images/items.png');
 }
 #user-navigation > a:nth-child(4) > div:before
 {
-	content: url('images/achievements/achievements.png');
+	content: url('../../images/achievements/achievements.png');
 }
 #user-navigation > a:nth-child(5) > div:before
 {
-	content: url('images/settings.png');
+	content: url('../../images/settings.png');
 }
 #user-navigation > a:nth-child(6) > div:before
 {
-	content: url('images/suspend.png');
+	content: url('../../images/suspend.png');
 }
 
 #user-navigation div
