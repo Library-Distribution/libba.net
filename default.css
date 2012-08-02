@@ -219,12 +219,14 @@ div.menu a:hover
 	height: 90%;
 
 	text-align: center;
+	border: solid gray 1px;
+
+	filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr='#FFD3D3D3', endColorstr='#FF808080', GradientType='0');
 	background-image: linear-gradient(top, lightgray 0%, gray 100%);
 	background-image: -moz-linear-gradient(top, lightgray 0%, gray 100%);
 	background-image: -webkit-linear-gradient(top, lightgray 0%, gray 100%);
 	background-image: -ms-linear-gradient(top, lightgray 0%, gray 100%);
 	background-image: -o-linear-gradient(top, lightgray 0%, gray 100%);
-	border: solid gray 1px;
 }
 #site-name
 {
@@ -237,6 +239,7 @@ div.menu a:hover
 }
 #navigation a.nav-link:hover
 {
+	filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr='#FFDDDDDD', endColorstr='#FF888888', GradientType='0');
 	background-image: linear-gradient(top, #DDD 0%, #888 100%);
 	background-image: -moz-linear-gradient(top, #DDD 0%, #888 100%);
 	background-image: -webkit-linear-gradient(top, #DDD 0%, #888 100%);
