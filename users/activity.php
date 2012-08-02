@@ -87,11 +87,11 @@
 			$item = isset($retrieved_items[$id])
 						? $retrieved_items[$id]
 						: ($retrieved_items[$id] = $api->getItemById($id));
-			$activity[] = array("header" => "$user commented on <a href=\"review?id=$id\">Code Review for {$item["name"]} v{$item["version"]}</a>",
+			$activity[] = array("header" => "$user commented on <a href=\"reviews/$id\">Code Review for {$item["name"]} v{$item["version"]}</a>",
 								"text" => $comment["comment"],
 								"image" => "images/activity/review-comment.png",
 								"date" => $comment["date"],
-								"link" => "review?id=$id"); # todo: anchor for comment
+								"link" => "reviews/$id"); # todo: anchor for comment
 		}
 
 		if (hasPrivilege($user_data["privileges"], PRIVILEGE_REVIEW))
@@ -123,7 +123,7 @@
 								"text" => $candidature["text"],
 								"image" => "images/activity/candidature.png",
 								"date" => $candidature["date"],
-								"link" => "candidatures?id=" . $candidature["id"]);
+								"link" => "candidatures/" . $candidature["id"]);
 
 			if ($candidature["closed"])
 			{
@@ -133,7 +133,7 @@
 									"text" => $candidature["closed-comment"],
 									"image" => "images/activity/candidature-$accepted.png",
 									"date" => $candidature["closed-date"],
-									"link" => "candidatures?id={$candidature["id"]}#closecomment");
+									"link" => "candidatures/{$candidature["id"]}#closecomment");
 			}
 		}
 
@@ -180,11 +180,11 @@
 						? $retrieved_items[$id]
 						: ($retrieved_items[$id] = $api->getItemById($item_id));
 
-			$activity[] = array("header" => "$user commented on <a href=\"candidatures?id=$id\">{$item["name"]} v{$item["version"]} - Stdlib candidature</a>",
+			$activity[] = array("header" => "$user commented on <a href=\"candidatures/$id\">{$item["name"]} v{$item["version"]} - Stdlib candidature</a>",
 								"text" => $comment["comment"],
 								"image" => "images/activity/candidature-comment.png",
 								"date" => $comment["date"],
-								"link" => "candidatures?id=$id");
+								"link" => "candidatures/$id");
 		}
 
 		$activity = sortArray($activity, array("date" => true));
