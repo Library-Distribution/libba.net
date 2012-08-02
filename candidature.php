@@ -1,4 +1,5 @@
 <?php
+	ob_start();
 	session_start();
 
 	require_once("user_input.php");
@@ -204,7 +205,7 @@
 <html>
 	<head>
 		<?php require("templates/html.head.php"); ?>
-		<link rel="stylesheet" type="text/css" href="candidature.css"/>
+		<link rel="stylesheet" type="text/css" href="style/candidature.css"/>
 	</head>
 	<body>
 		<h1 id="page-title"><?php echo $page_title; ?></h1>
@@ -220,11 +221,11 @@
 					<table id="candidature">
 						<tr>
 							<td>Library:</td>
-							<td><a href="items?id=<?php echo $candidature["HEX(libid)"]; ?>"><?php echo $candidature["libname"]; ?> (v<?php echo $candidature["libversion"]; ?>)</a></td>
+							<td><a href="items/<?php echo $candidature["HEX(libid)"]; ?>"><?php echo $candidature["libname"]; ?> (v<?php echo $candidature["libversion"]; ?>)</a></td>
 						</tr>
 						<tr>
 							<td>User:</td>
-							<td><a href="users?user=<?php echo $candidature["username"]; ?>"><?php echo $candidature["username"]; ?></a></td>
+							<td><a href="users/<?php echo $candidature["username"]; ?>/profile"><?php echo $candidature["username"]; ?></a></td>
 						</tr>
 						<tr>
 							<td>Applied:</td>
@@ -240,7 +241,7 @@
 						<?php
 							foreach ($comments AS $comment)
 							{
-								echo "<tr><td><img alt=\"avatar\" src=\"http://gravatar.com/avatar/{$comment['user-mail']}?s=50&amp;d=mm\" class=\"comment-avatar\"/><br/><a href=\"users?user={$comment["user"]}\">{$comment["user"]}</a><hr/>{$comment["date"]}</td>"
+								echo "<tr><td><img alt=\"avatar\" src=\"http://gravatar.com/avatar/{$comment['user-mail']}?s=50&amp;d=mm\" class=\"comment-avatar\"/><br/><a href=\"users/{$comment["user"]}/profile\">{$comment["user"]}</a><hr/>{$comment["date"]}</td>"
 									. "<td>" . user_input_process($comment["comment"]) . (!empty($comment["vote"]) ? "<div class=\"vote\" style=\"float: right\">+1</div>" : "") . "</td></tr>";
 							}
 							if (!$candidature["closed"])
@@ -249,7 +250,7 @@
 								{
 						?>
 									<tr>
-										<td><a href="users?user=<?php echo $_SESSION["user"]; ?>">You</a><hr/>Now</td>
+										<td><a href="users/<?php echo $_SESSION["user"]; ?>/profile">You</a><hr/>Now</td>
 										<td>
 											<form action="#" method="post">
 												<textarea name="newcomment" style="width: 99.5%"></textarea>
@@ -272,7 +273,7 @@
 									{
 						?>
 										<tr>
-											<td><a href="users?team=stdlb">Stdlib team</a></td>
+											<td><a href="users/teams/stdlib">Stdlib team</a></td>
 											<td>
 												<form action="#" method="post" style="text-align: center">
 													<textarea name="closecomment" style="width: 99.5%"></textarea>
@@ -287,7 +288,7 @@
 							}
 							else
 							{
-								echo "<tr><td><a href=\"users?user={$candidature["closed-by"]}\">{$candidature["closed-by"]}</a><hr/>{$candidature["closed-date"]}</td>"
+								echo "<tr><td><a href=\"users/{$candidature["closed-by"]}/profile\">{$candidature["closed-by"]}</a><hr/>{$candidature["closed-date"]}</td>"
 									. "<td id=\"close-comment\" class=\"" . ( /* todo: get if included in stdlib or not */ "") . "\">" . user_input_process($candidature["closed-comment"]) . "</td></tr>";
 								/*
 								if ($can_close && !$in_standard)
@@ -318,7 +319,7 @@
 						<?php
 							foreach ($candidatures AS $cand)
 							{
-								echo "<tr><td><a href=\"?id={$cand["id"]}\">&gt;&gt;</a></td><td><a href=\"items?id={$cand["HEX(libid)"]}\">{$cand["lib-name"]} (v{$cand["lib-version"]})</a></td><td><a href=\"users?user={$cand["user"]}\">{$cand["user"]}</a></td><td>{$cand["date"]}</td><td class=\"" . ($cand["closed"] ? "cand-closed" : "cand-open") . "\">" . ($cand["closed"] ? "closed" : "open") . "</td></tr>";
+								echo "<tr><td><a href=\"./{$cand["id"]}\">&gt;&gt;</a></td><td><a href=\"items/{$cand["HEX(libid)"]}\">{$cand["lib-name"]} (v{$cand["lib-version"]})</a></td><td><a href=\"users/{$cand["user"]}/profile\">{$cand["user"]}</a></td><td>{$cand["date"]}</td><td class=\"" . ($cand["closed"] ? "cand-closed" : "cand-open") . "\">" . ($cand["closed"] ? "closed" : "open") . "</td></tr>";
 							}
 						?>
 						</tbody>
@@ -330,3 +331,8 @@
 		<?php require("footer.php"); require("header.php"); ?>
 	</body>
 </html>
+<?php
+	require_once("rewriter.php");
+	echo rewrite();
+	ob_end_flush();
+?>

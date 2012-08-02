@@ -5,11 +5,15 @@ RewriteEngine On
 #RewriteRule ^index/(\d+)$ index.php?page=$1 [S=1] # CSS + relative link issue!
 
 RewriteRule ^about$ about.php [L]
-RewriteRule ^candidatures$ candidature.php [L]
 RewriteRule ^help$ help.php [L]
 RewriteRule ^index$ index.php [L]
 RewriteRule ^login$ login.php [L]
-RewriteRule ^review$ review.php [L]
 RewriteRule ^upload$ upload.php [L]
-RewriteRule ^items$ viewitem.php [L]
-RewriteRule ^users$ viewuser.php [L]
+
+RewriteRule ^candidatures$ /candidatures/          [R=301] # add a trailing slash
+RewriteRule ^candidatures/$ candidature.php            [L] # the list of candidatures
+RewriteRule ^candidatures/(\d+)$ candidature.php?id=$1 [L] # a specific candidature
+
+RewriteRule ^reviews$ /reviews/                      [R=301] # add a trailing slash
+RewriteRule ^reviews/$ review.php                        [L] # the list of reviews
+RewriteRule ^reviews/([0-9a-fA-F]{32})$ review.php?id=$1 [L] # a specific review

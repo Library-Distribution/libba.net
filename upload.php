@@ -20,7 +20,7 @@
 <html>
 	<head>
 		<?php require("templates/html.head.php"); ?>
-		<link rel="stylesheet" type="text/css" href="upload.css"/>
+		<link rel="stylesheet" type="text/css" href="style/upload.css"/>
 		<?php
 			if ($mode == "start" && !$logged_in)
 			{
@@ -108,7 +108,7 @@
 			?>
 							<b>Successfully uploaded!</b><br/>
 							<a href="index">Go to index</a><br />
-							<a href="items?id=<?php echo $id; ?>">View uploaded app or library</a>
+							<a href="items/<?php echo $id; ?>">View uploaded app or library</a>
 			<?php
 						}
 					}

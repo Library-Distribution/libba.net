@@ -1,4 +1,5 @@
 <?php
+	ob_start();
 	session_start();
 
 	require_once("ALD.php");
@@ -70,7 +71,7 @@
 <html>
 	<head>
 		<?php require("templates/html.head.php"); ?>
-		<link rel="stylesheet" type="text/css" href="review.css"/>
+		<link rel="stylesheet" type="text/css" href="style/review.css"/>
 	</head>
 	<body>
 		<h1 id="page-title"><?php echo $page_title; ?></h1>
@@ -90,13 +91,13 @@
 			<?php
 						foreach ($comments AS $comment)
 						{
-							echo "<tr><td><img alt=\"avatar\" src=\"http://gravatar.com/avatar/{$comment['user-mail']}?s=50&amp;d=mm\" class=\"comment-avatar\"/><br/><a href=\"users?user={$comment["user"]}\">{$comment["user"]}</a><hr/>{$comment["date"]}</td><td>" . user_input_process($comment["comment"]) . "</td></tr>";
+							echo "<tr><td><img alt=\"avatar\" src=\"http://gravatar.com/avatar/{$comment['user-mail']}?s=50&amp;d=mm\" class=\"comment-avatar\"/><br/><a href=\"users/{$comment["user"]}/profile\">{$comment["user"]}</a><hr/>{$comment["date"]}</td><td>" . user_input_process($comment["comment"]) . "</td></tr>";
 						}
 						if (!$item["reviewed"])
 						{
 			?>
 							<tr>
-								<td><a href="users?user=<?php echo $_SESSION["user"]; ?>">You</a><hr/>Now</td>
+								<td><a href="users/<?php echo $_SESSION["user"]; ?>/profile">You</a><hr/>Now</td>
 								<td>
 									<form action="#" method="post">
 										<textarea name="newcomment" style="width: 99.5%"></textarea>
@@ -128,7 +129,7 @@
 			<?php
 						foreach ($items AS $item)
 						{
-							echo "<tr><td><a href=\"?id={$item["id"]}\">&gt;&gt;</a></td><td><a href=\"items?name={$item["name"]}&version=latest\">{$item["name"]}</a></td><td>{$item["version"]}</td><td><a href=\"users?user={$item["user"]["name"]}\">{$item["user"]["name"]}</a></td></tr>";
+							echo "<tr><td><a href=\"./{$item["id"]}\">&gt;&gt;</a></td><td><a href=\"items/{$item["name"]}/latest\">{$item["name"]}</a></td><td>{$item["version"]}</td><td><a href=\"users/{$item["user"]["name"]}/profile\">{$item["user"]["name"]}</a></td></tr>";
 						}
 			?>
 						</tbody>
@@ -140,3 +141,8 @@
 		<?php require("footer.php"); require("header.php"); ?>
 	</body>
 </html>
+<?php
+	require_once("rewriter.php");
+	echo rewrite();
+	ob_end_flush();
+?>
