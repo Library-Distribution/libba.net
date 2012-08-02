@@ -1,4 +1,5 @@
 <?php
+	ob_start();
 	session_start();
 
 	require_once("user_input.php");
@@ -318,7 +319,7 @@
 						<?php
 							foreach ($candidatures AS $cand)
 							{
-								echo "<tr><td><a href=\"?id={$cand["id"]}\">&gt;&gt;</a></td><td><a href=\"items/{$cand["HEX(libid)"]}\">{$cand["lib-name"]} (v{$cand["lib-version"]})</a></td><td><a href=\"users/{$cand["user"]}/profile\">{$cand["user"]}</a></td><td>{$cand["date"]}</td><td class=\"" . ($cand["closed"] ? "cand-closed" : "cand-open") . "\">" . ($cand["closed"] ? "closed" : "open") . "</td></tr>";
+								echo "<tr><td><a href=\"./{$cand["id"]}\">&gt;&gt;</a></td><td><a href=\"items/{$cand["HEX(libid)"]}\">{$cand["lib-name"]} (v{$cand["lib-version"]})</a></td><td><a href=\"users/{$cand["user"]}/profile\">{$cand["user"]}</a></td><td>{$cand["date"]}</td><td class=\"" . ($cand["closed"] ? "cand-closed" : "cand-open") . "\">" . ($cand["closed"] ? "closed" : "open") . "</td></tr>";
 							}
 						?>
 						</tbody>
@@ -330,3 +331,8 @@
 		<?php require("footer.php"); require("header.php"); ?>
 	</body>
 </html>
+<?php
+	require_once("rewriter.php");
+	echo rewrite();
+	ob_end_flush();
+?>
