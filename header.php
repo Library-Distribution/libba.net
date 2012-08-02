@@ -17,7 +17,7 @@
 						: urlencode($_SERVER["REQUEST_URI"]);
 		if (isset($_SESSION["user"]))
 		{
-			echo "Welcome<br/><a href=\"users?user={$_SESSION["user"]}\">{$_SESSION["user"]}</a>!<hr/><a href=\"login?mode=logout&amp;redirect=$redirect\">Logout</a>";
+			echo "Welcome<br/><a href=\"users/{$_SESSION["user"]}\">{$_SESSION["user"]}</a>!<hr/><a href=\"login?mode=logout&amp;redirect=$redirect\">Logout</a>";
 		}
 		else
 		{

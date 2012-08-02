@@ -129,7 +129,7 @@
 			{
 				$user = $api->getUserById($candidature["HEX(`closed-by`)"]);
 				$accepted = $item["default"] ? "accepted" : "rejected";
-				$activity[] = array("header" => "The stdlib candidature for {$item["name"]} v{$item["version"]} has been $accepted by <a href=\"users?user={$user["name"]}\">{$user["name"]}</a>",
+				$activity[] = array("header" => "The stdlib candidature for {$item["name"]} v{$item["version"]} has been $accepted by <a href=\"users/{$user["name"]}\">{$user["name"]}</a>",
 									"text" => $candidature["closed-comment"],
 									"image" => "images/activity/candidature-$accepted.png",
 									"date" => $candidature["closed-date"],
