@@ -2,7 +2,7 @@
 	session_start();
 	ob_start();
 
-	if (!isset($_GET["id"]))
+	if (!isset($_GET["id"]) && (!isset($_GET["name"]) || !isset($_GET["version"])))
 	{
 		header("Location: .");
 		exit;
@@ -14,11 +14,19 @@
 
 	$logged_in = isset($_SESSION["user"]);
 	$api = new ALD(get_API_URL());
-	$id = $_GET["id"];
 
 	try
 	{
-		$item = $api->getItemById($id);
+		if (isset($_GET["id"]))
+		{
+			$id = $_GET["id"];
+			$item = $api->getItemById($id);
+		}
+		else
+		{
+			$item = $api->getItem($_GET["name"], $_GET["version"]);
+			$id = $item["id"];
+		}
 	}
 	catch (HttpException $e)
 	{
