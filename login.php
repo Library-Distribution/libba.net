@@ -199,18 +199,12 @@
 			{
 				echo "<meta http-equiv=\"REFRESH\" content=\"10;url=$redirect\">";
 		?>
-				<script type="text/javascript">
-					$seconds = 9;
-					function updateTime()
-					{
-						document.getElementById("sec").innerHTML = $seconds--;
-					}
-				</script>
+				<script type="text/javascript" src="javascript/update_redirect_time.js"></script>
 		<?php
 			}
 		?>
 	</head>
-	<body <?php echo $should_redirect ? "onload=\"setInterval(updateTime, 999)\"" : ""; ?>>
+	<body <?php echo $should_redirect ? "onload=\"setInterval(update_redirect_time, 999)\"" : ""; ?>>
 		<h1 id="page-title"><?php echo $page_title; ?></h1>
 
 		<div id="page-content">

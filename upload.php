@@ -28,21 +28,7 @@
 			if ($mode == "start" && !$logged_in)
 			{
 		?>
-				<script type="text/javascript">
-					function validateData()
-					{
-						if (document.up.package.value != ""
-							&& document.up.user.value != ""
-							&& document.up.password.value != "")
-						{
-							document.up.submit_btn.disabled = false;
-						}
-						else
-						{
-							document.up.submit_btn.disabled = true;
-						}
-					}
-				</script>
+				<script type="text/javascript" src="javascript/validate_upload_data.js"></script>
 		<?php
 			}
 		?>
@@ -64,7 +50,7 @@
 							</tr>
 							<tr>
 								<td>Package:</td>
-								<td><input type="hidden" name="MAX_FILE_SIZE" value="78643200"/><input type="file" name="package" onchange="validateData()"/>
+								<td><input type="hidden" name="MAX_FILE_SIZE" value="78643200"/><input type="file" name="package" onchange="validate_upload_data()"/>
 							</tr>
 			<?php
 					if (!$logged_in) { ?>
@@ -73,11 +59,11 @@
 							</tr>
 							<tr>
 								<td>User name:</td>
-								<td><input type="text" name="user" onchange="validateData()"/></td>
+								<td><input type="text" name="user" onchange="validate_upload_data()"/></td>
 							</tr>
 							<tr>
 								<td>Password:</td>
-								<td><input type="password" name="password" onchange="validateData()"/></td>
+								<td><input type="password" name="password" onchange="validate_upload_data()"/></td>
 							</tr>
 					<?php } ?>
 							<tr>
