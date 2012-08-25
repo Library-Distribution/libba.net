@@ -28,8 +28,7 @@
 		else if ($mode == "logout")
 		{
 			$page_title = "Logged out";
-			unset($_SESSION["privileges"]); unset($_SESSION["user"]); unset($_SESSION["userID"]); unset($_SESSION["password"]); # unset here as session_destroy() seems to have no effect on currently loaded page
-			session_destroy();
+			clearSession();
 			$should_redirect = true;
 		}
 	}
@@ -161,8 +160,7 @@
 						}
 						catch (HttpException $e)
 						{
-							unset($_SESSION["privileges"]); unset($_SESSION["user"]); unset($_SESSION["userID"]); unset($_SESSION["password"]); # unset here as session_destroy() seems to have no effect on currently loaded page
-							session_destroy();
+							clearSession();
 
 							$message = "Could not login";
 							$error_description = "Could not retrieve the required user data for a login. The exception message was: \"{$e->getMessage()}\".";
@@ -263,3 +261,11 @@
 		<?php require("footer.php"); require("header.php"); ?>
 	</body>
 </html>
+<?php
+	function clearSession()
+	{
+		foreach (array_keys($_SESSION) AS $key)
+			unset($_SESSION[$key]); # unset here as session_destroy() has no effect on currently loaded page
+		session_destroy();
+	}
+?>
