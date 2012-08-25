@@ -2,6 +2,9 @@
 	session_start();
 	date_default_timezone_set("UTC");
 
+	require_once("secure_redirect.php");
+	secure_redirect();
+
 	$page_title = "";
 	$mode = isset($_GET["mode"]) ? $_GET["mode"] : "register"; # maybe change default later
 	$error = true;

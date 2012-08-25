@@ -2,11 +2,9 @@
 	session_start();
 
 	require_once("config/constants.php");
+	require_once("secure_redirect.php");
+	secure_redirect();
 
-	if (!IS_SECURE)
-	{
-		header("Location: " . SECURE_ROOT_URL . "upload");
-	}
 	if ($_POST && $_FILES)
 	{
 		$page_title = "Uploading...";

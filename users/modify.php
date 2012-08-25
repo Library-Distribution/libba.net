@@ -15,6 +15,9 @@
 	require_once("../api/db.php");
 	require_once("../db2.php");
 
+	require_once("../secure_redirect.php");
+	secure_redirect();
+
 	$api = new ALD( SECURE_API_URL );
 	$logged_in = isset($_SESSION["user"]);
 	$error = true;
