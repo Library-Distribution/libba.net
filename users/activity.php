@@ -11,13 +11,13 @@
 
 	require_once("../sortArray.php");
 	require_once("../ALD.php");
-	require_once("../get_API_URL.php");
+	require_once("../config/constants.php");
 	require_once("../user_input.php");
 	require_once("../privilege.php");
 	require_once("../api/db.php");
 	require_once("../db2.php");
 
-	$api = new ALD(get_API_URL());
+	$api = new ALD( API_URL );
 	$logged_in = isset($_SESSION["user"]);
 	$error = true;
 

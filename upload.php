@@ -1,8 +1,11 @@
 <?php
 	session_start();
-	if (empty($_SERVER["HTTPS"]) && $_SERVER["SERVER_ADDR"] != "127.0.0.1")
+
+	require_once("config/constants.php");
+
+	if (!IS_SECURE)
 	{
-		header("Location: https://ahk4.net/user/maulesel/upload");
+		header("Location: " . SECURE_ROOT_URL . "upload");
 	}
 	if ($_POST && $_FILES)
 	{
@@ -92,10 +95,9 @@
 						$password = isset($_POST["password"]) ? $_POST["password"] : $_SESSION["password"];
 
 						require_once("ALD.php");
-						require_once("get_API_URL.php");
 						try
 						{
-							$conn = new ALD(get_API_URL(true));
+							$conn = new ALD( SECURE_API_URL );
 							$id = $conn->uploadItem($_FILES["package"]["tmp_name"], $user, $password);
 						}
 						catch (HttpException $e)

@@ -9,11 +9,11 @@
 	}
 
 	require_once("../ALD.php");
-	require_once("../get_API_URL.php");
+	require_once("../config/constants.php");
 	require_once("../api/semver.php");
 
 	$logged_in = isset($_SESSION["user"]);
-	$api = new ALD(get_API_URL());
+	$api = new ALD( API_URL );
 
 	try
 	{

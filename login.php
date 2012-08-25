@@ -145,13 +145,13 @@
 
 					require_once("api/User.php");
 					require_once("ALD.php");
-					require_once("get_API_URL.php");
+					require_once("config/constants.php");
 
 					if (User::validateLogin($_POST["name"], $_POST["password"], false))
 					{
 						try
 						{
-							$api = new ALD(get_API_URL());
+							$api = new ALD( API_URL );
 							$user = $api->getUser($name);
 
 							$_SESSION["user"] = $name;

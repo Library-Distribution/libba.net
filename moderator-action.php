@@ -3,7 +3,7 @@
 
 	require_once("api/HttpException.php");
 	require_once("ALD.php");
-	require_once("get_API_URL.php");
+	require_once("config/constants.php");
 	require_once("api/User.php");
 	require_once("privilege.php");
 
@@ -43,12 +43,12 @@
 		}
 		else if ($action == "review")
 		{
-			$api = new ALD(get_API_URL(true));
+			$api = new ALD( SECURE_API_URL );
 			$api->modifyItemById($_GET["id"], $_SESSION["user"], $_SESSION["password"], $_GET["value"]);
 		}
 		else if ($action == "default")
 		{
-			$api = new ALD(get_API_URL(true));
+			$api = new ALD( SECURE_API_URL );
 			$api->modifyItemById($_GET["id"], $_SESSION["user"], $_SESSION["password"], NULL, $_GET["value"]);
 		}
 		else

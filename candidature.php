@@ -6,14 +6,14 @@
 	require_once("api/db.php");
 	require_once("db2.php");
 	require_once("ALD.php");
-	require_once("get_API_URL.php");
+	require_once("config/constants.php");
 	require_once("privilege.php");
 
 	$db_connection = db_ensure_connection();
 
 	for ($i = 0; $i < 1; $i++)
 	{
-		$api = new ALD(get_API_URL());
+		$api = new ALD( API_URL );
 		$error = true; # assume error here, reset on success
 
 		if (isset($_GET["id"]))
