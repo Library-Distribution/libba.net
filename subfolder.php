@@ -10,7 +10,7 @@
 	{
 		$prefix = "";
 		$level = get_subfolder_level();
-		for ($i = 0; $i <= $level; $i++)
+		for ($i = 1; $i <= $level; $i++)
 			$prefix .= "../";
 		return $prefix;
 	}
