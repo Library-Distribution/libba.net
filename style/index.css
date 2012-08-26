@@ -137,27 +137,15 @@ h1
 	text-align: right;
 }
 
-#trello, #github
-{
-	position: absolute;
-	max-width: 10%;
-	left: 3%
-}
-#trello
-{
-	top: 70%
-}
-#github
-{
-	top: 52.5%
-}
-
-/* software */
-#php, #MySQL, #apache
+/* software & development */
+#php, #MySQL, #apache, #github, #trello
 {
 	position: absolute;
 	bottom: 4%;
-	width: 5%;
+}
+#php, #MySQL, #apache
+{
+	width: 3%;
 }
 #apache
 {
@@ -165,11 +153,20 @@ h1
 }
 #MySQL
 {
-	left: 7.5%
+	left: 5%
 }
 #php
 {
-	left: 15%
+	left: 10%
+}
+#github
+{
+	left: 15%;
+}
+#trello
+{
+	left: 20%;
+	width: 5%
 }
 
 /* HTML and CSS validity */

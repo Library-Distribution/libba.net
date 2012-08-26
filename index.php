@@ -23,13 +23,6 @@
 			<a href="http://mysql.com" title="Storing data using MySQL"><img alt="MySQL" src="http://upload.wikimedia.org/wikipedia/de/1/1f/Logo_MySQL.svg" id="MySQL"/></a>
 			<a href="http://apache.org" title="Running on Apache"><img alt="apache" src="http://www.apache.org/images/feather-small.gif" id="apache"/></a>
 
-			<a href="http://validator.w3.org/check/refererer" title="Uses HTML5">
-				<img alt="W3C HTML" src="http://www.w3.org/html/logo/downloads/HTML5_Logo_128.png" id="html-check"/>
-			</a>
-			<a href="http://jigsaw.w3.org/css-validator/check/referer" title="Valid CSS">
-				<img alt="CSS is valid!" src="http://jigsaw.w3.org/css-validator/images/vcss-blue" id="css-check"/>
-			</a>
-
 			<h1>ALD &mdash;<br/>AutoHotkey Library Distribution system</h1>
 
 			<div id="short1">Share your AutoHotkey work &mdash; in an easy and comfortable way</div>
