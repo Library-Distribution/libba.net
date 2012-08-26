@@ -2,6 +2,7 @@
 	session_start();
 	date_default_timezone_set("UTC");
 
+	require_once("config/constants.php");
 	require_once("secure_redirect.php");
 	secure_redirect();
 
@@ -83,7 +84,7 @@
 						break;
 					}
 
-					$url = "http://" . $_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'] . "?name=$name&mode=activate&token=$token&redirect=" . urlencode($redirect);
+					$url = ROOT_URL . "activate?name=$name&token=$token&redirect=" . urlencode($redirect);
 					if (!mail($mail,
 						"Confirm your registration to ALD",
 						"To activate your account, go to <a href='$url'>$url</a>.",
@@ -147,7 +148,6 @@
 
 					require_once("api/User.php");
 					require_once("ALD.php");
-					require_once("config/constants.php");
 
 					if (User::validateLogin($_POST["name"], $_POST["password"], false))
 					{

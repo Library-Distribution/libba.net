@@ -2,12 +2,9 @@ AddDefaultCharset utf-8
 
 RewriteEngine On
 
-#RewriteRule ^index/(\d+)$ index.php?page=$1 [S=1] # CSS + relative link issue!
-
 RewriteRule ^about$ about.php [L]
 RewriteRule ^help$ help.php [L]
 RewriteRule ^index$ index.php [L]
-RewriteRule ^login$ login.php [L]
 RewriteRule ^upload$ upload.php [L]
 
 RewriteRule ^candidatures$ /candidatures/          [R=301] # add a trailing slash
@@ -17,3 +14,8 @@ RewriteRule ^candidatures/(\d+)$ candidature.php?id=$1 [L] # a specific candidat
 RewriteRule ^reviews$ /reviews/                      [R=301] # add a trailing slash
 RewriteRule ^reviews/$ review.php                        [L] # the list of reviews
 RewriteRule ^reviews/([0-9a-fA-F]{32})$ review.php?id=$1 [L] # a specific review
+
+RewriteRule ^login$    login.php?mode=login    [L,QSA]
+RewriteRule ^register$ login.php?mode=register [L,QSA]
+RewriteRule ^activate$ login.php?mode=activate [L,QSA]
+RewriteRule ^logout$   login.php?mode=logout   [L,QSA]
