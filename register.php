@@ -30,7 +30,7 @@
 		{
 			if ($mode == "init")
 			{
-				if (empty($_POST["name"]) || empty($_POST["mail"]) || empty($_POST["password"]))
+				if (empty($_POST["name"]) || empty($_POST["mail"]) || empty($_POST["password"]) || empty($_POST["password_alt"]))
 				{
 					$message = "Data missing";
 					$error_description = "Not all data required for a registration is present.";
@@ -40,7 +40,7 @@
 				require("registration-template.php");
 				try
 				{
-					$api->initRegistration( $_POST["name"], $_POST["mail"], $_POST["password"], $template );
+					$api->initRegistration( $_POST["name"], $_POST["mail"], $_POST["password"], $_POST["password_alt"], $template );
 				}
 				catch (HttpException $e)
 				{

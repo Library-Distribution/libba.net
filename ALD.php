@@ -74,9 +74,9 @@
 			$this->_Request( CURLOPT_HTTPGET, "/items/modify/$id", array("Accept: application/json"), $data, $request_user, $request_password );
 		}
 
-		public function initRegistration( $name, $mail, $password, $template )
+		public function initRegistration( $name, $mail, $password, $password_alt, $template )
 		{
-			$this->_Request( CURLOPT_POST, "/users/register", NULL, array("name" => $name, "mail" => $mail, "password" => $password, "template" => $template) );
+			$this->_Request( CURLOPT_POST, "/users/register", NULL, array("name" => $name, "mail" => $mail, "password" => $password, "password-alt" => $password_alt, "template" => $template) );
 		}
 
 		public function completeRegistration( $id, $token )
