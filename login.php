@@ -255,7 +255,7 @@
 					}
 					if ($should_redirect)
 					{
-						echo "Redirecting to <a href=\"$redirect\">$redirect</a> in <span id=\"sec\">10</span> seconds...";
+						echo "<p>Redirecting to <a href=\"$redirect\">$redirect</a> in <span id=\"sec\">10</span> seconds...</p>";
 					}
 				}
 			?>
