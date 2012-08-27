@@ -7,7 +7,7 @@
 	require_once("secure_redirect.php");
 	secure_redirect();
 
-	$page_title = "";
+	$page_title = "Registration failed";
 	$mode = isset($_GET["mode"]) ? strtolower($_GET["mode"]) : "init";
 	$error = true;
 	$api = new ALD( API_URL );
@@ -49,6 +49,7 @@
 					break;
 				}
 				$message = "Registration has been initiated successfully. Check your email account for further details.";
+				$page_title = "Registration initiated";
 			}
 			else if ($mode == "verify" && isset($_GET["id"]))
 			{
@@ -70,6 +71,7 @@
 					break;
 				}
 				$message = "Your registration has successfully been completed.";
+				$page_title = "Registration successful";
 			}
 
 			$error = false;
