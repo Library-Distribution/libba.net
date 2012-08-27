@@ -1,6 +1,5 @@
 <?php
 	session_start();
-	date_default_timezone_set("UTC");
 
 	require_once("config/constants.php");
 	require_once("ALD.php");
