@@ -48,7 +48,7 @@
 							"text" => "Welcome to ALD, $user! If you have any questions, consult the <a href=\"help\">help</a> or contact us!",
 							"image" => "images/activity/joined.png",
 							"date" => $user_data["joined"],
-							"link" => "user=$user");
+							"link" => "./../$user/profile");
 
 		# get items uploaded
 		try
