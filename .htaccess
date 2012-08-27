@@ -21,3 +21,5 @@ RewriteRule ^logout$   login.php?mode=logout   [L,QSA]
 
 RewriteRule ^register$       register.php?mode=init         [L,QSA]
 RewriteRule ^register/(.+)$  register.php?mode=verify&id=$1 [L,QSA]
+
+RewriteRule ^create-account$ create-account.php [L]
