@@ -3,11 +3,12 @@
 	date_default_timezone_set("UTC");
 
 	require_once("config/constants.php");
+	require_once("ALD.php");
 	require_once("secure_redirect.php");
 	secure_redirect();
 
 	$page_title = "";
-	$mode = isset($_GET["mode"]) ? $_GET["mode"] : "register"; # maybe change default later
+	$mode = isset($_GET["mode"]) ? $_GET["mode"] : "login";
 	$error = true;
 	$redirect = (empty($_GET["redirect"])) ? "index" : urldecode($_GET["redirect"]);
 	$should_redirect = true;
@@ -20,10 +21,6 @@
 		if ($mode == "login")
 		{
 			$page_title = "Login";
-		}
-		else if ($mode == "register")
-		{
-			$page_title = "Register";
 		}
 		else if ($mode == "activate")
 		{
@@ -48,65 +45,7 @@
 				$name = $_POST["name"]; $pw = hash("sha256", $_POST["password"]);
 				$escaped_name = mysql_real_escape_string($name, $db_connection);
 
-				if ($mode == "register" && isset($_POST["mail"]))
-				{
-					$should_redirect = false; # redirect after activation!
-					$page_title = "Registration failed"; # assume failure, reset on success
-
-					$mail = $_POST["mail"];
-					$escaped_mail = mysql_real_escape_string($mail, $db_connection);
-
-					$token = mt_rand();
-					$joined = date("Y-m-d");
-
-					# check if already registered
-					$db_query = "SELECT name FROM $db_table_users WHERE mail = '$escaped_mail' OR name = '$escaped_name'";
-					if (!$db_result = mysql_query($db_query, $db_connection))
-					{
-						$message = "Could not access user database";
-						$error_description = "The attempt to check if a user with the same name or email already exists failed. The error message was: \"" . mysql_error . "\".";
-						break;
-					}
-
-					if (mysql_num_rows($db_result) > 0)
-					{
-						$message = "Registration not possible: duplicate user";
-						$error_description = "A user with this nickname (\"$name\") or email (\"$mail\") is already registered. Duplicate names or mail addresses are not allowed.";
-						break;
-					}
-
-					# register
-					$db_query = "INSERT INTO $db_table_users (id, name, mail, pw, activationToken, joined) VALUES (UNHEX(REPLACE(UUID(), '-', '')), '$escaped_name', '$escaped_mail', '$pw', '$token', '$joined')";
-					if (!mysql_query($db_query, $db_connection))
-					{
-						$message = "Registration not possible: server error";
-						$error_description = "The registration of user \"$name\" failed. The error message was: \"" . mysql_error . "\".";
-						break;
-					}
-
-					$url = ROOT_URL . "activate?name=$name&token=$token&redirect=" . urlencode($redirect);
-					if (!mail($mail,
-						"Confirm your registration to ALD",
-						"To activate your account, go to <a href='$url'>$url</a>.",
-						"FROM: noreply@{$_SERVER['HTTP_HOST']}\r\nContent-type: text/html; charset=iso-8859-1"))
-					{
-						$message = "Failed to send account activation mail to '$mail'!";
-						$error_message = "An account has been created, but the activation mail could not be sent. Therefore the account was deleted again.";
-
-						$db_query = "DELETE FROM $db_table_users WHERE name = '$escaped_name'";
-						if (!$db_result = mysql_query($db_query, $db_connection))
-						{
-							$message = "User account deletion failed";
-							$error_description = "The attempt to send the activation mail for the new account failed. Also, the deactivated account could not be deleted. ";
-						}
-						break;
-					}
-
-					$error = false;
-					$message = "An activation mail was sent to the supplied mail address. Open the included link to activate your account.";
-					$page_title = "Successfully registered!";
-				}
-				else if ($mode == "activate")
+				if ($mode == "activate")
 				{
 					if (isset($_GET["token"]))
 					{
@@ -147,7 +86,6 @@
 					$should_redirect = false;
 
 					require_once("api/User.php");
-					require_once("ALD.php");
 
 					if (User::validateLogin($_POST["name"], $_POST["password"], false))
 					{
@@ -222,21 +160,13 @@
 								<td>Nickname:</td>
 								<td><input type="text" name="name"/></td>
 							</tr>
-			<?php		if ($mode == "register") {	?>
-							<tr>
-								<td>Email:</td>
-								<td><input type="text" name="mail"/></td>
-							</tr>
-				<?php
-						}
-					}
-				?>
+			<?php	} ?>
 							<tr>
 								<td>Password:</td>
 								<td><input type="password" name="password"/></td>
 							</tr>
 							<tr>
-								<td colspan="2"><input type="submit" value="<?php echo ($mode == "login") ? "Login" : "Register"; ?>"/></td>
+								<td colspan="2"><input type="submit" value="<?php echo ($mode == "login") ? "Login" : "Activate"; ?>"/></td>
 							</tr>
 						</table>
 					</form>
