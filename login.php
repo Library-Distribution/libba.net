@@ -86,7 +86,7 @@
 
 					$url = ROOT_URL . "activate?name=$name&token=$token&redirect=" . urlencode($redirect);
 					if (!mail($mail,
-						"Confirm your registration to ALD",
+						"Confirm your registration to libba.net",
 						"To activate your account, go to <a href='$url'>$url</a>.",
 						"FROM: noreply@{$_SERVER['HTTP_HOST']}\r\nContent-type: text/html; charset=iso-8859-1"))
 					{

@@ -1,6 +1,6 @@
 ﻿<?php
 	session_start();
-	$page_title = "ALD - AutoHotkey Library Distribution system";
+	$page_title = "Home | libba.net";
 ?>
 <!DOCTYPE html>
 <html>
@@ -14,7 +14,7 @@
 			<div id="vert1"></div><div id="vert2"></div>
 			<div id="horz1"></div><div id="horz2"></div>
 
-			<a href="about" title="Get to know the AutoHotkey Library Distribution"><img id="logo" alt="ALD-logo" src="images/logo.png"/></a>
+			<a href="about" title="Get to know libba.net"><img id="logo" alt="libba.net logo" src="images/logo.png"/></a>
 
 			<a href="https://github.com/maul-esel/ALD" title="Developed on github"><img alt="github" src="images/github.png" id="github"/></a>
 			<a href="http://trello.com" title="Planned on trello"><img alt="trello" src="images/trello.png" id="trello"/></a>
@@ -23,7 +23,7 @@
 			<a href="http://mysql.com" title="Storing data using MySQL"><img alt="MySQL" src="http://upload.wikimedia.org/wikipedia/de/1/1f/Logo_MySQL.svg" id="MySQL"/></a>
 			<a href="http://apache.org" title="Running on Apache"><img alt="apache" src="http://www.apache.org/images/feather-small.gif" id="apache"/></a>
 
-			<h1>ALD &mdash;<br/>AutoHotkey Library Distribution system</h1>
+			<h1>libba.net &mdash;<br/>AutoHotkey Library Distribution system</h1>
 
 			<div id="short1">Share your AutoHotkey work &mdash; in an easy and comfortable way</div>
 			<div id="short2">Get all the libraries you need &mdash; fast, reliable and always up-to-date</div>

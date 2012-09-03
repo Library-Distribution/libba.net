@@ -44,8 +44,8 @@
 		$retrieved_items = array();
 
 		# joined
-		$activity[] = array("header" => "$user joined ALD",
-							"text" => "Welcome to ALD, $user! If you have any questions, consult the <a href=\"help\">help</a> or contact us!",
+		$activity[] = array("header" => "$user joined libba.net",
+							"text" => "Welcome to libba.net, $user! If you have any questions, consult the <a href=\"help\">help</a> or contact us!",
 							"image" => "images/activity/joined.png",
 							"date" => $user_data["joined"],
 							"link" => "./../$user/profile");

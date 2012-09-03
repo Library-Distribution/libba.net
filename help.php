@@ -1,6 +1,6 @@
 <?php
 	session_start();
-	$page_title = "Help | ALD";
+	$page_title = "Help";
 ?>
 <!DOCTYPE html>
 <html>
@@ -8,7 +8,7 @@
 		<?php require("templates/html.head.php"); ?>
 	</head>
 	<body>
-		<h1 id="page-title">ALD help page</h1>
+		<h1 id="page-title">libba.net help page</h1>
 		<div id="page-content">
 			<h2 class="question">What is this?</h2>
 			<div class="answer">

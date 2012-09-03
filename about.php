@@ -1,6 +1,6 @@
 ﻿<?php
 	session_start();
-	$page_title = "About ALD";
+	$page_title = "About";
 ?>
 <!DOCTYPE html>
 <html>
@@ -23,7 +23,7 @@
 				Thanks for these wonderful icons!
 			</p>
 			<p>
-				ALD makes use of 3rd party software:
+				libba.net makes use of 3rd party software:
 				<ul>
 					<li>Thanks to <a href="http://michelf.ca">Michel Fortin</a> for <a href="http://michelf.ca/projects/php-markdown/">PHP Markdown Extra</a> (<a href="markdown/License.txt">license</a>) and <a href="http://michelf.ca/projects/php-smartypants/">PHP SmartyPants</a> (<a href="smartypants/License.txt">license</a>).</li>
 					<li>Thanks to <a href="http://ezyang.com/">Edward Z. Yang</a> for <a href="http://htmlpurifier.org">HTMLPurifier</a> (<a href="htmlpurifier/LICENSE">license</a>).</li>

@@ -1,7 +1,7 @@
 ﻿<div id="header">
 	<div id="navigation">
-		<img alt="ALD logo" src="images/logo.png" id="header-logo"/>
-		<div id="site-name">ALD</div>
+		<img alt="libba.net logo" src="images/logo.png" id="header-logo"/>
+		<div id="site-name">libba.net</div>
 
 		<a class="nav-link" href="index">Home</a>
 		<a class="nav-link" href="items">Code</a>
