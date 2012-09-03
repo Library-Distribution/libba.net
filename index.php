@@ -1,6 +1,6 @@
 ﻿<?php
 	session_start();
-	$page_title = "Home | libba.net";
+	$page_title = "Home";
 ?>
 <!DOCTYPE html>
 <html>
