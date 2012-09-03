@@ -65,7 +65,7 @@
 				{
 					require("../error.php");
 				}
-				else if (!isset($id))
+				else
 				{
 					$last_letter = "";
 					$i = 0;
