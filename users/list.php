@@ -29,7 +29,10 @@
 			$error_description = "The list of users could not be retrieved. API error was: '{$e->getMessage()}'";
 			break;
 		}
-		$users = sortArray($users, "name");
+		if (count($users) > 0)
+		{
+			$users = sortArray($users, "name");
+		}
 		$error = false;
 	}
 ?>

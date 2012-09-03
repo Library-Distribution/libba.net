@@ -32,7 +32,10 @@
 	$start_index = $page_index * $page_itemcount;
 
 	$items = $api->getItemList($start_index, $page_itemcount + 1, $type, $user, NULL, $tags, "latest", $stdlib);
-	$items = sortArray($items, "name");
+	if (count($items) > 0)
+	{
+		$items = sortArray($items, "name");
+	}
 ?>
 <!DOCTYPE html>
 <html>
