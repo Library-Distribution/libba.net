@@ -57,7 +57,7 @@
 						break;
 					}
 				}
-				else if (isset($_POST["accept"]) || isset($_POST["réject"]))
+				else if (isset($_POST["accept"]) || isset($_POST["reject"]))
 				{
 					if ($can_close)
 					{
