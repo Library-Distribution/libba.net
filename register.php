@@ -37,7 +37,7 @@
 					break;
 				}
 
-				require("registration-template.php");
+				require("templates/registration.php");
 				try
 				{
 					$api->initRegistration( $_POST["name"], $_POST["mail"], $_POST["password"], $_POST["password_alt"], $template );
