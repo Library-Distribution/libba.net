@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 	require_once("markdown/markdown.php");
 	require_once("smartypants/smartypants.php");
 	require_once("htmlpurifier/library/HTMLPurifier.auto.php");

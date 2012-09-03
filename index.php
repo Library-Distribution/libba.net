@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 	session_start();
 	$page_title = "Home";
 ?>

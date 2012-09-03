@@ -1,4 +1,4 @@
-﻿<div id="header">
+<div id="header">
 	<div id="navigation">
 		<img alt="libba.net logo" src="images/logo.png" id="header-logo"/>
 		<div id="site-name">libba.net</div>
