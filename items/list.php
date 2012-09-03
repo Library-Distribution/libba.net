@@ -6,35 +6,49 @@
 	require_once("../config/constants.php");
 	require_once("../sortArray.php");
 
-	$logged_in = isset($_SESSION["user"]);
 	$api = new ALD( API_URL );
+	$logged_in = isset($_SESSION["user"]);
+	$error = true;
 
-	$page_title = "Browse ";
-
-	if ($type = (!empty($_GET["type"]) && in_array(strtolower($_GET["type"]), array("app", "lib"))) ? strtolower($_GET["type"]) : NULL)
+	for ($i = 0; $i < 1; $i++)
 	{
-		$page_title .= ($type == "app") ? "applications" : ($type == "lib" ? "libraries" : "libraries and applications");
-	}
-	else # probably remove unknown type and reload?
-	{
-		$page_title .= "libraries and applications";
-	}
+		$page_title = "Browse ";
 
-	$user = !empty($_GET["user"]) ? $_GET["user"] : NULL
-		AND $page_title .= " by $user";
-	$stdlib = !empty($_GET["stdlib"]) ? $_GET["stdlib"] : "both"
-		AND $page_title .= !empty($_GET["stdlib"]) ? " (lib standard)" : "";
-	$tags = isset($_GET["tags"]) ? explode("|", $_GET["tags"]) : NULL
-		AND $page_title .= " (tags: " . implode($tags, ", ") . ")";
+		if ($type = (!empty($_GET["type"]) && in_array(strtolower($_GET["type"]), array("app", "lib"))) ? strtolower($_GET["type"]) : NULL)
+		{
+			$page_title .= ($type == "app") ? "applications" : ($type == "lib" ? "libraries" : "libraries and applications");
+		}
+		else # probably remove unknown type and reload?
+		{
+			$page_title .= "libraries and applications";
+		}
 
-	$page_index = !empty($_GET["page"]) ? (int)$_GET["page"] : 0;
-	$page_itemcount = !empty($_GET["items"]) ? (int)$_GET["items"] : 20;
-	$start_index = $page_index * $page_itemcount;
+		$user = !empty($_GET["user"]) ? $_GET["user"] : NULL
+			AND $page_title .= " by $user";
+		$stdlib = !empty($_GET["stdlib"]) ? $_GET["stdlib"] : "both"
+			AND $page_title .= !empty($_GET["stdlib"]) ? " (lib standard)" : "";
+		$tags = isset($_GET["tags"]) ? explode("|", $_GET["tags"]) : NULL
+			AND $page_title .= " (tags: " . implode($tags, ", ") . ")";
 
-	$items = $api->getItemList($start_index, $page_itemcount + 1, $type, $user, NULL, $tags, "latest", $stdlib);
-	if (count($items) > 0)
-	{
-		$items = sortArray($items, "name");
+		$page_index = !empty($_GET["page"]) ? (int)$_GET["page"] : 0;
+		$page_itemcount = !empty($_GET["items"]) ? (int)$_GET["items"] : 20;
+		$start_index = $page_index * $page_itemcount;
+
+		try
+		{
+			$items = $api->getItemList($start_index, $page_itemcount + 1, $type, $user, NULL, $tags, "latest", $stdlib);
+		}
+		catch (HttpException $e)
+		{
+			$error_message = "Failed to get item list: API error";
+			$error_description = "The requested list of items could not be retrieved. API error was: '{$e->getMessage()}'";
+			break;
+		}
+		if (count($items) > 0)
+		{
+			$items = sortArray($items, "name");
+		}
+		$error = false;
 	}
 ?>
 <!DOCTYPE html>
@@ -47,7 +61,11 @@
 		<h1 id="page-title"><?php echo $page_title; ?></h1>
 		<div id="page-content">
 			<?php
-				if (!isset($id))
+				if ($error)
+				{
+					require("../error.php");
+				}
+				else if (!isset($id))
 				{
 					$last_letter = "";
 					$i = 0;
