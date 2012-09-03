@@ -2,7 +2,7 @@
 
 $template = "Hi {%NAME%},
 
-Welcome to the AutoHotkey Library Distribution system ALD.
+Welcome to the libba.net!
 You have requested registration with the following data:
 
 	Name: {%NAME%}
