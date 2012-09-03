@@ -1,40 +1,40 @@
-#candidature, #candidature-comments, #candidature-list
+#candidate, #candidate-comments, #candidate-list
 {
 	border-collapse: separate;
 	border-spacing: 10px;
 	width: 100%;
 }
-#candidature-list
+#candidate-list
 {
 	border-spacing: 1px;
 }
-#candidature-list tr > td:first-of-type
+#candidate-list tr > td:first-of-type
 {
 	width: 2.5%;
 	text-align: center
 }
 
-#candidature-list td.cand-open
+#candidate-list td.cand-open
 {
 	background-color: lightgreen;
 }
-#candidature-list td.cand-closed
+#candidate-list td.cand-closed
 {
 	background-color: #FF6666;
 }
-#candidature td, #candidature-comments td, #candidature-list td
+#candidate td, #candidate-comments td, #candidate-list td
 {
 	border: solid teal 2px;
 	padding: 3px;
 	background-color: lightblue;
 	text-align: justify;
 }
-#candidature tr > td:first-of-type, #candidature-comments tr > td:first-of-type
+#candidate tr > td:first-of-type, #candidate-comments tr > td:first-of-type
 {
 	font-weight: bold;
 	width: 15%;
 }
-#candidature #candidature-text
+#candidate #candidate-text
 {
 	font-weight: normal;
 	width: auto;
@@ -79,7 +79,7 @@ div.vote-option
 	display: inline-block
 }
 
-#candidature-comments tr > td:first-of-type
+#candidate-comments tr > td:first-of-type
 {
 	text-align: center;
 }

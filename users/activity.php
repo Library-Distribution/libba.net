@@ -100,91 +100,91 @@
 			# todo!
 		}
 
-		$retrieved_candidatures = array();
+		$retrieved_candidates = array();
 
-		# get candidatures opened and closed
-		$db_query = "SELECT *, HEX(libid), HEX(userid), HEX(`closed-by`) FROM $db_table_candidatures WHERE userid = UNHEX('{$user_data["id"]}') ORDER BY date DESC $db_limit";
+		# get candidates opened and closed
+		$db_query = "SELECT *, HEX(libid), HEX(userid), HEX(`closed-by`) FROM $db_table_candidates WHERE userid = UNHEX('{$user_data["id"]}') ORDER BY date DESC $db_limit";
 		$db_result = mysql_query($db_query, $db_connection);
 		if (!$db_result)
 		{
 			$error_message = "Failed to retrieve activity: MySQL error";
-			$error_description = "Failed to retrieve candidatures. MySQL error was: '" . mysql_error() . "'";
+			$error_description = "Failed to retrieve candidates. MySQL error was: '" . mysql_error() . "'";
 			break;
 		}
-		while ($candidature = mysql_fetch_assoc($db_result))
+		while ($candidate = mysql_fetch_assoc($db_result))
 		{
-			$retrieved_candidatures[$candidature["id"]] = $candidature; # save data for further use
+			$retrieved_candidates[$candidate["id"]] = $candidate; # save data for further use
 
-			$id = $candidature["HEX(libid)"];
+			$id = $candidate["HEX(libid)"];
 			$item = isset($retrieved_items[$id])
 						? $retrieved_items[$id]
 						: ($retrieved_items[$id] = $api->getItemById($id));
 			$activity[] = array("header" => "$user proposed <a href=\"items/$id\">{$item["name"]} (v{$item["version"]})</a> for the stdlib",
-								"text" => $candidature["text"],
-								"image" => "images/activity/candidature.png",
-								"date" => $candidature["date"],
-								"link" => "candidatures/" . $candidature["id"]);
+								"text" => $candidate["text"],
+								"image" => "images/activity/candidate.png",
+								"date" => $candidate["date"],
+								"link" => "candidates/" . $candidate["id"]);
 
-			if ($candidature["closed"])
+			if ($candidate["closed"])
 			{
-				$user = $api->getUserById($candidature["HEX(`closed-by`)"]);
+				$user = $api->getUserById($candidate["HEX(`closed-by`)"]);
 				$accepted = $item["default"] ? "accepted" : "rejected";
-				$activity[] = array("header" => "The stdlib candidature for {$item["name"]} v{$item["version"]} has been $accepted by <a href=\"users/{$user["name"]}/profile\">{$user["name"]}</a>",
-									"text" => $candidature["closed-comment"],
-									"image" => "images/activity/candidature-$accepted.png",
-									"date" => $candidature["closed-date"],
-									"link" => "candidatures/{$candidature["id"]}#closecomment");
+				$activity[] = array("header" => "The stdlib candidate {$item["name"]} v{$item["version"]} has been $accepted by <a href=\"users/{$user["name"]}/profile\">{$user["name"]}</a>",
+									"text" => $candidate["closed-comment"],
+									"image" => "images/activity/candidate-$accepted.png",
+									"date" => $candidate["closed-date"],
+									"link" => "candidates/{$candidate["id"]}#closecomment");
 			}
 		}
 
 		if (hasPrivilege($user_data["privileges"], PRIVILEGE_STDLIB))
 		{
-			# get candidatures closed by this user
-			$db_query = "SELECT *, HEX(libid), HEX(userid), HEX(`closed-by`) FROM $db_table_candidatures WHERE `closed-by` = UNHEX('{$user_data["id"]}') ORDER BY date DESC $db_limit";
+			# get candidates closed by this user
+			$db_query = "SELECT *, HEX(libid), HEX(userid), HEX(`closed-by`) FROM $db_table_candidates WHERE `closed-by` = UNHEX('{$user_data["id"]}') ORDER BY date DESC $db_limit";
 			$db_result = mysql_query($db_query, $db_connection);
 			if (!$db_result)
 			{
 				$error_message = "Failed to retrieve activity: MySQL error";
-				$error_description = "Could not read candidatures closed by $user. MySQL error was: '" . mysql_error() . "'";
+				$error_description = "Could not read candidates closed by $user. MySQL error was: '" . mysql_error() . "'";
 				break;
 			}
-			while ($candidature = mysql_fetch_assoc($db_result))
+			while ($candidate = mysql_fetch_assoc($db_result))
 			{
-				#$candidatures_closed[] = $candidature; # TODO
-				$retrieved_candidatures[$candidature["id"]] = $candidature;
+				#$candidates_closed[] = $candidate; # TODO
+				$retrieved_candidates[$candidate["id"]] = $candidate;
 			}
 		}
 
-		# get candidature comments
-		$db_query = "SELECT id, comment, date, vote FROM $db_table_candidature_comments WHERE user = UNHEX('{$user_data["id"]}') ORDER BY date DESC $db_limit";
+		# get candidate comments
+		$db_query = "SELECT id, comment, date, vote FROM $db_table_candidate_comments WHERE user = UNHEX('{$user_data["id"]}') ORDER BY date DESC $db_limit";
 		$db_result = mysql_query($db_query, $db_connection);
 		if (!$db_result)
 		{
 			$error_message = "Failed to retrieve activity: MySQL error";
-			$error_descrition = "Candidature comments could not be read. MySQL error was: '" . mysql_error() . "'";
+			$error_descrition = "Candidate comments could not be read. MySQL error was: '" . mysql_error() . "'";
 			break;
 		}
 		while ($comment = mysql_fetch_assoc($db_result))
 		{
 			$id = $comment["id"];
 
-			$candidature = isset($retrieved_candidatures[$id])
-						? $retrieved_candidatures[$id]
-						: ($retrieved_candidatures[$id] = getCandidature($id, $error_message, $error_description));
-			if (!$candidature)
+			$candidate = isset($retrieved_candidates[$id])
+						? $retrieved_candidates[$id]
+						: ($retrieved_candidates[$id] = getCandidate($id, $error_message, $error_description));
+			if (!$candidate)
 			{
 				break;
 			}
-			$item_id = $candidature["HEX(libid)"];
+			$item_id = $candidate["HEX(libid)"];
 			$item = isset($retrieved_items[$id])
 						? $retrieved_items[$id]
 						: ($retrieved_items[$id] = $api->getItemById($item_id));
 
-			$activity[] = array("header" => "$user commented on <a href=\"candidatures/$id\">{$item["name"]} v{$item["version"]} - Stdlib candidature</a>",
+			$activity[] = array("header" => "$user commented on <a href=\"candidates/$id\">{$item["name"]} v{$item["version"]} - Stdlib candidate</a>",
 								"text" => $comment["comment"],
-								"image" => "images/activity/candidature-comment.png",
+								"image" => "images/activity/candidate-comment.png",
 								"date" => $comment["date"],
-								"link" => "candidatures/$id");
+								"link" => "candidates/$id");
 		}
 
 		$activity = sortArray($activity, array("date" => true));
@@ -253,15 +253,15 @@
 	ob_end_flush();
 ?>
 <?php
-	function getCandidature($id, &$error_message, &$error_description)
+	function getCandidate($id, &$error_message, &$error_description)
 	{
-		global $db_connection, $db_table_candidatures;
-		$db_query = "SELECT *, HEX(libid), HEX(userid), HEX(`closed-by`) FROM $db_table_candidatures WHERE id = '$id'";
+		global $db_connection, $db_table_candidates;
+		$db_query = "SELECT *, HEX(libid), HEX(userid), HEX(`closed-by`) FROM $db_table_candidates WHERE id = '$id'";
 		$db_result = mysql_query($db_query, $db_connection);
 		if (!$db_result)
 		{
 			$error_message = "Failed to retrieve activity: MySQL error";
-			$error_description = "Candidature $id could not be read. MySQL error was: '" . mysql_error() . "'";
+			$error_description = "Candidate $id could not be read. MySQL error was: '" . mysql_error() . "'";
 			return FALSE;
 		}
 		return mysql_fetch_assoc($db_result);
