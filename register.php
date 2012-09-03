@@ -93,8 +93,8 @@
 				?>
 						<div>
 							Look at the image below and type the displayed letters in the box.
-							<br/><img alt="Token" src="<?php echo ""; ?>api/users/register/token/<?php echo $_GET["id"]; ?>"/>
-							<br/>Image available at: <a href="<?php echo ""; ?>api/users/register/token/<?php echo $_GET["id"]; ?>"><?php echo ""; ?>api/users/register/token/<?php echo $_GET["id"]; ?></a>
+							<br/><img alt="Token" src="<?php echo API_URL; ?>/users/register/token/<?php echo $_GET["id"]; ?>"/>
+							<br/>Image available at: <a href="<?php echo echo API_URL; ?>/users/register/token/<?php echo $_GET["id"]; ?>"><?php echo echo API_URL; ?>/users/register/token/<?php echo $_GET["id"]; ?></a>
 						</div>
 				<?php } ?>
 					<form action="<?php echo $_SERVER["REQUEST_URI"]; ?>" method="post">
