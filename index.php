@@ -20,8 +20,8 @@
 			<a href="http://trello.com" title="Planned on trello"><img alt="trello" src="images/trello.png" id="trello"/></a>
 
 			<a href="http://php.net" title="Written in PHP"><img src="images/php.png" alt="php" id="php"/></a>
-			<a href="http://mysql.com" title="Storing data using MySQL"><img alt="MySQL" src="http://upload.wikimedia.org/wikipedia/de/1/1f/Logo_MySQL.svg" id="MySQL"/></a>
-			<a href="http://apache.org" title="Running on Apache"><img alt="apache" src="http://www.apache.org/images/feather-small.gif" id="apache"/></a>
+			<a href="http://mysql.com" title="Storing data using MySQL"><img alt="MySQL" src="images/MySQL.svg" id="MySQL"/></a>
+			<a href="http://apache.org" title="Running on Apache"><img alt="apache" src="images/apache.gif" id="apache"/></a>
 
 			<h1>libba.net &mdash;<br/>AutoHotkey Library Distribution system</h1>
 
