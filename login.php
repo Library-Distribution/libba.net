@@ -1,5 +1,4 @@
 <?php
-	session_start();
 	date_default_timezone_set("UTC");
 
 	require_once("config/constants.php");
@@ -14,6 +13,7 @@
 
 	if (empty($_POST))
 	{
+		session_start();
 		$should_redirect = false;
 		$error = false;
 
@@ -143,6 +143,12 @@
 				}
 				else if ($mode == "login")
 				{
+					if (isset($_POST["keepLoggedIn"]) && $_POST["keepLoggedIn"])
+					{
+						session_set_cookie_params(8640000); # 100 Tage
+					}
+					session_start();
+
 					$page_title = "Login failed"; # assume failure, reset on success
 					$should_redirect = false;
 
@@ -213,7 +219,7 @@
 				if (empty($_POST) && $mode != "logout")
 				{
 			?>
-					<form action="<?php echo $_SERVER["REQUEST_URI"]; ?>" method="post">
+					<form action="<?php echo htmlentities($_SERVER["REQUEST_URI"]); ?>" method="post">
 						<table>
 			<?php	if ($mode == "activate") { ?>
 						<input type="hidden" name="name" value="<?php echo $_GET["name"]; ?>"/>
@@ -234,6 +240,9 @@
 							<tr>
 								<td>Password:</td>
 								<td><input type="password" name="password"/></td>
+							</tr>
+							<tr>
+								<td colspan="2"><input type="checkbox" name="keepLoggedIn">keep me logged in permanently</input></td>
 							</tr>
 							<tr>
 								<td colspan="2"><input type="submit" value="<?php echo ($mode == "login") ? "Login" : "Register"; ?>"/></td>
