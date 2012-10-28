@@ -6,7 +6,7 @@
 	url = https://github.com/michelf/php-smartypants.git
 [submodule "htmlpurifier"]
 	path = htmlpurifier
-	url = http://repo.or.cz/r/htmlpurifier.git
+	url = https://github.com/ezyang/htmlpurifier.git
 [submodule "api"]
 	path = api
 	url = https://github.com/maul-esel/ALD-API.git
