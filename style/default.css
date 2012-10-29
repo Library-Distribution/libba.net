@@ -11,6 +11,11 @@ table
 	empty-cells: show;
 }
 
+img
+{
+	border: none;
+}
+
 /* highlight first word in paragraph */
 .text-first-word
 {
@@ -293,17 +298,13 @@ div.menu a:hover
 	text-align: center;
 	display: table-cell;
 
-	border-bottom-right-radius: 10px;
-	-moz-border-bottom-right-radius: 10px;
-	-webkit-border-bottom-right-radius: 10px;
-	-ms-border-bottom-right-radius: 10px;
-	-o-border-bottom-right-radius: 10px;
+	border-radius: 0 0 10px 10px;
+	-moz-border-radius: 0 0 10px 10px;
+	-webkit-border-radius: 0 0 10px 10px;
+	-ms-border-radius: 0 0 10px 10px;
+	-o-border-radius: 0 0 10px 10px;
 
-	border-bottom-left-radius: 10px;
-	-moz-border-bottom-left-radius: 10px;
-	-webkit-border-bottom-left-radius: 10px;
-	-ms-border-bottom-left-radius: 10px;
-	-o-border-bottom-left-radius: 10px;
+	behavior: url(/style/PIE.htc); /* IE compatibility fix */
 }
 #header-ahk
 {
