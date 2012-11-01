@@ -92,6 +92,10 @@
 								<td>member since:</td>
 								<td><?php echo $user_data["joined"]; ?></td>
 							</tr>
+							<tr>
+								<td>user ID:</td>
+								<td><?php echo $user_data["id"]; ?></td>
+							</tr>
 						</table>
 				<?php
 				}
