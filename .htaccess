@@ -21,3 +21,5 @@ RewriteRule ^login$    login.php?mode=login    [L,QSA]
 RewriteRule ^register$ login.php?mode=register [L,QSA]
 RewriteRule ^activate$ login.php?mode=activate [L,QSA]
 RewriteRule ^logout$   login.php?mode=logout   [L,QSA]
+
+RewriteRule ^sitemap$ sitemap.php [L]
