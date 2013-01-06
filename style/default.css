@@ -1,6 +1,7 @@
 @import url("../font/stylesheet.css");
+@import url("jquery-ui/smoothness/jquery-ui.css");
 
-body
+body, .ui-widget, .ui-widget button
 {
 	font-family: QuicksandBook, sans-serif;
 }

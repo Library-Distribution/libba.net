@@ -61,7 +61,6 @@
 		<script type="text/javascript" src="javascript/items/list.js"></script>
 
 		<link rel="stylesheet" type="text/css" href="style/items/list.css"/>
-		<link rel="stylesheet" type="text/css" href="style/jquery-ui/smoothness/jquery-ui.css"/>
 	</head>
 	<body>
 		<h1 id="page-title"><?php echo $page_title; ?></h1>
