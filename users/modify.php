@@ -256,7 +256,7 @@
 			</div>
 		</div>
 		<?php
-			$current_mode = "activity";
+			$current_mode = "modify";
 			require_once("user_navigation.php");
 
 			require("../footer.php");
