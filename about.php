@@ -23,11 +23,13 @@
 				Thanks for these wonderful icons!
 			</p>
 			<p>
-				libba.net makes use of 3rd party software:
+				libba.net makes use of 3rd party software written in PHP an Javascript:
 				<ul>
 					<li>Thanks to <a href="http://michelf.ca">Michel Fortin</a> for <a href="http://michelf.ca/projects/php-markdown/">PHP Markdown Extra</a> (<a href="markdown/License.txt">license</a>) and <a href="http://michelf.ca/projects/php-smartypants/">PHP SmartyPants</a> (<a href="smartypants/License.txt">license</a>).</li>
 					<li>Thanks to <a href="http://ezyang.com/">Edward Z. Yang</a> for <a href="http://htmlpurifier.org">HTMLPurifier</a> (<a href="htmlpurifier/LICENSE">license</a>).</li>
 					<li>Thanks to <a href="https://github.com/lojjic">Jason Johnston</a>  for <a href="http://css3pie.com/">CSS3 PIE</a> (<a href="https://raw.github.com/lojjic/PIE/master/LICENSE-APACHE2.txt">license</a>).</li>
+					<hr/>
+					<li>As jor Javascript, I wish to thank the <a href="http://jquery.com">jQuery</a> and <a href="http://http://jqueryui.com/">jQuery-UI</a> teams (<a href="https://raw.github.com/jquery/jquery/master/MIT-LICENSE.txt">license</a>).</li>
 				</ul>
 			</p>
 		</div>
