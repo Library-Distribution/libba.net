@@ -10,7 +10,7 @@
 							"suspend" => "Suspend user");
 	foreach ($possible_modes AS $mode => $name)
 	{
-		$class = ($mode == $current_mode) ? "class=\"nav-current\"" : "";
+		$class = ($mode == $current_mode) ? "class=\"nav-current nav-url\"" : "";
 		$style = ($mode == "modify" && (!$logged_in || $_SESSION["user"] != $user)) || ($mode == "suspend" && (!$logged_in || !hasPrivilege($_SESSION["privileges"], PRIVILEGE_USER_MANAGE) || $user == $_SESSION["user"]))
 				? "style=\"display: none\""
 				: "";

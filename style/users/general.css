@@ -67,7 +67,7 @@
 	-ms-bottom-left-border-radius: 15px;
 	-o-bottom-left-border-radius: 15px;
 }
-#user-navigation a.nav-current
+#user-navigation a.nav-url.nav-current
 {
 	pointer-events: none;
 }

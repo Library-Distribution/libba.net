@@ -3,7 +3,7 @@ function loadUserContent(event)
 	var new_link = $(event.currentTarget);
 	var curr_link = $(".nav-current");
 
-	if (new_link != curr_link) {
+	if (!new_link.hasClass("nav-current")) {
 		curr_link.toggleClass("nav-current");
 		new_link.toggleClass("nav-current");
 
