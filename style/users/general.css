@@ -67,11 +67,11 @@
 	-ms-bottom-left-border-radius: 15px;
 	-o-bottom-left-border-radius: 15px;
 }
-#user-navigation a#nav-current
+#user-navigation a.nav-current
 {
 	pointer-events: none;
 }
-#user-navigation a#nav-current div
+#user-navigation a.nav-current div
 {
 	background-color: #BBB;
 }
@@ -104,4 +104,9 @@
 {
 	width: 50%;
 	text-align: center;
+}
+#content-profile, #content-activity, #content-achievements, #content-items
+{
+	width: 100%;
+	height: 100%;
 }
