@@ -5,6 +5,10 @@ body, .ui-widget, .ui-widget button
 {
 	font-family: QuicksandBook, sans-serif;
 }
+.ui-widget-content a
+{
+	color: navy;
+}
 
 table
 {
