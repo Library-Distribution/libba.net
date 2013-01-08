@@ -55,17 +55,13 @@
 	line-height: 50px;
 	vertical-align: middle;
 
-	border-top-left-radius: 15px;
-	-moz-border-top-left-radius: 15px;
-	-webkit-top-left-border-radius: 15px;
-	-ms-top-left-border-radius: 15px;
-	-o-top-left-border-radius: 15px;
+	border-radius: 15px 0px 0px 15px;
+	-moz-border-radius: 15px 0px 0px 15px;
+	-webkit-border-radius: 15px 0px 0px 15px;
+	-ms-border-radius: 15px 0px 0px 15px;
+	-o-border-radius: 15px 0px 0px 15px;
 
-	border-bottom-left-radius: 15px;
-	-moz-bottom-left-border-radius: 15px;
-	-webkit-bottom-left-border-radius: 15px;
-	-ms-bottom-left-border-radius: 15px;
-	-o-bottom-left-border-radius: 15px;
+	behavior: url('/style/PIE.htc'); /* IE compatibility fix */
 }
 #user-navigation a.nav-url.nav-current
 {
@@ -99,6 +95,8 @@
 	-webkit-border-radius: 5px;
 	-ms-border-radius: 5px;
 	-o-border-radius: 5px;
+
+	behavior: url('/style/PIE.htc'); /* IE compatibility fix */
 }
 #page-content
 {

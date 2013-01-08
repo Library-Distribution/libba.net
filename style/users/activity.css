@@ -7,12 +7,17 @@
 	border: solid #999 1px;
 	margin: 5px;
 	padding: 10px;
+}
 
+.activity-item, .activity-item .activity-body
+{
 	border-radius: 5px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 	-ms-border-radius: 5px;
 	-o-border-radius: 5px;
+
+	behavior: url('/style/PIE.htc'); /* IE compatibility fix */
 }
 .activity-item:hover
 {
@@ -41,9 +46,4 @@
 	float: right;
 
 	border: solid gray 1px;
-	border-radius: 5px;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	-ms-border-radius: 5px;
-	-o-border-radius: 5px;
 }
