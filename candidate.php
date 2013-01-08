@@ -206,6 +206,9 @@
 	<head>
 		<?php require("templates/html.head.php"); ?>
 		<link rel="stylesheet" type="text/css" href="style/candidate.css"/>
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+		<script type="text/javascript" src="javascript/jquery-ui.js"></script>
+		<script type="text/javascript" src="javascript/candidate.js"></script>
 	</head>
 	<body>
 		<h1 id="page-title"><?php echo $page_title; ?></h1>
@@ -305,25 +308,24 @@
 				else
 				{
 			?>
-					<table id="candidate-list">
-						<thead>
-							<tr>
-								<th></th>
-								<th>Library</th>
-								<th>User</th>
-								<th>Date</th>
-								<th>Status</th>
-							</tr>
-						</thead>
-						<tbody>
+					<div id="candidate-list">
 						<?php
 							foreach ($candidates AS $cand)
 							{
-								echo "<tr><td><a href=\"./{$cand["id"]}\">&gt;&gt;</a></td><td><a href=\"items/{$cand["HEX(libid)"]}\">{$cand["lib-name"]} (v{$cand["lib-version"]})</a></td><td><a href=\"users/{$cand["user"]}/profile\">{$cand["user"]}</a></td><td>{$cand["date"]}</td><td class=\"" . ($cand["closed"] ? "cand-closed" : "cand-open") . "\">" . ($cand["closed"] ? "closed" : "open") . "</td></tr>";
+								$status = $cand['closed'] ? 'closed' : 'open';
+								echo '<div class="candidate-entry"><div class="candidate-header">'
+									. "<h3>{$cand['lib-name']} (v{$cand['lib-version']})</h3></div>"
+									. '<dl class="candidate-details">'
+										. "<dt>Name</dt><dd><a href='items/{$cand['HEX(libid)']}'>{$cand['lib-name']}</a></dd>"
+										. "<dt>Version</dt><dd>{$cand['lib-version']}</dd>"
+										. "<dt>User</dt><dd><a href='users/$cand[user]/profile'>$cand[user]</a></dd>"
+										. "<dt>Date</dt><dd>$cand[date]</dd>"
+										. "<dt>Status</dt><dd class='cand-$status'>$status</dd>"
+										. "<dt>Link</dt><dd>&#9654; <a href='./$cand[id]'>Go to discussion thread</a> &#9654;</dd>"
+									. '</dl></div>';
 							}
 						?>
-						</tbody>
-					</table>
+					</div>
 			<?php
 				}
 			?>

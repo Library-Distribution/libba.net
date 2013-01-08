@@ -1,29 +1,57 @@
-#candidate, #candidate-comments, #candidate-list
+body {
+	background-color: lightgray;
+}
+#page-content {
+	background-color: white;
+	width: 50%;
+	text-align: center;
+
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	-ms-border-radius: 10px;
+	-o-border-radius: 10px;
+}
+
+
+#candidate, #candidate-comments
 {
 	border-collapse: separate;
 	border-spacing: 10px;
 	width: 100%;
 }
-#candidate-list
-{
-	border-spacing: 1px;
-}
-#candidate-list tr > td:first-of-type
-{
-	width: 2.5%;
-	text-align: center
-}
 
-#candidate-list td.cand-open
-{
+#candidate-list .candidate-entry {
+	display: inline-block;
+	width: 99.5%;
+	margin-bottom: 10px;
+}
+#candidate-list dt {
+	float: left;
+	width: 20%;
+	margin: 0;
+	padding: 5px;
+	border-top: 1px solid #999;
+	font-weight: bold;
+}
+#candidate-list dd {
+	float: left;
+	width: 75%;
+	margin: 0;
+	padding: 5px;
+	border-top: 1px solid #999;
+}
+.candidate-header h3 {
+	display: inline-block;
+}
+#candidate-list dd.cand-open {
 	background-color: lightgreen;
 }
-#candidate-list td.cand-closed
-{
+#candidate-list dd.cand-closed {
 	background-color: #FF6666;
 }
-#candidate td, #candidate-comments td, #candidate-list td
-{
+
+#candidate td, #candidate-comments td {
 	border: solid teal 2px;
 	padding: 3px;
 	background-color: lightblue;
