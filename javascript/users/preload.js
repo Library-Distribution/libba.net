@@ -57,8 +57,12 @@ $(document).ready(function() {
 				$("link", $(dummy_div)).each(function() {
 					var href = $(this).attr("href");
 					if ($.inArray(href, loaded_styles) == -1) {
-						var link = $("<link rel='stylesheet' type='text/css' href='" + href + "'/>");
-						$("html > head").append(link);
+						if (document.createStyleSheet) {
+							document.createStyleSheet(href);
+						} else {
+							var link = $("<link rel='stylesheet' type='text/css' href='" + href + "'/>");
+							$("html > head").append(link);
+						}
 					}
 				});
 			});
