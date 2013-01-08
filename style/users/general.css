@@ -47,7 +47,7 @@
 	margin: 3px;
 	margin-bottom: 10%;
 
-	background-color: #999;
+	background-color: #666;
 	color: white;
 	font-weight: bold;
 	height: 45px;
@@ -67,13 +67,9 @@
 {
 	pointer-events: none;
 }
-#user-navigation a.nav-current div
+#user-navigation a.nav-current div, #user-navigation div:hover
 {
-	background-color: #BBB;
-}
-#user-navigation div:hover
-{
-	background-color: #BBB;
+	background-color: #888;
 }
 #user-navigation:last-of-type
 {
@@ -98,10 +94,22 @@
 
 	behavior: url('/style/PIE.htc'); /* IE compatibility fix */
 }
+body
+{
+	background-color: lightgray;
+}
 #page-content
 {
 	width: 50%;
 	text-align: center;
+	background-color: white;
+	margin-top: 10px;
+
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	-ms-border-radius: 10px;
+	-o-border-radius: 10px;
 }
 #content-profile, #content-activity, #content-achievements, #content-items
 {
