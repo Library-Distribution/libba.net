@@ -58,6 +58,7 @@ body.pretty-ui #page-content {
 	background-color: white;
 	width: 50%;
 	text-align: center;
+	padding: 20px;
 
 	border-radius: 10px;
 	-moz-border-radius: 10px;
