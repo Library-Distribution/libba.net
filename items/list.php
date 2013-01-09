@@ -62,7 +62,7 @@
 
 		<link rel="stylesheet" type="text/css" href="style/items/list.css"/>
 	</head>
-	<body>
+	<body class="pretty-ui">
 		<h1 id="page-title"><?php echo $page_title; ?></h1>
 		<div id="page-content">
 			<div id="items-list">

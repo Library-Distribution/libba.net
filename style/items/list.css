@@ -10,7 +10,6 @@
 	border-bottom-width: 5px;
 	padding: 5px;
 }
-#page-content
-{
-	width: 50%;
+#page-content * {
+	text-align: left;
 }
