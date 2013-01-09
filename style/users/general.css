@@ -94,22 +94,8 @@
 
 	behavior: url('/style/PIE.htc'); /* IE compatibility fix */
 }
-body
-{
-	background-color: lightgray;
-}
-#page-content
-{
-	width: 50%;
-	text-align: center;
-	background-color: white;
+#page-content {
 	margin-top: 10px;
-
-	border-radius: 10px;
-	-moz-border-radius: 10px;
-	-webkit-border-radius: 10px;
-	-ms-border-radius: 10px;
-	-o-border-radius: 10px;
 }
 #content-profile, #content-activity, #content-achievements, #content-items
 {

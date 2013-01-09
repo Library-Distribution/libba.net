@@ -76,7 +76,7 @@
 		<script type="text/javascript" src="javascript/jquery-ui.js"></script>
 		<script type="text/javascript" src="javascript/review.js"></script>
 	</head>
-	<body>
+	<body class="pretty-ui">
 		<h1 id="page-title"><?php echo $page_title; ?></h1>
 		<div id="page-content">
 			<?php

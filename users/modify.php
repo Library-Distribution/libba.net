@@ -166,7 +166,7 @@
 		<script type="text/javascript" src="javascript/jquery-ui.js"></script>
 		<script type="text/javascript" src="javascript/users/preload.js"></script>
 	</head>
-	<body>
+	<body class="pretty-ui">
 		<h1 id="page-title">
 			<?php
 				echo "<img alt=\"$user's avatar\" id=\"user-gravatar\" src=\"http://gravatar.com/avatar/{$user_data['mail']}?s=50&amp;d=mm\"/>";

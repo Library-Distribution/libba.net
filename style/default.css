@@ -50,6 +50,24 @@ img
 	padding-bottom: 3%
 }
 
+body.pretty-ui {
+	background-color: lightgray;
+}
+
+body.pretty-ui #page-content {
+	background-color: white;
+	width: 50%;
+	text-align: center;
+
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	-ms-border-radius: 10px;
+	-o-border-radius: 10px;
+
+	behavior: url('/style/PIE.htc'); /* IE compatibility fix */
+}
+
 /***********************************
  * DEFAULT LINK STYLING
  ***********************************/
