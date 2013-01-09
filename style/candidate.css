@@ -26,20 +26,18 @@ body {
 	width: 99.5%;
 	margin-bottom: 10px;
 }
-#candidate-list dt {
+#candidate-list dt, #candidate-list dd {
 	float: left;
-	width: 20%;
 	margin: 0;
 	padding: 5px;
-	border-top: 1px solid #999;
+	border-bottom: 1px solid #999;
+}
+#candidate-list dt {
+	width: 20%;
 	font-weight: bold;
 }
 #candidate-list dd {
-	float: left;
 	width: 75%;
-	margin: 0;
-	padding: 5px;
-	border-top: 1px solid #999;
 }
 h3.candidate-header {
 	display: inline-block;
