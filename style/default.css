@@ -68,6 +68,10 @@ body.pretty-ui #page-content {
 	behavior: url('/style/PIE.htc'); /* IE compatibility fix */
 }
 
+body.pretty-ui #page-content * {
+	text-align: left;
+}
+
 /***********************************
  * DEFAULT LINK STYLING
  ***********************************/
