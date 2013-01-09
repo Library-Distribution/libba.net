@@ -1,36 +1,48 @@
+body {
+	background-color: lightgray;
+}
+#page-content {
+	background-color: white;
+	width: 50%;
+	text-align: center;
+
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	-ms-border-radius: 10px;
+	-o-border-radius: 10px;
+}
 #review-list, #review-comments
 {
 	border-collapse: separate;
 	border-spacing: 10px;
 	width: 100%;
 }
-#review-list
-{
-	border-spacing: 1px;
+#review-list .review-entry {
+	display: inline-block;
+	width: 99.5%;
+	margin-bottom: 10px;
 }
-#review-list tr > td:first-of-type
-{
-	width: 2.5%;
-	text-align: center;
+#review-list .review-entry {
+	display: inline-block;
+	width: 99.5%;
+	margin-bottom: 10px;
 }
-#review-list td
-{
-	border: solid teal 2px;
-	padding: 3px;
-	background-color: lightblue;
-	text-align: justify;
+#review-list dt, #review-list dd {
+	float: left;
+	margin: 0;
+	padding: 5px;
+	border-bottom: 1px solid #999;
 }
-#review td, #review-comments td, #review-list td
-{
-	border: solid teal 2px;
-	padding: 3px;
-	background-color: lightblue;
-	text-align: justify;
-}
-#review tr > td:first-of-type, #review-comments tr > td:first-of-type
-{
+#review-list dt {
+	width: 20%;
 	font-weight: bold;
-	width: 15%;
+}
+#review-list dd {
+	width: 75%;
+}
+h3.review-header {
+	display: inline-block;
 }
 
 #review-comments tr > td:first-of-type

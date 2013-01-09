@@ -72,6 +72,9 @@
 	<head>
 		<?php require("templates/html.head.php"); ?>
 		<link rel="stylesheet" type="text/css" href="style/review.css"/>
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+		<script type="text/javascript" src="javascript/jquery-ui.js"></script>
+		<script type="text/javascript" src="javascript/review.js"></script>
 	</head>
 	<body>
 		<h1 id="page-title"><?php echo $page_title; ?></h1>
@@ -116,24 +119,21 @@
 				else
 				{
 			?>
-					<table id="review-list">
-						<thead>
-							<tr>
-								<th></th>
-								<th>Library</th>
-								<th>Version</th>
-								<th>User</th>
-							</tr>
-						</thead>
-						<tbody>
-			<?php
-						foreach ($items AS $item)
-						{
-							echo "<tr><td><a href=\"./{$item["id"]}\">&gt;&gt;</a></td><td><a href=\"items/{$item["name"]}/latest\">{$item["name"]}</a></td><td>{$item["version"]}</td><td><a href=\"users/{$item["user"]["name"]}/profile\">{$item["user"]["name"]}</a></td></tr>";
-						}
-			?>
-						</tbody>
-					</table>
+					<div id="review-list">
+						<?php
+							foreach ($items AS $item)
+							{
+								echo '<div class="review-entry">'
+									. "<h3 class='review-header'>$item[name]</h3>"
+									. '<dl>'
+										. "<dt>Library</dt><dd><a href='items/$item[id]'>$item[name]</a></dd>"
+										. "<dt>Version</dt><dd>$item[version]</dd>"
+										. "<dt>User</dt><dd><a href=\"users/{$item["user"]["name"]}/profile\">{$item["user"]["name"]}</a></dd>"
+										. "<dt>Link</dt><dd>&#9654; <a href='./$item[id]'>Go to discussion thread</a> &#9654;</dd>"
+									. '</dl></div>';
+							}
+						?>
+					</div>
 			<?php
 				}
 			?>
