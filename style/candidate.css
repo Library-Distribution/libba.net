@@ -41,7 +41,7 @@ body {
 	padding: 5px;
 	border-top: 1px solid #999;
 }
-.candidate-header h3 {
+h3.candidate-header {
 	display: inline-block;
 }
 #candidate-list dd.cand-open {

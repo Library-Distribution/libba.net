@@ -313,8 +313,8 @@
 							foreach ($candidates AS $cand)
 							{
 								$status = $cand['closed'] ? 'closed' : 'open';
-								echo '<div class="candidate-entry"><div class="candidate-header">'
-									. "<h3>{$cand['lib-name']} (v{$cand['lib-version']})</h3></div>"
+								echo '<div class="candidate-entry">'
+									. "<h3 class='candidate-header'>{$cand['lib-name']} (v{$cand['lib-version']})</h3>"
 									. '<dl class="candidate-details">'
 										. "<dt>Name</dt><dd><a href='items/{$cand['HEX(libid)']}'>{$cand['lib-name']}</a></dd>"
 										. "<dt>Version</dt><dd>{$cand['lib-version']}</dd>"
