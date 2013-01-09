@@ -39,8 +39,9 @@
 <html>
 	<head>
 		<?php require("../templates/html.head.php"); ?>
+		<link rel="stylesheet" type="text/css" href="style/items/view.css"/>
 	</head>
-	<body>
+	<body class="pretty-ui">
 		<h1 id="page-title"><?php echo $page_title; ?></h1>
 		<div id="page-content">
 			<?php
@@ -84,17 +85,17 @@
 					}
 				}
 		?>
-		<table>
+		<table id="item-details">
 			<tr>
-				<td>Uploaded by:</td>
+				<th>Uploaded by:</th>
 				<td><a href="users/<?php echo $item['user']['name']; ?>/profile"><?php echo $item['user']['name']; ?></a></td>
 			</tr>
 			<tr>
-				<td>Uploaded:</td>
+				<th>Uploaded:</th>
 				<td><?php echo $item['uploaded']; ?></td>
 			</tr>
 			<tr>
-				<td>Tags:</td>
+				<th>Tags:</th>
 				<td>
 					<?php
 						foreach ($item['tags'] AS $tag)
@@ -105,17 +106,17 @@
 				</td>
 			</tr>
 			<tr>
-				<td>Reviewed:</td>
+				<th>Reviewed:</th>
 				<td><?php echo "<span style=\"font-weight: bolder; color: " . ($item['reviewed'] ? "green\">Yes" : "red\">No") . "</span>"; ?></td>
 			</tr>
 		</table>
-		<h3>Description</h3>
-		<div>
+		<h3 id="item-descr-title">Description</h3>
+		<p id="item-descr">
 			<?php
 				require_once("../user_input.php");
 				echo user_input_process($item['description']);
 			?>
-		</div>
+		</p>
 		<?php
 
 			$versions = $api->getItemList(0, "all", NULL, NULL, $item['name']);
