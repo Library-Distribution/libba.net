@@ -31,7 +31,7 @@
 						$vote = (int)(mysql_real_escape_string($_POST['vote']));
 						if (in_array($vote, array(-1, 0, 1)))
 						{
-							$db_query = "SELECT COUNT(*) FROM $db_table_candidate_comments WHERE id = '$id' AND vote != '0' AND user = UNHEX('{$_SESSION['userID']}')";
+							$db_query = "SELECT COUNT(*) FROM $db_table_candidate_comments WHERE id = '$id' AND vote != '0' AND user = UNHEX('$_SESSION[userID]')";
 							$db_result = mysql_query($db_query, $db_connection);
 							if (!$db_result)
 							{
@@ -48,7 +48,7 @@
 							$vote = 0;
 					}
 
-					$db_query = "INSERT INTO $db_table_candidate_comments (id, user, comment, vote) VALUES ($id, UNHEX('{$_SESSION['userID']}'), '" . mysql_real_escape_string($_POST['newcomment']) . '\', \'' . $vote . '\')';
+					$db_query = "INSERT INTO $db_table_candidate_comments (id, user, comment, vote) VALUES ($id, UNHEX('$_SESSION[userID]'), '" . mysql_real_escape_string($_POST['newcomment']) . '\', \'' . $vote . '\')';
 					$db_result = mysql_query($db_query, $db_connection);
 					if (!$db_result)
 					{
@@ -61,7 +61,7 @@
 				{
 					if ($can_close)
 					{
-						$db_query = "UPDATE $db_table_candidates Set closed = '1', closed-by = UNHEX('{$_SESSION['userID']}'), closed-date = NOW(), closed-comment = '" . mysql_real_escape_string($_POST['closecomment']) . "' WHERE id = '$id'";
+						$db_query = "UPDATE $db_table_candidates Set closed = '1', closed-by = UNHEX('$_SESSION[userID]'), closed-date = NOW(), closed-comment = '" . mysql_real_escape_string($_POST['closecomment']) . "' WHERE id = '$id'";
 						$db_result = mysql_query($db_query, $db_connection);
 						if (!$db_result)
 						{
@@ -145,7 +145,7 @@
 
 			if ($logged_in)
 			{
-				$db_query = "SELECT COUNT(*) FROM $db_table_candidate_comments WHERE id = '$id' AND vote != '0' AND user = UNHEX('{$_SESSION['userID']}')";
+				$db_query = "SELECT COUNT(*) FROM $db_table_candidate_comments WHERE id = '$id' AND vote != '0' AND user = UNHEX('$_SESSION[userID]')";
 				$db_result = mysql_query($db_query, $db_connection);
 				if (!$db_result)
 				{
@@ -241,7 +241,7 @@
 						<?php
 							foreach ($comments AS $comment)
 							{
-								echo "<tr><td><img alt='avatar' src='http://gravatar.com/avatar/{$comment['userMail']}?s=50&amp;d=mm' class='comment-avatar'/><br/><a href='users/{$comment['user']}/profile'>{$comment['user']}</a><hr/>{$comment['date']}</td>"
+								echo "<tr><td><img alt='avatar' src='http://gravatar.com/avatar/$comment[userMail]?s=50&amp;d=mm' class='comment-avatar'/><br/><a href='users/$comment[user]/profile'>$comment[user]</a><hr/>$comment[date]</td>"
 									. '<td>' . user_input_process($comment['comment']) . (!empty($comment['vote']) ? '<div class="vote" style="float: right">+1</div>' : '') . '</td></tr>';
 							}
 							if (!$candidate['closed'])
@@ -288,7 +288,7 @@
 							}
 							else
 							{
-								echo "<tr><td><a href='users/{$candidate['closedBy']}/profile'>{$candidate['closedBy']}</a><hr/>{$candidate['closedDate']}</td>"
+								echo "<tr><td><a href='users/$candidate[closedBy]/profile'>$candidate[closedBy]</a><hr/>$candidate[closedDate]</td>"
 									. '<td id="close-comment" class="' . ( /* todo: get if included in stdlib or not */ '') . '">' . user_input_process($candidate['closed-comment']) . '</td></tr>';
 								/*
 								if ($can_close && !$in_standard)
@@ -319,7 +319,7 @@
 						<?php
 							foreach ($candidates AS $cand)
 							{
-								echo "<tr><td><a href='./{$cand['id']}'>&gt;&gt;</a></td><td><a href='items/{$cand['libId']}'>{$cand['libName']} (v{$cand['libVersion']})</a></td><td><a href='users/{$cand['user']}/profile'>{$cand['user']}</a></td><td>{$cand['date']}</td><td class='" . ($cand['closed'] ? 'cand-closed' : 'cand-open') . "'>" . ($cand['closed'] ? 'closed' : 'open') . '</td></tr>';
+								echo "<tr><td><a href='./$cand[id]'>&gt;&gt;</a></td><td><a href='items/$cand[libId]'>$cand[libName] (v$cand[libVersion])</a></td><td><a href='users/$cand[user]}/profile'>$cand[user]}</a></td><td>$cand[date]</td><td class='" . ($cand['closed'] ? 'cand-closed' : 'cand-open') . "'>" . ($cand['closed'] ? 'closed' : 'open') . '</td></tr>';
 							}
 						?>
 						</tbody>

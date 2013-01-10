@@ -56,7 +56,7 @@
 	<body>
 		<h1 id="page-title">
 			<?php
-				echo "<img alt='$user's avatar' id='user-gravatar' src='http://gravatar.com/avatar/{$user_data['mail']}?s=50&amp;d=mm'/>";
+				echo "<img alt='$user's avatar' id='user-gravatar' src='http://gravatar.com/avatar/$user_data[mail]?s=50&amp;d=mm'/>";
 				echo $page_title;
 			?>
 		</h1>
@@ -75,7 +75,7 @@
 							echo "<h2>$set_name uploaded ($item_count)</h2>";
 							foreach ($set AS $item)
 							{
-								echo "<a href='items/{$item['id']}' class='user-item'>{$item['name']} (v{$item['version']})</a>";
+								echo "<a href='items/$item[id]' class='user-item'>$item[name] (v$item[version])</a>";
 							}
 						}
 					}

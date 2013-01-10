@@ -65,7 +65,7 @@
 		{
 			$id = $item['id'];
 			$retrieved_items[$id] = $api->getItemById($id);
-			$activity[] = array('header' => "$user uploaded <a href='items/$id'>{$item['name']} (v{$item['version']})</a>",
+			$activity[] = array('header' => "$user uploaded <a href='items/$id'>$item[name] (v$item[version])</a>",
 							'text' => $retrieved_items[$id]['description'],
 							'image' => 'images/activity/upload.png',
 							'date' => $retrieved_items[$id]['uploaded'],
@@ -73,7 +73,7 @@
 		}
 
 		# get review comments
-		$db_query = "SELECT HEX(id) AS id, comment, date FROM $db_table_review_comments WHERE user = UNHEX('{$user_data['id']}') ORDER BY date DESC $db_limit";
+		$db_query = "SELECT HEX(id) AS id, comment, date FROM $db_table_review_comments WHERE user = UNHEX('$user_data[id]') ORDER BY date DESC $db_limit";
 		$db_result = mysql_query($db_query, $db_connection);
 		if (!$db_result)
 		{
@@ -87,7 +87,7 @@
 			$item = isset($retrieved_items[$id])
 						? $retrieved_items[$id]
 						: ($retrieved_items[$id] = $api->getItemById($id));
-			$activity[] = array('header' => "$user commented on <a href='reviews/$id'>Code Review for {$item['name']} v{$item['version']}</a>",
+			$activity[] = array('header' => "$user commented on <a href='reviews/$id'>Code Review for $item[name] v$item[version]</a>",
 							'text' => $comment['comment'],
 							'image' => 'images/activity/review-comment.png',
 							'date' => $comment['date'],
@@ -103,7 +103,7 @@
 		$retrieved_candidates = array();
 
 		# get candidates opened and closed
-		$db_query = "SELECT *, HEX(libid) AS libId, HEX(userid) AS userId, HEX(`closed-by`) AS closedBy FROM $db_table_candidates WHERE userid = UNHEX('{$user_data['id']}') ORDER BY date DESC $db_limit";
+		$db_query = "SELECT *, HEX(libid) AS libId, HEX(userid) AS userId, HEX(`closed-by`) AS closedBy FROM $db_table_candidates WHERE userid = UNHEX('$user_data[id]') ORDER BY date DESC $db_limit";
 		$db_result = mysql_query($db_query, $db_connection);
 		if (!$db_result)
 		{
@@ -119,7 +119,7 @@
 			$item = isset($retrieved_items[$id])
 						? $retrieved_items[$id]
 						: ($retrieved_items[$id] = $api->getItemById($id));
-			$activity[] = array('header' => "$user proposed <a href='items/$id'>{$item['name']} (v{$item['version']})</a> for the stdlib",
+			$activity[] = array('header' => "$user proposed <a href='items/$id'>$item[name] (v$item[version])</a> for the stdlib",
 							'text' => $candidate['text'],
 							'image' => 'images/activity/candidate.png',
 							'date' => $candidate['date'],
@@ -129,18 +129,18 @@
 			{
 				$user = $api->getUserById($candidate['closedBy']);
 				$accepted = $item['default'] ? 'accepted' : 'rejected';
-				$activity[] = array('header' => "The stdlib candidate {$item['name']} v{$item['version']} has been $accepted by <a href='users/{$user['name']}/profile'>{$user['name']}</a>",
+				$activity[] = array('header' => "The stdlib candidate $item[name] v$item[version] has been $accepted by <a href='users/$user[name]/profile'>$user[name]</a>",
 								'text' => $candidate['closed-comment'],
 								'image' => "images/activity/candidate-$accepted.png",
 								'date' => $candidate['closed-date'],
-								'link' => "candidates/{$candidate['id']}#closecomment");
+								'link' => "candidates/$candidate[id]#closecomment");
 			}
 		}
 
 		if (hasPrivilege($user_data['privileges'], PRIVILEGE_STDLIB))
 		{
 			# get candidates closed by this user
-			$db_query = "SELECT *, HEX(libid) AS libId, HEX(userid) AS userId, HEX(`closed-by`) AS closedBy FROM $db_table_candidates WHERE `closed-by` = UNHEX('{$user_data['id']}') ORDER BY date DESC $db_limit";
+			$db_query = "SELECT *, HEX(libid) AS libId, HEX(userid) AS userId, HEX(`closed-by`) AS closedBy FROM $db_table_candidates WHERE `closed-by` = UNHEX('$user_data[id]') ORDER BY date DESC $db_limit";
 			$db_result = mysql_query($db_query, $db_connection);
 			if (!$db_result)
 			{
@@ -156,7 +156,7 @@
 		}
 
 		# get candidate comments
-		$db_query = "SELECT id, comment, date, vote FROM $db_table_candidate_comments WHERE user = UNHEX('{$user_data['id']}') ORDER BY date DESC $db_limit";
+		$db_query = "SELECT id, comment, date, vote FROM $db_table_candidate_comments WHERE user = UNHEX('$user_data[id]') ORDER BY date DESC $db_limit";
 		$db_result = mysql_query($db_query, $db_connection);
 		if (!$db_result)
 		{
@@ -180,7 +180,7 @@
 						? $retrieved_items[$id]
 						: ($retrieved_items[$id] = $api->getItemById($item_id));
 
-			$activity[] = array('header' => "$user commented on <a href='candidates/$id'>{$item['name']} v{$item['version']} - Stdlib candidate</a>",
+			$activity[] = array('header' => "$user commented on <a href='candidates/$id'>$item[name] v$item[version] - Stdlib candidate</a>",
 							'text' => $comment['comment'],
 							'image' => 'images/activity/candidate-comment.png',
 							'date' => $comment['date'],
@@ -206,7 +206,7 @@
 	<body>
 		<h1 id="page-title">
 			<?php
-				echo "<img alt='$user's avatar' id='user-gravatar' src='http://gravatar.com/avatar/{$user_data['mail']}?s=50&amp;d=mm'/>";
+				echo "<img alt='$user's avatar' id='user-gravatar' src='http://gravatar.com/avatar/$user_data[mail]?s=50&amp;d=mm'/>";
 				echo $page_title;
 			?>
 		</h1>
@@ -226,13 +226,13 @@
 
 						echo '<div class="activity-item">'
 								. '<div class="activity-header">'
-									. "<a href='{$item['link']}'>"
-										. "<img class='activity-icon' alt='activity icon' src='{$item['image']}'/>"
+									. "<a href='$item[link]'>"
+										. "<img class='activity-icon' alt='activity icon' src='$item[image]'/>"
 									. '</a>'
 									. $item['header']
 								. '</div><hr/>'
 								. "<div class='activity-body user-markup'>$text</div>"
-								. "<div class='activity-footer'>{$item['date']}</div>"
+								. "<div class='activity-footer'>$item[date]</div>"
 							. '</div>';
 					}
 				}

@@ -20,7 +20,7 @@
 
 		if (isset($_SESSION['user']))
 		{
-			echo "Welcome<br/><a href='users/{$_SESSION["user"]}/profile'>{$_SESSION["user"]}</a>!<hr/><a href='logout?redirect=$redirect'>Logout</a>";
+			echo "Welcome<br/><a href='users/$_SESSION[user]/profile'>$_SESSION[user]</a>!<hr/><a href='logout?redirect=$redirect'>Logout</a>";
 		}
 		else
 		{

@@ -23,7 +23,7 @@
 			{
 				if ($logged_in)
 				{
-					$db_query = "INSERT INTO $db_table_review_comments (id, user, comment) VALUES (UNHEX('$id'), UNHEX('{$_SESSION['userID']}'), '" . mysql_real_escape_string($_POST['newcomment']) . "')";
+					$db_query = "INSERT INTO $db_table_review_comments (id, user, comment) VALUES (UNHEX('$id'), UNHEX('$_SESSION[userID]'), '" . mysql_real_escape_string($_POST['newcomment']) . "')";
 					$db_result = mysql_query($db_query, $db_connection);
 					if (!$db_result)
 					{
@@ -38,7 +38,7 @@
 			require_once('user_input.php');
 
 			$item = $api->getItemById($id);
-			$page_title = $item['name'] . " (v{$item['version']}) | Code review";
+			$page_title = $item['name'] . " (v$item[version]) | Code review";
 
 			$db_query = "SELECT HEX(user) AS user, comment, date FROM $db_table_review_comments WHERE id = UNHEX('$id')";
 			$db_result = mysql_query($db_query, $db_connection);
@@ -91,7 +91,7 @@
 			<?php
 						foreach ($comments AS $comment)
 						{
-							echo "<tr><td><img alt='avatar' src='http://gravatar.com/avatar/{$comment['userMail']}?s=50&amp;d=mm' class='comment-avatar'/><br/><a href='users/{$comment['user']}/profile'>{$comment['user']}</a><hr/>{$comment['date']}</td><td>" . user_input_process($comment['comment']) . '</td></tr>';
+							echo "<tr><td><img alt='avatar' src='http://gravatar.com/avatar/$comment[userMail]?s=50&amp;d=mm' class='comment-avatar'/><br/><a href='users/$comment[user]/profile'>$comment[user]</a><hr/>$comment[date]</td><td>" . user_input_process($comment['comment']) . '</td></tr>';
 						}
 						if (!$item['reviewed'])
 						{
@@ -129,7 +129,7 @@
 			<?php
 						foreach ($items AS $item)
 						{
-							echo "<tr><td><a href='./{$item['id']}'>&gt;&gt;</a></td><td><a href='items/{$item['name']}/latest'>{$item['name']}</a></td><td>{$item['version']}</td><td><a href='users/{$item['user']['name']}/profile'>{$item['user']['name']}</a></td></tr>";
+							echo "<tr><td><a href='./$item[id]'>&gt;&gt;</a></td><td><a href='items/$item[name]/latest'>$item[name]</a></td><td>$item[version]</td><td><a href='users/{$item['user']['name']}/profile'>{$item['user']['name']}</a></td></tr>";
 						}
 			?>
 						</tbody>

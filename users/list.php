@@ -60,7 +60,7 @@
 						{
 							break;
 						}
-						echo "<li><a href='./{$user['name']}/profile'>{$user['name']}</a></li>";
+						echo "<li><a href='./$user[name]/profile'>$user[name]</a></li>";
 					}
 					echo '</ul>';
 

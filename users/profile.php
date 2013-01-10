@@ -34,7 +34,7 @@
 		$page_title = $user;
 		$db_connection = db_ensure_connection();
 
-		$db_query = "SELECT * FROM $db_table_user_profile WHERE id = UNHEX('{$user_data['id']}')";
+		$db_query = "SELECT * FROM $db_table_user_profile WHERE id = UNHEX('$user_data[id]')";
 		$db_result = mysql_query($db_query, $db_connection);
 		if (!$db_result)
 		{
@@ -59,7 +59,7 @@
 	<body>
 		<h1 id="page-title">
 			<?php
-				echo "<img alt='$user's avatar' id='user-gravatar' src='http://gravatar.com/avatar/{$user_data['mail']}?s=50&amp;d=mm'/>";
+				echo "<img alt='$user's avatar' id='user-gravatar' src='http://gravatar.com/avatar/$user_data[mail]?s=50&amp;d=mm'/>";
 				echo $page_title;
 			?>
 		</h1>
@@ -79,7 +79,7 @@
 				<?php
 					if ($user_profile['show_mail'] == 'public' || ($user_profile['show_mail'] == 'members' && $logged_in))
 					{
-						echo "<img id='user-mail' alt='$user's mail address' src='mailimage.php?user={$user_data['id']}'/>";
+						echo "<img id='user-mail' alt='$user's mail address' src='mailimage.php?user=$user_data[id]'/>";
 					}
 					if ($user_profile['allow_mails'])
 					{

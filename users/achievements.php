@@ -46,7 +46,7 @@
 
 		foreach ($libs as $lib)
 		{
-			$achievements[] = array('text' => "$user's library {$lib['name']} v{$lib['version']} is part of the standard lib for AutoHotkey",
+			$achievements[] = array('text' => "$user's library $lib[name] v$lib[version] is part of the standard lib for AutoHotkey",
 									'image' => 'images/achievements/stdlib.png',
 									'link' => 'items/' . $lib['id']);
 		}
@@ -63,7 +63,7 @@
 	<body>
 		<h1 id="page-title">
 			<?php
-				echo "<img alt='$user's avatar' id='user-gravatar' src='http://gravatar.com/avatar/{$user_data['mail']}?s=50&amp;d=mm'/>";
+				echo "<img alt='$user's avatar' id='user-gravatar' src='http://gravatar.com/avatar/$user_data[mail]?s=50&amp;d=mm'/>";
 				echo $page_title;
 			?>
 		</h1>
@@ -77,7 +77,7 @@
 				{
 					foreach ($achievements AS $a)
 					{
-						echo "<div class='achievement'><a href='{$a['link']}'><img class='achievement-icon' src='{$a['image']}'/></a>{$a['text']}</div>";
+						echo "<div class='achievement'><a href='$a[link]'><img class='achievement-icon' src='$a[image]'/></a>$a[text]</div>";
 					}
 				}
 			?>

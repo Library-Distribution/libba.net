@@ -88,7 +88,7 @@
 					if (!mail($mail,
 						'Confirm your registration to libba.net',
 						"To activate your account, go to <a href='$url'>$url</a>.",
-						"FROM: noreply@{$_SERVER['HTTP_HOST']}\r\nContent-type: text/html; charset=iso-8859-1"))
+						"FROM: noreply@$_SERVER[HTTP_HOST]\r\nContent-type: text/html; charset=iso-8859-1"))
 					{
 						$message = "Failed to send account activation mail to '$mail'!";
 						$error_message = 'An account has been created, but the activation mail could not be sent. Therefore the account was deleted again.';

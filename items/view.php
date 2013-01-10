@@ -33,7 +33,7 @@
 		die ("Failed to retrieve information about this item.<p>{$e->getMessage()}</p>");
 	}
 
-	$page_title = "\"{$item['name']}\" (v{$item['version']})";
+	$page_title = "\"$item[name]}\" (v$item[version])";
 ?>
 <!DOCTYPE html>
 <html>
@@ -135,7 +135,7 @@
 				echo '<h3>Other versions:</h3><ul>';
 				foreach ($versions AS $version)
 				{
-					echo "<li><a href='./{$version['id']}'>version {$version['version']}</a></li>";
+					echo "<li><a href='./$version[id]'>version $version[version]</a></li>";
 				}
 				echo '</ul>';
 			}
