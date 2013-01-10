@@ -1,29 +1,29 @@
 <?php
 	session_start();
 
-	require_once("config/constants.php");
-	require_once("secure_redirect.php");
+	require_once('config/constants.php');
+	require_once('secure_redirect.php');
 	secure_redirect();
 
 	if ($_POST && $_FILES)
 	{
-		$page_title = "Uploading...";
-		$mode = "process";
+		$page_title = 'Uploading...';
+		$mode = 'process';
 	}
 	else
 	{
-		$page_title = "Upload a new library or application";
-		$mode = "start";
+		$page_title = 'Upload a new library or application';
+		$mode = 'start';
 	}
-	$logged_in = isset($_SESSION["user"]);
+	$logged_in = isset($_SESSION['user']);
 ?>
 <!DOCTYPE html>
 <html>
 	<head>
-		<?php require("templates/html.head.php"); ?>
+		<?php require('templates/html.head.php'); ?>
 		<link rel="stylesheet" type="text/css" href="style/upload.css"/>
 		<?php
-			if ($mode == "start" && !$logged_in)
+			if ($mode == 'start' && !$logged_in)
 			{
 		?>
 				<script type="text/javascript" src="javascript/validate_upload_data.js"></script>
@@ -35,11 +35,11 @@
 		<h1 id="page-title"><?php echo $page_title; ?></h1>
 		<div id="page-content">
 			<?php
-				if ($mode == "start")
+				if ($mode == 'start')
 				{
 			?>
 					Fill in the following fields:
-					<form name="up" action="<?php echo $_SERVER["REQUEST_URI"]; ?>" method="post" enctype="multipart/form-data">
+					<form name="up" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="post" enctype="multipart/form-data">
 						<table width="100%">
 							<col width="25%"/>
 							<col width="75%"/>
@@ -65,24 +65,24 @@
 							</tr>
 					<?php } ?>
 							<tr>
-								<td colspan="2"><input type="submit" name="submit_btn" <?php echo !$logged_in ? "disabled=\"disabled\"" : "" ?> value="Submit!"/></td>
+								<td colspan="2"><input type="submit" name="submit_btn" <?php echo !$logged_in ? 'disabled="disabled"' : '' ?> value="Submit!"/></td>
 							</tr>
 						</table>
 					</form>
 			<?php
 				}
-				else if ($mode == "process")
+				else if ($mode == 'process')
 				{
-					if (isset($_FILES["package"]) && ((isset($_POST["user"]) && isset($_POST["password"])) || isset($_SESSION["user"])))
+					if (isset($_FILES['package']) && ((isset($_POST['user']) && isset($_POST['password'])) || isset($_SESSION['user'])))
 					{
-						$user = isset($_POST["user"]) ? $_POST["user"] : $_SESSION["user"];
-						$password = isset($_POST["password"]) ? $_POST["password"] : $_SESSION["password"];
+						$user = isset($_POST['user']) ? $_POST['user'] : $_SESSION['user'];
+						$password = isset($_POST['password']) ? $_POST['password'] : $_SESSION['password'];
 
-						require_once("ALD.php");
+						require_once('ALD.php');
 						try
 						{
 							$conn = new ALD( SECURE_API_URL );
-							$id = $conn->uploadItem($_FILES["package"]["tmp_name"], $user, $password);
+							$id = $conn->uploadItem($_FILES['package']['tmp_name'], $user, $password);
 						}
 						catch (HttpException $e)
 						{
@@ -99,10 +99,10 @@
 						}
 					}
 					else
-						echo "Failed to upload: required data is missing.";
+						echo 'Failed to upload: required data is missing.';
 				}
 			?>
 		</div>
-		<?php require("footer.php"); require("header.php"); ?>
+		<?php require('footer.php'); require('header.php'); ?>
 	</body>
 </html>

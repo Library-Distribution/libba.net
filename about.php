@@ -1,11 +1,11 @@
 <?php
 	session_start();
-	$page_title = "About";
+	$page_title = 'About';
 ?>
 <!DOCTYPE html>
 <html>
 	<head>
-		<?php require("templates/html.head.php"); ?>
+		<?php require('templates/html.head.php'); ?>
 	</head>
 	<body>
 		<h1 id="page-title">About</h1>
@@ -31,6 +31,6 @@
 				</ul>
 			</p>
 		</div>
-		<?php require("footer.php"); require("header.php"); ?>
+		<?php require('footer.php'); require('header.php'); ?>
 	</body>
 </html>

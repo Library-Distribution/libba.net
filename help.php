@@ -1,11 +1,11 @@
 <?php
 	session_start();
-	$page_title = "Help";
+	$page_title = 'Help';
 ?>
 <!DOCTYPE html>
 <html>
 	<head>
-		<?php require("templates/html.head.php"); ?>
+		<?php require('templates/html.head.php'); ?>
 	</head>
 	<body>
 		<h1 id="page-title">libba.net help page</h1>
@@ -43,6 +43,6 @@
 			<h2 class="question">?</h2>
 			<div class="answer"></div>
 		</div>
-		<?php require("footer.php"); require("header.php"); ?>
+		<?php require('footer.php'); require('header.php'); ?>
 	</body>
 </html>

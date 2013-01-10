@@ -12,19 +12,19 @@
 
 	<div id="header-login">
 	<?php
-		$query_start = strpos($_SERVER["REQUEST_URI"], "?");
-		$pure_url = substr($_SERVER["REQUEST_URI"], 0, $query_start);
-		$redirect = in_array($pure_url, array("/login", "/logout", "/register", "/activate"))
-						? "index"
-						: urlencode($_SERVER["REQUEST_URI"]);
+		$query_start = strpos($_SERVER['REQUEST_URI'], '?');
+		$pure_url = substr($_SERVER['REQUEST_URI'], 0, $query_start);
+		$redirect = in_array($pure_url, array('/login', '/logout', '/register', '/activate'))
+						? 'index'
+						: urlencode($_SERVER['REQUEST_URI']);
 
-		if (isset($_SESSION["user"]))
+		if (isset($_SESSION['user']))
 		{
-			echo "Welcome<br/><a href=\"users/{$_SESSION["user"]}/profile\">{$_SESSION["user"]}</a>!<hr/><a href=\"logout?redirect=$redirect\">Logout</a>";
+			echo "Welcome<br/><a href='users/{$_SESSION["user"]}/profile'>{$_SESSION["user"]}</a>!<hr/><a href='logout?redirect=$redirect'>Logout</a>";
 		}
 		else
 		{
-			echo "Welcome!<hr/><a href=\"login?redirect=$redirect\">Login</a><hr/><a href=\"register?redirect=$redirect\">Register</a>";
+			echo "Welcome!<hr/><a href='login?redirect=$redirect'>Login</a><hr/><a href='register?redirect=$redirect'>Register</a>";
 		}
 	?>
 	</div>

@@ -1,15 +1,15 @@
 <?php
 	session_start();
-	$page_title = "Home";
+	$page_title = 'Home';
 ?>
 <!DOCTYPE html>
 <html>
 	<head>
-		<?php require("templates/html.head.php"); ?>
+		<?php require('templates/html.head.php'); ?>
 		<link rel="stylesheet" type="text/css" href="style/index.css"/>
 	</head>
 	<body>
-		<?php require("header.php"); ?>
+		<?php require('header.php'); ?>
 		<!--div id="page-content"-->
 			<div id="vert1"></div><div id="vert2"></div>
 			<div id="horz1"></div><div id="horz2"></div>
@@ -31,6 +31,6 @@
 			<div id="long1">Uploading your work is as simple as 1-2-3. Your code is available to all users easily. You can make it into the standard library for AutoHotkey.</div>
 			<div id="long2">Get a set of libraries for everyday use. Enhance AutoHotkey with specialized pieces of code. Code review and careful selection for the standard lib ensure you get always the best.</div>
 		<!--/div-->
-		<?php require("footer.php"); ?>
+		<?php require('footer.php'); ?>
 	</body>
 </html>

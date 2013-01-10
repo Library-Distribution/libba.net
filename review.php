@@ -2,59 +2,59 @@
 	ob_start();
 	session_start();
 
-	require_once("ALD.php");
-	require_once("config/constants.php");
+	require_once('ALD.php');
+	require_once('config/constants.php');
 
 	$api = new ALD( API_URL );
-	$logged_in = isset($_SESSION["user"]);
+	$logged_in = isset($_SESSION['user']);
 
-	if (isset($_GET["id"]))
+	if (isset($_GET['id']))
 	{
-		require_once("api/db.php");
-		require_once("db2.php");
+		require_once('api/db.php');
+		require_once('db2.php');
 
 		$db_connection = db_ensure_connection();
-		$id = mysql_real_escape_string($_GET["id"], $db_connection);
+		$id = mysql_real_escape_string($_GET['id'], $db_connection);
 		$error = true;
 
 		for ($i = 0; $i < 1; $i++)
 		{
-			if (isset($_POST["newcomment"]))
+			if (isset($_POST['newcomment']))
 			{
 				if ($logged_in)
 				{
-					$db_query = "INSERT INTO $db_table_review_comments (id, user, comment) VALUES (UNHEX('$id'), UNHEX('{$_SESSION["userID"]}'), '" . mysql_real_escape_string($_POST["newcomment"]) . "')";
+					$db_query = "INSERT INTO $db_table_review_comments (id, user, comment) VALUES (UNHEX('$id'), UNHEX('{$_SESSION['userID']}'), '" . mysql_real_escape_string($_POST['newcomment']) . "')";
 					$db_result = mysql_query($db_query, $db_connection);
 					if (!$db_result)
 					{
-						$error_message = "Failed to post comment: MySQL error";
-						$error_description = "Could not insert new comment. MySQL error was: '" . mysql_error() . "'";
+						$error_message = 'Failed to post comment: MySQL error';
+						$error_description = 'Could not insert new comment. MySQL error was: "' . mysql_error() . '"';
 						break;
 					}
 				}
-				header("Location: " . $_SERVER["REQUEST_URI"]);
+				header('Location: ' . $_SERVER['REQUEST_URI']);
 			}
 
-			require_once("user_input.php");
+			require_once('user_input.php');
 
 			$item = $api->getItemById($id);
-			$page_title = $item["name"] . " (v{$item["version"]}) | Code review";
+			$page_title = $item['name'] . " (v{$item['version']}) | Code review";
 
 			$db_query = "SELECT HEX(user), comment, date FROM $db_table_review_comments WHERE id = UNHEX('$id')";
 			$db_result = mysql_query($db_query, $db_connection);
 			if (!$db_result)
 			{
-				$error_message = "Failed to read comments: MySQL error";
-				$error_description = "Comments could not be read from database. MySQL error was: '" . mysql_error() . "'";
+				$error_message = 'Failed to read comments: MySQL error';
+				$error_description = 'Comments could not be read from database. MySQL error was: "' . mysql_error() . '"';
 				break;
 			}
 
 			$comments = array();
 			while ($comment = mysql_fetch_assoc($db_result))
 			{
-				$temp = $api->getUserById($comment["HEX(user)"]);
-				$comment["user"] = $temp["name"];
-				$comment["user-mail"] = $temp["mail"];
+				$temp = $api->getUserById($comment['HEX(user)']);
+				$comment['user'] = $temp['name'];
+				$comment['user-mail'] = $temp['mail'];
 				$comments[] = $comment;
 			}
 
@@ -63,14 +63,14 @@
 	}
 	else
 	{
-		$page_title = "Unreviewed items";
-		$items = $api->getItemList(0, "all", NULL, NULL, NULL, NULL, NULL, "both", "no");
+		$page_title = 'Unreviewed items';
+		$items = $api->getItemList(0, 'all', NULL, NULL, NULL, NULL, NULL, 'both', 'no');
 	}
 ?>
 <!DOCTYPE html>
 <html>
 	<head>
-		<?php require("templates/html.head.php"); ?>
+		<?php require('templates/html.head.php'); ?>
 		<link rel="stylesheet" type="text/css" href="style/review.css"/>
 	</head>
 	<body>
@@ -81,7 +81,7 @@
 				{
 					if ($error)
 					{
-						require("error.php");
+						require('error.php');
 					}
 					else
 					{
@@ -91,13 +91,13 @@
 			<?php
 						foreach ($comments AS $comment)
 						{
-							echo "<tr><td><img alt=\"avatar\" src=\"http://gravatar.com/avatar/{$comment['user-mail']}?s=50&amp;d=mm\" class=\"comment-avatar\"/><br/><a href=\"users/{$comment["user"]}/profile\">{$comment["user"]}</a><hr/>{$comment["date"]}</td><td>" . user_input_process($comment["comment"]) . "</td></tr>";
+							echo "<tr><td><img alt='avatar' src='http://gravatar.com/avatar/{$comment['user-mail']}?s=50&amp;d=mm' class='comment-avatar'/><br/><a href='users/{$comment['user']}/profile'>{$comment['user']}</a><hr/>{$comment['date']}</td><td>" . user_input_process($comment['comment']) . '</td></tr>';
 						}
-						if (!$item["reviewed"])
+						if (!$item['reviewed'])
 						{
 			?>
 							<tr>
-								<td><a href="users/<?php echo $_SESSION["user"]; ?>/profile">You</a><hr/>Now</td>
+								<td><a href="users/<?php echo $_SESSION['user']; ?>/profile">You</a><hr/>Now</td>
 								<td>
 									<form action="#" method="post">
 										<textarea name="newcomment" style="width: 99.5%"></textarea>
@@ -129,7 +129,7 @@
 			<?php
 						foreach ($items AS $item)
 						{
-							echo "<tr><td><a href=\"./{$item["id"]}\">&gt;&gt;</a></td><td><a href=\"items/{$item["name"]}/latest\">{$item["name"]}</a></td><td>{$item["version"]}</td><td><a href=\"users/{$item["user"]["name"]}/profile\">{$item["user"]["name"]}</a></td></tr>";
+							echo "<tr><td><a href='./{$item['id']}'>&gt;&gt;</a></td><td><a href='items/{$item['name']}/latest'>{$item['name']}</a></td><td>{$item['version']}</td><td><a href='users/{$item['user']['name']}/profile'>{$item['user']['name']}</a></td></tr>";
 						}
 			?>
 						</tbody>
@@ -138,11 +138,11 @@
 				}
 			?>
 		</div>
-		<?php require("footer.php"); require("header.php"); ?>
+		<?php require('footer.php'); require('header.php'); ?>
 	</body>
 </html>
 <?php
-	require_once("rewriter.php");
+	require_once('rewriter.php');
 	echo rewrite();
 	ob_end_flush();
 ?>

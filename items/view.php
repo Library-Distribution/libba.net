@@ -2,30 +2,30 @@
 	session_start();
 	ob_start();
 
-	if (!isset($_GET["id"]) && (!isset($_GET["name"]) || !isset($_GET["version"])))
+	if (!isset($_GET['id']) && (!isset($_GET['name']) || !isset($_GET['version'])))
 	{
-		header("Location: .");
+		header('Location: .');
 		exit;
 	}
 
-	require_once("../ALD.php");
-	require_once("../config/constants.php");
-	require_once("../api/semver.php");
+	require_once('../ALD.php');
+	require_once('../config/constants.php');
+	require_once('../api/semver.php');
 
-	$logged_in = isset($_SESSION["user"]);
+	$logged_in = isset($_SESSION['user']);
 	$api = new ALD( API_URL );
 
 	try
 	{
-		if (isset($_GET["id"]))
+		if (isset($_GET['id']))
 		{
-			$id = $_GET["id"];
+			$id = $_GET['id'];
 			$item = $api->getItemById($id);
 		}
 		else
 		{
-			$item = $api->getItem($_GET["name"], $_GET["version"]);
-			$id = $item["id"];
+			$item = $api->getItem($_GET['name'], $_GET['version']);
+			$id = $item['id'];
 		}
 	}
 	catch (HttpException $e)
@@ -38,7 +38,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<?php require("../templates/html.head.php"); ?>
+		<?php require('../templates/html.head.php'); ?>
 	</head>
 	<body>
 		<h1 id="page-title"><?php echo $page_title; ?></h1>
@@ -46,10 +46,10 @@
 			<?php
 				if ($logged_in)
 				{
-					require_once("../privilege.php");
+					require_once('../privilege.php');
 
-					$redirect_url = urlencode($_SERVER["REQUEST_URI"]);
-					if (hasPrivilege($_SESSION["privileges"], PRIVILEGE_REVIEW))
+					$redirect_url = urlencode($_SERVER['REQUEST_URI']);
+					if (hasPrivilege($_SESSION['privileges'], PRIVILEGE_REVIEW))
 					{
 						# insert review items
 						/*
@@ -66,7 +66,7 @@
 						echo "</ul></div>";
 						*/
 					}
-					if (hasPrivilege($_SESSION["privileges"], PRIVILEGE_STDLIB) && $item['type'] == "lib" && $item['reviewed'])
+					if (hasPrivilege($_SESSION['privileges'], PRIVILEGE_STDLIB) && $item['type'] == 'lib' && $item['reviewed'])
 					{
 						# insert default_include items
 						/*
@@ -106,46 +106,46 @@
 			</tr>
 			<tr>
 				<td>Reviewed:</td>
-				<td><?php echo "<span style=\"font-weight: bolder; color: " . ($item['reviewed'] ? "green\">Yes" : "red\">No") . "</span>"; ?></td>
+				<td><?php echo '<span style="font-weight: bolder; color: ' . ($item['reviewed'] ? 'green">Yes' : 'red">No') . '</span>'; ?></td>
 			</tr>
 		</table>
 		<h3>Description</h3>
 		<div>
 			<?php
-				require_once("../user_input.php");
+				require_once('../user_input.php');
 				echo user_input_process($item['description']);
 			?>
 		</div>
 		<?php
 
-			$versions = $api->getItemList(0, "all", NULL, NULL, $item['name']);
+			$versions = $api->getItemList(0, 'all', NULL, NULL, $item['name']);
 
 			# remove the current item from the array
-			require_once("../api/util.php");
-			$index = searchSubArray($versions, array("id" => $item["id"]));
+			require_once('../api/util.php');
+			$index = searchSubArray($versions, array('id' => $item['id']));
 			if ($index !== NULL)
 			{
 				unset($versions[$index]);
 			}
 
-			usort($versions, "semver_sort"); # sort by "version" field, following semver rules
+			usort($versions, 'semver_sort'); # sort by "version" field, following semver rules
 
 			if (count($versions) > 0)
 			{
-				echo "<h3>Other versions:</h3><ul>";
+				echo '<h3>Other versions:</h3><ul>';
 				foreach ($versions AS $version)
 				{
 					echo "<li><a href='./{$version['id']}'>version {$version['version']}</a></li>";
 				}
-				echo "</ul>";
+				echo '</ul>';
 			}
 			?>
 		</div>
-		<?php require("../header.php"); require("../footer.php"); ?>
+		<?php require('../header.php'); require('../footer.php'); ?>
 	</body>
 </html>
 <?php
-	require_once("../rewriter.php");
+	require_once('../rewriter.php');
 	echo rewrite();
 	ob_end_flush();
 ?>
