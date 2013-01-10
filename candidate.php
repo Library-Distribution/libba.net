@@ -77,7 +77,7 @@
 				header('Location: ' . $_SERVER['REQUEST_URI']); # reload to clear POST data and avoid repost of comment
 			}
 
-			$db_query = "SELECT *, HEX(libid), HEX(userid), HEX(`closed-by`) FROM $db_table_candidates WHERE id = '$id'";
+			$db_query = "SELECT *, HEX(libid) AS libId, HEX(userid) AS userId, HEX(`closed-by`) AS closedBy, closed-date AS closedDate FROM $db_table_candidates WHERE id = '$id'";
 			$db_result = mysql_query($db_query, $db_connection);
 			if (!$db_result)
 			{
@@ -93,19 +93,19 @@
 			}
 			$candidate = mysql_fetch_assoc($db_result);
 
-			$lib = $api->getItemById($candidate['HEX(libid)']);
-			$candidate['libname'] = $lib['name'];
-			$candidate['libversion'] = $lib['version'];
-			$temp = $api->getUserById($candidate['HEX(userid)']);
-			$candidate['username'] = $temp['name'];
+			$lib = $api->getItemById($candidate['libId']);
+			$candidate['libName'] = $lib['name'];
+			$candidate['libVersion'] = $lib['version'];
+			$temp = $api->getUserById($candidate['userId']);
+			$candidate['userName'] = $temp['name'];
 			if ($candidate['closed'])
 			{
-				$temp = $api->getUserById($candidate['HEX(`closed-by`)']);
-				$candidate['closed-by'] = $temp['name'];
+				$temp = $api->getUserById($candidate['closedBy']);
+				$candidate['closedBy'] = $temp['name'];
 			}
 
 			$comments = array();
-			$db_query = "SELECT *, HEX(user) FROM $db_table_candidate_comments WHERE id = '$id'";
+			$db_query = "SELECT *, HEX(user) AS user FROM $db_table_candidate_comments WHERE id = '$id'";
 			$db_result = mysql_query($db_query, $db_connection);
 			if (!$db_result)
 			{
@@ -115,9 +115,9 @@
 			}
 			while ($comment = mysql_fetch_assoc($db_result))
 			{
-				$temp = $api->getUserById($comment['HEX(user)']);
+				$temp = $api->getUserById($comment['user']);
 				$comment['user'] = $temp['name'];
-				$comment['user-mail'] = $temp['mail'];
+				$comment['userMail'] = $temp['mail'];
 				$comments[] = $comment;
 			}
 
@@ -156,7 +156,7 @@
 				$can_vote = mysql_fetch_object($db_result)->{'COUNT(*)'} == 0; # set to false if there's already a comment by the current user with a vote
 			}
 
-			$page_title = ($candidate['closed'] ? 'closed: ' : '') . $candidate['libname'] . ' v' . $candidate['libversion'] . ' | Candidate for stdlib';
+			$page_title = ($candidate['closed'] ? 'closed: ' : '') . $candidate['libName'] . ' v' . $candidate['libVersion'] . ' | Candidate for stdlib';
 		}
 		else
 		{
@@ -176,7 +176,7 @@
 				}
 			}
 
-			$db_query = "SELECT id, HEX(libid), HEX(userid), date, closed FROM $db_table_candidates WHERE $db_cond";
+			$db_query = "SELECT id, HEX(libid) as libId, HEX(userid) as userId, date, closed FROM $db_table_candidates WHERE $db_cond";
 			$db_result = mysql_query($db_query, $db_connection);
 			if (!$db_result)
 			{
@@ -188,11 +188,11 @@
 			$candidates = array();
 			while ($candidate = mysql_fetch_assoc($db_result))
 			{
-				$lib = $api->getItemById($candidate['HEX(libid)']);
-				$candidate['lib-name'] = $lib['name'];
-				$candidate['lib-version'] = $lib['version'];
+				$lib = $api->getItemById($candidate['libId']);
+				$candidate['libName'] = $lib['name'];
+				$candidate['libVersion'] = $lib['version'];
 
-				$temp = $api->getUserById($candidate['HEX(userid)']);
+				$temp = $api->getUserById($candidate['userId']);
 				$candidate['user'] = $temp['name'];
 
 				$candidates[] = $candidate;
@@ -221,11 +221,11 @@
 					<table id="candidate">
 						<tr>
 							<td>Library:</td>
-							<td><a href="items/<?php echo $candidate['HEX(libid)']; ?>"><?php echo $candidate['libname']; ?> (v<?php echo $candidate['libversion']; ?>)</a></td>
+							<td><a href="items/<?php echo $candidate['libId']; ?>"><?php echo $candidate['libName']; ?> (v<?php echo $candidate['libVersion']; ?>)</a></td>
 						</tr>
 						<tr>
 							<td>User:</td>
-							<td><a href="users/<?php echo $candidate['username']; ?>/profile"><?php echo $candidate['username']; ?></a></td>
+							<td><a href="users/<?php echo $candidate['userName']; ?>/profile"><?php echo $candidate['userName']; ?></a></td>
 						</tr>
 						<tr>
 							<td>Applied:</td>
@@ -241,7 +241,7 @@
 						<?php
 							foreach ($comments AS $comment)
 							{
-								echo "<tr><td><img alt='avatar' src='http://gravatar.com/avatar/{$comment['user-mail']}?s=50&amp;d=mm' class='comment-avatar'/><br/><a href='users/{$comment['user']}/profile'>{$comment['user']}</a><hr/>{$comment['date']}</td>"
+								echo "<tr><td><img alt='avatar' src='http://gravatar.com/avatar/{$comment['userMail']}?s=50&amp;d=mm' class='comment-avatar'/><br/><a href='users/{$comment['user']}/profile'>{$comment['user']}</a><hr/>{$comment['date']}</td>"
 									. '<td>' . user_input_process($comment['comment']) . (!empty($comment['vote']) ? '<div class="vote" style="float: right">+1</div>' : '') . '</td></tr>';
 							}
 							if (!$candidate['closed'])
@@ -288,7 +288,7 @@
 							}
 							else
 							{
-								echo "<tr><td><a href='users/{$candidate['closed-by']}/profile'>{$candidate['closed-by']}</a><hr/>{$candidate['closed-date']}</td>"
+								echo "<tr><td><a href='users/{$candidate['closedBy']}/profile'>{$candidate['closedBy']}</a><hr/>{$candidate['closedDate']}</td>"
 									. '<td id="close-comment" class="' . ( /* todo: get if included in stdlib or not */ '') . '">' . user_input_process($candidate['closed-comment']) . '</td></tr>';
 								/*
 								if ($can_close && !$in_standard)
@@ -319,7 +319,7 @@
 						<?php
 							foreach ($candidates AS $cand)
 							{
-								echo "<tr><td><a href='./{$cand['id']}'>&gt;&gt;</a></td><td><a href='items/{$cand['HEX(libid)']}'>{$cand['lib-name']} (v{$cand['lib-version']})</a></td><td><a href='users/{$cand['user']}/profile'>{$cand['user']}</a></td><td>{$cand['date']}</td><td class='" . ($cand['closed'] ? 'cand-closed' : 'cand-open') . "'>" . ($cand['closed'] ? 'closed' : 'open') . '</td></tr>';
+								echo "<tr><td><a href='./{$cand['id']}'>&gt;&gt;</a></td><td><a href='items/{$cand['libId']}'>{$cand['libName']} (v{$cand['libVersion']})</a></td><td><a href='users/{$cand['user']}/profile'>{$cand['user']}</a></td><td>{$cand['date']}</td><td class='" . ($cand['closed'] ? 'cand-closed' : 'cand-open') . "'>" . ($cand['closed'] ? 'closed' : 'open') . '</td></tr>';
 							}
 						?>
 						</tbody>

@@ -73,7 +73,7 @@
 		}
 
 		# get review comments
-		$db_query = "SELECT HEX(id), comment, date FROM $db_table_review_comments WHERE user = UNHEX('{$user_data['id']}') ORDER BY date DESC $db_limit";
+		$db_query = "SELECT HEX(id) AS id, comment, date FROM $db_table_review_comments WHERE user = UNHEX('{$user_data['id']}') ORDER BY date DESC $db_limit";
 		$db_result = mysql_query($db_query, $db_connection);
 		if (!$db_result)
 		{
@@ -83,7 +83,7 @@
 		}
 		while ($comment = mysql_fetch_assoc($db_result))
 		{
-			$id = $comment['HEX(id)'];
+			$id = $comment['id'];
 			$item = isset($retrieved_items[$id])
 						? $retrieved_items[$id]
 						: ($retrieved_items[$id] = $api->getItemById($id));
@@ -103,7 +103,7 @@
 		$retrieved_candidates = array();
 
 		# get candidates opened and closed
-		$db_query = "SELECT *, HEX(libid), HEX(userid), HEX(`closed-by`) FROM $db_table_candidates WHERE userid = UNHEX('{$user_data['id']}') ORDER BY date DESC $db_limit";
+		$db_query = "SELECT *, HEX(libid) AS libId, HEX(userid) AS userId, HEX(`closed-by`) AS closedBy FROM $db_table_candidates WHERE userid = UNHEX('{$user_data['id']}') ORDER BY date DESC $db_limit";
 		$db_result = mysql_query($db_query, $db_connection);
 		if (!$db_result)
 		{
@@ -115,7 +115,7 @@
 		{
 			$retrieved_candidates[$candidate['id']] = $candidate; # save data for further use
 
-			$id = $candidate['HEX(libid)'];
+			$id = $candidate['libId'];
 			$item = isset($retrieved_items[$id])
 						? $retrieved_items[$id]
 						: ($retrieved_items[$id] = $api->getItemById($id));
@@ -127,7 +127,7 @@
 
 			if ($candidate['closed'])
 			{
-				$user = $api->getUserById($candidate['HEX(`closed-by`)']);
+				$user = $api->getUserById($candidate['closedBy']);
 				$accepted = $item['default'] ? 'accepted' : 'rejected';
 				$activity[] = array('header' => "The stdlib candidate {$item['name']} v{$item['version']} has been $accepted by <a href='users/{$user['name']}/profile'>{$user['name']}</a>",
 								'text' => $candidate['closed-comment'],
@@ -140,7 +140,7 @@
 		if (hasPrivilege($user_data['privileges'], PRIVILEGE_STDLIB))
 		{
 			# get candidates closed by this user
-			$db_query = "SELECT *, HEX(libid), HEX(userid), HEX(`closed-by`) FROM $db_table_candidates WHERE `closed-by` = UNHEX('{$user_data['id']}') ORDER BY date DESC $db_limit";
+			$db_query = "SELECT *, HEX(libid) AS libId, HEX(userid) AS userId, HEX(`closed-by`) AS closedBy FROM $db_table_candidates WHERE `closed-by` = UNHEX('{$user_data['id']}') ORDER BY date DESC $db_limit";
 			$db_result = mysql_query($db_query, $db_connection);
 			if (!$db_result)
 			{
@@ -175,7 +175,7 @@
 			{
 				break;
 			}
-			$item_id = $candidate['HEX(libid)'];
+			$item_id = $candidate['libId'];
 			$item = isset($retrieved_items[$id])
 						? $retrieved_items[$id]
 						: ($retrieved_items[$id] = $api->getItemById($item_id));
@@ -256,7 +256,7 @@
 	function getCandidate($id, &$error_message, &$error_description)
 	{
 		global $db_connection, $db_table_candidates;
-		$db_query = "SELECT *, HEX(libid), HEX(userid), HEX(`closed-by`) FROM $db_table_candidates WHERE id = '$id'";
+		$db_query = "SELECT *, HEX(libid) AS libId, HEX(userid) AS userId, HEX(`closed-by`) AS closedBy FROM $db_table_candidates WHERE id = '$id'";
 		$db_result = mysql_query($db_query, $db_connection);
 		if (!$db_result)
 		{

@@ -40,7 +40,7 @@
 			$item = $api->getItemById($id);
 			$page_title = $item['name'] . " (v{$item['version']}) | Code review";
 
-			$db_query = "SELECT HEX(user), comment, date FROM $db_table_review_comments WHERE id = UNHEX('$id')";
+			$db_query = "SELECT HEX(user) AS user, comment, date FROM $db_table_review_comments WHERE id = UNHEX('$id')";
 			$db_result = mysql_query($db_query, $db_connection);
 			if (!$db_result)
 			{
@@ -52,9 +52,9 @@
 			$comments = array();
 			while ($comment = mysql_fetch_assoc($db_result))
 			{
-				$temp = $api->getUserById($comment['HEX(user)']);
+				$temp = $api->getUserById($comment['user']);
 				$comment['user'] = $temp['name'];
-				$comment['user-mail'] = $temp['mail'];
+				$comment['userMail'] = $temp['mail'];
 				$comments[] = $comment;
 			}
 
@@ -91,7 +91,7 @@
 			<?php
 						foreach ($comments AS $comment)
 						{
-							echo "<tr><td><img alt='avatar' src='http://gravatar.com/avatar/{$comment['user-mail']}?s=50&amp;d=mm' class='comment-avatar'/><br/><a href='users/{$comment['user']}/profile'>{$comment['user']}</a><hr/>{$comment['date']}</td><td>" . user_input_process($comment['comment']) . '</td></tr>';
+							echo "<tr><td><img alt='avatar' src='http://gravatar.com/avatar/{$comment['userMail']}?s=50&amp;d=mm' class='comment-avatar'/><br/><a href='users/{$comment['user']}/profile'>{$comment['user']}</a><hr/>{$comment['date']}</td><td>" . user_input_process($comment['comment']) . '</td></tr>';
 						}
 						if (!$item['reviewed'])
 						{
