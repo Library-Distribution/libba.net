@@ -1,0 +1,78 @@
+#candidate, #candidate-comments
+{
+	border-collapse: separate;
+	border-spacing: 10px;
+	width: 100%;
+}
+
+#candidate td, #candidate th, #candidate-comments td, #candidate-comments th {
+	border: solid #666 0px;
+	padding: 5px;
+	background-color: #bbb;
+	text-align: justify;
+	border-radius: 2px;
+}
+#candidate tr th, #candidate-comments tr th
+{
+	font-weight: bold;
+	width: 15%;
+}
+#candidate #candidate-text
+{
+	font-weight: normal;
+	width: auto;
+	padding: 10px;
+}
+.vote
+{
+	padding: 5px;
+	margin: 3px;
+	background-color: #CCC;
+	border: outset gray 3px;
+
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-ms-border-radius: 5px;
+	-o-border-radius: 5px;
+
+	display: inline-block;
+}
+.downvote
+{
+	background-color: lightcoral;
+	border-color: red;
+}
+.upvote
+{
+	background-color: lightgreen;
+	border-color: green;
+}
+#votes
+{
+	float: right;
+}
+#votes + *
+{
+	clear: right;
+}
+div.vote-option
+{
+	width: 30%;
+	display: inline-block
+}
+
+#candidate-comments tr > th:first-of-type
+{
+	text-align: center;
+}
+.comment-avatar
+{
+	display: inline-block;
+
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-ms-border-radius: 5px;
+	-o-border-radius: 5px;
+}

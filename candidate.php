@@ -205,7 +205,12 @@
 <html>
 	<head>
 		<?php require("templates/html.head.php"); ?>
-		<link rel="stylesheet" type="text/css" href="style/candidate.css"/>
+		<?php if (isset($id)) { ?>
+			<link rel="stylesheet" type="text/css" href="style/candidates/view.css"/>
+		<?php } else { ?>
+			<link rel="stylesheet" type="text/css" href="style/candidates/list.css"/>
+		<?php } ?>
+
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 		<script type="text/javascript" src="javascript/jquery-ui.js"></script>
 		<script type="text/javascript" src="javascript/candidate.js"></script>
@@ -223,15 +228,15 @@
 			?>
 					<table id="candidate">
 						<tr>
-							<td>Library:</td>
+							<th>Library:</th>
 							<td><a href="items/<?php echo $candidate["HEX(libid)"]; ?>"><?php echo $candidate["libname"]; ?> (v<?php echo $candidate["libversion"]; ?>)</a></td>
 						</tr>
 						<tr>
-							<td>User:</td>
+							<th>User:</th>
 							<td><a href="users/<?php echo $candidate["username"]; ?>/profile"><?php echo $candidate["username"]; ?></a></td>
 						</tr>
 						<tr>
-							<td>Applied:</td>
+							<th>Applied:</th>
 							<td><?php echo $candidate["date"]; ?></td>
 						</tr>
 						<tr>
@@ -244,7 +249,7 @@
 						<?php
 							foreach ($comments AS $comment)
 							{
-								echo "<tr><td><img alt=\"avatar\" src=\"http://gravatar.com/avatar/{$comment['user-mail']}?s=50&amp;d=mm\" class=\"comment-avatar\"/><br/><a href=\"users/{$comment["user"]}/profile\">{$comment["user"]}</a><hr/>{$comment["date"]}</td>"
+								echo "<tr><th><img alt=\"avatar\" src=\"http://gravatar.com/avatar/{$comment['user-mail']}?s=50&amp;d=mm\" class=\"comment-avatar\"/><br/><a href=\"users/{$comment["user"]}/profile\">{$comment["user"]}</a><hr/>{$comment["date"]}</th>"
 									. "<td>" . user_input_process($comment["comment"]) . (!empty($comment["vote"]) ? "<div class=\"vote\" style=\"float: right\">+1</div>" : "") . "</td></tr>";
 							}
 							if (!$candidate["closed"])
