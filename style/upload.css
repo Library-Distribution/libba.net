@@ -13,3 +13,7 @@ tr.form-header td
 {
 	border-bottom: solid gray 2px;
 }
+form
+{
+	margin-top: 10px;
+}

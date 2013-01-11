@@ -30,34 +30,30 @@
 		<?php
 			}
 		?>
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+		<script type="text/javascript" src="javascript/jquery-ui.js"></script>
+		<script type="text/javascript" src="javascript/upload.js"></script>
 	</head>
-	<body>
+	<body class="pretty-ui">
 		<h1 id="page-title"><?php echo $page_title; ?></h1>
 		<div id="page-content">
 			<?php
 				if ($mode == "start")
 				{
 			?>
-					Fill in the following fields:
+					Please fill in the following fields:
 					<form name="up" action="<?php echo $_SERVER["REQUEST_URI"]; ?>" method="post" enctype="multipart/form-data">
 						<table width="100%">
-							<col width="25%"/>
-							<col width="75%"/>
-							<tr class="form-header">
-								<td colspan="2">Your application or library:</td>
-							</tr>
+							<col width="25%"/><col width="75%"/>
 							<tr>
 								<td>Package:</td>
 								<td><input type="hidden" name="MAX_FILE_SIZE" value="78643200"/><input type="file" name="package" onchange="validate_upload_data()"/>
 							</tr>
 			<?php
 					if (!$logged_in) { ?>
-							<tr class="form-header">
-								<td colspan="2">You:</td>
-							</tr>
 							<tr>
 								<td>User name:</td>
-								<td><input type="text" name="user" onchange="validate_upload_data()"/></td>
+								<td><input id="user-name" type="text" name="user" onchange="validate_upload_data()"/></td>
 							</tr>
 							<tr>
 								<td>Password:</td>
