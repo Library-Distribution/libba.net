@@ -188,123 +188,102 @@ div.menu a:hover
 
 
 /***********************************
- * HEADER & FOOTER STYLING
+ * NAVIGATION & FOOTER STYLING
  ***********************************/
-#footer, #header
-{
+#navigation {
 	position: fixed;
 	left: 0%;
-	right: 0%;
-	width: 100%;
-	background-color: #EEE
-}
-#header
-{
 	top: 0%;
-	height: 12%;
-	border-bottom: ridge gray 2px;
-}
-#footer
-{
 	bottom: 0%;
-	height: 2%;
-	border-top: ridge gray 2px;
-	padding: 3px;
-	font-size: 80%;
-}
 
-/* elements in header */
-#navigation
-{
-	float: left;
-	width: 52%;
 	height: 100%;
+	width: 15%;
+	z-index: 99;
 }
-#header-logo, #navigation a.nav-link, #site-name, #header-ahk, #header-login
-{
-	display: table-cell;
-	margin: 0px;
+.nav-triangle {
+	display: block;
+	position: absolute;
+	left: 50px;
+	width: 0;
+	height: 0;
+	border-left: 20px solid black;
+	border-top: 12.5px solid transparent;
+	border-bottom: 12.5px solid transparent;
 }
-#navigation a.nav-link
-{
-	padding: 3% 5%;
-	width: 20%;
-	height: 90%;
+.nav-tooltip {
+	display: none;
 
-	text-align: center;
-	border: solid gray 1px;
-
-	filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr='#FFD3D3D3', endColorstr='#FF808080', GradientType='0');
-	background-image: linear-gradient(top, lightgray 0%, gray 100%);
-	background-image: -moz-linear-gradient(top, lightgray 0%, gray 100%);
-	background-image: -webkit-linear-gradient(top, lightgray 0%, gray 100%);
-	background-image: -ms-linear-gradient(top, lightgray 0%, gray 100%);
-	background-image: -o-linear-gradient(top, lightgray 0%, gray 100%);
-}
-#site-name
-{
-	font-size: 110%;
-	text-align: center;
-	padding-left: 20px;
-	padding-right: 20px;
-	vertical-align: middle;
-	font-weight: bolder;
-}
-#navigation a.nav-link:hover
-{
-	filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr='#FFDDDDDD', endColorstr='#FF888888', GradientType='0');
-	background-image: linear-gradient(top, #DDD 0%, #888 100%);
-	background-image: -moz-linear-gradient(top, #DDD 0%, #888 100%);
-	background-image: -webkit-linear-gradient(top, #DDD 0%, #888 100%);
-	background-image: -ms-linear-gradient(top, #DDD 0%, #888 100%);
-	background-image: -o-linear-gradient(top, #DDD 0%, #888 100%);
 	text-decoration: none;
-}
-
-.nav-link:before
-{
-	margin: 0px;
-	display: inline-table;
 	text-align: center;
-}
-.nav-link:first-of-type:before
-{
-	content: url('../images/home.png');
-}
-.nav-link:nth-of-type(2):before
-{
-	content: url('../images/items.png');
-}
-.nav-link:nth-of-type(3):before
-{
-	content: url('../images/users.png');
-}
-.nav-link:nth-of-type(4):before
-{
-	content: url('../images/help.png');
-}
-.nav-link:nth-of-type(5):before
-{
-	content: url('../images/activity/upload.png');
-}
+	color: #444;
+	background-color: white;
 
-#header-logo
-{
-	width: 11%;
-	padding: 1.5px;
-	padding-right: 0px;
-	float: left;
+	box-shadow: 10px 10px 15px;
+	-moz-box-shadow: 10px 10px 15px;
+	-webkit-box-shadow: 10px 10px 15px;
+	-ms-box-shadow: 10px 10px 15px;
+	-o-box-shadow: 10px 10px 15px;
+
+	border: solid #222 3px;
+	border-radius: 15px;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+	-ms-border-radius: 15px;
+	-o-border-radius: 15px;
+
+	behavior: url(/style/PIE.htc);
+
+	position: relative;
+	left: +50px;
+	top: -50px;
+	padding: 5px;
+	width: 100px;
+
+	z-index: 101;
 }
-#header-login
-{
+#navigation a:hover .nav-tooltip {
+	display: inline-block;
+}
+#navigation img {
+	position:fixed;
+	left:0.5%;
+	height:22px;
+}
+#navigation > a > div {
 	position: fixed;
 	width: 7.5%;
-	left: 63.5%;
+	left: 0%;
+	height: 8.5%;
 
-	background-color: #AAA;
-	padding: 0.75%;
+	border-radius: 0 25px 25px 0;
+	-moz-border-radius: 0 25px 25px 0;
+	-ms-border-radius: 0 25px 25px 0;
+	-webkit-border-radius: 0 25px 25px 0;
+	-o-border-radius: 0 25px 25px 0;
+
+	box-shadow: inset -5px 0px 7.5px #555;
+	-moz-box-shadow: inset -5px 0px 7.5px #555;
+	-webkit-box-shadow: inset -5px 0px 7.5px #555;
+	-ms-box-shadow: inset -5px 0px 7.5px #555;
+	-o-box-shadow: inset -5px 0px 7.5px #555;
+
+	behavior: url(/style/PIE.htc);
+
+	background-color: white;
+}
+
+#login * {
+	visibility: collapse;
+}
+#login {
+	display: inherit;
+	position: fixed;
+	right: 2.5%;
+	top: -5%;
+	width: 7.5%;
+	background-color: lightgray;
+	padding: 5px;
 	text-align: center;
-	display: table-cell;
 
 	border-radius: 0 0 10px 10px;
 	-moz-border-radius: 0 0 10px 10px;
@@ -312,21 +291,39 @@ div.menu a:hover
 	-ms-border-radius: 0 0 10px 10px;
 	-o-border-radius: 0 0 10px 10px;
 
-	behavior: url(/style/PIE.htc); /* IE compatibility fix */
+	behavior: url(/style/PIE.htc);
 }
-#header-ahk
-{
-	float: right;
-	width: 25%;
-	padding: 1%;
+#login:hover {
+	top: 0%;
 }
-/* elements in footer */
-#footer #copyright
-{
+#login:hover  * {
+	visibility: visible;
+}
+
+/*
+	footer
+*/
+#footer {
+	position: fixed;
+	left: 0%;
+	right: 0%;
+	bottom: 0%;
+
+	width: 100%;
+	height: 2%;
+	padding: 3px;
+
+	background-color: #EEE;
+	border-top: ridge gray 2px;
+	font-size: 80%;
+	z-index: 100;
+}
+
+#footer #copyright {
 	float: right
 }
-#footer a
-{
+
+#footer a {
 	display: inline-block;
 	padding-left: 3px;
 	padding-right: 25px;
