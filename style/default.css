@@ -57,7 +57,6 @@ body.pretty-ui {
 body.pretty-ui #page-content {
 	background-color: white;
 	width: 50%;
-	text-align: center;
 	padding: 20px;
 
 	border-radius: 10px;
@@ -67,10 +66,6 @@ body.pretty-ui #page-content {
 	-o-border-radius: 10px;
 
 	behavior: url('/style/PIE.htc'); /* IE compatibility fix */
-}
-
-body.pretty-ui #page-content * {
-	text-align: left;
 }
 
 /***********************************
