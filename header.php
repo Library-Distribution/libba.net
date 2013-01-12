@@ -1,5 +1,5 @@
 <div id="navigation">
-	<a href="/" title="home page">
+	<a href="" title="home page">
 		<div style="top:3%" id="nav-home">
 			<img alt="home" src="images/home.png" style="top:05%;"/>
 			<div class="nav-triangle" style="top:27.5%;">
@@ -7,7 +7,7 @@
 			</div>
 		</div>
 	</a>
-	<a href="/items" title="libraries and applications">
+	<a href="items" title="libraries and applications">
 		<div style="top:23%">
 			<img alt="items" src="images/items.png" style="top:25%;"/>
 			<div class="nav-triangle" style="top:27.5%;">
@@ -15,7 +15,7 @@
 			</div>
 		</div>
 	</a>
-	<a href="/users" title="registered users">
+	<a href="users" title="registered users">
 		<div style="top:43%">
 			<img alt="users" src="images/users.png" style="top:45%;"/>
 			<div class="nav-triangle" style="top:27.5%;">
@@ -23,7 +23,7 @@
 			</div>
 		</div>
 	</a>
-	<a href="/upload" title="package upload">
+	<a href="upload" title="package upload">
 		<div style="top:63%">
 			<img alt="upload" src="images/activity/upload.png" style="top:65%;"/>
 			<div class="nav-triangle" style="top:27.5%;">
@@ -31,7 +31,7 @@
 			</div>
 		</div>
 	</a>
-	<a href="/help" title="help index">
+	<a href="help" title="help index">
 		<div style="top:83%">
 			<img alt="help" src="images/help.png" style="top:85%;"/>
 			<div class="nav-triangle" style="top:27.5%;">
