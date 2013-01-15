@@ -20,6 +20,10 @@
 		if ($mode == "login")
 		{
 			$page_title = "Login";
+
+			require_once("ALD.php");
+			$api = new ALD(API_URL);
+			$user_list = $api->getUserList();
 		}
 		else if ($mode == "register")
 		{
@@ -208,10 +212,15 @@
 		?>
 				<script type="text/javascript" src="javascript/update_redirect_time.js"></script>
 		<?php
-			}
+			} else {
 		?>
+			<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+			<script type="text/javascript" src="javascript/jquery-ui.js"></script>
+			<script type="text/javascript" src="javascript/modernizr.js"></script>
+			<script type="text/javascript" src="javascript/login.js"></script>
+		<?php } ?>
 	</head>
-	<body <?php echo $should_redirect ? "onload=\"setInterval(update_redirect_time, 999)\"" : ""; ?>>
+	<body class="pretty-ui" <?php echo $should_redirect ? "onload=\"setInterval(update_redirect_time, 999)\"" : ""; ?>>
 		<h1 id="page-title"><?php echo $page_title; ?></h1>
 
 		<div id="page-content">
@@ -226,7 +235,14 @@
 			<?php 	} else { ?>
 							<tr>
 								<td>Nickname:</td>
-								<td><input type="text" name="name"/></td>
+								<td>
+									<input id="user-name" type="text" name="name" list="registered-users"/>
+									<datalist id="registered-users"><?php
+										foreach ($user_list AS $user) {
+											echo "<option value='$user[name]'></option>";
+										}
+									?></datalist>
+								</td>
 							</tr>
 			<?php		if ($mode == "register") {	?>
 							<tr>
