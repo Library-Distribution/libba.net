@@ -30,6 +30,7 @@
 					<li>Thanks to <a href="https://github.com/lojjic">Jason Johnston</a>  for <a href="http://css3pie.com/">CSS3 PIE</a> (<a href="https://raw.github.com/lojjic/PIE/master/LICENSE-APACHE2.txt">license</a>).</li>
 					<hr/>
 					<li>As jor Javascript, I wish to thank the <a href="http://jquery.com">jQuery</a> and <a href="http://http://jqueryui.com/">jQuery-UI</a> teams (<a href="https://raw.github.com/jquery/jquery/master/MIT-LICENSE.txt">license</a>).</li>
+					<li>Also a big thanks to the <a href="http://modernizr.js">modernizr.js</a> team (modernizr.js is <a href="https://github.com/Modernizr/Modernizr/blob/master/readme.md">licensed under the MIT license</a>).
 				</ul>
 			</p>
 		</div>
