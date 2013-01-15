@@ -76,3 +76,6 @@ div.vote-option
 	-ms-border-radius: 5px;
 	-o-border-radius: 5px;
 }
+textarea {
+	resize: vertical;
+}
