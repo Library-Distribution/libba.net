@@ -5,14 +5,14 @@
 	width: 100%;
 }
 
-#candidate td, #candidate th, #candidate-comments td, #candidate-comments th {
+#candidate > tbody > tr > td, #candidate > tbody > tr >  th, #candidate-comments  > tbody > tr > td, #candidate-comments  > tbody > tr > th {
 	border: solid #666 0px;
 	padding: 5px;
 	background-color: #bbb;
 	text-align: justify;
 	border-radius: 2px;
 }
-#candidate tr th, #candidate-comments tr th
+#candidate > tbody > tr > th, #candidate-comments > tbody > tr > th
 {
 	font-weight: bold;
 	width: 15%;
@@ -62,7 +62,7 @@ div.vote-option
 	display: inline-block
 }
 
-#candidate-comments tr > th:first-of-type
+#candidate-comments > tbody > tr > th:first-of-type
 {
 	text-align: center;
 }
