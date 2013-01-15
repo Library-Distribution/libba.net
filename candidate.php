@@ -227,25 +227,28 @@
 				{
 			?>
 					<table id="candidate">
-						<tr>
-							<th>Library:</th>
-							<td><a href="items/<?php echo $candidate["HEX(libid)"]; ?>"><?php echo $candidate["libname"]; ?> (v<?php echo $candidate["libversion"]; ?>)</a></td>
-						</tr>
-						<tr>
-							<th>User:</th>
-							<td><a href="users/<?php echo $candidate["username"]; ?>/profile"><?php echo $candidate["username"]; ?></a></td>
-						</tr>
-						<tr>
-							<th>Applied:</th>
-							<td><?php echo $candidate["date"]; ?></td>
-						</tr>
-						<tr>
-							<td colspan="2" id="candidate-text"><?php echo user_input_process($candidate["text"]); ?></td>
-						</tr>
+						<tbody>
+							<tr>
+								<th>Library:</th>
+								<td><a href="items/<?php echo $candidate["HEX(libid)"]; ?>"><?php echo $candidate["libname"]; ?> (v<?php echo $candidate["libversion"]; ?>)</a></td>
+							</tr>
+							<tr>
+								<th>User:</th>
+								<td><a href="users/<?php echo $candidate["username"]; ?>/profile"><?php echo $candidate["username"]; ?></a></td>
+							</tr>
+							<tr>
+								<th>Applied:</th>
+								<td><?php echo $candidate["date"]; ?></td>
+							</tr>
+							<tr>
+								<td colspan="2" id="candidate-text"><?php echo user_input_process($candidate["text"]); ?></td>
+							</tr>
+						</tbody>
 					</table>
 					<div id="votes"><div class="vote upvote">+<?php echo $up_vote_count; ?></div><div class="vote downvote">-<?php echo $down_vote_count; ?></div><div class="vote"><?php echo ($total_vote_count > 0 ? "+" : "-") . $total_vote_count; ?> votes</div></div>
 					<h2>Comments</h2>
 					<table id="candidate-comments">
+						<tbody>
 						<?php
 							foreach ($comments AS $comment)
 							{
@@ -306,6 +309,7 @@
 								*/
 							}
 						?>
+						</tbody>
 					</table>
 					<a href="http://htmlpurifier.org/"><img src="http://htmlpurifier.org/live/art/powered.png" alt="Powered by HTML Purifier" border="0" /></a>
 			<?php
