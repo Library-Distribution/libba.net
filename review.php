@@ -74,6 +74,7 @@
 		<link rel="stylesheet" type="text/css" href="style/review.css"/>
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 		<script type="text/javascript" src="javascript/jquery-ui.js"></script>
+		<script type="text/javascript" src="javascript/comments.js"></script>
 		<script type="text/javascript" src="javascript/review.js"></script>
 	</head>
 	<body class="pretty-ui">
@@ -103,7 +104,7 @@
 								<td><a href="users/<?php echo $_SESSION["user"]; ?>/profile">You</a><hr/>Now</td>
 								<td>
 									<form action="#" method="post">
-										<textarea name="newcomment" style="width: 99.5%"></textarea>
+										<textarea class="preview-source" name="newcomment" style="width: 99.5%" placeholder="Enter your comment..."></textarea>
 										<input type="submit" value="Submit" style="float: right"/>
 									</form>
 								</td>

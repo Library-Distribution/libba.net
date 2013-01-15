@@ -213,6 +213,7 @@
 
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 		<script type="text/javascript" src="javascript/jquery-ui.js"></script>
+		<script type="text/javascript" src="javascript/comments.js"></script>
 		<script type="text/javascript" src="javascript/candidate.js"></script>
 	</head>
 	<body class="pretty-ui">
@@ -264,7 +265,7 @@
 										<td><a href="users/<?php echo $_SESSION["user"]; ?>/profile">You</a><hr/>Now</td>
 										<td>
 											<form action="#" method="post">
-												<textarea name="newcomment" style="width: 99.5%"></textarea>
+												<textarea class="preview-source" name="newcomment" style="width: 99.5%" placeholder="Enter your comment..."></textarea>
 						<?php
 												if ($can_vote)
 												{
@@ -286,8 +287,8 @@
 										<tr>
 											<td><a href="users/teams/stdlib">Stdlib team</a></td>
 											<td>
-												<form action="#" method="post" style="text-align: center">
-													<textarea name="closecomment" style="width: 99.5%"></textarea>
+												<form action="#" method="post">
+													<textarea class="preview-source" name="closecomment" style="width: 99.5%" placeholder="Enter a comment..."></textarea>
 													<input style="width: 49%; display: inline-block" type="submit" value="accept" name="accept"/>
 													<input style="width: 49%; display: inline-block" type="submit" value="reject" name="reject"/>
 												</form>
