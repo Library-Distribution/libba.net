@@ -1,5 +1,6 @@
 $(document).ready(function() {
-	$.getJSON("api/users/list", function(data) {
-		$("input#user-name").autocomplete({ source: $.map(data, function(user) { return user['name']; }) });
-	});
+	if (!Modernizr.input.list) {
+		var users = $.makeArray($("datalist#registered-users option").map(function(i, item) { return $(item).attr("value"); }));
+		$("input#user-name").autocomplete({ source: users });
+	}
 });

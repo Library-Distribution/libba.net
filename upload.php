@@ -15,7 +15,13 @@
 		$page_title = "Upload a new library or application";
 		$mode = "start";
 	}
+
 	$logged_in = isset($_SESSION["user"]);
+	if (!$logged_in) {
+		require_once("ALD.php");
+		$api = new ALD(API_URL);
+		$user_list = $api->getUserList();
+	}
 ?>
 <!DOCTYPE html>
 <html>
@@ -32,6 +38,7 @@
 		?>
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 		<script type="text/javascript" src="javascript/jquery-ui.js"></script>
+		<script type="text/javascript" src="javascript/modernizr.js"></script>
 		<script type="text/javascript" src="javascript/upload.js"></script>
 	</head>
 	<body class="pretty-ui">
@@ -53,7 +60,15 @@
 					if (!$logged_in) { ?>
 							<tr>
 								<td>User name:</td>
-								<td><input id="user-name" type="text" name="user" onchange="validate_upload_data()"/></td>
+								<td><input id="user-name" type="text" name="user" onchange="validate_upload_data()" list="registered-users"/>
+									<datalist id="registered-users">
+									<?php
+										foreach ($user_list AS $user) {
+											echo "<option value='$user[name]'></option>";
+										}
+									?>
+									</datalist>
+								</td>
 							</tr>
 							<tr>
 								<td>Password:</td>
