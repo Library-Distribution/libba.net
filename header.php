@@ -1,5 +1,5 @@
 <div id="navigation">
-	<a href="" title="home page">
+	<a href="index" title="home page">
 		<div style="top:3%" id="nav-home">
 			<img alt="home" src="images/home.png" style="top:05%;"/>
 			<div class="nav-triangle" style="top:27.5%;">
