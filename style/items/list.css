@@ -10,3 +10,10 @@
 	border-bottom-width: 5px;
 	padding: 5px;
 }
+
+li.lib {
+	list-style-image: url('/images/lib.png');
+}
+li.app {
+	list-style-image: url('/images/app.png');
+}

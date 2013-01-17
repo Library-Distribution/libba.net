@@ -96,7 +96,7 @@
 							}
 							echo "<div class='letter-container' id='items$current_letter'><h3>$current_letter</h3><div id='items_$current_letter'><ul>";
 						}
-						echo "<li id='item{$item['id']}'><a class='item' href='./{$item['id']}'>{$item['name']}</a> (v{$item['version']}) by <a class='userlink' href='users/{$item['user']['name']}/profile'>{$item['user']['name']}</a></li>";
+						echo "<li id='item{$item['id']}' class='$item[type]'><a class='item' href='./{$item['id']}'>{$item['name']}</a> (v{$item['version']}) by <a class='userlink' href='users/{$item['user']['name']}/profile'>{$item['user']['name']}</a></li>";
 						$last_letter = $current_letter;
 					}
 					if (count($items) > 0)

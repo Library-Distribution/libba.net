@@ -42,7 +42,7 @@
 		<link rel="stylesheet" type="text/css" href="style/items/view.css"/>
 	</head>
 	<body class="pretty-ui">
-		<h1 id="page-title"><?php echo $page_title; ?></h1>
+		<h1 id="page-title" class="<?php echo $item['type']; ?>"><?php echo $page_title; ?></h1>
 		<div id="page-content">
 			<?php
 				if ($logged_in)

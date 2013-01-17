@@ -39,3 +39,28 @@ ul li:before {
 ul li:hover:before {
 	color: #888;
 }
+
+#page-title:before, #page-title:after {
+	border-radius: 50%;
+	-moz-border-radius: 50%;
+	-ms-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	-o-border-radius: 50%;
+	behavior: url('/style/PIE.htc'); /* IE compatibility fix */
+
+	background-color: white;
+
+	padding: 5px;
+	margin-right: 5px;
+	margin-left: 5px;
+
+	width: 3%;
+	line-height: 2%;
+	display: inline-block;
+}
+#page-title.lib:before, #page-title.lib:after {
+	content: url('/images/lib.png');
+}
+#page-title.app:before, #page-title.app:after {
+	content: url('/images/app.png');
+}
