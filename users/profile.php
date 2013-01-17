@@ -63,7 +63,7 @@
 	<body class="pretty-ui">
 		<h1 id="page-title">
 			<?php
-				echo "<img alt=\"$user's avatar\" id=\"user-gravatar\" src=\"http://gravatar.com/avatar/{$user_data['mail']}?s=50&amp;d=mm\"/>";
+				echo "<img alt=\"$user's avatar\" id=\"user-gravatar\" src=\"http://gravatar.com/avatar/{$user_data['mail-md5']}?s=50&amp;d=mm\"/>";
 				echo $page_title;
 			?>
 		</h1>
