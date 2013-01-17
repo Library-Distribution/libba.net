@@ -117,7 +117,7 @@
 			{
 				$temp = $api->getUserById($comment["HEX(user)"]);
 				$comment["user"] = $temp["name"];
-				$comment["user-mail"] = $temp["mail"];
+				$comment["user-mail"] = $temp["mail-md5"];
 				$comments[] = $comment;
 			}
 
