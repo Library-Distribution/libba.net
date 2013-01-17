@@ -1,4 +1,5 @@
 Options -Multiviews
+ErrorDocument 404 /errors/404.html
 
 AddDefaultCharset utf-8
 
