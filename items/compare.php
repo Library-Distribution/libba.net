@@ -21,7 +21,6 @@
 	*	link to the correct URL. After some seconds,
 	*	redirect there.
 	* - tweak styling, especially for non-javascript viewers
-	* - proper error handling
 	*/
 
 	$page_title = "Compare ERROR";
@@ -30,18 +29,31 @@
 		$api = new ALD(API_URL);
 		if (isset($_GET['name']) && isset($_GET['version1']) && isset($_GET['version2']))
 		{
+			if (!semver_validate($_GET['version1']) || !semver_validate($_GET['version2'])) {
+				$error_message = 'Invalid version number specified!';
+				$error_description = 'One of the two specified version numbers "' . htmlentities($_GET['version1']) . '" and "' . htmlentities($_GET['version2']) . '" is not a valid version number.';
+				break;
+			}
+			if (semver_compare($_GET['version1'], $_GET['version2']) != -1) { #TODO: warning instead of error; redirect; link
+				$error_message = 'Invalid version order specified!';
+				$error_description = 'The specified two version numbers are in incorrect order: the older version must be first.';
+				break;
+			}
+
 			try {
 				$item1 = $api->getItem($_GET['name'], $_GET['version1']);
 			} catch (HttpException $e) {
-				# TODO: error handling
-				die('failed');
+				$error_message = 'Could not retrieve specified item!';
+				$error_description = 'The specified item("' . $_GET['name'] . '", version "' . $_GET['version1'] . '") could not be read. The API error message was: "' . $e->getMessage() . '".';
+				break;
 			}
 
 			try {
 				$item2 = $api->getItem($_GET['name'], $_GET['version2']);
 			} catch (HttpException $e) {
-				# TODO: error handling
-				die('failed');
+				$error_message = 'Could not retrieve specified item!';
+				$error_description = 'The specified item ("' . $_GET['name'] . '", version "' . $_GET['version2'] . '") could not be read. The API error message was: "' . $e->getMessage() . '".';
+				break;
 			}
 
 			$id_old = semver_compare($item1['version'], $item2['version']) == -1 ? $item1['id'] : $item2['id'];
@@ -55,20 +67,23 @@
 			try {
 				$item1 = $api->getItemById($_GET['id1']);
 			} catch (HttpException $e) {
-				# TODO: error handling
-				die('failed');
+				$error_message = 'Could not retrieve specified item!';
+				$error_description = 'The specified item (ID: "' . $_GET['id1'] . '") could not be read. The API error message was: "' . $e->getMessage() . '".';
+				break;
 			}
 
 			try {
 				$item2 = $api->getItemById($_GET['id2']);
 			} catch (HttpException $e) {
-				# TODO: error handling
-				die('failed');
+				$error_message = 'Could not retrieve specified item!';
+				$error_description = 'The specified item (ID: "' . $_GET['id2'] . '") could not be read. The API error message was: "' . $e->getMessage() . '".';
+				break;
 			}
 
 			if ($item1['name'] != $item2['name']) {
-				# TODO: error handling
-				die('failed');
+				$error_message = 'Cannot compare versions of different items!';
+				$error_description = 'The two specified versions belong to different items ("' . $item1['name'] . '" and "' . $item2['name'] . '"). Comparing them is currently not supported.';
+				break;
 			}
 
 			$id_old = semver_compare($item1['version'], $item2['version']) == -1 ? $_GET['id1'] : $_GET['id2'];
@@ -79,12 +94,19 @@
 		}
 		else
 		{
-			# TODO: error handling
-			die('failed');
+			$error_message = 'Cannot identify items!';
+			$error_description = 'The current URL cannot be used for comparison. Either name and two versions or two IDs must be specified to identify the items to compare.';
+			break;
 		}
 
-		$old_item = new CompareItem($api, $id_old);
-		$new_item = new CompareItem($api, $id_new);
+		try {
+			$old_item = new CompareItem($api, $id_old);
+			$new_item = new CompareItem($api, $id_new);
+		} catch (Exception $e) {
+			$error_message = 'Cannot load items for comparison!';
+			$error_description = 'An unknown error (possibly API error) occured while trying to load the items for comparison. The error message was: "' . $e->getMessage() . '".';
+			break;
+		}
 
 		$files_old = $old_item->files();
 		$files_new = $new_item->files();

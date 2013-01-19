@@ -10,12 +10,7 @@ class CompareItem
 	function __construct($api, $id)
 	{
 		$this->id = $id;
-		try {
-			$item = $api->loadItem($id);
-		} catch (HttpException $e) {
-			# TODO: error handling
-			die('failed');
-		}
+		$item = $api->loadItem($id);
 
 		$this->handle = tmpfile();
 		fputs($this->handle, $item);
