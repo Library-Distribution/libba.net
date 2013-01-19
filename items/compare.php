@@ -189,6 +189,7 @@
 				</ul>
 			<?php } ?>
 		</div>
+		<?php require('../footer.php'); require('../header.php'); ?>
 	</body>
 </html>
 <?php
