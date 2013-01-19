@@ -1,0 +1,20 @@
+.action-type {
+	color: #333;
+}
+.compare-diff {
+	padding: 5px;
+	border: solid gray 1px;
+	width: 98%;
+	display: inline-block;
+	white-space: pre;
+	overflow-x: scroll;
+}
+.compare-diff del, .compare-diff ins {
+	text-decoration: none;
+}
+.compare-diff del {
+	background-color: #FCC;
+}
+.compare-diff ins {
+	background-color: lightgreen;
+}
