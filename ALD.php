@@ -74,6 +74,11 @@
 			$this->_Request( CURLOPT_HTTPGET, "/items/modify/$id", array("Accept: application/json"), $data, $request_user, $request_password );
 		}
 
+		public function loadItem($id)
+		{
+			return $this->_Request( CURLOPT_HTTPGET, "/items/describe/$id", array('Accept: application/x-ald-package') );
+		}
+
 		private function _Request($method, $url, $header, $data = NULL, $user = NULL, $password = NULL)
 		{
 			$conn = curl_init();
