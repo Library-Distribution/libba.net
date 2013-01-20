@@ -43,13 +43,14 @@
 
 			$list = $api->getItemList(0, 'all', NULL, NULL, $item['name'], NULL, NULL, 'both', 'yes');
 			usort($list, "semver_sort");
-			#print_r($list);
 
-			$j = 0;
-			do {
-				$diff_base = $list[$j]['version'];
-				$j++;
-			} while (semver_compare($item['version'], $diff_base) != 1);
+			for ($j = 0; $j < count($list); $j++)
+			{
+				if (semver_compare($item['version'], $list[$j]['version']) == 1) {
+					$diff_base = $list[$j]['version'];
+					break;
+				}
+			}
 
 			$db_query = "SELECT HEX(user), comment, date FROM $db_table_review_comments WHERE id = UNHEX('$id')";
 			$db_result = mysql_query($db_query, $db_connection);
@@ -101,11 +102,12 @@
 					else
 					{
 			?>
-						<table id="review">
+						<table id="review"><?php if (isset($diff_base)) { ?>
 							<tr>
 								<th>Diff:</th>
 								<td><a href='items/compare/<?php echo $item['name'], '/', $diff_base, '...', $item['version']; ?>'>Compare to latest reviewed version (<?php echo $diff_base; ?>)</a></td>
 							</tr>
+							<?php } ?>
 						</table>
 						<table id="review-comments">
 			<?php
