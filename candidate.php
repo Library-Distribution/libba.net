@@ -8,6 +8,7 @@
 	require_once("ALD.php");
 	require_once("config/constants.php");
 	require_once("privilege.php");
+	require_once('api/semver.php');
 
 	$db_connection = db_ensure_connection();
 
@@ -21,6 +22,7 @@
 			$id = mysql_real_escape_string($_GET["id"], $db_connection);
 			$logged_in = isset($_SESSION["userID"]);
 			$can_close = $logged_in && hasPrivilege($_SESSION["privileges"], PRIVILEGE_STDLIB);
+			$diff = false;
 
 			if (!empty($_POST) && $logged_in)
 			{
@@ -102,6 +104,17 @@
 			{
 				$temp = $api->getUserById($candidate["HEX(`closed-by`)"]);
 				$candidate["closed-by"] = $temp["name"];
+			}
+			else
+			{
+				# get previous version in stdlib if existing
+				$list = $api->getItemList(0, 'all', NULL, NULL, $candidate['libname'], NULL, NULL, 'yes');
+				if (count($list) > 0)
+				{
+					$diff = true;
+					usort($list, "semver_sort"); # sort by version numbers (descending)
+					$diff_base = $list[0]['version'];
+				}
 			}
 
 			$comments = array();
@@ -241,6 +254,12 @@
 								<th>Applied:</th>
 								<td><?php echo $candidate["date"]; ?></td>
 							</tr>
+							<?php if ($diff) { ?>
+							<tr>
+								<th>Diff:</th>
+								<td><a href='items/compare/<?php echo $candidate['libname'], '/', $diff_base, '...', $candidate['libversion']; ?>'>compare with latest version in the stdlib (<?php echo $diff_base; ?>)</a></td>
+							</tr>
+							<?php } ?>
 							<tr>
 								<td colspan="2" id="candidate-text"><?php echo user_input_process($candidate["text"]); ?></td>
 							</tr>
@@ -347,4 +366,10 @@
 	require_once("rewriter.php");
 	echo rewrite();
 	ob_end_flush();
+?>
+<?php
+	function semver_sort($a, $b)
+	{
+		return semver_compare($b['version'], $a['version']);
+	}
 ?>
