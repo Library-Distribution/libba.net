@@ -36,3 +36,15 @@ h1#page-title:before, h1#page-title:after {
 	-o-border-radius: 50%;
 	behavior: url('/style/PIE.htc'); /* IE compatibility fix */
 }
+ul#diff-steps {
+	list-style-type: none;
+}
+ul#diff-steps h3 {
+	color: #333;
+	text-decoration: underline;
+	font-weight: bold;
+}
+div.action-details {
+	border: solid gray 1px;
+	padding: 10px;
+}
