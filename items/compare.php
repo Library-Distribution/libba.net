@@ -140,6 +140,27 @@
 			asort($actions[$category]);
 		}
 
+		$old_meta = $old_item->meta();
+		$new_meta = $new_item->meta();
+		$meta_actions = array();
+
+		foreach ($new_meta AS $name => $value) {
+			if (!isset($old_meta[$name])) {
+				$meta_actions[] = array('type' => ACT_ADD, 'property' => $name, 'value' => json_encode($value));
+			} else if ($value != $old_meta[$name]) {
+				if (is_array($value)) {
+					# TODO: array diff
+				} else {
+					$meta_actions[] = array('type' => ACT_MOD, 'property' => $name, 'old' => json_encode($old_meta[$name]), 'new' => json_encode($value));
+				}
+			}
+		}
+		foreach ($old_meta AS $name => $value) {
+			if (!isset($new_meta[$name])) {
+				$meta_actions[] = array('type' => ACT_DEL, 'property' => $name, 'value' => json_encode($value));
+			}
+		}
+
 		$page_title = "Comparing $item_name v$version_old with v$version_new";
 		$error = false;
 	}
@@ -184,6 +205,22 @@
 								}
 								echo '<li><span class="action-summary"><span class="action-type">' . $prefix . '</span> ' . $file . '</span><div class="action-details">' . $details . '</div></li>';
 							}
+						}
+						echo '<h3>metadata</h3>';
+						foreach ($meta_actions AS $action) {
+							switch ($action['type']) {
+								case ACT_ADD: $prefix = 'Added:';
+											$details = "Property <code>$action[property]</code> has been added to the package metadata.";
+											break;
+								case ACT_DEL: $prefix = 'Deleted:';
+											$details = "Property <code>$action[property]</code> has been removed from the package metadata.";
+											break;
+								default:
+								case ACT_MOD: $prefix = 'Modified:';
+											$details = '<table><tr class="old-meta"><th>Previous value:</th><td>' . $action['old'] . '</td></tr><tr class="new-meta"><th>New value:</th><td>' . $action['new'] . '</td></tr></table>';
+											break;
+							}
+							echo '<li><span class="action-summary"><span class="action-type">' . $prefix . '</span> ' . $action['property'] . '</span><div class="action-details">' . $details . '</div></li>';
 						}
 					?>
 				</ul>

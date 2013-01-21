@@ -48,3 +48,18 @@ div.action-details {
 	border: solid gray 1px;
 	padding: 10px;
 }
+div.action-details table {
+	text-align: left;
+	border-collapse: separate;
+	border-spacing: 3px;
+}
+div.action-details table th {
+	color: #333;
+	padding-right: 50px;
+}
+div.action-details table td {
+	font-style: italic;
+}
+div.action-details table tr.old-meta {
+	border-bottom: solid gray 2px;
+}

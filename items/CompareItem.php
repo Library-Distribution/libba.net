@@ -6,10 +6,12 @@ class CompareItem
 	private $zip;
 	private $doc;
 	private $xp;
+	private $meta;
 
 	function __construct($api, $id)
 	{
 		$this->id = $id;
+		$this->meta = $api->getItemById($id);
 		$item = $api->loadItem($id);
 
 		$this->handle = tmpfile();
@@ -58,6 +60,11 @@ class CompareItem
 	public function getFile($name)
 	{
 		return $this->zip->getFromName($name);
+	}
+
+	public function meta()
+	{
+		return $this->meta;
 	}
 }
 ?>
