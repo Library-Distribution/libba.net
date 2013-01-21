@@ -105,7 +105,7 @@
 						<table id="review"><?php if (isset($diff_base)) { ?>
 							<tr>
 								<th>Diff:</th>
-								<td><a href='items/compare/<?php echo $item['name'], '/', $diff_base, '...', $item['version']; ?>'>Compare to latest reviewed version (<?php echo $diff_base; ?>)</a></td>
+								<td><a id='compare-latest' href='items/compare/<?php echo $item['name'], '/', $diff_base, '...', $item['version']; ?>'>compare to latest reviewed version (<?php echo $diff_base; ?>)</a></td>
 							</tr>
 							<?php } ?>
 						</table>

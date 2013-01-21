@@ -39,3 +39,10 @@ h3.review-header {
 {
 	display: inline-block;
 }
+a#compare-latest {
+	background-image: url('/images/diff.png');
+	background-repeat: no-repeat;
+	background-position: left center;
+	padding-left: 20px;
+	background-size: auto 100%;
+}

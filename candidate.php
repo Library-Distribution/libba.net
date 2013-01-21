@@ -257,7 +257,7 @@
 							<?php if ($diff) { ?>
 							<tr>
 								<th>Diff:</th>
-								<td><a href='items/compare/<?php echo $candidate['libname'], '/', $diff_base, '...', $candidate['libversion']; ?>'>compare with latest version in the stdlib (<?php echo $diff_base; ?>)</a></td>
+								<td><a id='compare-previous' href='items/compare/<?php echo $candidate['libname'], '/', $diff_base, '...', $candidate['libversion']; ?>'>compare with latest version in the stdlib (<?php echo $diff_base; ?>)</a></td>
 							</tr>
 							<?php } ?>
 							<tr>

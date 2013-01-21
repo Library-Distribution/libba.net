@@ -79,3 +79,10 @@ div.vote-option
 textarea {
 	resize: vertical;
 }
+a#compare-previous {
+	background-image: url('/images/diff.png');
+	background-repeat: no-repeat;
+	background-position: left center;
+	padding-left: 20px;
+	background-size: auto 100%;
+}

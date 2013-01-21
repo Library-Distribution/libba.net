@@ -18,3 +18,21 @@
 .compare-diff ins {
 	background-color: lightgreen;
 }
+h1#page-title:before, h1#page-title:after {
+	content: url('/images/diff.png');
+	background-color: white;
+	padding: 5px;
+	margin-right: 10px;
+	margin-left: 10px;
+
+	width: 3%;
+	line-height: 2%;
+	display: inline-block;
+
+	border-radius: 50%;
+	-moz-border-radius: 50%;
+	-ms-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	-o-border-radius: 50%;
+	behavior: url('/style/PIE.htc'); /* IE compatibility fix */
+}
