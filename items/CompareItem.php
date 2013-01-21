@@ -38,7 +38,7 @@ class CompareItem
 
 	public function files()
 	{
-		$files = array('doc' => array(), 'src' => array(), 'logo' => array(), 'schema' => array('definition.ald'));
+		$files = array('doc' => array(), 'src' => array(), 'logo' => array());
 
 		foreach ($this->xp->query('/*/ald:files/ald:src/ald:file/@ald:path') AS $file)
 			$files['src'][] = $file->nodeValue;
