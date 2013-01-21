@@ -136,7 +136,8 @@
 				echo "<h3>Other versions:</h3><ul>";
 				foreach ($versions AS $version)
 				{
-					echo "<li><a href='./{$version['id']}'>version {$version['version']}</a></li>";
+					$comparison = semver_compare($item['version'], $version['version']) < 0 ? $item['version'] . '...' . $version['version'] : $version['version'] . '...' . $item['version'];
+					echo "<li><a href='./{$version['id']}'>version {$version['version']}</a><a class='compare-link' title='compare against version $version[version]' href='./compare/$version[name]/$comparison'/></a></li>";
 				}
 				echo "</ul>";
 			}
