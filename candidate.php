@@ -320,7 +320,7 @@
 							else
 							{
 								echo "<tr><td><a href=\"users/{$candidate["closed-by"]}/profile\">{$candidate["closed-by"]}</a><hr/>{$candidate["closed-date"]}</td>"
-									. "<td id=\"close-comment\" class=\"" . ( /* todo: get if included in stdlib or not */ "") . "\">" . user_input_process($candidate["closed-comment"]) . "</td></tr>";
+									. "<td id=\"close-comment\" class=\"" . ( /* todo: get if included in stdlib or not */ "") . "\"><div class='markdown'>" . user_input_process($candidate["closed-comment"]) . "</div></td></tr>";
 								/*
 								if ($can_close && !$in_standard)
 								{

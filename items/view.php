@@ -112,10 +112,12 @@
 		</table>
 		<h3 id="item-descr-title">Description</h3>
 		<p id="item-descr">
+			<div class='markdown'>
 			<?php
 				require_once("../user_input.php");
 				echo user_input_process($item['description']);
 			?>
+			</div>
 		</p>
 		<?php
 

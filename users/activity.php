@@ -236,7 +236,7 @@
 									. "</a>"
 									. $item["header"]
 								. "</div><hr/>"
-								. "<div class=\"activity-body user-markup\">$text</div>"
+								. "<div class=\"activity-body markdown\">$text</div>"
 								. "<div class=\"activity-footer\">{$item["date"]}</div>"
 							. "</div>";
 					}

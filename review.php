@@ -107,13 +107,14 @@
 								<th>Diff:</th>
 								<td><a id='compare-latest' href='items/compare/<?php echo $item['name'], '/', $diff_base, '...', $item['version']; ?>'>compare to latest reviewed version (<?php echo $diff_base; ?>)</a></td>
 							</tr>
+							<!-- DESCRIPTION: ENCLOSE IN <div class='markdown'></div> !!! -->
 							<?php } ?>
 						</table>
 						<table id="review-comments">
 			<?php
 						foreach ($comments AS $comment)
 						{
-							echo "<tr><td><img alt=\"avatar\" src=\"http://gravatar.com/avatar/{$comment['user-mail']}?s=50&amp;d=mm\" class=\"comment-avatar\"/><br/><a href=\"users/{$comment["user"]}/profile\">{$comment["user"]}</a><hr/>{$comment["date"]}</td><td>" . user_input_process($comment["comment"]) . "</td></tr>";
+							echo "<tr><td><img alt=\"avatar\" src=\"http://gravatar.com/avatar/{$comment['user-mail']}?s=50&amp;d=mm\" class=\"comment-avatar\"/><br/><a href=\"users/{$comment["user"]}/profile\">{$comment["user"]}</a><hr/>{$comment["date"]}</td><td><div class='markdown'>" . user_input_process($comment["comment"]) . "</div></td></tr>";
 						}
 						if (!$item["reviewed"])
 						{
