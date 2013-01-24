@@ -1,43 +1,52 @@
-#item-details td, #item-details th {
-	border-bottom: solid gray 1px;
-	padding: 7px;
-}
 #item-details {
 	min-width: 50%;
 	float: left;
 	clear: both;
 	margin-right: 15px;
 	margin-bottom: 15px;
+
+	td, th {
+		border-bottom: solid gray 1px;
+		padding: 7px;
+	}
+
+	th {
+		color: #333;
+	}
 }
-#item-details th {
-	color: #333;
-}
+
 #item-descr-title, #item-descr {
 	display: inline;
 }
+
 #item-descr ~ h3 {
 	clear: both;
 }
+
 ul {
 	list-style-type: none;
-}
-ul li {
-	display: inline-block;
-	width: 30%;
-	margin-right: 3%;
-	text-align: center;
-	margin-bottom: 10px;
-}
-ul li a {
-	width: 75%;
-	display: inline-block;
-}
-ul li:before {
-	color: #333;
-	content: '\25b6\a0\a0';
-}
-ul li:hover:before {
-	color: #888;
+
+	li {
+		display: inline-block;
+		width: 30%;
+		margin-right: 3%;
+		text-align: center;
+		margin-bottom: 10px;
+
+		a {
+			width: 75%;
+			display: inline-block;
+		}
+
+		&:before {
+			color: #333;
+			content: '\25b6\a0\a0';
+		}
+
+		&:hover:before {
+			color: #888;
+		}
+	}
 }
 
 a.compare-link {
@@ -67,9 +76,11 @@ a.compare-link {
 	line-height: 2%;
 	display: inline-block;
 }
+
 #page-title.lib:before, #page-title.lib:after {
 	content: url('/images/lib.png');
 }
+
 #page-title.app:before, #page-title.app:after {
 	content: url('/images/app.png');
 }

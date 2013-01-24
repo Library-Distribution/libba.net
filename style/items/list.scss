@@ -1,10 +1,9 @@
-.letter-item
-{
+.letter-item {
 	font-weight: bold;
 	font-size: 250%;
 }
-.letter-container
-{
+
+.letter-container {
 	border: solid lightgray 1px;
 	border-bottom-style: double;
 	border-bottom-width: 5px;
@@ -14,6 +13,7 @@
 li.lib {
 	list-style-image: url('/images/lib.png');
 }
+
 li.app {
 	list-style-image: url('/images/app.png');
 }

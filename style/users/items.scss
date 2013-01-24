@@ -1,5 +1,4 @@
-﻿.user-item
-{
+﻿.user-item {
 	width: 95%;
 	display: inline-block;
 	background-color: #BBB;
@@ -15,8 +14,8 @@
 	-o-border-radius: 5px;
 
 	behavior: url('/style/PIE.htc'); /* IE compatibility fix */
-}
-.user-item:hover
-{
-	background-color: #CCC;
+
+	&:hover {
+		background-color: #CCC;
+	}
 }

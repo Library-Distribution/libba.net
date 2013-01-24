@@ -2,37 +2,31 @@
 @import url("jquery-ui/smoothness/jquery-ui.css");
 @import url("markdown.css");
 
-body, .ui-widget, .ui-widget button
-{
+body, .ui-widget, .ui-widget button {
 	font-family: QuicksandBook, sans-serif;
 }
-.ui-widget-content a
-{
+.ui-widget-content a {
 	color: navy;
 }
 
-table
-{
+table {
 	border-collapse: collapse;
 	empty-cells: show;
 }
 
-img
-{
+img {
 	border: none;
 }
 
 /* highlight first word in paragraph */
-.text-first-word
-{
+.text-first-word {
 	font-size: 150%;
 	font-weight: bold;
 	font-style: italic;
 }
 
 /* the page title */
-#page-title
-{
+#page-title {
 	position: relative;
 	top: 100px;
 	text-align: center;
@@ -40,8 +34,7 @@ img
 	color: white;
 }
 
-#page-content
-{
+#page-content {
 	margin: auto;
 	display: inline-block;
 	padding: 5px;
@@ -54,137 +47,132 @@ img
 
 body.pretty-ui {
 	background-color: #333;
-}
 
-body.pretty-ui #page-content {
-	background-color: white;
-	width: 50%;
-	padding: 20px;
+	#page-content {
+		background-color: white;
+		width: 50%;
+		padding: 20px;
 
-	border-radius: 10px;
-	-moz-border-radius: 10px;
-	-webkit-border-radius: 10px;
-	-ms-border-radius: 10px;
-	-o-border-radius: 10px;
+		border-radius: 10px;
+		-moz-border-radius: 10px;
+		-webkit-border-radius: 10px;
+		-ms-border-radius: 10px;
+		-o-border-radius: 10px;
 
-	behavior: url('/style/PIE.htc'); /* IE compatibility fix */
+		behavior: url('/style/PIE.htc'); /* IE compatibility fix */
+	}
 }
 
 /***********************************
  * DEFAULT LINK STYLING
  ***********************************/
-a, a:visited
-{
+a, a:visited {
 	text-decoration: none;
 	color: navy;
-}
-a:hover
-{
-	text-decoration: underline;
-	color: darkred;
+
+	&:hover {
+		text-decoration: underline;
+		color: darkred;
+	}
 }
 /* END OF DEFAULT LINK STYLING */
 
 /***********************************
  * ERROR MESSAGE STYLING
  ***********************************/
-.error-message
-{
+.error-message {
 	padding: 10px;
 	text-align: justify;
-}
-.error-message .message, .error-message .message:before
-{
-	font-weight: bold;
-	border-bottom: solid red 1px;
-	margin-bottom: 7.5px;
-}
-.error-message .message:before
-{
-	content: 'Error: ';
-	border-bottom-style: none;
+
+	.message, .message:before {
+		font-weight: bold;
+		border-bottom: solid red 1px;
+		margin-bottom: 7.5px;
+	}
+	.message:before {
+		content: 'Error: ';
+		border-bottom-style: none;
+	}
 }
 /* END OF ERROR MESSAGE STYLING */
 
 /***********************************
  * ADMIN MENU STYLING
  ***********************************/
-.admin-menu
-{
+.admin-menu {
 	list-style-type: none;
 	border-style: none;
 	width: 225px;
 	display: none;
 	position: relative;
 	left: -45px;
+
+	li {
+		padding: 3px;
+		margin: 0.4em;
+		border-left: solid gray 1px;
+
+		&:hover {
+			border: solid gray 1px;
+			padding-top: 2px;
+			padding-bottom: 2px;
+		}
+	}
 }
-.admin-menu li
-{
-	padding: 3px;
-	margin: 0.4em;
-	border-left: solid gray 1px
-}
-div.menu:hover > .admin-menu
-{
-	display: block
-}
-div.menu:hover
-{
-	border: solid gray 1px;
-	border-top: ridge gray 3px;
-	margin-left: 4px;
-	margin-right: 4px
-}
-div.menu
-{
+
+div.menu {
 	float: right;
 	clear: left;
 	border-style: ridge;
 	width: 225px;
 	padding: 3px;
 	margin: 2px;
-}
-div.menu a
-{
-	color: black;
-	margin: 0px;
-	padding: 0px
-}
-div.menu a:hover
-{
-	text-decoration: none;
-	cursor: pointer
-}
-.admin-menu li:hover
-{
-	border: solid gray 1px;
-	padding-top: 2px;
-	padding-bottom: 2px;
+
+	a {
+		color: black;
+		margin: 0px;
+		padding: 0px;
+
+		&:hover {
+			text-decoration: none;
+			cursor: pointer
+		}
+	}
+
+	&:hover {
+		border: solid gray 1px;
+		border-top: ridge gray 3px;
+		margin-left: 4px;
+		margin-right: 4px;
+
+		& > .admin-menu {
+			display: block;
+		}
+	}
 }
 /* END OF ADMIN MENU STYLING */
 
 /***********************************
  * "NEXT" & "PREVIOUS" LINK STYLING
  ***********************************/
-.next-previous
-{
+.next-previous {
 	display:inline-block
 }
 #next
 {
 	float: right;
-}
-#next:before, #next:after
-{
-	content: ' >> ';
+
+	&:before, &:after {
+		content: ' >> ';
+	}
 }
 #prev
 {
 	float: left;
-}
-#prev:before, #prev:after
-{
-	content: ' << ';
+
+	&:before, &:after {
+		content: ' << ';
+	}
 }
 /* END OF "NEXT" & "PREVIOUS" LINK STYLING */
 
@@ -201,6 +189,39 @@ div.menu a:hover
 	height: 100%;
 	width: 15%;
 	z-index: 99;
+
+	a:hover .nav-tooltip {
+		display: inline-block;
+	}
+
+	img {
+		position:fixed;
+		left:0.5%;
+		height:22px;
+	}
+
+	& > a > div {
+		position: fixed;
+		width: 7.5%;
+		left: 0%;
+		height: 8.5%;
+
+		border-radius: 0 25px 25px 0;
+		-moz-border-radius: 0 25px 25px 0;
+		-ms-border-radius: 0 25px 25px 0;
+		-webkit-border-radius: 0 25px 25px 0;
+		-o-border-radius: 0 25px 25px 0;
+
+		box-shadow: inset -5px 0px 7.5px #555;
+		-moz-box-shadow: inset -5px 0px 7.5px #555;
+		-webkit-box-shadow: inset -5px 0px 7.5px #555;
+		-ms-box-shadow: inset -5px 0px 7.5px #555;
+		-o-box-shadow: inset -5px 0px 7.5px #555;
+
+		behavior: url(/style/PIE.htc);
+
+		background-color: white;
+	}
 }
 .nav-triangle {
 	display: block;
@@ -243,40 +264,6 @@ div.menu a:hover
 
 	z-index: 101;
 }
-#navigation a:hover .nav-tooltip {
-	display: inline-block;
-}
-#navigation img {
-	position:fixed;
-	left:0.5%;
-	height:22px;
-}
-#navigation > a > div {
-	position: fixed;
-	width: 7.5%;
-	left: 0%;
-	height: 8.5%;
-
-	border-radius: 0 25px 25px 0;
-	-moz-border-radius: 0 25px 25px 0;
-	-ms-border-radius: 0 25px 25px 0;
-	-webkit-border-radius: 0 25px 25px 0;
-	-o-border-radius: 0 25px 25px 0;
-
-	box-shadow: inset -5px 0px 7.5px #555;
-	-moz-box-shadow: inset -5px 0px 7.5px #555;
-	-webkit-box-shadow: inset -5px 0px 7.5px #555;
-	-ms-box-shadow: inset -5px 0px 7.5px #555;
-	-o-box-shadow: inset -5px 0px 7.5px #555;
-
-	behavior: url(/style/PIE.htc);
-
-	background-color: white;
-}
-
-#login * {
-	visibility: collapse;
-}
 #login {
 	display: inherit;
 	position: fixed;
@@ -294,12 +281,18 @@ div.menu a:hover
 	-o-border-radius: 0 0 10px 10px;
 
 	behavior: url(/style/PIE.htc);
-}
-#login:hover {
-	top: 0%;
-}
-#login:hover  * {
-	visibility: visible;
+
+	* {
+		visibility: collapse;
+	}
+
+	&:hover {
+		top: 0%;
+
+		* {
+			visibility: visible;
+		}
+	}
 }
 
 /*
@@ -319,16 +312,16 @@ div.menu a:hover
 	border-top: ridge gray 2px;
 	font-size: 80%;
 	z-index: 100;
-}
 
-#footer #copyright {
-	float: right
-}
+	#copyright {
+		float: right
+	}
 
-#footer a {
-	display: inline-block;
-	padding-left: 3px;
-	padding-right: 25px;
+	a {
+		display: inline-block;
+		padding-left: 3px;
+		padding-right: 25px;
+	}
 }
 /* END OF HEADER & FOOTER STYLING */
 
