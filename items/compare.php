@@ -14,13 +14,11 @@
 	/*
 	* TODO:
 	***********************
-	* - check for schema differences and present them (not as text diff!)
 	* - ensure correct compare order of versions
 	*	If incorrect, do not silently assume correct
 	*	order, but output a warning / error and a
 	*	link to the correct URL. After some seconds,
 	*	redirect there.
-	* - tweak styling, especially for non-javascript viewers
 	*/
 
 	$page_title = "Compare ERROR";
@@ -166,7 +164,7 @@
 	}
 ?>
 <!DOCTYPE html>
-<html>
+<html class="no-js">
 	<head>
 		<?php require('../templates/html.head.php'); ?>
 		<link type="text/css" rel="stylesheet" href="style/items/compare.css"/>

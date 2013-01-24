@@ -38,6 +38,8 @@ h1#page-title:before, h1#page-title:after {
 }
 ul#diff-steps {
 	list-style-type: none;
+	margin: 2px;
+	padding: 0px;
 }
 ul#diff-steps h3 {
 	color: #333;
@@ -45,7 +47,6 @@ ul#diff-steps h3 {
 	font-weight: bold;
 }
 div.action-details {
-	border: solid gray 1px;
 	padding: 10px;
 }
 div.action-details table {
@@ -60,6 +61,34 @@ div.action-details table th {
 div.action-details table td {
 	font-style: italic;
 }
-div.action-details table tr.old-meta {
-	border-bottom: solid gray 2px;
+div.action-details table tr.old-meta th {
+	color: darkred;
+}
+div.action-details table tr.new-meta th {
+	color: darkgreen;
+}
+
+html.no-js div.action-details {
+	margin-left: 3%;
+	border: solid gray 1px;
+
+	box-shadow: 0px 5px 5px;
+	-moz-box-shadow: 0px 5px 5px;
+	-webkit-box-shadow: 0px 5px 5px;
+	-ms-box-shadow: 0px 5px 5px;
+	-o-box-shadow: 0px 5px 5px;
+
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-ms-border-radius: 5px;
+	-o-border-radius: 5px;
+
+	behavior: url('/style/PIE.htc'); /* IE compatibility fix */
+}
+html.no-js div.action-details:hover {
+	box-shadow: 0px 7.5px 7.5px;
+}
+html.no-js ul#diff-steps li {
+	margin-bottom: 2%;
 }
