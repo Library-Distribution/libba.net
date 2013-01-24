@@ -261,7 +261,7 @@
 							</tr>
 							<?php } ?>
 							<tr>
-								<td colspan="2" id="candidate-text"><?php echo user_input_process($candidate["text"]); ?></td>
+								<td colspan="2" id="candidate-text"><div class='markdown'><?php echo user_input_process($candidate["text"]); ?></div></td>
 							</tr>
 						</tbody>
 					</table>
@@ -273,7 +273,7 @@
 							foreach ($comments AS $comment)
 							{
 								echo "<tr><th><img alt=\"avatar\" src=\"http://gravatar.com/avatar/{$comment['user-mail']}?s=50&amp;d=mm\" class=\"comment-avatar\"/><br/><a href=\"users/{$comment["user"]}/profile\">{$comment["user"]}</a><hr/>{$comment["date"]}</th>"
-									. "<td>" . user_input_process($comment["comment"]) . (!empty($comment["vote"]) ? "<div class=\"vote\" style=\"float: right\">+1</div>" : "") . "</td></tr>";
+									. "<td><div class='markdown'>" . user_input_process($comment["comment"]) . '</div>' . (!empty($comment["vote"]) ? "<div class=\"vote\" style=\"float: right\">+1</div>" : "") . "</td></tr>";
 							}
 							if (!$candidate["closed"])
 							{
