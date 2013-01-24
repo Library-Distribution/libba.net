@@ -3,8 +3,6 @@
 
 #item-details {
 	min-width: 50%;
-	float: left;
-	clear: both;
 	margin-right: 15px;
 	margin-bottom: 15px;
 
@@ -20,10 +18,6 @@
 
 #item-descr-title, #item-descr {
 	display: inline;
-}
-
-#item-descr ~ h3 {
-	clear: both;
 }
 
 ul {
