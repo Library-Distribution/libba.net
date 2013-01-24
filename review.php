@@ -12,6 +12,7 @@
 	{
 		require_once("api/db.php");
 		require_once("db2.php");
+		require_once('api/semver.php');
 
 		$db_connection = db_ensure_connection();
 		$id = mysql_real_escape_string($_GET["id"], $db_connection);
@@ -39,6 +40,17 @@
 
 			$item = $api->getItemById($id);
 			$page_title = $item["name"] . " (v{$item["version"]}) | Code review";
+
+			$list = $api->getItemList(0, 'all', NULL, NULL, $item['name'], NULL, NULL, 'both', 'yes');
+			usort($list, "semver_sort");
+
+			for ($j = 0; $j < count($list); $j++)
+			{
+				if (semver_compare($item['version'], $list[$j]['version']) == 1) {
+					$diff_base = $list[$j]['version'];
+					break;
+				}
+			}
 
 			$db_query = "SELECT HEX(user), comment, date FROM $db_table_review_comments WHERE id = UNHEX('$id')";
 			$db_result = mysql_query($db_query, $db_connection);
@@ -90,7 +102,13 @@
 					else
 					{
 			?>
-						<table id="review"><!-- todo --></table>
+						<table id="review"><?php if (isset($diff_base)) { ?>
+							<tr>
+								<th>Diff:</th>
+								<td><a id='compare-latest' href='items/compare/<?php echo $item['name'], '/', $diff_base, '...', $item['version']; ?>'>compare to latest reviewed version (<?php echo $diff_base; ?>)</a></td>
+							</tr>
+							<?php } ?>
+						</table>
 						<table id="review-comments">
 			<?php
 						foreach ($comments AS $comment)
@@ -146,4 +164,10 @@
 	require_once("rewriter.php");
 	echo rewrite();
 	ob_end_flush();
+?>
+<?php
+	function semver_sort($a, $b)
+	{
+		return semver_compare($b['version'], $a['version']);
+	}
 ?>
