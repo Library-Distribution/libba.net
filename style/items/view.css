@@ -40,6 +40,15 @@ ul li:hover:before {
 	color: #888;
 }
 
+a.compare-link {
+	background-image: url('/images/diff.png');
+	background-repeat: no-repeat;
+	background-position: center center;
+	width: 20px;
+	min-height: 20px;
+	display: inline-block;
+}
+
 #page-title:before, #page-title:after {
 	border-radius: 50%;
 	-moz-border-radius: 50%;

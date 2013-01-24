@@ -1,0 +1,94 @@
+.action-type {
+	color: #333;
+}
+.compare-diff {
+	padding: 5px;
+	border: solid gray 1px;
+	width: 98%;
+	display: inline-block;
+	white-space: pre;
+	overflow-x: scroll;
+}
+.compare-diff del, .compare-diff ins {
+	text-decoration: none;
+}
+.compare-diff del {
+	background-color: #FCC;
+}
+.compare-diff ins {
+	background-color: lightgreen;
+}
+h1#page-title:before, h1#page-title:after {
+	content: url('/images/diff.png');
+	background-color: white;
+	padding: 5px;
+	margin-right: 10px;
+	margin-left: 10px;
+
+	width: 3%;
+	line-height: 2%;
+	display: inline-block;
+
+	border-radius: 50%;
+	-moz-border-radius: 50%;
+	-ms-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	-o-border-radius: 50%;
+	behavior: url('/style/PIE.htc'); /* IE compatibility fix */
+}
+ul#diff-steps {
+	list-style-type: none;
+	margin: 2px;
+	padding: 0px;
+}
+ul#diff-steps h3 {
+	color: #333;
+	text-decoration: underline;
+	font-weight: bold;
+}
+div.action-details {
+	padding: 10px;
+}
+div.action-details table {
+	text-align: left;
+	border-collapse: separate;
+	border-spacing: 3px;
+}
+div.action-details table th {
+	color: #333;
+	padding-right: 50px;
+}
+div.action-details table td {
+	font-style: italic;
+}
+div.action-details table tr.old-meta th {
+	color: darkred;
+}
+div.action-details table tr.new-meta th {
+	color: darkgreen;
+}
+
+html.no-js div.action-details {
+	margin-left: 3%;
+	border: solid gray 1px;
+
+	box-shadow: 0px 5px 5px;
+	-moz-box-shadow: 0px 5px 5px;
+	-webkit-box-shadow: 0px 5px 5px;
+	-ms-box-shadow: 0px 5px 5px;
+	-o-box-shadow: 0px 5px 5px;
+
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-ms-border-radius: 5px;
+	-o-border-radius: 5px;
+
+	behavior: url('/style/PIE.htc'); /* IE compatibility fix */
+}
+html.no-js div.action-details:hover {
+	box-shadow: 0px 7.5px 7.5px;
+}
+html.no-js ul#diff-steps li {
+	margin-bottom: 2%;
+}
