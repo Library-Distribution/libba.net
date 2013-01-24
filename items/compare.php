@@ -11,16 +11,6 @@
 	define('ACT_DEL', 2);
 	define('ACT_MOD', 3);
 
-	/*
-	* TODO:
-	***********************
-	* - ensure correct compare order of versions
-	*	If incorrect, do not silently assume correct
-	*	order, but output a warning / error and a
-	*	link to the correct URL. After some seconds,
-	*	redirect there.
-	*/
-
 	$page_title = "Compare ERROR";
 	$error = true;
 	for ($i = 0; $i < 1; $i++) {
@@ -32,9 +22,10 @@
 				$error_description = 'One of the two specified version numbers "' . htmlentities($_GET['version1']) . '" and "' . htmlentities($_GET['version2']) . '" is not a valid version number.';
 				break;
 			}
-			if (semver_compare($_GET['version1'], $_GET['version2']) != -1) { #TODO: warning instead of error; redirect; link
+			if (semver_compare($_GET['version1'], $_GET['version2']) != -1) {
 				$error_message = 'Invalid version order specified!';
-				$error_description = 'The specified two version numbers are in incorrect order: the older version must be first.';
+				$error_description = 'The specified two version numbers are in incorrect order: the older version must be first. You will be redirected in a few seconds.';
+				$redirect = $_GET['version2'] . '...' . $_GET['version1'];
 				break;
 			}
 
@@ -54,10 +45,10 @@
 				break;
 			}
 
-			$id_old = semver_compare($item1['version'], $item2['version']) == -1 ? $item1['id'] : $item2['id'];
-			$version_old = semver_compare($item1['version'], $item2['version']) == -1 ? $item1['version'] : $item2['version'];
-			$id_new = semver_compare($item1['version'], $item2['version']) == 1 ? $item1['id'] : $item2['id'];
-			$version_new = semver_compare($item1['version'], $item2['version']) == 1 ? $item1['version'] : $item2['version'];
+			$id_old = $item1['id'];
+			$version_old = $item1['version'];
+			$id_new = $item2['id'];
+			$version_new = $item2['version'];
 			$item_name = $_GET['name'];
 		}
 		else if (isset($_GET['id1']) && isset($_GET['id2']))
@@ -167,6 +158,9 @@
 <html class="no-js">
 	<head>
 		<?php require('../templates/html.head.php'); ?>
+		<?php if (isset($redirect)) { ?>
+			<meta http-equiv="REFRESH" content="5; URL=<?php echo $redirect; ?>"/>
+		<?php } ?>
 		<link type="text/css" rel="stylesheet" href="style/items/compare.css"/>
 
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
