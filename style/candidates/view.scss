@@ -1,3 +1,6 @@
+/* SCSS imports */
+@import "global/cross-browser.scss";
+
 #candidate, #candidate-comments {
 	border-collapse: separate;
 	border-spacing: 10px;
@@ -12,7 +15,7 @@
 				padding: 5px;
 				background-color: #bbb;
 				text-align: justify;
-				border-radius: 2px;
+				@include border-radius(2px);
 			}
 
 			&> th {
@@ -35,14 +38,8 @@
 	margin: 3px;
 	background-color: #CCC;
 	border: outset gray 3px;
-
-	border-radius: 5px;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	-ms-border-radius: 5px;
-	-o-border-radius: 5px;
-
 	display: inline-block;
+	@include border-radius(5px);
 }
 
 .downvote {
@@ -70,12 +67,7 @@ div.vote-option {
 
 .comment-avatar {
 	display: inline-block;
-
-	border-radius: 5px;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	-ms-border-radius: 5px;
-	-o-border-radius: 5px;
+	@include border-radius(5px);
 }
 
 textarea {

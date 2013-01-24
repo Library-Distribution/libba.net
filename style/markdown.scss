@@ -1,17 +1,9 @@
+/* SCSS imports */
+@import "global/cross-browser.scss";
+
 .markdown {
-	border-radius: 10px;
-	-moz-border-radius: 10px;
-	-webkit-border-radius: 10px;
-	-ms-border-radius: 10px;
-	-o-border-radius: 10px;
-
-	box-shadow: 0px 2.5px 5px;
-	-moz-box-shadow: 0px 2.5px 5px;
-	-webkit-box-shadow: 0px 2.5px 5px;
-	-ms-box-shadow: 0px 2.5px 5px;
-	-o-box-shadow: 0px 2.5px 5px;
-
-	behavior: url('/style/PIE.htc'); /* IE compatibility fix */
+	@include border-radius(10px);
+	@include box-shadow(0px 2.5px 5px);
 
 	background-color: white;
 	padding: 10px;

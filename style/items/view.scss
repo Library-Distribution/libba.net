@@ -1,3 +1,6 @@
+/* SCSS imports */
+@import "global/cross-browser.scss";
+
 #item-details {
 	min-width: 50%;
 	float: left;
@@ -59,13 +62,6 @@ a.compare-link {
 }
 
 #page-title:before, #page-title:after {
-	border-radius: 50%;
-	-moz-border-radius: 50%;
-	-ms-border-radius: 50%;
-	-webkit-border-radius: 50%;
-	-o-border-radius: 50%;
-	behavior: url('/style/PIE.htc'); /* IE compatibility fix */
-
 	background-color: white;
 
 	padding: 5px;
@@ -75,6 +71,7 @@ a.compare-link {
 	width: 3%;
 	line-height: 2%;
 	display: inline-block;
+	@include border-radius(50%);
 }
 
 #page-title.lib:before, #page-title.lib:after {

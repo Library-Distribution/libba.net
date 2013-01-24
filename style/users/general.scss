@@ -1,4 +1,7 @@
-﻿#user-navigation {
+﻿/* SCSS imports */
+@import "global/cross-browser.scss";
+
+#user-navigation {
 	position: fixed;
 	top: 30%;
 	right: 0%;
@@ -50,13 +53,7 @@
 		line-height: 50px;
 		vertical-align: middle;
 
-		border-radius: 15px 0px 0px 15px;
-		-moz-border-radius: 15px 0px 0px 15px;
-		-webkit-border-radius: 15px 0px 0px 15px;
-		-ms-border-radius: 15px 0px 0px 15px;
-		-o-border-radius: 15px 0px 0px 15px;
-
-		behavior: url('/style/PIE.htc'); /* IE compatibility fix */
+		@include border-radius(15px 0px 0px 15px);
 	}
 
 	a.nav-url.nav-current {
@@ -77,13 +74,7 @@
 }
 
 #user-gravatar {
-	border-radius: 5px;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	-ms-border-radius: 5px;
-	-o-border-radius: 5px;
-
-	behavior: url('/style/PIE.htc'); /* IE compatibility fix */
+	@include border-radius(5px);
 }
 
 #page-content {

@@ -1,4 +1,7 @@
-﻿.activity-item {
+﻿/* SCSS imports */
+@import "global/cross-browser.scss";
+
+.activity-item {
 	width: 95%;
 	display: inline-block;
 	background-color: #BBB;
@@ -8,13 +11,7 @@
 	padding: 10px;
 
 	&, .activity-body {
-		border-radius: 5px;
-		-moz-border-radius: 5px;
-		-webkit-border-radius: 5px;
-		-ms-border-radius: 5px;
-		-o-border-radius: 5px;
-
-		behavior: url('/style/PIE.htc'); /* IE compatibility fix */
+		@include border-radius(5px);
 	}
 
 	&:hover {

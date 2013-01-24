@@ -1,6 +1,10 @@
+/* CSS imports */
 @import url("font/stylesheet.css");
 @import url("jquery-ui/smoothness/jquery-ui.css");
 @import url("markdown.css");
+
+/* SCSS imports */
+@import "global/cross-browser.scss";
 
 body, .ui-widget, .ui-widget button {
 	font-family: QuicksandBook, sans-serif;
@@ -53,13 +57,7 @@ body.pretty-ui {
 		width: 50%;
 		padding: 20px;
 
-		border-radius: 10px;
-		-moz-border-radius: 10px;
-		-webkit-border-radius: 10px;
-		-ms-border-radius: 10px;
-		-o-border-radius: 10px;
-
-		behavior: url('/style/PIE.htc'); /* IE compatibility fix */
+		@include border-radius(10px);
 	}
 }
 
@@ -206,19 +204,8 @@ div.menu {
 		left: 0%;
 		height: 8.5%;
 
-		border-radius: 0 25px 25px 0;
-		-moz-border-radius: 0 25px 25px 0;
-		-ms-border-radius: 0 25px 25px 0;
-		-webkit-border-radius: 0 25px 25px 0;
-		-o-border-radius: 0 25px 25px 0;
-
-		box-shadow: inset -5px 0px 7.5px #555;
-		-moz-box-shadow: inset -5px 0px 7.5px #555;
-		-webkit-box-shadow: inset -5px 0px 7.5px #555;
-		-ms-box-shadow: inset -5px 0px 7.5px #555;
-		-o-box-shadow: inset -5px 0px 7.5px #555;
-
-		behavior: url(/style/PIE.htc);
+		@include border-radius(0 25px 25px 0);
+		@include box-shadow(inset -5px 0px 7.5px #555);
 
 		background-color: white;
 	}
@@ -240,21 +227,10 @@ div.menu {
 	text-align: center;
 	color: #444;
 	background-color: white;
-
-	box-shadow: 10px 10px 15px;
-	-moz-box-shadow: 10px 10px 15px;
-	-webkit-box-shadow: 10px 10px 15px;
-	-ms-box-shadow: 10px 10px 15px;
-	-o-box-shadow: 10px 10px 15px;
-
 	border: solid #222 3px;
-	border-radius: 15px;
-	-moz-border-radius: 15px;
-	-webkit-border-radius: 15px;
-	-ms-border-radius: 15px;
-	-o-border-radius: 15px;
 
-	behavior: url(/style/PIE.htc);
+	@include border-radius(15px);
+	@include box-shadow(10px 10px 15px);
 
 	position: relative;
 	left: +50px;
@@ -274,13 +250,7 @@ div.menu {
 	padding: 5px;
 	text-align: center;
 
-	border-radius: 0 0 10px 10px;
-	-moz-border-radius: 0 0 10px 10px;
-	-webkit-border-radius: 0 0 10px 10px;
-	-ms-border-radius: 0 0 10px 10px;
-	-o-border-radius: 0 0 10px 10px;
-
-	behavior: url(/style/PIE.htc);
+	@include border-radius(0 0 10px 10px);
 
 	* {
 		visibility: collapse;

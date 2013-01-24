@@ -1,3 +1,6 @@
+/* SCSS imports */
+@import "global/cross-browser.scss";
+
 #logo {
 	overflow: hidden;
 	display: block;
@@ -5,24 +8,11 @@
 	width: 25%;
 
 	border: solid gray 2px;
-	border-radius: 50%;
-	-moz-border-radius: 50%;
-	-webkit-border-radius: 50%;
-	-ms-border-radius: 50%;
-	-o-border-radius: 50%;
-
-	box-shadow: 0px 10px 10px #444;
-	-moz-box-shadow: 0px 10px 10px #555;
-	-webkit-box-shadow: 0px 10px 10px #555;
-	-ms-box-shadow: 0px 10px 10px #555;
-	-o-box-shadow: 0px 10px 10px #555;
+	@include border-radius(50%);
+	@include box-shadow(0px 10px 10px #444);
 
 	&:hover {
-		box-shadow: 0px 10px 15px #333;
-		-moz-box-shadow: 0px 10px 15px #333;
-		-webkit-box-shadow: 0px 10px 15px #333;
-		-ms-box-shadow: 0px 10px 15px #333;
-		-o-box-shadow: 0px 10px 15px #333;
+		@include box-shadow(0px 10px 15px #333);
 	}
 }
 
@@ -35,12 +25,7 @@ h1 {
 	padding: 5px;
 	width: 48%;
 	background-color: lightgray;
-
-	border-radius: 10px;
-	-moz-border-radius: 10px;
-	-webkit-border-radius: 10px;
-	-ms-border-radius: 10px;
-	-o-border-radius: 10px;
+	@include border-radius(10px);
 
 	p {
 		text-align: justify;
@@ -59,36 +44,18 @@ h1 {
 }
 #give {
 	float: left;
-
-	box-shadow: -3px -1px 10px #000;
-	-moz-box-shadow: -3px -1px 10px #000;
-	-webkit-box-shadow: -3px -1px 10px #000;
-	-ms-box-shadow: -3px -1px 10px #000;
-	-o-box-shadow: -3px -1px 10px #000;
+	@include box-shadow(-3px -1px 10px #000);
 
 	&:hover {
-		box-shadow: -3px -1px 15px #000;
-		-moz-box-shadow: -3px -1px 15px #000;
-		-webkit-box-shadow: -3px -1px 15px #000;
-		-ms-box-shadow: -3px -1px 15px #000;
-		-o-box-shadow: -3px -1px 15px #000;
+		@include box-shadow(-3px -1px 15px #000);
 	}
 }
 #get {
 	float: right;
-
-	box-shadow: 3px -1px 10px #000;
-	-moz-box-shadow: 3px -1px 10px #000;
-	-webkit-box-shadow: 3px -1px 10px #000;
-	-ms-box-shadow: 3px -1px 10px #000;
-	-o-box-shadow: 3px -1px 10px #000;
+	@include box-shadow(3px -1px 10px #000);
 
 	&:hover {
-		box-shadow: 3px -1px 15px #000;
-		-moz-box-shadow: 3px -1px 15px #000;
-		-webkit-box-shadow: 3px -1px 15px #000;
-		-ms-box-shadow: 3px -1px 15px #000;
-		-o-box-shadow: 3px -1px 15px #000;
+		@include box-shadow(3px -1px 15px #000);
 	}
 }
 
@@ -108,24 +75,11 @@ h1 {
 		height: 17.5%;
 		margin-bottom: 25px;
 
-		box-shadow: 5px 5px 10px #000;
-		-moz-box-shadow: 5px 5px 10px #000;
-		-webkit-box-shadow: 5px 5px 10px #000;
-		-ms-box-shadow: 5px 5px 10px #000;
-		-o-box-shadow: 5px 5px 10px #000;
-
-		border-radius: 25%;
-		-moz-border-radius: 25%;
-		-webkit-border-radius: 25%;
-		-ms-border-radius: 25%;
-		-o-border-radius: 25%;
+		@include box-shadow(5px 5px 10px #000);
+		@include border-radius(25%);
 
 		&:hover {
-			box-shadow: 5px 5px 15px #000;
-			-moz-box-shadow: 5px 5px 15px #000;
-			-webkit-box-shadow: 5px 5px 15px #000;
-			-ms-box-shadow: 5px 5px 15px #000;
-			-o-box-shadow: 5px 5px 15px #000;
+			@include box-shadow(5px 5px 15px #000);
 		}
 
 		img {
@@ -139,8 +93,4 @@ h1 {
 			margin: auto;
 		}
 	}
-}
-
-#logo, #give, #get, #logo-list a {
-	behavior: url(/style/PIE.htc); /* IE compatibility fix */
 }

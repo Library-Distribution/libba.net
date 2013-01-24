@@ -1,3 +1,6 @@
+/* SCSS imports */
+@import "global/cross-browser.scss";
+
 .action-type {
 	color: #333;
 }
@@ -33,13 +36,7 @@ h1#page-title:before, h1#page-title:after {
 	width: 3%;
 	line-height: 2%;
 	display: inline-block;
-
-	border-radius: 50%;
-	-moz-border-radius: 50%;
-	-ms-border-radius: 50%;
-	-webkit-border-radius: 50%;
-	-o-border-radius: 50%;
-	behavior: url('/style/PIE.htc'); /* IE compatibility fix */
+	@include border-radius(50%);
 }
 
 ul#diff-steps {
@@ -85,23 +82,11 @@ html.no-js {
 	div.action-details {
 		margin-left: 3%;
 		border: solid gray 1px;
-
-		box-shadow: 0px 5px 5px;
-		-moz-box-shadow: 0px 5px 5px;
-		-webkit-box-shadow: 0px 5px 5px;
-		-ms-box-shadow: 0px 5px 5px;
-		-o-box-shadow: 0px 5px 5px;
-
-		border-radius: 5px;
-		-moz-border-radius: 5px;
-		-webkit-border-radius: 5px;
-		-ms-border-radius: 5px;
-		-o-border-radius: 5px;
-
-		behavior: url('/style/PIE.htc'); /* IE compatibility fix */
+		@include box-shadow(0px 5px 5px);
+		@include border-radius(5px);
 
 		&:hover {
-			box-shadow: 0px 7.5px 7.5px;
+			@include box-shadow(0px 7.5px 7.5px);
 		}
 	}
 
