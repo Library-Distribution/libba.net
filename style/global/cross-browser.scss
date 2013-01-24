@@ -4,10 +4,10 @@
 
 @mixin multi-browser-property($prop, $value) {
 	#{$prop}: $value;
-	-moz-#{$prop}: $value;
-	-webkit-#{$prop}: $value;
-	-ms-#{$prop}: $value;
-	-o-#{$prop}: $value;
+
+	@each $prefix in moz, webkit, ms, o {
+		-#{$prefix}-#{$prop}: $value;
+	}
 
 	@include IE-compat;
 }
