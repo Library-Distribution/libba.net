@@ -240,7 +240,7 @@ div.menu {
 	}
 
 	@include border-radius(15px);
-	@include box-shadow(10px 10px 15px);
+	@include box-shadow(10px 10px 15px #000);
 }
 #login {
 	display: inherit;
