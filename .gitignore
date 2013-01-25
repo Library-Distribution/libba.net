@@ -4,3 +4,7 @@ view_db.php
 *.bak
 *~
 uploads/*
+.sass-cache/*
+*.css
+!style/font/stylesheet.css
+!style/jquery-ui/smoothness/jquery-ui.css

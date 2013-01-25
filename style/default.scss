@@ -1,0 +1,311 @@
+/* CSS imports */
+@import url("font/stylesheet.css");
+@import url("jquery-ui/smoothness/jquery-ui.css");
+
+/* SCSS imports */
+@import "global/cross-browser.scss";
+
+body, .ui-widget, .ui-widget button {
+	font-family: QuicksandBook, sans-serif;
+}
+.ui-widget-content a {
+	color: navy;
+}
+
+table {
+	border-collapse: collapse;
+	empty-cells: show;
+}
+
+img {
+	border: none;
+}
+
+/* the page title */
+#page-title {
+	position: relative;
+	top: 100px;
+	text-align: center;
+	font-size: 200%;
+	color: white;
+}
+
+#page-content {
+	display: inline-block;
+	position: absolute;
+	top: 175px;
+	left: 0%;
+	right: 0%;
+
+	margin: auto;
+	padding: 5px {
+		bottom: 3%;
+	}
+}
+
+body.pretty-ui {
+	background-color: #333;
+
+	#page-content {
+		background-color: white;
+		width: 50%;
+		padding: 20px;
+
+		@include border-radius(10px);
+	}
+}
+
+/***********************************
+ * DEFAULT LINK STYLING
+ ***********************************/
+a, a:visited {
+	text-decoration: none;
+	color: navy;
+
+	&:hover {
+		text-decoration: underline;
+		color: darkred;
+	}
+}
+/* END OF DEFAULT LINK STYLING */
+
+/***********************************
+ * ERROR MESSAGE STYLING
+ ***********************************/
+.error-message {
+	padding: 10px;
+	text-align: justify;
+
+	.message, .message:before {
+		font-weight: bold;
+		border-bottom: solid red 1px;
+		margin-bottom: 7.5px;
+	}
+	.message:before {
+		content: 'Error: ';
+		border-bottom-style: none;
+	}
+}
+/* END OF ERROR MESSAGE STYLING */
+
+/***********************************
+ * ADMIN MENU STYLING
+ ***********************************/
+.admin-menu {
+	list-style-type: none;
+	border-style: none;
+	width: 225px;
+	display: none;
+	position: relative;
+	left: -45px;
+
+	li {
+		padding: 3px;
+		margin: 0.4em;
+		border-left: solid gray 1px;
+
+		&:hover {
+			border: solid gray 1px;
+			padding: {
+				top: 2px;
+				bottom: 2px;
+			}
+		}
+	}
+}
+
+div.menu {
+	float: right;
+	clear: left;
+	border-style: ridge;
+	width: 225px;
+	padding: 3px;
+	margin: 2px;
+
+	a {
+		color: black;
+		margin: 0px;
+		padding: 0px;
+
+		&:hover {
+			text-decoration: none;
+			cursor: pointer
+		}
+	}
+
+	&:hover {
+		border: solid gray 1px {
+			top: ridge gray 3px;
+		}
+		margin: {
+			left: 4px;
+			right: 4px;
+		}
+
+		& > .admin-menu {
+			display: block;
+		}
+	}
+}
+/* END OF ADMIN MENU STYLING */
+
+/***********************************
+ * "NEXT" & "PREVIOUS" LINK STYLING
+ ***********************************/
+.next-previous {
+	display:inline-block
+}
+#next
+{
+	float: right;
+
+	&:before, &:after {
+		content: ' >> ';
+	}
+}
+#prev
+{
+	float: left;
+
+	&:before, &:after {
+		content: ' << ';
+	}
+}
+/* END OF "NEXT" & "PREVIOUS" LINK STYLING */
+
+
+/***********************************
+ * NAVIGATION & FOOTER STYLING
+ ***********************************/
+#navigation {
+	position: fixed;
+	left: 0%;
+	top: 0%;
+	bottom: 0%;
+
+	height: 100%;
+	width: 15%;
+	z-index: 99;
+
+	a:hover .nav-tooltip {
+		display: inline-block;
+	}
+
+	img {
+		position:fixed;
+		left:0.5%;
+		height:22px;
+	}
+
+	& > a > div {
+		position: fixed;
+		width: 7.5%;
+		left: 0%;
+		height: 8.5%;
+
+		@include border-radius(0 25px 25px 0);
+		@include box-shadow(inset -5px 0px 7.5px #555);
+
+		background-color: white;
+	}
+}
+.nav-triangle {
+	display: block;
+	position: absolute;
+	left: 50px;
+	width: 0;
+	height: 0;
+	border: {
+		left: 20px solid black;
+		top: 12.5px solid transparent;
+		bottom: 12.5px solid transparent;
+	}
+}
+.nav-tooltip {
+	display: none;
+
+	position: relative;
+	left: +50px;
+	top: -50px;
+	padding: 5px;
+	width: 100px;
+	z-index: 101;
+
+	color: #444;
+	background-color: white;
+	border: solid #222 3px;
+	text: {
+		decoration: none;
+		align: center;
+	}
+
+	@include border-radius(15px);
+	@include box-shadow(10px 10px 15px);
+}
+#login {
+	display: inherit;
+	position: fixed;
+	right: 2.5%;
+	top: -5%;
+	width: 7.5%;
+	background-color: lightgray;
+	padding: 5px;
+	text-align: center;
+
+	@include border-radius(0 0 10px 10px);
+
+	* {
+		visibility: collapse;
+	}
+
+	&:hover {
+		top: 0%;
+
+		* {
+			visibility: visible;
+		}
+	}
+}
+
+/*
+	footer
+*/
+#footer {
+	position: fixed;
+	left: 0%;
+	right: 0%;
+	bottom: 0%;
+
+	width: 100%;
+	height: 2%;
+	padding: 3px;
+
+	background-color: #EEE;
+	border-top: ridge gray 2px;
+	font-size: 80%;
+	z-index: 100;
+
+	#copyright {
+		float: right
+	}
+
+	a {
+		display: inline-block;
+		padding: {
+			left: 3px;
+			right: 25px;
+		}
+	}
+}
+/* END OF HEADER & FOOTER STYLING */
+
+.preview-block {
+	display: none;
+}
+textarea.preview-source:focus + .preview-block {
+	display: block;
+	margin-bottom: 5px;
+}
+.preview-empty {
+	color: #555;
+}
