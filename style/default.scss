@@ -194,7 +194,8 @@ div.menu {
 	img {
 		position:fixed;
 		left:0.5%;
-		height:22px;
+		max-height:25px;
+		max-width: 30px;
 	}
 
 	& > a > div {

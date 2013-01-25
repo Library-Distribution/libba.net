@@ -8,32 +8,48 @@
 		</div>
 	</a>
 	<a href="items" title="libraries and applications">
-		<div style="top:23%">
-			<img alt="items" src="images/items.png" style="top:25%;"/>
+		<div style="top:16%">
+			<img alt="items" src="images/items.png" style="top:18%;"/>
 			<div class="nav-triangle" style="top:27.5%;">
 				<div class="nav-tooltip">Browse the available libraries and applications</div>
 			</div>
 		</div>
 	</a>
 	<a href="users" title="registered users">
-		<div style="top:43%">
-			<img alt="users" src="images/users.png" style="top:45%;"/>
+		<div style="top:29%">
+			<img alt="users" src="images/users.png" style="top:31%;"/>
 			<div class="nav-triangle" style="top:27.5%;">
 				<div class="nav-tooltip">Find registered users and moderators</div>
 			</div>
 		</div>
 	</a>
+	<a href="reviews" title="code review">
+		<div style="top:42%">
+			<img alt="help" src="images/review.png" style="top:44%;"/>
+			<div class="nav-triangle" style="top:27.5%;">
+				<div class="nav-tooltip">See how new items are checked for bad and malicious code</div>
+			</div>
+		</div>
+	</a>
+	<a href="candidates" title="stdlib candidates">
+		<div style="top:55%">
+			<img alt="help" src="images/achievements/stdlib.png" style="top:57%;"/>
+			<div class="nav-triangle" style="top:27.5%;">
+				<div class="nav-tooltip">Here the new libraries for the standard library are selected</div>
+			</div>
+		</div>
+	</a>
 	<a href="upload" title="package upload">
-		<div style="top:63%">
-			<img alt="upload" src="images/activity/upload.png" style="top:65%;"/>
+		<div style="top:68%">
+			<img alt="upload" src="images/activity/upload.png" style="top:70%;"/>
 			<div class="nav-triangle" style="top:27.5%;">
 				<div class="nav-tooltip">Upload and share your own library or app</div>
 			</div>
 		</div>
 	</a>
 	<a href="help" title="help index">
-		<div style="top:83%">
-			<img alt="help" src="images/help.png" style="top:85%;"/>
+		<div style="top:81%">
+			<img alt="help" src="images/help.png" style="top:83%;"/>
 			<div class="nav-triangle" style="top:27.5%;">
 				<div class="nav-tooltip">Need help with anything? This link is for you!</div>
 			</div>
