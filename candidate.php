@@ -16,6 +16,7 @@
 	{
 		$api = new ALD( API_URL );
 		$error = true; # assume error here, reset on success
+		$page_title = 'ERROR';
 
 		if (isset($_GET["id"]))
 		{
