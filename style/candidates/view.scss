@@ -1,0 +1,88 @@
+/* SCSS imports */
+@import "../global/cross-browser.scss";
+@import "../markdown.css";
+
+#candidate, #candidate-comments {
+	border: {
+		collapse: separate;
+		spacing: 10px;
+	}
+	width: 100%;
+}
+
+#candidate, #candidate-comments {
+	&> tbody {
+		&> tr {
+			&> td, &> th {
+				border: solid #666 0px;
+				padding: 5px;
+				background-color: #bbb;
+				text-align: justify;
+				@include border-radius(2px);
+			}
+
+			&> th {
+				font-weight: bold;
+				width: 15%;
+				text-align: center;
+			}
+		}
+	}
+}
+
+#candidate #candidate-text {
+	font-weight: normal;
+	width: auto;
+	padding: 10px;
+}
+
+.vote {
+	padding: 5px;
+	margin: 3px;
+	background-color: #CCC;
+	border: outset gray 3px;
+	display: inline-block;
+	@include border-radius(5px);
+}
+
+.downvote {
+	background-color: lightcoral;
+	border-color: red;
+}
+
+.upvote {
+	background-color: lightgreen;
+	border-color: green;
+}
+
+#votes {
+	float: right;
+}
+
+#votes + * {
+	clear: right;
+}
+
+div.vote-option {
+	width: 30%;
+	display: inline-block
+}
+
+.comment-avatar {
+	display: inline-block;
+	@include border-radius(5px);
+}
+
+textarea {
+	resize: vertical;
+}
+
+a#compare-previous {
+	background: {
+		image: url('/images/diff.png');
+		repeat: no-repeat;
+		position: left center;
+		size: auto 100%;
+	}
+	padding-left: 20px;
+}

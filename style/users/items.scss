@@ -1,0 +1,17 @@
+﻿/* SCSS imports */
+@import "../global/cross-browser.scss";
+
+.user-item {
+	width: 95%;
+	display: inline-block;
+	background-color: #BBB;
+	text-align: left;
+	border: solid #999 1px;
+	margin: 5px;
+	padding: 10px;
+	@include border-radius(5px);
+
+	&:hover {
+		background-color: #CCC;
+	}
+}

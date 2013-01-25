@@ -1,0 +1,35 @@
+#candidate-list {
+	.candidate-entry {
+		display: inline-block;
+		width: 99.5%;
+		margin-bottom: 10px;
+	}
+
+	dt, dd {
+		float: left;
+		margin: 0;
+		padding: 5px;
+		border-bottom: 1px solid #999;
+	}
+
+	dt {
+		width: 20%;
+		font-weight: bold;
+	}
+
+	dd {
+		width: 75%;
+	}
+
+	dd.cand-open {
+		background-color: lightgreen;
+	}
+
+	dd.cand-closed {
+		background-color: #FF6666;
+	}
+}
+
+h3.candidate-header {
+	display: inline-block;
+}

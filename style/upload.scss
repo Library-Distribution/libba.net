@@ -1,19 +1,16 @@
-td
-{
+td {
 	padding: 3px;
 }
 
-tr.form-header
-{
+tr.form-header {
 	background-color: lightgray;
 	font-weight: bold;
+
+	td {
+		border-bottom: solid gray 2px;
+	}
 }
 
-tr.form-header td
-{
-	border-bottom: solid gray 2px;
-}
-form
-{
+form {
 	margin-top: 10px;
 }

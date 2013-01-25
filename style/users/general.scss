@@ -1,0 +1,90 @@
+﻿/* SCSS imports */
+@import "../global/cross-browser.scss";
+
+#user-navigation {
+	position: fixed;
+	top: 30%;
+	right: 0%;
+	width: 15%;
+	display: inline-block;
+
+	& > a > div:before {
+		width: 25px;
+		margin: 5px;
+		display: inline-block;
+		line-height: 50px;
+		vertical-align: middle;
+	}
+
+	& > a:first-child > div:before {
+		content: url('../../images/profile.png');
+	}
+
+	& > a:nth-child(2) > div:before {
+		content: url('../../images/activity/activity.png');
+	}
+
+	& > a:nth-child(3) > div:before {
+		content: url('../../images/items.png');
+	}
+
+	& > a:nth-child(4) > div:before {
+		content: url('../../images/achievements/achievements.png');
+	}
+
+	& > a:nth-child(5) > div:before {
+		content: url('../../images/settings.png');
+	}
+
+	& > a:nth-child(6) > div:before {
+		content: url('../../images/suspend.png');
+	}
+
+	div {
+		width: 100%;
+
+		background-color: #666;
+		color: white;
+		font-weight: bold;
+		height: 45px;
+		display: inline-block;
+		line-height: 50px;
+		vertical-align: middle;
+
+		margin: 3px {
+			bottom: 10%;
+		}
+
+		@include border-radius(15px 0px 0px 15px);
+	}
+
+	a.nav-url.nav-current {
+		pointer-events: none;
+	}
+
+	a.nav-current div, div:hover {
+		background-color: #888;
+	}
+}
+
+#user-gravatar, #page-title div {
+	display: inline-block;
+	margin: 3px;
+	line-height: 50px;
+	height: 50px;
+	vertical-align: middle;
+}
+
+#user-gravatar {
+	@include border-radius(5px);
+}
+
+#page-content {
+	margin-top: 10px;
+}
+
+#content-profile, #content-activity, #content-achievements, #content-items
+{
+	width: 100%;
+	height: 100%;
+}
