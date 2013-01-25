@@ -1,10 +1,4 @@
-/* SCSS imports */
-@import "global/cross-browser.scss";
-
 .markdown {
-	@include border-radius(10px);
-	@include box-shadow(0px 2.5px 5px);
-
 	background-color: white;
 	padding: 10px;
 	border: solid gray 1px;
