@@ -11,6 +11,7 @@
 	require_once("../ALD.php");
 	require_once("../config/constants.php");
 	require_once("../api/semver.php");
+	require_once('../api/HttpException.php');
 
 	$logged_in = isset($_SESSION["user"]);
 	$api = new ALD( API_URL );
@@ -30,7 +31,11 @@
 	}
 	catch (HttpException $e)
 	{
-		die ("Failed to retrieve information about this item.<p>{$e->getMessage()}</p>");
+		$code = $e->getCode();
+		header('HTTP/1.1 ' . $code . ' ' . HttpException::getStatusMessage($code));
+		if (file_exists('../errors/' . $code . '.html'))
+			require('../errors/' . $code . '.html');
+		exit;
 	}
 
 	$page_title = "\"{$item['name']}\" (v{$item['version']})";
