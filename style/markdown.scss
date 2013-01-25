@@ -27,19 +27,25 @@
 
 	td, th {
 		padding: 10px;
-		border-style: inset;
-		border-color: gray;
+		border: {
+			style: inset;
+			color: gray;
+		}
 	}
 
 	th {
-		border-bottom-width: 2px;
-		border-bottom-style: solid;
+		border-bottom: {
+			width: 2px;
+			style: solid;
+		}
 	}
 
 	table {
-		border-spacing: 2px;
-		border-style: solid;
-		border-color: transparent;
-		border-bottom: solid gray 2px;
+		border: {
+			spacing: 2px;
+			style: solid;
+			color: transparent;
+			bottom: solid gray 2px;
+		}
 	}
 }

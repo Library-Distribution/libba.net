@@ -21,13 +21,6 @@ img {
 	border: none;
 }
 
-/* highlight first word in paragraph */
-.text-first-word {
-	font-size: 150%;
-	font-weight: bold;
-	font-style: italic;
-}
-
 /* the page title */
 #page-title {
 	position: relative;
@@ -38,14 +31,16 @@ img {
 }
 
 #page-content {
-	margin: auto;
 	display: inline-block;
-	padding: 5px;
 	position: absolute;
 	top: 175px;
 	left: 0%;
 	right: 0%;
-	padding-bottom: 3%;
+
+	margin: auto;
+	padding: 5px {
+		bottom: 3%;
+	}
 }
 
 body.pretty-ui {
@@ -111,8 +106,10 @@ a, a:visited {
 
 		&:hover {
 			border: solid gray 1px;
-			padding-top: 2px;
-			padding-bottom: 2px;
+			padding: {
+				top: 2px;
+				bottom: 2px;
+			}
 		}
 	}
 }
@@ -137,10 +134,13 @@ div.menu {
 	}
 
 	&:hover {
-		border: solid gray 1px;
-		border-top: ridge gray 3px;
-		margin-left: 4px;
-		margin-right: 4px;
+		border: solid gray 1px {
+			top: ridge gray 3px;
+		}
+		margin: {
+			left: 4px;
+			right: 4px;
+		}
 
 		& > .admin-menu {
 			display: block;
@@ -215,29 +215,32 @@ div.menu {
 	left: 50px;
 	width: 0;
 	height: 0;
-	border-left: 20px solid black;
-	border-top: 12.5px solid transparent;
-	border-bottom: 12.5px solid transparent;
+	border: {
+		left: 20px solid black;
+		top: 12.5px solid transparent;
+		bottom: 12.5px solid transparent;
+	}
 }
 .nav-tooltip {
 	display: none;
-
-	text-decoration: none;
-	text-align: center;
-	color: #444;
-	background-color: white;
-	border: solid #222 3px;
-
-	@include border-radius(15px);
-	@include box-shadow(10px 10px 15px);
 
 	position: relative;
 	left: +50px;
 	top: -50px;
 	padding: 5px;
 	width: 100px;
-
 	z-index: 101;
+
+	color: #444;
+	background-color: white;
+	border: solid #222 3px;
+	text: {
+		decoration: none;
+		align: center;
+	}
+
+	@include border-radius(15px);
+	@include box-shadow(10px 10px 15px);
 }
 #login {
 	display: inherit;
@@ -288,8 +291,10 @@ div.menu {
 
 	a {
 		display: inline-block;
-		padding-left: 3px;
-		padding-right: 25px;
+		padding: {
+			left: 3px;
+			right: 25px;
+		}
 	}
 }
 /* END OF HEADER & FOOTER STYLING */

@@ -1,13 +1,18 @@
 .letter-item {
-	font-weight: bold;
-	font-size: 250%;
+	font: {
+		weight: bold;
+		size: 250%;
+	}
 }
 
 .letter-container {
-	border: solid lightgray 1px;
-	border-bottom-style: double;
-	border-bottom-width: 5px;
 	padding: 5px;
+	border: solid lightgray 1px {
+		bottom: {
+			style: double;
+			width: 5px;
+		}
+	}
 }
 
 li.lib {

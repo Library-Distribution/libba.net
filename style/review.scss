@@ -1,17 +1,13 @@
 #review-list, #review-comments
 {
-	border-collapse: separate;
-	border-spacing: 10px;
+	border: {
+		collapse: separate;
+		spacing: 10px;
+	}
 	width: 100%;
 }
 
 #review-list {
-	.review-entry {
-		display: inline-block;
-		width: 99.5%;
-		margin-bottom: 10px;
-	}
-
 	.review-entry {
 		display: inline-block;
 		width: 99.5%;
@@ -48,9 +44,11 @@ h3.review-header {
 }
 
 a#compare-latest {
-	background-image: url('/images/diff.png');
-	background-repeat: no-repeat;
-	background-position: left center;
+	background: {
+		image: url('/images/diff.png');
+		repeat: no-repeat;
+		position: left center;
+		size: auto 100%;
+	}
 	padding-left: 20px;
-	background-size: auto 100%;
 }
