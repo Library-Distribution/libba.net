@@ -61,7 +61,7 @@
 						<fieldset>
 							<legend>User login</legend>
 							<label for="user-name">User name:</label>
-							<input id="user-name" type="text" name="user" onchange="validate_upload_data()" list="registered-users"/>
+							<input id="user-name" type="text" name="user" onchange="validate_upload_data()" list="registered-users" placeholder="enter your libba.net user name..."/>
 							<datalist id="registered-users">
 							<?php
 								foreach ($user_list AS $user) {
@@ -70,10 +70,10 @@
 							?>
 							</datalist>
 							<label for="input_user_pw">Password:</label>
-							<input id="input_user_pw" type="password" name="password" onchange="validate_upload_data()"/>
+							<input id="input_user_pw" type="password" name="password" onchange="validate_upload_data()" placeholder="enter your libba.net password... (will be hidden)"/>
 						</fieldset>
 					<?php } ?>
-						<input type="submit" name="submit_btn" <?php echo !$logged_in ? "disabled=\"disabled\"" : "" ?> value="Upload"/>
+						<input type="submit" name="submit_btn" value="Upload"/>
 						<input type="reset" name="reset_btn" value="Reset"/>
 					</form>
 			<?php
