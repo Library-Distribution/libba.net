@@ -1,16 +1,31 @@
-td {
-	padding: 3px;
-}
-
-tr.form-header {
-	background-color: lightgray;
-	font-weight: bold;
-
-	td {
-		border-bottom: solid gray 2px;
-	}
-}
-
-form {
+fieldset {
 	margin-top: 10px;
+}
+
+label {
+	float: left;
+	min-width: 15%;
+	clear: both;
+}
+
+input {
+	float: left;
+	min-width: 45%;
+}
+
+legend {
+	font-weight: bold;
+}
+
+#advice {
+	border-bottom: solid gray 1px;
+	display: block;
+	width: 75%;
+}
+
+input[type='submit'], input[type='reset'] {
+	float: right;
+	min-width: 25%;
+	width: 25%;
+	margin: 5px;
 }

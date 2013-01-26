@@ -48,37 +48,33 @@
 				if ($mode == "start")
 				{
 			?>
-					Please fill in the following fields:
+					<span id="advice">To upload your code, please fill in the following fields:</span>
 					<form name="up" action="<?php echo $_SERVER["REQUEST_URI"]; ?>" method="post" enctype="multipart/form-data">
-						<table width="100%">
-							<col width="25%"/><col width="75%"/>
-							<tr>
-								<td>Package:</td>
-								<td><input type="hidden" name="MAX_FILE_SIZE" value="78643200"/><input type="file" name="package" onchange="validate_upload_data()"/>
-							</tr>
+						<fieldset>
+							<legend>Package information</legend>
+							<input type="hidden" name="MAX_FILE_SIZE" value="78643200"/>
+							<label for="input_pack_file">File:</label>
+							<input id="input_pack_file" type="file" name="package" onchange="validate_upload_data()"/>
+						</fieldset>
 			<?php
-					if (!$logged_in) { ?>
-							<tr>
-								<td>User name:</td>
-								<td><input id="user-name" type="text" name="user" onchange="validate_upload_data()" list="registered-users"/>
-									<datalist id="registered-users">
-									<?php
-										foreach ($user_list AS $user) {
-											echo "<option value='$user[name]'></option>";
-										}
-									?>
-									</datalist>
-								</td>
-							</tr>
-							<tr>
-								<td>Password:</td>
-								<td><input type="password" name="password" onchange="validate_upload_data()"/></td>
-							</tr>
+				if (!$logged_in) { ?>
+						<fieldset>
+							<legend>User login</legend>
+							<label for="user-name">User name:</label>
+							<input id="user-name" type="text" name="user" onchange="validate_upload_data()" list="registered-users"/>
+							<datalist id="registered-users">
+							<?php
+								foreach ($user_list AS $user) {
+									echo "<option value='$user[name]'></option>";
+								}
+							?>
+							</datalist>
+							<label for="input_user_pw">Password:</label>
+							<input id="input_user_pw" type="password" name="password" onchange="validate_upload_data()"/>
+						</fieldset>
 					<?php } ?>
-							<tr>
-								<td colspan="2"><input type="submit" name="submit_btn" <?php echo !$logged_in ? "disabled=\"disabled\"" : "" ?> value="Submit!"/></td>
-							</tr>
-						</table>
+						<input type="submit" name="submit_btn" <?php echo !$logged_in ? "disabled=\"disabled\"" : "" ?> value="Upload"/>
+						<input type="reset" name="reset_btn" value="Reset"/>
 					</form>
 			<?php
 				}
