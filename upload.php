@@ -28,14 +28,6 @@
 	<head>
 		<?php require("templates/html.head.php"); ?>
 		<link rel="stylesheet" type="text/css" href="style/upload.css"/>
-		<?php
-			if ($mode == "start" && !$logged_in)
-			{
-		?>
-				<script type="text/javascript" src="javascript/validate_upload_data.js"></script>
-		<?php
-			}
-		?>
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 		<script type="text/javascript" src="javascript/jquery-ui.js"></script>
 		<script type="text/javascript" src="javascript/modernizr.js"></script>
@@ -54,14 +46,14 @@
 							<legend>Package information</legend>
 							<input type="hidden" name="MAX_FILE_SIZE" value="78643200"/>
 							<label for="input_pack_file">File:</label>
-							<input id="input_pack_file" type="file" name="package" onchange="validate_upload_data()"/>
+							<input id="input_pack_file" type="file" name="package" required="required"/>
 						</fieldset>
 			<?php
 				if (!$logged_in) { ?>
 						<fieldset>
 							<legend>User login</legend>
 							<label for="user-name">User name:</label>
-							<input id="user-name" type="text" name="user" onchange="validate_upload_data()" list="registered-users" placeholder="enter your libba.net user name..."/>
+							<input id="user-name" type="text" name="user" list="registered-users" required="required" placeholder="enter your libba.net user name..."/>
 							<datalist id="registered-users">
 							<?php
 								foreach ($user_list AS $user) {
@@ -70,7 +62,7 @@
 							?>
 							</datalist>
 							<label for="input_user_pw">Password:</label>
-							<input id="input_user_pw" type="password" name="password" onchange="validate_upload_data()" placeholder="enter your libba.net password... (will be hidden)"/>
+							<input id="input_user_pw" type="password" name="password" required="required" placeholder="enter your libba.net password... (will be hidden)"/>
 						</fieldset>
 					<?php } ?>
 						<input type="submit" name="submit_btn" value="Upload"/>
