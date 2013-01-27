@@ -1,0 +1,17 @@
+label {
+	float: left;
+	min-width: 25%;
+	clear: both;
+}
+
+input {
+	float: left;
+	min-width: 45%;
+}
+
+input[type='submit'], input[type='reset'] {
+	float: right;
+	min-width: 25%;
+	width: 25%;
+	margin: 5px;
+}
