@@ -299,14 +299,3 @@ div.menu {
 	}
 }
 /* END OF HEADER & FOOTER STYLING */
-
-.preview-block {
-	display: none;
-}
-textarea.preview-source:focus + .preview-block {
-	display: block;
-	margin-bottom: 5px;
-}
-.preview-empty {
-	color: #555;
-}
