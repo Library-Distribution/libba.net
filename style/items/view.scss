@@ -1,5 +1,6 @@
 /* SCSS imports */
 @import "../global/cross-browser.scss";
+@import "../imports/side-image.scss";
 
 #item-details {
 	min-width: 50%;
@@ -59,21 +60,6 @@ a.compare-link {
 		repeat: no-repeat;
 		position: center center;
 	}
-}
-
-#page-title:before, #page-title:after {
-	background-color: white;
-
-	width: 3%;
-	line-height: 2%;
-	display: inline-block;
-
-	padding: 5px;
-	margin: {
-		right: 5px;
-		left: 5px;
-	}
-	@include border-radius(50%);
 }
 
 #page-title.lib:before, #page-title.lib:after {

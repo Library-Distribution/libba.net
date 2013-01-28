@@ -1,5 +1,6 @@
 /* SCSS imports */
 @import "../global/cross-browser.scss";
+@import "../imports/side-image.scss";
 
 .action-type {
 	color: #333;
@@ -26,19 +27,10 @@
 	}
 }
 
-h1#page-title:before, h1#page-title:after {
-	content: url('/images/diff.png');
-	background-color: white;
-
-	width: 3%;
-	line-height: 2%;
-	display: inline-block;
-	padding: 5px;
-	margin: {
-		right: 10px;
-		left: 10px;
+#page-title {
+	&:before, &:after {
+		content: url('/images/diff.png');
 	}
-	@include border-radius(50%);
 }
 
 ul#diff-steps {

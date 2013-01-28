@@ -168,7 +168,7 @@
 		<script type="text/javascript" src="javascript/items/compare.js"></script>
 	</head>
 	<body class="pretty-ui">
-		<h1 id="page-title"><?php echo $page_title; ?></h1>
+		<h1 id="page-title" class="side-image"><?php echo $page_title; ?></h1>
 		<div id="page-content">
 			<?php
 				if ($error)
