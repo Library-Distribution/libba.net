@@ -40,8 +40,8 @@
 				if ($mode == "start")
 				{
 			?>
-					<span id="advice">To upload your code, please fill in the following fields:</span>
 					<form name="up" action="<?php echo $_SERVER["REQUEST_URI"]; ?>" method="post" enctype="multipart/form-data">
+						<span class="advice">To upload your code, please fill in the following fields:</span>
 						<fieldset>
 							<legend>Package information</legend>
 							<input type="hidden" name="MAX_FILE_SIZE" value="78643200"/>

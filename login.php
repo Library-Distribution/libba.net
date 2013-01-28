@@ -230,6 +230,7 @@
 				{
 			?>
 					<form action="<?php echo htmlentities($_SERVER["REQUEST_URI"]); ?>" method="post">
+						<span class="advice">Enter your personal information below:</span>
 			<?php	if ($mode == "activate") { ?>
 						<input type="hidden" name="name" value="<?php echo $_GET["name"]; ?>"/>
 			<?php 	} else { ?>
