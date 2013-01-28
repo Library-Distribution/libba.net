@@ -89,67 +89,6 @@ a, a:visited {
 /* END OF ERROR MESSAGE STYLING */
 
 /***********************************
- * ADMIN MENU STYLING
- ***********************************/
-.admin-menu {
-	list-style-type: none;
-	border-style: none;
-	width: 225px;
-	display: none;
-	position: relative;
-	left: -45px;
-
-	li {
-		padding: 3px;
-		margin: 0.4em;
-		border-left: solid gray 1px;
-
-		&:hover {
-			border: solid gray 1px;
-			padding: {
-				top: 2px;
-				bottom: 2px;
-			}
-		}
-	}
-}
-
-div.menu {
-	float: right;
-	clear: left;
-	border-style: ridge;
-	width: 225px;
-	padding: 3px;
-	margin: 2px;
-
-	a {
-		color: black;
-		margin: 0px;
-		padding: 0px;
-
-		&:hover {
-			text-decoration: none;
-			cursor: pointer
-		}
-	}
-
-	&:hover {
-		border: solid gray 1px {
-			top: ridge gray 3px;
-		}
-		margin: {
-			left: 4px;
-			right: 4px;
-		}
-
-		& > .admin-menu {
-			display: block;
-		}
-	}
-}
-/* END OF ADMIN MENU STYLING */
-
-/***********************************
  * "NEXT" & "PREVIOUS" LINK STYLING
  ***********************************/
 .next-previous {
