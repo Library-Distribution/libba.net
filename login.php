@@ -218,8 +218,7 @@
 			<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 			<script type="text/javascript" src="javascript/jquery-ui.js"></script>
 			<script type="text/javascript" src="javascript/modernizr.js"></script>
-			<script type="text/javascript" src="javascript/login.js"></script>
-			<script type="text/javascript" src="javascript/checkRequiredFields.js"></script>
+			<script type="text/javascript" src="javascript/polyfills/loadFormPolyfills.js"></script>
 		<?php } ?>
 	</head>
 	<body class="pretty-ui" <?php echo $should_redirect ? "onload=\"setInterval(update_redirect_time, 999)\"" : ""; ?>>

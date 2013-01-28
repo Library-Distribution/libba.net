@@ -31,8 +31,7 @@
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 		<script type="text/javascript" src="javascript/jquery-ui.js"></script>
 		<script type="text/javascript" src="javascript/modernizr.js"></script>
-		<script type="text/javascript" src="javascript/upload.js"></script>
-		<script type="text/javascript" src="javascript/checkRequiredFields.js"></script>
+		<script type="text/javascript" src="javascript/polyfills/loadFormPolyfills.js"></script>
 	</head>
 	<body class="pretty-ui">
 		<h1 id="page-title"><?php echo $page_title; ?></h1>
