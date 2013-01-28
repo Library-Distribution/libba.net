@@ -219,6 +219,7 @@
 			<script type="text/javascript" src="javascript/jquery-ui.js"></script>
 			<script type="text/javascript" src="javascript/modernizr.js"></script>
 			<script type="text/javascript" src="javascript/login.js"></script>
+			<script type="text/javascript" src="javascript/checkRequiredFields.js"></script>
 		<?php } ?>
 	</head>
 	<body class="pretty-ui" <?php echo $should_redirect ? "onload=\"setInterval(update_redirect_time, 999)\"" : ""; ?>>
@@ -235,7 +236,7 @@
 						<input type="hidden" name="name" value="<?php echo $_GET["name"]; ?>"/>
 			<?php 	} else { ?>
 						<label for="user-name">Nickname:</label>
-						<input id="user-name" type="text" name="name" <?php echo isset($user_list) ? 'list="registered-users"' : ''; ?>/>
+						<input id="user-name" type="text" name="name" <?php echo isset($user_list) ? 'list="registered-users"' : ''; ?> required="required"/>
 						<?php if (isset($user_list)) {
 							echo '<datalist id="registered-users">';
 							foreach ($user_list AS $user) {
@@ -246,13 +247,13 @@
 						?>
 			<?php		if ($mode == "register") {	?>
 							<label for="input_user_mail">Email:</label>
-							<input id="input_user_mail" type="email" name="mail"/>
+							<input id="input_user_mail" type="email" name="mail" required="required"/>
 				<?php
 						}
 					}
 				?>
 						<label for="input_user_pw">Password:</label>
-						<input id="input_user_pw" type="password" name="password"/>
+						<input id="input_user_pw" type="password" name="password" required="required"/>
 						<label for="input_login_permanent">login permanently</label>
 						<input type="checkbox" name="keepLoggedIn" id="input_login_permanent"/>
 						<input type="submit" value="<?php echo ($mode == "login") ? "Login" : "Register"; ?>"/>

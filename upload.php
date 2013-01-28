@@ -32,6 +32,7 @@
 		<script type="text/javascript" src="javascript/jquery-ui.js"></script>
 		<script type="text/javascript" src="javascript/modernizr.js"></script>
 		<script type="text/javascript" src="javascript/upload.js"></script>
+		<script type="text/javascript" src="javascript/checkRequiredFields.js"></script>
 	</head>
 	<body class="pretty-ui">
 		<h1 id="page-title"><?php echo $page_title; ?></h1>
