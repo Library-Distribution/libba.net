@@ -1,0 +1,25 @@
+@mixin item-list($entry-class) {
+	width: 100%;
+
+	dt, dd {
+		float: left;
+		margin: 0;
+		padding: 5px;
+		border-bottom: 1px solid #999;
+	}
+
+	dt {
+		width: 20%;
+		font-weight: bold;
+	}
+
+	dd {
+		width: 75%;
+	}
+
+	.#{$entry-class} {
+		display: inline-block;
+		width: 99.5%;
+		margin-bottom: 10px;
+	}
+}
