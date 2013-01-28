@@ -4,7 +4,7 @@ $(document).ready(function() {
 		$("input#user-name").autocomplete({ source: users });
 	}
 
-	if (Modernizr.input.required) { // the browser doesn't check if required fields are filled in
+	if (!Modernizr.input.required) { // the browser doesn't check if required fields are filled in
 		if (document.up) { // the form (named "up") exists
 			document.up.submit_btn.disabled = true; // disable submit button initially
 			$("form input[type!='hidden']").change(function() {
