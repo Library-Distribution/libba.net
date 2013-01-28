@@ -1,7 +1,7 @@
 $(document).ready(function() {
 	if (!Modernizr.input.required) { // the browser doesn't check if required fields are filled in
 		$("form").each(function() { // handle each form separately
-			form = $(this);
+			var form = $(this);
 			$("input[type='submit']", form).prop('disabled', true); // disable the submit button initially
 			$("input[type!='hidden'][required]", form).change(function() { // if any real required input field changes
 				var fulfilled = true;
