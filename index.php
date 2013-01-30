@@ -32,6 +32,7 @@
 			</div>
 
 			<div id="logo-list">
+				<a href="http://autohotkey.com" title="Created for AutoHotkey"><img alt="AHK" src="images/AutoHotkey.png"/></a>
 				<a href="https://github.com/maul-esel/ALD" title="Developed on github"><img alt="github" src="images/github.png"/></a>
 				<a href="http://trello.com" title="Planned on trello"><img alt="trello" src="images/trello.png"/></a>
 				<a href="http://php.net" title="Written in PHP"><img src="images/php.png" alt="php"/></a>
