@@ -59,10 +59,6 @@
 		<?php require("../templates/html.head.php"); ?>
 		<link rel="stylesheet" type="text/css" href="style/users/general.css"/>
 		<link rel="stylesheet" type="text/css" href="style/users/achievements.css"/>
-
-		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-		<script type="text/javascript" src="javascript/jquery-ui.js"></script>
-		<script type="text/javascript" src="javascript/users/preload.js"></script>
 	</head>
 	<body class="pretty-ui">
 		<h1 id="page-title">
@@ -72,7 +68,6 @@
 			?>
 		</h1>
 		<div id="page-content">
-			<div id="content-achievements">
 			<?php
 				if ($error)
 				{
@@ -86,7 +81,6 @@
 					}
 				}
 			?>
-			</div>
 		</div>
 		<?php
 			$current_mode = "achievements";

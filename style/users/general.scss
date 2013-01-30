@@ -58,11 +58,11 @@
 		@include border-radius(15px 0px 0px 15px);
 	}
 
-	a.nav-url.nav-current {
+	a#nav-current {
 		pointer-events: none;
 	}
 
-	a.nav-current div, div:hover {
+	a#nav-current div, div:hover {
 		background-color: #888;
 	}
 }
@@ -81,10 +81,4 @@
 
 #page-content {
 	margin-top: 10px;
-}
-
-#content-profile, #content-activity, #content-achievements, #content-items
-{
-	width: 100%;
-	height: 100%;
 }
