@@ -1,3 +1,37 @@
+@import "../global/cross-browser.scss";
+
 #page-content ul {
 	margin-left: 5%;
+	list-style-type: none;
+	list-style-position: inside;
+	display: block;
+	padding-left:0;
+	margin-left: 0;
+
+	li {
+		width: 100%;
+		display: block;
+
+		a {
+			display: block;
+			width: 100%;
+			height: 100%;
+			background-color: #BBB;
+			margin: 5px;
+			@include border-radius(5px);
+
+			&:hover {
+				@include box-shadow(0 0 3px 2px #000);
+				text-decoration: none;
+			}
+		}
+	}
+}
+
+.user-list-avatar {
+	width: 35px;
+	margin: 5px;
+	margin-right: 15px;
+	vertical-align: middle;
+	@include border-radius(3px);
 }

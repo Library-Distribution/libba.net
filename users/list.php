@@ -61,7 +61,8 @@
 						{
 							break;
 						}
-						echo "<li><a href='./{$user['name']}/profile'>{$user['name']}</a></li>";
+						$user_data = $api->getUser($user['name']);
+						echo "<li><a href='./{$user['name']}/profile'><img src='http://gravatar.com/avatar/{$user_data['mail-md5']}?s=35&amp;d=mm' class='user-list-avatar'/>{$user['name']}</a></li>";
 					}
 					echo "</ul>";
 
