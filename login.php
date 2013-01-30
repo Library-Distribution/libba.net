@@ -64,7 +64,7 @@
 					if (!$db_result = mysql_query($db_query, $db_connection))
 					{
 						$message = "Could not access user database";
-						$error_description = "The attempt to check if a user with the same name or email already exists failed. The error message was: \"" . mysql_error . "\".";
+						$error_description = "The attempt to check if a user with the same name or email already exists failed. The error message was: \"" . mysql_error() . "\".";
 						break;
 					}
 
@@ -80,7 +80,7 @@
 					if (!mysql_query($db_query, $db_connection))
 					{
 						$message = "Registration not possible: server error";
-						$error_description = "The registration of user \"$name\" failed. The error message was: \"" . mysql_error . "\".";
+						$error_description = "The registration of user \"$name\" failed. The error message was: \"" . mysql_error() . "\".";
 						break;
 					}
 
