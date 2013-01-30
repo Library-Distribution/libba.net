@@ -137,7 +137,8 @@ a, a:visited {
 		max-width: 30px;
 	}
 
-	& > a > div {
+	& > a {
+		display: block;
 		position: fixed;
 		width: 7.5%;
 		left: 0%;
@@ -165,8 +166,9 @@ a, a:visited {
 	display: none;
 
 	position: relative;
-	left: +50px;
-	top: -50px;
+	left: +110%;
+	top: -25%;
+
 	padding: 5px;
 	width: 100px;
 	z-index: 101;
