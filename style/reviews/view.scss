@@ -1,34 +1,9 @@
-@import "../imports/markdown.scss";
-@import "../imports/preview.scss";
-@import "../imports/item-list.scss";
+@import "../imports/comment-thread.scss";
 
-#review-comments
-{
-	border: {
-		collapse: separate;
-		spacing: 10px;
-	}
-	width: 100%;
+#review {
+	@extend %discussion-topic;
 }
 
-#review-list {
-	@include item-list(review-entry);
-}
-
-#review-comments tr > td:first-of-type {
-	text-align: center;
-}
-
-.comment-avatar {
-	display: inline-block;
-}
-
-a#compare-latest {
-	background: {
-		image: url('/images/diff.png');
-		repeat: no-repeat;
-		position: left center;
-		size: auto 100%;
-	}
-	padding-left: 20px;
+#review-comments {
+	@extend %comment-thread;
 }

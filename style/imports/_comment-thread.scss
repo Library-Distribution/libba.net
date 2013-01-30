@@ -1,0 +1,71 @@
+@import "../global/cross-browser.scss";
+@import "../imports/markdown.scss";
+@import "../imports/preview.scss";
+
+%discussion-topic, %comment-thread {
+	width: 100%;
+
+	&> tbody {
+		&> tr {
+			&> td, &> th {
+				border: solid #666 0px;
+				padding: 5px;
+				background-color: #BBB;
+				text-align: justify;
+				@include border-radius(2px);
+			}
+		}
+	}
+
+	border: {
+		collapse: separate;
+		spacing: 10px;
+	}
+}
+
+%discussion-topic {
+	.topic-details {
+			font-weight: normal;
+		width: auto;
+		padding: 10px;
+	}
+
+	a.compare {
+		background: {
+			image: url('/images/diff.png');
+			repeat: no-repeat;
+			position: left center;
+			size: auto 100%;
+		}
+		padding-left: 20px;
+	}
+
+	& > tbody > tr > th {
+		font-weight: bold;
+		width: 15%;
+		text-align: center;
+	}
+}
+
+%comment-thread {
+	textarea {
+		resize: vertical;
+	}
+
+	& > tbody > tr {
+		&:hover > td {
+			background-color: #CCC;
+			@include box-shadow(0px 0px 5px 1px #000);
+		}
+
+		& > td:first-of-type {
+			text-align: center;
+			width: 25%;
+
+			.comment-avatar {
+				display: inline-block;
+				@include border-radius(5px);
+			}
+		}
+	}
+}

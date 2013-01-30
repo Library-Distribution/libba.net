@@ -258,11 +258,11 @@
 							<?php if ($diff) { ?>
 							<tr>
 								<th>Diff:</th>
-								<td><a id='compare-previous' href='items/compare/<?php echo $candidate['libname'], '/', $diff_base, '...', $candidate['libversion']; ?>'>compare with latest version in the stdlib (<?php echo $diff_base; ?>)</a></td>
+								<td><a class='compare' href='items/compare/<?php echo $candidate['libname'], '/', $diff_base, '...', $candidate['libversion']; ?>'>compare with latest version in the stdlib (<?php echo $diff_base; ?>)</a></td>
 							</tr>
 							<?php } ?>
 							<tr>
-								<td colspan="2" id="candidate-text"><div class='markdown'><?php echo user_input_process($candidate["text"]); ?></div></td>
+								<td colspan="2" class="topic-details"><div class='markdown'><?php echo user_input_process($candidate["text"]); ?></div></td>
 							</tr>
 						</tbody>
 					</table>
@@ -273,52 +273,49 @@
 						<?php
 							foreach ($comments AS $comment)
 							{
-								echo "<tr><th><img alt=\"avatar\" src=\"http://gravatar.com/avatar/{$comment['user-mail']}?s=50&amp;d=mm\" class=\"comment-avatar\"/><br/><a href=\"users/{$comment["user"]}/profile\">{$comment["user"]}</a><hr/>{$comment["date"]}</th>"
+								echo "<tr><td><img alt=\"avatar\" src=\"http://gravatar.com/avatar/{$comment['user-mail']}?s=50&amp;d=mm\" class=\"comment-avatar\"/><br/><a href=\"users/{$comment["user"]}/profile\">{$comment["user"]}</a><hr/>{$comment["date"]}</td>"
 									. "<td><div class='markdown'>" . user_input_process($comment["comment"]) . '</div>' . (!empty($comment["vote"]) ? "<div class=\"vote\" style=\"float: right\">+1</div>" : "") . "</td></tr>";
 							}
-							if (!$candidate["closed"])
+							if (!$candidate["closed"] && $logged_in)
 							{
-								if ($logged_in)
-								{
 						?>
+								<tr>
+									<td><a href="users/<?php echo $_SESSION["user"]; ?>/profile">You</a><hr/>Now</td>
+									<td>
+										<form action="#" method="post">
+											<textarea class="preview-source" name="newcomment" style="width: 99.5%" placeholder="Enter your comment..."></textarea>
+					<?php
+											if ($can_vote)
+											{
+					?>
+												<div class="vote-option"><input type="radio" name="vote" value="-1"> &dArr; Vote down &dArr; </input></div>
+												<div class="vote-option"><input type="radio" name="vote" value="0" checked="checked">&lArr; neutral &rArr; </input></div>
+												<div class="vote-option"><input type="radio" name="vote" value="1"> &uArr; Vote up &uArr; </input></div>
+					<?php
+											}
+					?>
+											<input type="submit" value="Submit" style="float: right"/>
+										</form>
+									</td>
+								</tr>
+					<?php
+								if ($can_close)
+								{
+					?>
 									<tr>
-										<td><a href="users/<?php echo $_SESSION["user"]; ?>/profile">You</a><hr/>Now</td>
+										<td><a href="users/teams/stdlib">Stdlib team</a></td>
 										<td>
 											<form action="#" method="post">
-												<textarea class="preview-source" name="newcomment" style="width: 99.5%" placeholder="Enter your comment..."></textarea>
-						<?php
-												if ($can_vote)
-												{
-						?>
-													<div class="vote-option"><input type="radio" name="vote" value="-1"> &dArr; Vote down &dArr; </input></div>
-													<div class="vote-option"><input type="radio" name="vote" value="0" checked="checked">&lArr; neutral &rArr; </input></div>
-													<div class="vote-option"><input type="radio" name="vote" value="1"> &uArr; Vote up &uArr; </input></div>
-						<?php
-												}
-						?>
-												<input type="submit" value="Submit" style="float: right"/>
+												<textarea class="preview-source" name="closecomment" style="width: 99.5%" placeholder="Enter a comment..."></textarea>
+												<input style="width: 49%; display: inline-block" type="submit" value="accept" name="accept"/>
+												<input style="width: 49%; display: inline-block" type="submit" value="reject" name="reject"/>
 											</form>
 										</td>
 									</tr>
-						<?php
-									if ($can_close)
-									{
-						?>
-										<tr>
-											<td><a href="users/teams/stdlib">Stdlib team</a></td>
-											<td>
-												<form action="#" method="post">
-													<textarea class="preview-source" name="closecomment" style="width: 99.5%" placeholder="Enter a comment..."></textarea>
-													<input style="width: 49%; display: inline-block" type="submit" value="accept" name="accept"/>
-													<input style="width: 49%; display: inline-block" type="submit" value="reject" name="reject"/>
-												</form>
-											</td>
-										</tr>
-						<?php
-									}
+					<?php
 								}
 							}
-							else
+							else if ($candidate["closed"])
 							{
 								echo "<tr><td><a href=\"users/{$candidate["closed-by"]}/profile\">{$candidate["closed-by"]}</a><hr/>{$candidate["closed-date"]}</td>"
 									. "<td id=\"close-comment\" class=\"" . ( /* todo: get if included in stdlib or not */ "") . "\"><div class='markdown'>" . user_input_process($candidate["closed-comment"]) . "</div></td></tr>";

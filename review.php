@@ -93,48 +93,65 @@
 		<h1 id="page-title"><?php echo $page_title; ?></h1>
 		<div id="page-content">
 			<?php
-				if (isset($id))
+				if ($error)
 				{
-					if ($error)
-					{
-						require("error.php");
-					}
-					else
-					{
-			?>
-						<table id="review"><?php if (isset($diff_base)) { ?>
+					require("error.php");
+				}
+				else if (isset($id))
+				{
+		?>
+					<table id="review">
+						<tbody>
+							<tr>
+								<th><?php echo $item['type'] == 'lib' ? 'Library' : 'App'; ?>:</th>
+								<td><a href="items/<?php echo $item['id']; ?>"><?php echo $item['name']; ?> (v<?php echo $item['version']; ?>)</a></td>
+							</tr>
+							<tr>
+								<th>User:</th>
+								<td><a href="users/<?php echo $item['user']['name']; ?>/profile"><?php echo $item['user']['name']; ?></a></td>
+							</tr>
+							<tr>
+								<th>Uploaded:</th>
+								<td><?php echo $item['uploaded']; ?></td>
+							</tr>
+							<?php if (isset($diff_base)) { ?>
 							<tr>
 								<th>Diff:</th>
-								<td><a id='compare-latest' href='items/compare/<?php echo $item['name'], '/', $diff_base, '...', $item['version']; ?>'>compare to latest reviewed version (<?php echo $diff_base; ?>)</a></td>
+								<td><a class='compare' href='items/compare/<?php echo $item['name'], '/', $diff_base, '...', $item['version']; ?>'>compare to latest reviewed version (<?php echo $diff_base; ?>)</a></td>
 							</tr>
-							<!-- DESCRIPTION: ENCLOSE IN <div class='markdown'></div> !!! -->
 							<?php } ?>
-						</table>
-						<table id="review-comments">
-			<?php
-						foreach ($comments AS $comment)
-						{
-							echo "<tr><td><img alt=\"avatar\" src=\"http://gravatar.com/avatar/{$comment['user-mail']}?s=50&amp;d=mm\" class=\"comment-avatar\"/><br/><a href=\"users/{$comment["user"]}/profile\">{$comment["user"]}</a><hr/>{$comment["date"]}</td><td><div class='markdown'>" . user_input_process($comment["comment"]) . "</div></td></tr>";
-						}
-						if (!$item["reviewed"])
-						{
-			?>
 							<tr>
-								<td><a href="users/<?php echo $_SESSION["user"]; ?>/profile">You</a><hr/>Now</td>
-								<td>
-									<form action="#" method="post">
-										<textarea class="preview-source" name="newcomment" style="width: 99.5%" placeholder="Enter your comment..."></textarea>
-										<input type="submit" value="Submit" style="float: right"/>
-									</form>
-								</td>
+								<td colspan="2" class="topic-details"><div class='markdown'><?php echo user_input_process($item['description']); ?></div></td>
 							</tr>
-			<?php
-						}
-			?>
-						</table>
-						<a href="http://htmlpurifier.org/"><img src="http://htmlpurifier.org/live/art/powered.png" alt="Powered by HTML Purifier" border="0" /></a>
-			<?php
-					}
+						</tbody>
+					</table>
+					<h2>Comments</h2>
+					<table id="review-comments">
+						<tbody>
+				<?php
+							foreach ($comments AS $comment)
+							{
+								echo "<tr><td><img alt=\"avatar\" src=\"http://gravatar.com/avatar/{$comment['user-mail']}?s=50&amp;d=mm\" class=\"comment-avatar\"/><br/><a href=\"users/{$comment["user"]}/profile\">{$comment["user"]}</a><hr/>{$comment["date"]}</td><td><div class='markdown'>" . user_input_process($comment["comment"]) . "</div></td></tr>";
+							}
+							if (!$item["reviewed"] && $logged_in)
+							{
+				?>
+								<tr>
+									<td><a href="users/<?php echo $_SESSION["user"]; ?>/profile">You</a><hr/>Now</td>
+									<td>
+										<form action="#" method="post">
+											<textarea class="preview-source" name="newcomment" style="width: 99.5%" placeholder="Enter your comment..."></textarea>
+											<input type="submit" value="Submit" style="float: right"/>
+										</form>
+									</td>
+								</tr>
+				<?php
+							}
+				?>
+						</tbody>
+					</table>
+					<a href="http://htmlpurifier.org/"><img src="http://htmlpurifier.org/live/art/powered.png" alt="Powered by HTML Purifier" border="0" /></a>
+		<?php
 				}
 				else
 				{

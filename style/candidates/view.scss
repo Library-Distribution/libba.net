@@ -1,41 +1,13 @@
-/* SCSS imports */
-@import "../global/cross-browser.scss";
-@import "../imports/markdown.scss";
-@import "../imports/preview.scss";
+@import "../imports/comment-thread.scss";
 
-#candidate, #candidate-comments {
-	border: {
-		collapse: separate;
-		spacing: 10px;
-	}
-	width: 100%;
+#candidate {
+	@extend %discussion-topic;
 }
 
-#candidate, #candidate-comments {
-	&> tbody {
-		&> tr {
-			&> td, &> th {
-				border: solid #666 0px;
-				padding: 5px;
-				background-color: #bbb;
-				text-align: justify;
-				@include border-radius(2px);
-			}
-
-			&> th {
-				font-weight: bold;
-				width: 15%;
-				text-align: center;
-			}
-		}
-	}
+#candidate-comments {
+	@extend %comment-thread;
 }
 
-#candidate #candidate-text {
-	font-weight: normal;
-	width: auto;
-	padding: 10px;
-}
 
 .vote {
 	padding: 5px;
@@ -67,23 +39,4 @@
 div.vote-option {
 	width: 30%;
 	display: inline-block
-}
-
-.comment-avatar {
-	display: inline-block;
-	@include border-radius(5px);
-}
-
-textarea {
-	resize: vertical;
-}
-
-a#compare-previous {
-	background: {
-		image: url('/images/diff.png');
-		repeat: no-repeat;
-		position: left center;
-		size: auto 100%;
-	}
-	padding-left: 20px;
 }
