@@ -93,7 +93,7 @@
 		<h1 id="page-title"><?php echo $page_title; ?></h1>
 		<div id="page-content">
 			<?php
-				if ($error)
+				if (isset($error) && $error)
 				{
 					require("error.php");
 				}
