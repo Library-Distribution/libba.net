@@ -72,11 +72,12 @@
 					{
 						if ($item_count = count($set))
 						{
-							echo "<h2>$set_name uploaded ($item_count)</h2>";
+							echo "<h2>$set_name uploaded ($item_count)</h2><ul>";
 							foreach ($set AS $item)
 							{
-								echo "<a href='items/{$item['id']}' class=\"user-item\">{$item['name']} (v{$item['version']})</a>";
+								echo "<li><a href='items/{$item['id']}' class=\"user-item\"><img class='item-type' alt='' src='images/$item[type].png'/>{$item['name']} (v{$item['version']})</a></li>";
 							}
+							echo '</ul>';
 						}
 					}
 				}
