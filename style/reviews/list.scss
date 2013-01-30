@@ -1,5 +1,9 @@
 @import "../imports/item-list.scss";
 
 #review-list {
-	@include item-list(review-entry);
+	@extend %item-list;
+
+	.review-entry {
+		@extend %item-list-entry;
+	}
 }

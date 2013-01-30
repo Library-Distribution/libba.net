@@ -9,5 +9,9 @@
 		background-color: #FF6666;
 	}
 
-	@include item-list(candidate-entry);
+	@extend %item-list;
+
+	.candidate-entry {
+		@extend %item-list-entry;
+	}
 }

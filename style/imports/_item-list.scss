@@ -1,4 +1,4 @@
-@mixin item-list($entry-class) {
+%item-list {
 	width: 100%;
 
 	dt, dd {
@@ -17,7 +17,7 @@
 		width: 75%;
 	}
 
-	.#{$entry-class} {
+	%item-list-entry {
 		display: inline-block;
 		width: 99.5%;
 		margin-bottom: 10px;
