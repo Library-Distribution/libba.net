@@ -1,0 +1,39 @@
+@import "../global/cross-browser.scss";
+
+.help[data-help-advice] {
+	display: block;
+	position: relative;
+	float: left;
+	min-width: 22.5px;
+	min-height: 22.5px;
+	background: {
+		image: url('/images/help.png');
+		size: 22.5px 22.5px;
+		repeat: no-repeat;
+		position: 0 0;
+	}
+
+	&:hover:after {
+		background-color: white;
+		padding: 2px;
+		float: left;
+		position: absolute;
+		left: 30px;
+
+		width: auto;
+		min-width: 750%;
+		max-width: 1000%;
+		height: auto;
+		max-height: 400%;
+		overflow: hidden;
+
+		display: block;
+		content: attr(data-help-advice);
+		font-size: 75%;
+		text-align: justify;
+
+		@include multi-browser-property(hyphens, auto);
+		@include border-radius(3px);
+		@include box-shadow(0 0 3px 3px #000);
+	}
+}

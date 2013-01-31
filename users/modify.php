@@ -184,9 +184,11 @@
 
 							<label for="username">user name:</label>
 							<input type="text" name="username" value="<?php echo $user; ?>"/>
+							<div class="help" lang="en" data-help-advice="The nickname you use for logging in and that is displayed to other users"></div>
 
 							<label for="mail">email:</label>
 							<input type="text" name="mail" value="<?php echo $user_profile["mail"]; ?>"/>
+							<div class="help" lang="en" data-help-advice="The email address associated with your profile. You can control its visibility below."></div>
 						</fieldset>
 
 						<fieldset>
@@ -203,6 +205,7 @@
 								}
 								?>
 							</select>
+							<div class="help" lang="en" data-help-advice="This changes how the website is presented to you when logged in."></div>
 						</fieldset>
 
 						<fieldset>
@@ -219,6 +222,7 @@
 								}
 								?>
 							</select>
+							<div class="help" lang="en" data-help-advice="To protect your mail address from spambots, it is embedded as image (if at all)"></div>
 
 							<label for="allow_mails">allow contact by:</label>
 							<select name="allow_mails">
@@ -231,6 +235,7 @@
 									}
 								?>
 							</select>
+							<div class="help" lang="en" data-help-advice="Contacting works without the sender seeing your mail address. Moderators can always contact you."></div>
 						</fieldset>
 						<!-- TODO: support password change (enter twice) -->
 
