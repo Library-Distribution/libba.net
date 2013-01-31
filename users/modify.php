@@ -179,67 +179,63 @@
 				{
 			?>
 					<form action="#" method="post">
-						<table style="display: inline-table">
-							<tr>
-								<td><label for="username">user name:</label></td>
-								<td><input type="text" name="username" value="<?php echo $user; ?>"/></td>
-							</tr>
-							<tr>
-								<td><label for="mail">email:</label></td>
-								<td><input type="text" name="mail" value="<?php echo $user_profile["mail"]; ?>"/></td>
-							</tr>
-							<tr>
-								<td><label for="site_theme">website theme:</label></td>
-								<td>
-									<select name="site_theme">
-						<?php
-										foreach ($theme_options AS $theme)
-										{
-											echo "<option value=\"$theme\" "
-														. ($user_profile["site_theme"] == $theme ? "selected=\"selected\"" : "")
-														. ">$theme</option>";
-										}
-						?>
-									</select>
-								</td>
-							</tr>
-							<tr>
-								<td><label for="show_mail">email visibility:</label></td>
-								<td>
-									<select name="show_mail">
-						<?php
-										foreach ($mail_options AS $option)
-										{
-											echo "<option value=\"$option\" "
-														. ($user_profile["show_mail"] == $option ? "selected=\"selected\"" : "")
-														. ">$option</option>";
-										}
-						?>
-									</select>
-								</td>
-							</tr>
-							<tr>
-								<td><label for="allow_mails">allow users to contact me:</label></td>
-								<td>
-									<select name="allow_mails">
-						<?php
-										foreach ($contact_options AS $value)
-										{
-											echo "<option value=\"$value\" "
-														. ($user_profile["allow_mails"] == $value ? "selected=\"selected\"" : "")
-														. ">$value</option>";
-										}
-						?>
-									</select>
-								</td>
-							</tr>
-							<!-- TODO: support password change (enter twice) -->
-							<tr>
-								<td colspan="2">
-									<input type="submit" value="Submit"/>
-								</td>
-							</tr>
-						</table>
+						<fieldset>
+							<legend>user</legend>
+
+							<label for="username">user name:</label>
+							<input type="text" name="username" value="<?php echo $user; ?>"/>
+
+							<label for="mail">email:</label>
+							<input type="text" name="mail" value="<?php echo $user_profile["mail"]; ?>"/>
+						</fieldset>
+
+						<fieldset>
+							<legend>display</legend>
+
+							<label for="site_theme">website theme:</label>
+							<select name="site_theme">
+								<?php
+								foreach ($theme_options AS $theme)
+								{
+									echo "<option value=\"$theme\" "
+											. ($user_profile["site_theme"] == $theme ? "selected=\"selected\"" : "")
+											. ">$theme</option>";
+								}
+								?>
+							</select>
+						</fieldset>
+
+						<fieldset>
+							<legend>privacy</legend>
+
+							<label for="show_mail">email visibility:</label>
+							<select name="show_mail">
+								<?php
+								foreach ($mail_options AS $option)
+								{
+									echo "<option value=\"$option\" "
+											. ($user_profile["show_mail"] == $option ? "selected=\"selected\"" : "")
+											. ">$option</option>";
+								}
+								?>
+							</select>
+
+							<label for="allow_mails">allow contact by:</label>
+							<select name="allow_mails">
+								<?php
+									foreach ($contact_options AS $value)
+									{
+										echo "<option value=\"$value\" "
+												. ($user_profile["allow_mails"] == $value ? "selected=\"selected\"" : "")
+												. ">$value</option>";
+									}
+								?>
+							</select>
+						</fieldset>
+						<!-- TODO: support password change (enter twice) -->
+
+						<input type="submit"/>
+						<input type="reset"/>
 					</form>
 			<?php
 				}
