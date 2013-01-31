@@ -1,3 +1,8 @@
-#user-mail {
-	display: block
+.label, .info {
+	float: left;
+	line-height: 150%;
+}
+.label {
+	clear: left;
+	width: 25%;
 }

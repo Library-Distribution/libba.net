@@ -72,31 +72,22 @@
 				else # output a user profile
 				{
 				?>
-					<table>
-							<tr>
-								<td>email:</td>
-								<td>
+					<span class='label'>email:</span>
 				<?php
 					if ($user_profile["show_mail"] == "public" || ($user_profile["show_mail"] == "members" && $logged_in))
 					{
-						echo "<img id=\"user-mail\" alt=\"$user's mail address\" src=\"mailimage.php?user={$user_data["id"]}\"/>";
+						echo "<img class='info' id=\"user-mail\" alt=\"$user's mail address\" src=\"mailimage.php?user={$user_data["id"]}\"/>";
 					}
 					if ($user_profile["allow_mails"])
 					{
-						echo "<a href=\"#\">Contact $user</a>";
+						echo "<a class='info' href=\"#\">Contact $user</a>";
 					}
 				?>
-								</td>
-							</tr>
-							<tr>
-								<td>member since:</td>
-								<td><?php echo $user_data["joined"]; ?></td>
-							</tr>
-							<tr>
-								<td>user ID:</td>
-								<td><?php echo $user_data["id"]; ?></td>
-							</tr>
-						</table>
+					<span class='label'>member since:</span>
+					<span class='info'><?php echo $user_data["joined"]; ?></span>
+
+					<span class='label'>user ID:</span>
+					<span class='info'><?php echo $user_data["id"]; ?></span>
 				<?php
 				}
 			?>
