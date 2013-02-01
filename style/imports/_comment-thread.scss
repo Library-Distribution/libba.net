@@ -52,11 +52,7 @@
 		resize: vertical;
 	}
 
-	.privilege-symbols img {
-		max-width: 10%;
-		vertical-align: middle;
-		padding: 2px;
-	}
+	@import "privilege-symbols.scss";
 
 	& > tbody > tr {
 		&:hover > td {
