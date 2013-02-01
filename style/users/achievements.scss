@@ -1,23 +1,10 @@
-/* SCSS imports */
-@import "../global/cross-browser.scss";
+@import "../imports/highlight-list.scss";
 
-.achievement {
-	width: 95%;
-	display: inline-block;
-	background-color: #BBB;
-	text-align: left;
-	border: solid #999 1px;
-	margin: 5px;
-	padding: 10px;
-	@include border-radius(5px);
-
-	&:hover {
-		background-color: #CCC;
-	}
+ul {
+	@extend %highlight-list;
 }
 
-.achievement-icon {
-	margin: 0 3px 3px 0;
-	float: left;
-	padding: 2px;
+img.achievement-icon {
+	width: 30px;
+	margin: 10px;
 }

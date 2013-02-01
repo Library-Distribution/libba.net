@@ -75,10 +75,12 @@
 				}
 				else
 				{
+					echo '<ul>';
 					foreach ($achievements AS $a)
 					{
-						echo "<div class=\"achievement\"><a href=\"{$a["link"]}\"><img class=\"achievement-icon\" src=\"{$a["image"]}\"/></a>{$a["text"]}</div>";
+						echo '<li><a href="' . $a['link'] . '"><img class="achievement-icon" src="' . $a['image'] . '"/> ' . $a['text'] . '</a></li>';
 					}
+					echo '</ul>';
 				}
 			?>
 		</div>
