@@ -1,6 +1,6 @@
 @import "../global/cross-browser.scss";
-@import "../imports/markdown.scss";
-@import "../imports/preview.scss";
+@import "markdown.scss";
+@import "preview.scss";
 
 %discussion-topic, %comment-thread {
 	width: 100%;
