@@ -12,6 +12,8 @@
 	require_once("../config/constants.php");
 	require_once("../api/db.php");
 	require_once("../db2.php");
+	require_once('../privilege.php');
+	require_once('../get_privilege_symbols.php');
 
 	$api = new ALD( API_URL );
 	$logged_in = isset($_SESSION["user"]);
@@ -88,7 +90,14 @@
 
 					<span class='label'>user ID:</span>
 					<span class='info'><?php echo $user_data["id"]; ?></span>
+
 				<?php
+					if (hasExtendedPrivileges($user_data['privileges'])) {
+				?>
+					<span class='label'>privileges:</span>
+					<span class='info'><?php echo get_privilege_symbols($user_data['privileges']); ?></span>
+				<?php
+					}
 				}
 			?>
 		</div>
