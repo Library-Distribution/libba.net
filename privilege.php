@@ -9,4 +9,8 @@
 	{
 		return ($comb & $priv) == $priv;
 	}
+
+	function hasExtendedPrivileges($comb) {
+		return $comb != PRIVILEGE_NONE;
+	}
 ?>

@@ -13,6 +13,7 @@
 		require_once("api/db.php");
 		require_once("db2.php");
 		require_once('api/semver.php');
+		require_once('get_privilege_symbols.php');
 
 		$db_connection = db_ensure_connection();
 		$id = mysql_real_escape_string($_GET["id"], $db_connection);
@@ -67,6 +68,7 @@
 				$temp = $api->getUserById($comment["HEX(user)"]);
 				$comment["user"] = $temp["name"];
 				$comment["user-mail"] = $temp["mail-md5"];
+				$comment['user-privilege'] = $temp['privileges'];
 				$comments[] = $comment;
 			}
 
@@ -131,7 +133,8 @@
 				<?php
 							foreach ($comments AS $comment)
 							{
-								echo "<tr><td><img alt=\"avatar\" src=\"http://gravatar.com/avatar/{$comment['user-mail']}?s=50&amp;d=mm\" class=\"comment-avatar\"/><br/><a href=\"users/{$comment["user"]}/profile\">{$comment["user"]}</a><hr/>{$comment["date"]}</td><td><div class='markdown'>" . user_input_process($comment["comment"]) . "</div></td></tr>";
+								$symbols = get_privilege_symbols($comment['user-privilege']);
+								echo "<tr><td><img alt=\"avatar\" src=\"http://gravatar.com/avatar/{$comment['user-mail']}?s=50&amp;d=mm\" class=\"comment-avatar\"/><br/><a href=\"users/{$comment["user"]}/profile\">{$comment["user"]}</a>$symbols<hr/>{$comment["date"]}</td><td><div class='markdown'>" . user_input_process($comment["comment"]) . "</div></td></tr>";
 							}
 							if (!$item["reviewed"] && $logged_in)
 							{

@@ -52,6 +52,12 @@
 		resize: vertical;
 	}
 
+	.privilege-symbols img {
+		max-width: 10%;
+		vertical-align: middle;
+		padding: 2px;
+	}
+
 	& > tbody > tr {
 		&:hover > td {
 			background-color: #CCC;

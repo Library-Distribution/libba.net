@@ -9,6 +9,7 @@
 	require_once("config/constants.php");
 	require_once("privilege.php");
 	require_once('api/semver.php');
+	require_once('get_privilege_symbols.php');
 
 	$db_connection = db_ensure_connection();
 
@@ -132,6 +133,7 @@
 				$temp = $api->getUserById($comment["HEX(user)"]);
 				$comment["user"] = $temp["name"];
 				$comment["user-mail"] = $temp["mail-md5"];
+				$comment['user-privilege'] = $temp['privileges'];
 				$comments[] = $comment;
 			}
 
@@ -273,7 +275,8 @@
 						<?php
 							foreach ($comments AS $comment)
 							{
-								echo "<tr><td><img alt=\"avatar\" src=\"http://gravatar.com/avatar/{$comment['user-mail']}?s=50&amp;d=mm\" class=\"comment-avatar\"/><br/><a href=\"users/{$comment["user"]}/profile\">{$comment["user"]}</a><hr/>{$comment["date"]}</td>"
+								$symbols = get_privilege_symbols($comment['user-privilege']);
+								echo "<tr><td><img alt=\"avatar\" src=\"http://gravatar.com/avatar/{$comment['user-mail']}?s=50&amp;d=mm\" class=\"comment-avatar\"/><br/><a href=\"users/{$comment["user"]}/profile\">{$comment["user"]}</a>$symbols<hr/>{$comment["date"]}</td>"
 									. "<td><div class='markdown'>" . user_input_process($comment["comment"]) . '</div>' . (!empty($comment["vote"]) ? "<div class=\"vote\" style=\"float: right\">+1</div>" : "") . "</td></tr>";
 							}
 							if (!$candidate["closed"] && $logged_in)
