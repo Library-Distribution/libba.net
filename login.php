@@ -222,7 +222,7 @@
 			<script type="text/javascript" src="javascript/polyfills/loadFormPolyfills.js"></script>
 		<?php } ?>
 	</head>
-	<body class="pretty-ui" <?php echo $should_redirect ? "onload=\"setInterval(update_redirect_time, 999)\"" : ""; ?>>
+	<body <?php echo $should_redirect ? "onload=\"setInterval(update_redirect_time, 999)\"" : ""; ?>>
 		<h1 id="page-title"><?php echo $page_title; ?></h1>
 
 		<div id="page-content">

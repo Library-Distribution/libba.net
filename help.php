@@ -11,7 +11,7 @@
 		<script type="text/javascript" src="javascript/jquery-ui.js"></script>
 		<script type="text/javascript" src="javascript/help.js"></script>
 	</head>
-	<body class="pretty-ui">
+	<body>
 		<h1 id="page-title">libba.net help page</h1>
 		<div id="page-content">
 			<h2 class="question">What is this?</h2>

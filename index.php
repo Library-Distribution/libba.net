@@ -8,7 +8,7 @@
 		<?php require("templates/html.head.php"); ?>
 		<link rel="stylesheet" type="text/css" href="style/index.css"/>
 	</head>
-	<body class="pretty-ui">
+	<body>
 		<?php require("header.php"); ?>
 		<div id="page-content">
 			<a href="about" title="Get to know libba.net"><img id="logo" alt="libba.net logo" src="images/logo.png"/></a>

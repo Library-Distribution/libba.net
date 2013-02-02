@@ -43,7 +43,7 @@
 		<?php require("../templates/html.head.php"); ?>
 		<link rel="stylesheet" type="text/css" href="style/users/list.css"/>
 	</head>
-	<body class="pretty-ui">
+	<body>
 		<h1 id="page-title"><?php echo $page_title; ?></h1>
 		<div id="page-content">
 			<?php

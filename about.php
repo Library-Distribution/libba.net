@@ -7,7 +7,7 @@
 	<head>
 		<?php require("templates/html.head.php"); ?>
 	</head>
-	<body class="pretty-ui">
+	<body>
 		<h1 id="page-title">About</h1>
 		<div id="page-content">
 			<p>

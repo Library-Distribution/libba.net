@@ -33,7 +33,7 @@
 		<script type="text/javascript" src="javascript/modernizr.js"></script>
 		<script type="text/javascript" src="javascript/polyfills/loadFormPolyfills.js"></script>
 	</head>
-	<body class="pretty-ui">
+	<body>
 		<h1 id="page-title"><?php echo $page_title; ?></h1>
 		<div id="page-content">
 			<?php

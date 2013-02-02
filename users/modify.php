@@ -163,7 +163,7 @@
 		<link rel="stylesheet" type="text/css" href="style/users/general.css"/>
 		<link rel="stylesheet" type="text/css" href="style/users/modify.css"/>
 	</head>
-	<body class="pretty-ui">
+	<body>
 		<h1 id="page-title">
 			<?php
 				echo "<img alt=\"$user's avatar\" id=\"user-gravatar\" src=\"http://gravatar.com/avatar/{$user_data['mail-md5']}?s=50&amp;d=mm\"/>";
