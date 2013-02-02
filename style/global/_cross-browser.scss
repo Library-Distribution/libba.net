@@ -1,0 +1,21 @@
+@mixin IE-compat {
+	behavior: url('/style/PIE.htc'); /* IE compatibility fix */
+}
+
+@mixin multi-browser-property($prop, $value) {
+	#{$prop}: $value;
+
+	@each $prefix in moz, webkit, ms, o {
+		-#{$prefix}-#{$prop}: $value;
+	}
+}
+
+@mixin border-radius($value) {
+	@include multi-browser-property(border-radius, $value);
+	@include IE-compat;
+}
+
+@mixin box-shadow($value) {
+	@include multi-browser-property(box-shadow, $value);
+	@include IE-compat;
+}

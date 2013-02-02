@@ -10,6 +10,7 @@
 	require_once("../sortArray.php");
 	require_once("../ALD.php");
 	require_once("../config/constants.php");
+	require_once('../partials/Notice.php');
 
 	$api = new ALD( API_URL );
 	$logged_in = isset($_SESSION["user"]);
@@ -63,7 +64,7 @@
 	<body>
 		<h1 id="page-title">
 			<?php
-				echo "<img alt=\"$user's avatar\" id=\"user-gravatar\" src=\"http://gravatar.com/avatar/{$user_data['mail']}?s=50&amp;d=mm\"/>";
+				echo "<img alt=\"$user's avatar\" id=\"user-gravatar\" src=\"http://gravatar.com/avatar/{$user_data['mail-md5']}?s=50&amp;d=mm\"/>";
 				echo $page_title;
 			?>
 		</h1>
@@ -71,14 +72,16 @@
 			<?php
 				if ($error)
 				{
-					require("../error.php");
+					error($error_message, $error_description, true);
 				}
 				else
 				{
+					echo '<ul>';
 					foreach ($achievements AS $a)
 					{
-						echo "<div class=\"achievement\"><a href=\"{$a["link"]}\"><img class=\"achievement-icon\" src=\"{$a["image"]}\"/></a>{$a["text"]}</div>";
+						echo '<li><a href="' . $a['link'] . '"><img class="achievement-icon" src="' . $a['image'] . '"/> ' . $a['text'] . '</a></li>';
 					}
+					echo '</ul>';
 				}
 			?>
 		</div>

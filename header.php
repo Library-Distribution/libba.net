@@ -1,33 +1,50 @@
-<div id="header">
-	<div id="navigation">
-		<img alt="libba.net logo" src="images/logo.png" id="header-logo"/>
-		<div id="site-name">libba.net</div>
+<div id="navigation">
+	<a href="index" title="home page" style="top:3%">
+		<img alt="home" src="images/home.png" style="top:05%;"/>
+		<div class="nav-triangle" style="top:27.5%;"></div>
+		<div class="nav-tooltip">Go back to the main page</div>
+	</a>
+	<a href="items" title="libraries and applications" style="top:16%">
+		<img alt="items" src="images/items.png" style="top:18%;"/>
+		<div class="nav-triangle" style="top:27.5%;"></div>
+		<div class="nav-tooltip">Browse the available libraries and applications</div>
+	</a>
+	<a href="users" title="registered users" style="top:29%">
+		<img alt="users" src="images/users.png" style="top:31%;"/>
+		<div class="nav-triangle" style="top:27.5%;"></div>
+		<div class="nav-tooltip">Find registered users and moderators</div>
+	</a>
+	<a href="reviews" title="code review" style="top:42%">
+		<img alt="help" src="images/review.png" style="top:44%;"/>
+		<div class="nav-triangle" style="top:27.5%;"></div>
+		<div class="nav-tooltip">See how new items are checked for bad and malicious code</div>
+	</a>
+	<a href="candidates" title="stdlib candidates" style="top:55%">
+		<img alt="help" src="images/achievements/stdlib.png" style="top:57%;"/>
+		<div class="nav-triangle" style="top:27.5%;"></div>
+		<div class="nav-tooltip">Here the new libraries for the standard library are selected</div>
+	</a>
+	<a href="upload" title="package upload" style="top:68%">
+		<img alt="upload" src="images/activity/upload.png" style="top:70%;"/>
+		<div class="nav-triangle" style="top:27.5%;"></div>
+		<div class="nav-tooltip">Upload and share your own library or app</div>
+	</a>
+	<a href="help" title="help index" style="top:81%">
+		<img alt="help" src="images/help.png" style="top:83%;"/>
+		<div class="nav-triangle" style="top:27.5%;"></div>
+		<div class="nav-tooltip">Need help with anything? This link is for you!</div>
+	</a>
+</div>
 
-		<a class="nav-link" href="index">Home</a>
-		<a class="nav-link" href="items">Code</a>
-		<a class="nav-link" href="users">Users</a>
-		<a class="nav-link" href="help">Help</a>
-		<a class="nav-link" href="upload">Upload</a>
-	</div>
-
-	<div id="header-login">
+<div id="login">
 	<?php
-		$query_start = strpos($_SERVER["REQUEST_URI"], "?");
-		$pure_url = substr($_SERVER["REQUEST_URI"], 0, $query_start);
-		$redirect = in_array($pure_url, array("/login", "/logout", "/register", "/activate"))
-						? "index"
-						: urlencode($_SERVER["REQUEST_URI"]);
-
 		if (isset($_SESSION["user"]))
 		{
-			echo "Welcome<br/><a href=\"users/{$_SESSION["user"]}/profile\">{$_SESSION["user"]}</a>!<hr/><a href=\"logout?redirect=$redirect\">Logout</a>";
+			echo "Welcome<br/><a href='users/$_SESSION[user]/profile'>$_SESSION[user]</a>!<hr/><a href='logout'>Logout</a>";
 		}
 		else
 		{
-			echo "Welcome!<hr/><a href=\"login?redirect=$redirect\">Login</a><hr/><a href=\"register?redirect=$redirect\">Register</a>";
+			echo 'Welcome!<hr/><a href="login">Login</a><hr/><a href="register">Register</a>';
 		}
 	?>
-	</div>
-
-	<a href="http://l.autohotkey.net" title="Created for AutoHotkey"><img alt="AHK" src="images/AutoHotkey.png" id="header-ahk"/></a>
 </div>

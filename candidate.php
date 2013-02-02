@@ -8,6 +8,9 @@
 	require_once("ALD.php");
 	require_once("config/constants.php");
 	require_once("privilege.php");
+	require_once('api/semver.php');
+	require_once('get_privilege_symbols.php');
+	require_once('partials/Notice.php');
 
 	$db_connection = db_ensure_connection();
 
@@ -15,12 +18,14 @@
 	{
 		$api = new ALD( API_URL );
 		$error = true; # assume error here, reset on success
+		$page_title = 'ERROR';
 
 		if (isset($_GET["id"]))
 		{
 			$id = mysql_real_escape_string($_GET["id"], $db_connection);
 			$logged_in = isset($_SESSION["userID"]);
 			$can_close = $logged_in && hasPrivilege($_SESSION["privileges"], PRIVILEGE_STDLIB);
+			$diff = false;
 
 			if (!empty($_POST) && $logged_in)
 			{
@@ -103,6 +108,17 @@
 				$temp = $api->getUserById($candidate["HEX(`closed-by`)"]);
 				$candidate["closed-by"] = $temp["name"];
 			}
+			else
+			{
+				# get previous version in stdlib if existing
+				$list = $api->getItemList(0, 'all', NULL, NULL, $candidate['libname'], NULL, NULL, 'yes');
+				if (count($list) > 0)
+				{
+					$diff = true;
+					usort($list, "semver_sort"); # sort by version numbers (descending)
+					$diff_base = $list[0]['version'];
+				}
+			}
 
 			$comments = array();
 			$db_query = "SELECT *, HEX(user) FROM $db_table_candidate_comments WHERE id = '$id'";
@@ -117,7 +133,8 @@
 			{
 				$temp = $api->getUserById($comment["HEX(user)"]);
 				$comment["user"] = $temp["name"];
-				$comment["user-mail"] = $temp["mail"];
+				$comment["user-mail"] = $temp["mail-md5"];
+				$comment['user-privilege'] = $temp['privileges'];
 				$comments[] = $comment;
 			}
 
@@ -205,7 +222,16 @@
 <html>
 	<head>
 		<?php require("templates/html.head.php"); ?>
-		<link rel="stylesheet" type="text/css" href="style/candidate.css"/>
+		<?php if (isset($id)) { ?>
+			<link rel="stylesheet" type="text/css" href="style/candidates/view.css"/>
+		<?php } else { ?>
+			<link rel="stylesheet" type="text/css" href="style/candidates/list.css"/>
+		<?php } ?>
+
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+		<script type="text/javascript" src="javascript/jquery-ui.js"></script>
+		<script type="text/javascript" src="javascript/comments.js"></script>
+		<script type="text/javascript" src="javascript/candidate.js"></script>
 	</head>
 	<body>
 		<h1 id="page-title"><?php echo $page_title; ?></h1>
@@ -213,83 +239,90 @@
 			<?php
 				if ($error)
 				{
-					require("error.php");
+					error($error_message, $error_description, true);
 				}
 				else if (isset($id))
 				{
 			?>
 					<table id="candidate">
-						<tr>
-							<td>Library:</td>
-							<td><a href="items/<?php echo $candidate["HEX(libid)"]; ?>"><?php echo $candidate["libname"]; ?> (v<?php echo $candidate["libversion"]; ?>)</a></td>
-						</tr>
-						<tr>
-							<td>User:</td>
-							<td><a href="users/<?php echo $candidate["username"]; ?>/profile"><?php echo $candidate["username"]; ?></a></td>
-						</tr>
-						<tr>
-							<td>Applied:</td>
-							<td><?php echo $candidate["date"]; ?></td>
-						</tr>
-						<tr>
-							<td colspan="2" id="candidate-text"><?php echo user_input_process($candidate["text"]); ?></td>
-						</tr>
+						<tbody>
+							<tr>
+								<th>Library:</th>
+								<td><a href="items/<?php echo $candidate["HEX(libid)"]; ?>"><?php echo $candidate["libname"]; ?> (v<?php echo $candidate["libversion"]; ?>)</a></td>
+							</tr>
+							<tr>
+								<th>User:</th>
+								<td><a href="users/<?php echo $candidate["username"]; ?>/profile"><?php echo $candidate["username"]; ?></a></td>
+							</tr>
+							<tr>
+								<th>Applied:</th>
+								<td><?php echo $candidate["date"]; ?></td>
+							</tr>
+							<?php if ($diff) { ?>
+							<tr>
+								<th>Diff:</th>
+								<td><a class='compare' href='items/compare/<?php echo $candidate['libname'], '/', $diff_base, '...', $candidate['libversion']; ?>'>compare with latest version in the stdlib (<?php echo $diff_base; ?>)</a></td>
+							</tr>
+							<?php } ?>
+							<tr>
+								<td colspan="2" class="topic-details"><div class='markdown'><?php echo user_input_process($candidate["text"]); ?></div></td>
+							</tr>
+						</tbody>
 					</table>
 					<div id="votes"><div class="vote upvote">+<?php echo $up_vote_count; ?></div><div class="vote downvote">-<?php echo $down_vote_count; ?></div><div class="vote"><?php echo ($total_vote_count > 0 ? "+" : "-") . $total_vote_count; ?> votes</div></div>
 					<h2>Comments</h2>
 					<table id="candidate-comments">
+						<tbody>
 						<?php
 							foreach ($comments AS $comment)
 							{
-								echo "<tr><td><img alt=\"avatar\" src=\"http://gravatar.com/avatar/{$comment['user-mail']}?s=50&amp;d=mm\" class=\"comment-avatar\"/><br/><a href=\"users/{$comment["user"]}/profile\">{$comment["user"]}</a><hr/>{$comment["date"]}</td>"
-									. "<td>" . user_input_process($comment["comment"]) . (!empty($comment["vote"]) ? "<div class=\"vote\" style=\"float: right\">+1</div>" : "") . "</td></tr>";
+								$symbols = get_privilege_symbols($comment['user-privilege']);
+								echo "<tr><td><img alt=\"avatar\" src=\"http://gravatar.com/avatar/{$comment['user-mail']}?s=50&amp;d=mm\" class=\"comment-avatar\"/><br/><a href=\"users/{$comment["user"]}/profile\">{$comment["user"]}</a>$symbols<hr/>{$comment["date"]}</td>"
+									. "<td><div class='markdown'>" . user_input_process($comment["comment"]) . '</div>' . (!empty($comment["vote"]) ? "<div class=\"vote\" style=\"float: right\">+1</div>" : "") . "</td></tr>";
 							}
-							if (!$candidate["closed"])
+							if (!$candidate["closed"] && $logged_in)
 							{
-								if ($logged_in)
-								{
 						?>
+								<tr>
+									<td><a href="users/<?php echo $_SESSION["user"]; ?>/profile">You</a><hr/>Now</td>
+									<td>
+										<form action="#" method="post">
+											<textarea class="preview-source" name="newcomment" style="width: 99.5%" placeholder="Enter your comment..."></textarea>
+					<?php
+											if ($can_vote)
+											{
+					?>
+												<div class="vote-option"><input type="radio" name="vote" value="-1"> &dArr; Vote down &dArr; </input></div>
+												<div class="vote-option"><input type="radio" name="vote" value="0" checked="checked">&lArr; neutral &rArr; </input></div>
+												<div class="vote-option"><input type="radio" name="vote" value="1"> &uArr; Vote up &uArr; </input></div>
+					<?php
+											}
+					?>
+											<input type="submit" value="Submit" style="float: right"/>
+										</form>
+									</td>
+								</tr>
+					<?php
+								if ($can_close)
+								{
+					?>
 									<tr>
-										<td><a href="users/<?php echo $_SESSION["user"]; ?>/profile">You</a><hr/>Now</td>
+										<td><a href="users/teams/stdlib">Stdlib team</a></td>
 										<td>
 											<form action="#" method="post">
-												<textarea name="newcomment" style="width: 99.5%"></textarea>
-						<?php
-												if ($can_vote)
-												{
-						?>
-													<div class="vote-option"><input type="radio" name="vote" value="-1"> &dArr; Vote down &dArr; </input></div>
-													<div class="vote-option"><input type="radio" name="vote" value="0" checked="checked">&lArr; neutral &rArr; </input></div>
-													<div class="vote-option"><input type="radio" name="vote" value="1"> &uArr; Vote up &uArr; </input></div>
-						<?php
-												}
-						?>
-												<input type="submit" value="Submit" style="float: right"/>
+												<textarea class="preview-source" name="closecomment" style="width: 99.5%" placeholder="Enter a comment..."></textarea>
+												<input style="width: 49%; display: inline-block" type="submit" value="accept" name="accept"/>
+												<input style="width: 49%; display: inline-block" type="submit" value="reject" name="reject"/>
 											</form>
 										</td>
 									</tr>
-						<?php
-									if ($can_close)
-									{
-						?>
-										<tr>
-											<td><a href="users/teams/stdlib">Stdlib team</a></td>
-											<td>
-												<form action="#" method="post" style="text-align: center">
-													<textarea name="closecomment" style="width: 99.5%"></textarea>
-													<input style="width: 49%; display: inline-block" type="submit" value="accept" name="accept"/>
-													<input style="width: 49%; display: inline-block" type="submit" value="reject" name="reject"/>
-												</form>
-											</td>
-										</tr>
-						<?php
-									}
+					<?php
 								}
 							}
-							else
+							else if ($candidate["closed"])
 							{
 								echo "<tr><td><a href=\"users/{$candidate["closed-by"]}/profile\">{$candidate["closed-by"]}</a><hr/>{$candidate["closed-date"]}</td>"
-									. "<td id=\"close-comment\" class=\"" . ( /* todo: get if included in stdlib or not */ "") . "\">" . user_input_process($candidate["closed-comment"]) . "</td></tr>";
+									. "<td id=\"close-comment\" class=\"" . ( /* todo: get if included in stdlib or not */ "") . "\"><div class='markdown'>" . user_input_process($candidate["closed-comment"]) . "</div></td></tr>";
 								/*
 								if ($can_close && !$in_standard)
 								{
@@ -298,6 +331,7 @@
 								*/
 							}
 						?>
+						</tbody>
 					</table>
 					<a href="http://htmlpurifier.org/"><img src="http://htmlpurifier.org/live/art/powered.png" alt="Powered by HTML Purifier" border="0" /></a>
 			<?php
@@ -305,25 +339,24 @@
 				else
 				{
 			?>
-					<table id="candidate-list">
-						<thead>
-							<tr>
-								<th></th>
-								<th>Library</th>
-								<th>User</th>
-								<th>Date</th>
-								<th>Status</th>
-							</tr>
-						</thead>
-						<tbody>
+					<div id="candidate-list">
 						<?php
 							foreach ($candidates AS $cand)
 							{
-								echo "<tr><td><a href=\"./{$cand["id"]}\">&gt;&gt;</a></td><td><a href=\"items/{$cand["HEX(libid)"]}\">{$cand["lib-name"]} (v{$cand["lib-version"]})</a></td><td><a href=\"users/{$cand["user"]}/profile\">{$cand["user"]}</a></td><td>{$cand["date"]}</td><td class=\"" . ($cand["closed"] ? "cand-closed" : "cand-open") . "\">" . ($cand["closed"] ? "closed" : "open") . "</td></tr>";
+								$status = $cand['closed'] ? 'closed' : 'open';
+								echo '<div class="candidate-entry">'
+									. "<h3 class='candidate-header'>{$cand['lib-name']} (v{$cand['lib-version']})</h3>"
+									. '<dl class="candidate-details">'
+										. "<dt>Name</dt><dd><a href='items/{$cand['HEX(libid)']}'>{$cand['lib-name']}</a></dd>"
+										. "<dt>Version</dt><dd>{$cand['lib-version']}</dd>"
+										. "<dt>User</dt><dd><a href='users/$cand[user]/profile'>$cand[user]</a></dd>"
+										. "<dt>Date</dt><dd>$cand[date]</dd>"
+										. "<dt>Status</dt><dd class='cand-$status'>$status</dd>"
+										. "<dt>Link</dt><dd>&#9654; <a href='./$cand[id]'>Go to discussion thread</a> &#9654;</dd>"
+									. '</dl></div>';
 							}
 						?>
-						</tbody>
-					</table>
+					</div>
 			<?php
 				}
 			?>
@@ -335,4 +368,10 @@
 	require_once("rewriter.php");
 	echo rewrite();
 	ob_end_flush();
+?>
+<?php
+	function semver_sort($a, $b)
+	{
+		return semver_compare($b['version'], $a['version']);
+	}
 ?>

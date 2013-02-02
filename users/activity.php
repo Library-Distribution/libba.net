@@ -16,6 +16,7 @@
 	require_once("../privilege.php");
 	require_once("../api/db.php");
 	require_once("../db2.php");
+	require_once('../partials/Notice.php');
 
 	$api = new ALD( API_URL );
 	$logged_in = isset($_SESSION["user"]);
@@ -206,7 +207,7 @@
 	<body>
 		<h1 id="page-title">
 			<?php
-				echo "<img alt=\"$user's avatar\" id=\"user-gravatar\" src=\"http://gravatar.com/avatar/{$user_data['mail']}?s=50&amp;d=mm\"/>";
+				echo "<img alt=\"$user's avatar\" id=\"user-gravatar\" src=\"http://gravatar.com/avatar/{$user_data['mail-md5']}?s=50&amp;d=mm\"/>";
 				echo $page_title;
 			?>
 		</h1>
@@ -214,7 +215,7 @@
 			<?php
 				if ($error)
 				{
-					require("../error.php");
+					error($error_message, $error_description, true);
 				}
 				else
 				{
@@ -231,7 +232,7 @@
 									. "</a>"
 									. $item["header"]
 								. "</div><hr/>"
-								. "<div class=\"activity-body user-markup\">$text</div>"
+								. "<div class=\"activity-body markdown\">$text</div>"
 								. "<div class=\"activity-footer\">{$item["date"]}</div>"
 							. "</div>";
 					}

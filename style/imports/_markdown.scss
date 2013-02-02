@@ -1,0 +1,45 @@
+.markdown {
+	background-color: white;
+	padding: 10px;
+	border: solid gray 1px;
+	word-wrap: break-word;
+	text-align: justify;
+
+	code {
+		border: solid gray 1px;
+		padding: 5px;
+		background-color: #EFEFEF;
+		min-width: 90%;
+		overflow-x: scroll;
+		display: block;
+		white-space: pre;
+	}
+
+	td, th, table {
+		border-width: 1px;
+	}
+
+	td, th {
+		padding: 10px;
+		border: {
+			style: inset;
+			color: gray;
+		}
+	}
+
+	th {
+		border-bottom: {
+			width: 2px;
+			style: solid;
+		}
+	}
+
+	table {
+		border: {
+			spacing: 2px;
+			style: solid;
+			color: transparent;
+			bottom: solid gray 2px;
+		}
+	}
+}

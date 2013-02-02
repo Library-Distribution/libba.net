@@ -1,0 +1,10 @@
+@import "../imports/highlight-list.scss";
+
+ul {
+	@extend %highlight-list;
+}
+
+img.achievement-icon {
+	width: 30px;
+	margin: 10px;
+}
