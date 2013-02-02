@@ -13,7 +13,7 @@
 	define('ACT_MOD', 3);
 
 	$page_title = "Compare ERROR";
-	$error = true;
+	$error = true; $warning = false;
 	for ($i = 0; $i < 1; $i++) {
 		$api = new ALD(API_URL);
 		if (isset($_GET['name']) && isset($_GET['version1']) && isset($_GET['version2']))
@@ -24,8 +24,9 @@
 				break;
 			}
 			if (semver_compare($_GET['version1'], $_GET['version2']) != -1) {
-				$error_message = 'Invalid version order specified!';
-				$error_description = 'The specified two version numbers are in incorrect order: the older version must be first. You will be redirected in a few seconds.';
+				$error = false; $warning = true;
+				$warn_message = 'Invalid version order specified!';
+				$warn_description = 'The specified two version numbers are in incorrect order: the older version must be first. You will be redirected in a few seconds. <a href="./' . $_GET['version2'] . '...' . $_GET['version1'] . '">&rArr; Go now &rArr;</a>';
 				$redirect = $_GET['version2'] . '...' . $_GET['version1'];
 				break;
 			}
@@ -175,6 +176,8 @@
 				if ($error)
 				{
 					error($error_message, $error_description, true);
+				} else if ($warning) {
+					warning($warn_message, $warn_description); # do not clean here
 				} else {
 			?>
 				<ul id="diff-steps">
