@@ -26,7 +26,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<?php require("templates/html.head.php"); ?>
+		<?php require("partials/html.head.php"); ?>
 		<link rel="stylesheet" type="text/css" href="style/upload.css"/>
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 		<script type="text/javascript" src="javascript/jquery-ui.js"></script>

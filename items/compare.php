@@ -159,7 +159,7 @@
 <!DOCTYPE html>
 <html class="no-js">
 	<head>
-		<?php require('../templates/html.head.php'); ?>
+		<?php require('../partials/html.head.php'); ?>
 		<?php if (isset($redirect)) { ?>
 			<meta http-equiv="REFRESH" content="5; URL=<?php echo $redirect; ?>"/>
 		<?php } ?>

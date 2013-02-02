@@ -206,7 +206,7 @@
 	<head>
 			<link rel="stylesheet" type="text/css" href="style/login.css"/>
 		<?php
-			require("templates/html.head.php");
+			require("partials/html.head.php");
 
 			if ($should_redirect)
 			{

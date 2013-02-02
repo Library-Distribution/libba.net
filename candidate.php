@@ -221,7 +221,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<?php require("templates/html.head.php"); ?>
+		<?php require("partials/html.head.php"); ?>
 		<?php if (isset($id)) { ?>
 			<link rel="stylesheet" type="text/css" href="style/candidates/view.css"/>
 		<?php } else { ?>

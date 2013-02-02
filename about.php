@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<?php require("templates/html.head.php"); ?>
+		<?php require("partials/html.head.php"); ?>
 	</head>
 	<body>
 		<h1 id="page-title">About</h1>

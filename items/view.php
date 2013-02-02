@@ -43,7 +43,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<?php require("../templates/html.head.php"); ?>
+		<?php require("../partials/html.head.php"); ?>
 		<link rel="stylesheet" type="text/css" href="style/items/view.css"/>
 	</head>
 	<body>

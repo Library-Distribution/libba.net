@@ -54,7 +54,7 @@
 <html>
 	<head>
 		<?php
-			require("../templates/html.head.php");
+			require("../partials/html.head.php");
 		?>
 		<link rel="stylesheet" type="text/css" href="style/users/general.css"/>
 		<link rel="stylesheet" type="text/css" href="style/users/profile.css"/>
