@@ -243,8 +243,8 @@
 			$current_mode = "activity";
 			require_once("user_navigation.php");
 
-			require("../footer.php");
-			require("../header.php");
+			require("../partials/footer.php");
+			require("../partials/header.php");
 		?>
 	</body>
 </html>

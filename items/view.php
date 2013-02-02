@@ -155,7 +155,7 @@
 		}
 		?>
 		</div>
-		<?php require("../header.php"); require("../footer.php"); ?>
+		<?php require("../partials/header.php"); require("../partials/footer.php"); ?>
 	</body>
 </html>
 <?php
