@@ -1,11 +1,12 @@
 <?php
 	session_start();
 
-	require_once("api/HttpException.php");
-	require_once("ALD.php");
-	require_once("config/constants.php");
-	require_once("api/User.php");
-	require_once("privilege.php");
+	require_once("../api/HttpException.php");
+	require_once("../util/ALD.php");
+	require_once("../config/constants.php");
+	require_once("../api/User.php");
+	require_once("../util/privilege.php");
+
 
 	if (!isset($_GET["action"]))
 	{

@@ -1,5 +1,5 @@
 <?php
-	require_once(dirname(__FILE__) . "/config/constants.php");
+	require_once(dirname(__FILE__) . "/../config/constants.php");
 	function get_subfolder_level()
 	{
 		$sub_path = str_replace("?" . $_SERVER["QUERY_STRING"], "", RELATIVE_URL);

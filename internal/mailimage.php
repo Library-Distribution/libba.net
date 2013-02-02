@@ -1,8 +1,8 @@
 <?php
 	session_start();
 
-	require_once("api/db.php");
-	require_once("db2.php");
+	require_once("../api/db.php");
+	require_once("../util/db2.php");
 	$db_connection = db_ensure_connection();
 
 	$db_query = "SELECT mail, show_mail FROM $db_table_user_profile WHERE id = UNHEX('" . mysql_real_escape_string($_GET["user"]) . "')";
@@ -39,7 +39,7 @@
 	$alpha = imagecolorallocatealpha($image, 255, 255, 255, 127);
 	$black = imagecolorallocate($image, 0, 0, 0);
 
-	if (!imagettftext($image, 10, 0, 5, 12.5, $black, './style/font/Quicksand_Bold-webfont.ttf', $user['mail']))
+	if (!imagettftext($image, 10, 0, 5, 12.5, $black, '../style/font/Quicksand_Bold-webfont.ttf', $user['mail']))
 	{
 		header("HTTP/1.1 500 Server error");
 		exit;

@@ -1,5 +1,5 @@
 <?php
-	require_once("config/constants.php");
+	require_once(dirname(__FILE__) . "/../config/constants.php");
 
 	function secure_redirect()
 	{

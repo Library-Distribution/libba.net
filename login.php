@@ -2,7 +2,7 @@
 	date_default_timezone_set("UTC");
 
 	require_once("config/constants.php");
-	require_once("secure_redirect.php");
+	require_once("util/secure_redirect.php");
 	require_once('partials/Notice.php');
 	secure_redirect();
 
@@ -22,7 +22,7 @@
 		{
 			$page_title = "Login";
 
-			require_once("ALD.php");
+			require_once("util/ALD.php");
 			$api = new ALD(API_URL);
 			$user_list = $api->getUserList();
 		}
@@ -158,7 +158,7 @@
 					$should_redirect = false;
 
 					require_once("api/User.php");
-					require_once("ALD.php");
+					require_once("util/ALD.php");
 
 					if (User::validateLogin($_POST["name"], $_POST["password"], false))
 					{

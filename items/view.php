@@ -8,7 +8,7 @@
 		exit;
 	}
 
-	require_once("../ALD.php");
+	require_once("../util/ALD.php");
 	require_once("../config/constants.php");
 	require_once("../api/semver.php");
 	require_once('../api/HttpException.php');
@@ -56,7 +56,7 @@
 		else {
 			if ($logged_in)
 			{
-				require_once("../privilege.php");
+				require_once("../util/privilege.php");
 
 				$redirect_url = urlencode($_SERVER["REQUEST_URI"]);
 				if (hasPrivilege($_SESSION["privileges"], PRIVILEGE_REVIEW))
@@ -66,13 +66,13 @@
 					echo "<div class=\"menu\">Code Review<ul class=\"admin-menu\">";
 					if ($item['reviewed'])
 					{
-						echo "<a href='moderator-action.php?id=$id&amp;action=review&amp;value=0&amp;return_error=true&amp;redirect=$redirect_url'><li>Mark as <span style=\"font-weight: bold;\">unreviewed</span></li></a>";
+						echo "<a href='internal/moderator-action.php?id=$id&amp;action=review&amp;value=0&amp;return_error=true&amp;redirect=$redirect_url'><li>Mark as <span style=\"font-weight: bold;\">unreviewed</span></li></a>";
 					}
 					else
 					{
-						echo "<a href='moderator-action.php?id=$id&amp;action=review&amp;value=1&amp;return_error=true&amp;redirect=$redirect_url'><li>Mark as <span style=\"font-weight: bold; color: green\">secure and stable</span></li></a>";
+						echo "<a href='internal/moderator-action.php?id=$id&amp;action=review&amp;value=1&amp;return_error=true&amp;redirect=$redirect_url'><li>Mark as <span style=\"font-weight: bold; color: green\">secure and stable</span></li></a>";
 					}
-					echo "<a href='moderator-action.php?id=$id&amp;action=review&amp;value=-1&amp;return_error=true&amp;redirect=$redirect_url'><li>Mark as <span style=\"font-weight: bold; color: red\">unsecure or unstable</span></li></a>";
+					echo "<a href='internal/moderator-action.php?id=$id&amp;action=review&amp;value=-1&amp;return_error=true&amp;redirect=$redirect_url'><li>Mark as <span style=\"font-weight: bold; color: red\">unsecure or unstable</span></li></a>";
 					echo "</ul></div>";
 					*/
 				}
@@ -83,11 +83,11 @@
 					echo "<div class=\"menu\">Library standard<ul class=\"admin-menu\">";
 					if ($item['default'])
 					{
-						echo "<a href='moderator-action.php?id=$id&amp;action=default&amp;value=0&amp;return_error=true&amp;redirect=$redirect_url'><li><span style=\"font-weight: bold; color: red\">Remove</span></li></a>";
+						echo "<a href='internal/moderator-action.php?id=$id&amp;action=default&amp;value=0&amp;return_error=true&amp;redirect=$redirect_url'><li><span style=\"font-weight: bold; color: red\">Remove</span></li></a>";
 					}
 					else
 					{
-						echo "<a href='moderator-action.php?id=$id&amp;action=default&amp;value=1&amp;return_error=true&amp;redirect=$redirect_url'><li><span style=\"font-weight: bold; color: green\">Add</span></li></a>";
+						echo "<a href='internal/moderator-action.php?id=$id&amp;action=default&amp;value=1&amp;return_error=true&amp;redirect=$redirect_url'><li><span style=\"font-weight: bold; color: green\">Add</span></li></a>";
 					}
 					echo "</ul></div>";
 					*/
@@ -123,7 +123,7 @@
 			<p id="item-descr">
 				<div class='markdown'>
 				<?php
-					require_once("../user_input.php");
+					require_once("../util/user_input.php");
 					echo user_input_process($item['description']);
 				?>
 				</div>
@@ -159,7 +159,7 @@
 	</body>
 </html>
 <?php
-	require_once("../rewriter.php");
+	require_once("../util/rewriter.php");
 	echo rewrite();
 	ob_end_flush();
 ?>

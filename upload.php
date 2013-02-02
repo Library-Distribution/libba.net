@@ -2,7 +2,7 @@
 	session_start();
 
 	require_once("config/constants.php");
-	require_once("secure_redirect.php");
+	require_once("util/secure_redirect.php");
 	secure_redirect();
 
 	if ($_POST && $_FILES)
@@ -18,7 +18,7 @@
 
 	$logged_in = isset($_SESSION["user"]);
 	if (!$logged_in) {
-		require_once("ALD.php");
+		require_once("util/ALD.php");
 		$api = new ALD(API_URL);
 		$user_list = $api->getUserList();
 	}
@@ -77,7 +77,7 @@
 						$user = isset($_POST["user"]) ? $_POST["user"] : $_SESSION["user"];
 						$password = isset($_POST["password"]) ? $_POST["password"] : $_SESSION["password"];
 
-						require_once("ALD.php");
+						require_once("util/ALD.php");
 						try
 						{
 							$conn = new ALD( SECURE_API_URL );

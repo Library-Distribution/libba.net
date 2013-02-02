@@ -2,11 +2,11 @@
 	ob_start();
 	session_start();
 
-	require_once("../sortArray.php");
-	require_once("../ALD.php");
+	require_once("../util/sortArray.php");
+	require_once("../util/ALD.php");
 	require_once("../config/constants.php");
 	require_once('../partials/Notice.php');
-	#require_once("../privilege.php");
+	#require_once("../util/privilege.php");
 
 	$api = new ALD( API_URL );
 	$logged_in = isset($_SESSION["user"]);
@@ -89,7 +89,7 @@
 	</body>
 </html>
 <?php
-	require_once("../rewriter.php");
+	require_once("../util/rewriter.php");
 	echo rewrite();
 	ob_end_flush();
 ?>

@@ -1,6 +1,6 @@
 function _load_comment_preview_() {
 	var output = $(this).next("div.preview-block").find("div.markdown");
-	$.post("/transform_comments.php", { "text" : $(this).val() }, function(data, status) {
+	$.post("/internal/transform_comments.php", { "text" : $(this).val() }, function(data, status) {
 		if (status == "success") {
 			output.html($.trim(data) ? data : "<span class='preview-empty'>Nothing to preview yet. Type in the box above and see the preview here...</span>");
 		}

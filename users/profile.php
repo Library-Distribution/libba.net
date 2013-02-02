@@ -7,13 +7,13 @@
 		header("Location: ."); # redirect to user list
 	}
 
-	require_once("../sortArray.php");
-	require_once("../ALD.php");
+	require_once("../util/sortArray.php");
+	require_once("../util/ALD.php");
 	require_once("../config/constants.php");
 	require_once("../api/db.php");
-	require_once("../db2.php");
-	require_once('../privilege.php');
-	require_once('../get_privilege_symbols.php');
+	require_once("../util/db2.php");
+	require_once('../util/privilege.php');
+	require_once('../util/get_privilege_symbols.php');
 	require_once('../partials/Notice.php');
 
 	$api = new ALD( API_URL );
@@ -79,7 +79,7 @@
 				<?php
 					if ($user_profile["show_mail"] == "public" || ($user_profile["show_mail"] == "members" && $logged_in))
 					{
-						echo "<img class='info' id=\"user-mail\" alt=\"$user's mail address\" src=\"mailimage.php?user={$user_data["id"]}\"/>";
+						echo "<img class='info' id=\"user-mail\" alt=\"$user's mail address\" src=\"internal/mailimage.php?user={$user_data["id"]}\"/>";
 					}
 					if ($user_profile["allow_mails"])
 					{
@@ -112,7 +112,7 @@
 	</body>
 </html>
 <?php
-	require_once("../rewriter.php");
+	require_once("../util/rewriter.php");
 	echo rewrite();
 	ob_end_flush();
 ?>

@@ -2,7 +2,7 @@
 	ob_start();
 	session_start();
 
-	require_once("ALD.php");
+	require_once("util/ALD.php");
 	require_once("config/constants.php");
 	require_once('partials/Notice.php');
 
@@ -12,9 +12,9 @@
 	if (isset($_GET["id"]))
 	{
 		require_once("api/db.php");
-		require_once("db2.php");
+		require_once("util/db2.php");
 		require_once('api/semver.php');
-		require_once('get_privilege_symbols.php');
+		require_once('util/get_privilege_symbols.php');
 
 		$db_connection = db_ensure_connection();
 		$id = mysql_real_escape_string($_GET["id"], $db_connection);
@@ -38,7 +38,7 @@
 				header("Location: " . $_SERVER["REQUEST_URI"]);
 			}
 
-			require_once("user_input.php");
+			require_once("util/user_input.php");
 
 			$item = $api->getItemById($id);
 			$page_title = $item["name"] . " (v{$item["version"]}) | Code review";
@@ -183,7 +183,7 @@
 	</body>
 </html>
 <?php
-	require_once("rewriter.php");
+	require_once("util/rewriter.php");
 	echo rewrite();
 	ob_end_flush();
 ?>

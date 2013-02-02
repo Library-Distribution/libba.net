@@ -7,16 +7,16 @@
 		header("Location: .");
 	}
 
-	#require_once("sortArray.php");
-	require_once("../ALD.php");
+	#require_once("../util/sortArray.php");
+	require_once("../util/ALD.php");
 	require_once("../config/constants.php");
-	#require_once("user_input.php");
-	require_once("../privilege.php");
+	#require_once("util/user_input.php");
+	require_once("../util/privilege.php");
 	require_once("../api/db.php");
-	require_once("../db2.php");
+	require_once("../util/db2.php");
 	require_once('../partials/Notice.php');
 
-	require_once("../secure_redirect.php");
+	require_once("../util/secure_redirect.php");
 	secure_redirect();
 
 	$api = new ALD( SECURE_API_URL );
@@ -261,7 +261,7 @@
 	</body>
 </html>
 <?php
-	require_once("../rewriter.php");
+	require_once("../util/rewriter.php");
 	echo rewrite();
 	ob_end_flush();
 ?>

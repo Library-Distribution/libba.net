@@ -1,5 +1,5 @@
 <?php
-	require_once("ALD.php");
+	require_once("util/ALD.php");
 	require_once("config/constants.php");
 
 	header("Content-type: application/rss+xml");

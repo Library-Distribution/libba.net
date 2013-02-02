@@ -1,7 +1,7 @@
 <?php
 	ob_start();
 
-	require_once('../ALD.php');
+	require_once('../util/ALD.php');
 	require_once('../api/semver.php');
 	require_once('../config/constants.php');
 	require_once('../modules/diff/finediff.php');
@@ -226,7 +226,7 @@
 	</body>
 </html>
 <?php
-	require_once("../rewriter.php");
+	require_once("../util/rewriter.php");
 	echo rewrite();
 	ob_end_flush();
 ?>
