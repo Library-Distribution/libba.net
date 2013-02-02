@@ -10,6 +10,7 @@
 	require_once("../sortArray.php");
 	require_once("../ALD.php");
 	require_once("../config/constants.php");
+	require_once('../partials/Notice.php');
 
 	$api = new ALD( API_URL );
 	$logged_in = isset($_SESSION["user"]);
@@ -71,7 +72,7 @@
 			<?php
 				if ($error)
 				{
-					require("../error.php");
+					error($error_message, $error_description, true);
 				}
 				else
 				{

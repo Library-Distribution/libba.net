@@ -14,6 +14,7 @@
 	require_once("../privilege.php");
 	require_once("../api/db.php");
 	require_once("../db2.php");
+	require_once('../partials/Notice.php');
 
 	require_once("../secure_redirect.php");
 	secure_redirect();
@@ -173,7 +174,7 @@
 			<?php
 				if ($error)
 				{
-					require("../error.php");
+					error($error_message, $error_description, true);
 				}
 				else if (empty($_POST))
 				{

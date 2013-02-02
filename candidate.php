@@ -10,6 +10,7 @@
 	require_once("privilege.php");
 	require_once('api/semver.php');
 	require_once('get_privilege_symbols.php');
+	require_once('partials/Notice.php');
 
 	$db_connection = db_ensure_connection();
 
@@ -238,7 +239,7 @@
 			<?php
 				if ($error)
 				{
-					require("error.php");
+					error($error_message, $error_description, true);
 				}
 				else if (isset($id))
 				{

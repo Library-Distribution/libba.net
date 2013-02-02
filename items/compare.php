@@ -6,6 +6,7 @@
 	require_once('../config/constants.php');
 	require_once('../modules/diff/finediff.php');
 	require_once('CompareItem.php');
+	require_once('../partials/Notice.php');
 
 	define('ACT_ADD', 1);
 	define('ACT_DEL', 2);
@@ -19,7 +20,7 @@
 		{
 			if (!semver_validate($_GET['version1']) || !semver_validate($_GET['version2'])) {
 				$error_message = 'Invalid version number specified!';
-				$error_description = 'One of the two specified version numbers "' . htmlentities($_GET['version1']) . '" and "' . htmlentities($_GET['version2']) . '" is not a valid version number.';
+				$error_description = 'One of the two specified version numbers "' . $_GET['version1'] . '" and "' . $_GET['version2'] . '" is not a valid version number.';
 				break;
 			}
 			if (semver_compare($_GET['version1'], $_GET['version2']) != -1) {
@@ -173,7 +174,7 @@
 			<?php
 				if ($error)
 				{
-					require('../error.php');
+					error($error_message, $error_description, true);
 				} else {
 			?>
 				<ul id="diff-steps">

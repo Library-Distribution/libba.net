@@ -3,6 +3,7 @@
 
 	require_once("config/constants.php");
 	require_once("secure_redirect.php");
+	require_once('partials/Notice.php');
 	secure_redirect();
 
 	$page_title = "";
@@ -264,8 +265,7 @@
 				{
 					if ($error)
 					{
-						$error_message = $message;
-						require("error.php");
+						error($message, $error_description, true);
 					}
 					else if (!empty($message))
 					{
