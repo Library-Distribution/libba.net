@@ -1,0 +1,42 @@
+@import "../imports/comment-thread.scss";
+
+#candidate {
+	@extend %discussion-topic;
+}
+
+#candidate-comments {
+	@extend %comment-thread;
+}
+
+
+.vote {
+	padding: 5px;
+	margin: 3px;
+	background-color: #CCC;
+	border: outset gray 3px;
+	display: inline-block;
+	@include border-radius(5px);
+}
+
+.downvote {
+	background-color: lightcoral;
+	border-color: red;
+}
+
+.upvote {
+	background-color: lightgreen;
+	border-color: green;
+}
+
+#votes {
+	float: right;
+}
+
+#votes + * {
+	clear: right;
+}
+
+div.vote-option {
+	width: 30%;
+	display: inline-block
+}

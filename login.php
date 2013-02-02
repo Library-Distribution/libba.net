@@ -3,6 +3,7 @@
 
 	require_once("config/constants.php");
 	require_once("secure_redirect.php");
+	require_once('partials/Notice.php');
 	secure_redirect();
 
 	$page_title = "";
@@ -20,6 +21,10 @@
 		if ($mode == "login")
 		{
 			$page_title = "Login";
+
+			require_once("ALD.php");
+			$api = new ALD(API_URL);
+			$user_list = $api->getUserList();
 		}
 		else if ($mode == "register")
 		{
@@ -199,6 +204,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
+			<link rel="stylesheet" type="text/css" href="style/login.css"/>
 		<?php
 			require("templates/html.head.php");
 
@@ -208,8 +214,13 @@
 		?>
 				<script type="text/javascript" src="javascript/update_redirect_time.js"></script>
 		<?php
-			}
+			} else {
 		?>
+			<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+			<script type="text/javascript" src="javascript/jquery-ui.js"></script>
+			<script type="text/javascript" src="javascript/modernizr.js"></script>
+			<script type="text/javascript" src="javascript/polyfills/loadFormPolyfills.js"></script>
+		<?php } ?>
 	</head>
 	<body <?php echo $should_redirect ? "onload=\"setInterval(update_redirect_time, 999)\"" : ""; ?>>
 		<h1 id="page-title"><?php echo $page_title; ?></h1>
@@ -220,34 +231,33 @@
 				{
 			?>
 					<form action="<?php echo htmlentities($_SERVER["REQUEST_URI"]); ?>" method="post">
-						<table>
+						<span class="advice">Enter your personal information below:</span>
 			<?php	if ($mode == "activate") { ?>
 						<input type="hidden" name="name" value="<?php echo $_GET["name"]; ?>"/>
 			<?php 	} else { ?>
-							<tr>
-								<td>Nickname:</td>
-								<td><input type="text" name="name"/></td>
-							</tr>
+						<label for="user-name">Nickname:</label>
+						<input id="user-name" type="text" name="name" <?php echo isset($user_list) ? 'list="registered-users"' : ''; ?> required="required"/>
+						<?php if (isset($user_list)) {
+							echo '<datalist id="registered-users">';
+							foreach ($user_list AS $user) {
+								echo "<option value='$user[name]'></option>";
+							}
+							echo '</datalist>';
+						}
+						?>
 			<?php		if ($mode == "register") {	?>
-							<tr>
-								<td>Email:</td>
-								<td><input type="text" name="mail"/></td>
-							</tr>
+							<label for="input_user_mail">Email:</label>
+							<input id="input_user_mail" type="email" name="mail" required="required"/>
 				<?php
 						}
 					}
 				?>
-							<tr>
-								<td>Password:</td>
-								<td><input type="password" name="password"/></td>
-							</tr>
-							<tr>
-								<td colspan="2"><input type="checkbox" name="keepLoggedIn">keep me logged in permanently</input></td>
-							</tr>
-							<tr>
-								<td colspan="2"><input type="submit" value="<?php echo ($mode == "login") ? "Login" : "Register"; ?>"/></td>
-							</tr>
-						</table>
+						<label for="input_user_pw">Password:</label>
+						<input id="input_user_pw" type="password" name="password" required="required"/>
+						<label for="input_login_permanent">login permanently</label>
+						<input type="checkbox" name="keepLoggedIn" id="input_login_permanent"/>
+						<input type="submit" value="<?php echo ($mode == "login") ? "Login" : "Register"; ?>"/>
+						<input type="reset" value="Reset"/>
 					</form>
 			<?php
 				}
@@ -255,8 +265,7 @@
 				{
 					if ($error)
 					{
-						$error_message = $message;
-						require("error.php");
+						error($message, $error_description, true);
 					}
 					else if (!empty($message))
 					{

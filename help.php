@@ -6,6 +6,10 @@
 <html>
 	<head>
 		<?php require("templates/html.head.php"); ?>
+		<link rel="stylesheet" type="text/css" href="style/help.css"/>
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+		<script type="text/javascript" src="javascript/jquery-ui.js"></script>
+		<script type="text/javascript" src="javascript/help.js"></script>
 	</head>
 	<body>
 		<h1 id="page-title">libba.net help page</h1>
@@ -40,8 +44,6 @@
 					It must be valid according to <a href="schema/2012/package.xsd">this XSD schema</a>.
 				</p>
 			</div>
-			<h2 class="question">?</h2>
-			<div class="answer"></div>
 		</div>
 		<?php require("footer.php"); require("header.php"); ?>
 	</body>

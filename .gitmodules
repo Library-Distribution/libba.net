@@ -10,3 +10,6 @@
 [submodule "api"]
 	path = api
 	url = https://github.com/maul-esel/ALD-API.git
+[submodule "modules/diff"]
+	path = modules/diff
+	url = https://github.com/gorhill/PHP-FineDiff.git

@@ -1,0 +1,265 @@
+/* CSS imports */
+@import url("font/stylesheet.css");
+@import url("jquery-ui/smoothness/jquery-ui.css");
+
+/* SCSS imports */
+@import "global/cross-browser.scss";
+
+body, .ui-widget, .ui-widget button {
+	font-family: QuicksandBook, sans-serif;
+}
+.ui-widget-content a {
+	color: navy;
+}
+
+body {
+	background-color: #333;
+}
+
+table {
+	border-collapse: collapse;
+	empty-cells: show;
+}
+
+img {
+	border: none;
+}
+
+/* the page title */
+#page-title {
+	position: relative;
+	top: 100px;
+	text-align: center;
+	font-size: 200%;
+	color: white;
+}
+
+#page-content {
+	display: inline-block;
+	position: absolute;
+	top: 175px;
+	left: 0%;
+	right: 0%;
+
+	background-color: white;
+	width: 50%;
+	margin: auto;
+	padding: 20px;
+
+	@include border-radius(10px);
+}
+
+/***********************************
+ * DEFAULT LINK STYLING
+ ***********************************/
+a, a:visited {
+	text-decoration: none;
+	color: navy;
+
+	&:hover {
+		text-decoration: underline;
+		color: darkred;
+	}
+}
+/* END OF DEFAULT LINK STYLING */
+
+/***********************************
+ * ERROR MESSAGE STYLING
+ ***********************************/
+.error, .warning {
+	padding: 10px;
+	text-align: justify;
+	border: {
+		style: solid;
+		width: 1px;
+	}
+
+	@include border-radius(5px);
+
+	img {
+		max-width: 2%;
+	}
+
+	.message {
+		font-weight: bold;
+		margin-bottom: 7.5px;
+		border-bottom: {
+			style: solid;
+			width: 1px;
+		}
+	}
+}
+
+.error {
+	color: darkred;
+	border-color: #EE1111;
+	background-color: #FEF1EC;
+
+	.message {
+		border-bottom-color: darkred;
+	}
+}
+
+.warning {
+	color: navy;
+	border-color: #DAA520;
+	background-color: #FFFACD;
+
+	.message {
+		border-bottom-color: navy;
+	}
+}
+/* END OF ERROR MESSAGE STYLING */
+
+/***********************************
+ * "NEXT" & "PREVIOUS" LINK STYLING
+ ***********************************/
+.next-previous {
+	display:inline-block
+}
+#next
+{
+	float: right;
+
+	&:before, &:after {
+		content: ' >> ';
+	}
+}
+#prev
+{
+	float: left;
+
+	&:before, &:after {
+		content: ' << ';
+	}
+}
+/* END OF "NEXT" & "PREVIOUS" LINK STYLING */
+
+
+/***********************************
+ * NAVIGATION & FOOTER STYLING
+ ***********************************/
+#navigation {
+	position: fixed;
+	left: 0%;
+	top: 0%;
+	bottom: 0%;
+
+	height: 100%;
+	width: 15%;
+	z-index: 99;
+
+	a:hover .nav-tooltip {
+		display: inline-block;
+	}
+
+	img {
+		position:fixed;
+		left:0.5%;
+		max-height:25px;
+		max-width: 30px;
+	}
+
+	& > a {
+		display: block;
+		position: fixed;
+		width: 7.5%;
+		left: 0%;
+		height: 8.5%;
+
+		@include border-radius(0 25px 25px 0);
+		@include box-shadow(inset -5px 0px 7.5px #555);
+
+		background-color: white;
+	}
+}
+.nav-triangle {
+	display: block;
+	position: absolute;
+	left: 50px;
+	width: 0;
+	height: 0;
+	border: {
+		left: 20px solid black;
+		top: 12.5px solid transparent;
+		bottom: 12.5px solid transparent;
+	}
+}
+.nav-tooltip {
+	display: none;
+
+	position: relative;
+	left: +110%;
+	top: -25%;
+
+	padding: 5px;
+	width: 100px;
+	z-index: 101;
+
+	color: #444;
+	background-color: white;
+	border: solid #222 3px;
+	text: {
+		decoration: none;
+		align: center;
+	}
+
+	@include border-radius(15px);
+	@include box-shadow(10px 10px 15px #000);
+}
+#login {
+	display: inherit;
+	position: fixed;
+	right: 2.5%;
+	top: -5%;
+	width: 7.5%;
+	background-color: lightgray;
+	padding: 5px;
+	text-align: center;
+
+	@include border-radius(0 0 10px 10px);
+
+	* {
+		visibility: collapse;
+	}
+
+	&:hover {
+		top: 0%;
+
+		* {
+			visibility: visible;
+		}
+	}
+}
+
+/*
+	footer
+*/
+#footer {
+	position: fixed;
+	left: 0%;
+	right: 0%;
+	bottom: 0%;
+
+	width: 100%;
+	height: 2%;
+	padding: 3px;
+
+	background-color: #EEE;
+	border-top: ridge gray 2px;
+	font-size: 80%;
+	z-index: 100;
+
+	#copyright {
+		float: right
+	}
+
+	a {
+		display: inline-block;
+		padding: {
+			left: 3px;
+			right: 25px;
+		}
+	}
+}
+/* END OF HEADER & FOOTER STYLING */

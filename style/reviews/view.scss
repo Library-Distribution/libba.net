@@ -1,0 +1,9 @@
+@import "../imports/comment-thread.scss";
+
+#review {
+	@extend %discussion-topic;
+}
+
+#review-comments {
+	@extend %comment-thread;
+}

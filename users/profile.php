@@ -12,6 +12,9 @@
 	require_once("../config/constants.php");
 	require_once("../api/db.php");
 	require_once("../db2.php");
+	require_once('../privilege.php');
+	require_once('../get_privilege_symbols.php');
+	require_once('../partials/Notice.php');
 
 	$api = new ALD( API_URL );
 	$logged_in = isset($_SESSION["user"]);
@@ -59,7 +62,7 @@
 	<body>
 		<h1 id="page-title">
 			<?php
-				echo "<img alt=\"$user's avatar\" id=\"user-gravatar\" src=\"http://gravatar.com/avatar/{$user_data['mail']}?s=50&amp;d=mm\"/>";
+				echo "<img alt=\"$user's avatar\" id=\"user-gravatar\" src=\"http://gravatar.com/avatar/{$user_data['mail-md5']}?s=50&amp;d=mm\"/>";
 				echo $page_title;
 			?>
 		</h1>
@@ -67,37 +70,35 @@
 			<?php
 				if ($error)
 				{
-					require("../error.php");
+					error($error_message, $error_description, true);
 				}
 				else # output a user profile
 				{
 				?>
-					<table>
-							<tr>
-								<td>email:</td>
-								<td>
+					<span class='label'>email:</span>
 				<?php
 					if ($user_profile["show_mail"] == "public" || ($user_profile["show_mail"] == "members" && $logged_in))
 					{
-						echo "<img id=\"user-mail\" alt=\"$user's mail address\" src=\"mailimage.php?user={$user_data["id"]}\"/>";
+						echo "<img class='info' id=\"user-mail\" alt=\"$user's mail address\" src=\"mailimage.php?user={$user_data["id"]}\"/>";
 					}
 					if ($user_profile["allow_mails"])
 					{
-						echo "<a href=\"#\">Contact $user</a>";
+						echo "<a class='info' href=\"#\">Contact $user</a>";
 					}
 				?>
-								</td>
-							</tr>
-							<tr>
-								<td>member since:</td>
-								<td><?php echo $user_data["joined"]; ?></td>
-							</tr>
-							<tr>
-								<td>user ID:</td>
-								<td><?php echo $user_data["id"]; ?></td>
-							</tr>
-						</table>
+					<span class='label'>member since:</span>
+					<span class='info'><?php echo $user_data["joined"]; ?></span>
+
+					<span class='label'>user ID:</span>
+					<span class='info'><?php echo $user_data["id"]; ?></span>
+
 				<?php
+					if (hasExtendedPrivileges($user_data['privileges'])) {
+				?>
+					<span class='label'>privileges:</span>
+					<span class='info'><?php echo get_privilege_symbols($user_data['privileges']); ?></span>
+				<?php
+					}
 				}
 			?>
 		</div>

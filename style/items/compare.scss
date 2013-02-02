@@ -1,0 +1,92 @@
+/* SCSS imports */
+@import "../global/cross-browser.scss";
+@import "../imports/side-image.scss";
+
+.action-type {
+	color: #333;
+}
+
+.compare-diff {
+	padding: 5px;
+	border: solid gray 1px;
+	width: 98%;
+	display: inline-block;
+	white-space: pre;
+	overflow-x: scroll;
+
+	del, ins {
+		text-decoration: none;
+	}
+
+	del {
+		background-color: #FCC;
+	}
+
+	ins {
+		background-color: lightgreen;
+	}
+}
+
+#page-title {
+	&:before, &:after {
+		content: url('/images/diff.png');
+	}
+}
+
+ul#diff-steps {
+	list-style-type: none;
+	margin: 2px;
+	padding: 0px;
+
+	h3 {
+		color: #333;
+		text-decoration: underline;
+		font-weight: bold;
+	}
+}
+
+div.action-details {
+	padding: 10px;
+
+	table {
+		text-align: left;
+		border: {
+			collapse: separate;
+			spacing: 3px;
+		}
+
+		th {
+			color: #333;
+			padding-right: 50px;
+		}
+
+		td {
+			font-style: italic;
+		}
+
+		tr.old-meta th {
+			color: darkred;
+		}
+
+		tr.new-meta th {
+			color: darkgreen;
+		}
+	}
+}
+
+html.no-js {
+	div.action-details {
+		margin-left: 3%;
+		border: solid gray 1px;
+		@include box-shadow(0px 5px 5px);
+		@include border-radius(5px);
+
+		&:hover {
+			@include box-shadow(0px 7.5px 7.5px);
+		}
+	}
+
+	ul#diff-steps li {
+		margin-bottom: 2%;
+	}
+}

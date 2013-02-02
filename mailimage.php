@@ -27,7 +27,7 @@
 		exit;
 	}
 
-	$width = 2 + 10 * strlen($user["mail"]);
+	$width = 10 + 7.5 * strlen($user['mail']);
 
 	if (!$image = @imagecreate($width, 15))
 	{
@@ -37,9 +37,9 @@
 
 	
 	$alpha = imagecolorallocatealpha($image, 255, 255, 255, 127);
-	$black = imagecolorallocate($image, 0, 0, 0);	
+	$black = imagecolorallocate($image, 0, 0, 0);
 
-	if (!imagestring($image, 5, 1, 1, $user["mail"], $black))
+	if (!imagettftext($image, 10, 0, 5, 12.5, $black, './style/font/Quicksand_Bold-webfont.ttf', $user['mail']))
 	{
 		header("HTTP/1.1 500 Server error");
 		exit;

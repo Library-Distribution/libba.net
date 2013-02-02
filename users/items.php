@@ -10,6 +10,7 @@
 	require_once("../sortArray.php");
 	require_once("../ALD.php");
 	require_once("../config/constants.php");
+	require_once('../partials/Notice.php');
 
 	$api = new ALD( API_URL );
 	$logged_in = isset($_SESSION["user"]);
@@ -56,7 +57,7 @@
 	<body>
 		<h1 id="page-title">
 			<?php
-				echo "<img alt=\"$user's avatar\" id=\"user-gravatar\" src=\"http://gravatar.com/avatar/{$user_data['mail']}?s=50&amp;d=mm\"/>";
+				echo "<img alt=\"$user's avatar\" id=\"user-gravatar\" src=\"http://gravatar.com/avatar/{$user_data['mail-md5']}?s=50&amp;d=mm\"/>";
 				echo $page_title;
 			?>
 		</h1>
@@ -64,7 +65,7 @@
 			<?php
 				if ($error)
 				{
-					require("../error.php");
+					error($error_message, $error_description, true);
 				}
 				else # output apps and lib uploaded
 				{
@@ -72,11 +73,12 @@
 					{
 						if ($item_count = count($set))
 						{
-							echo "<h2>$set_name uploaded ($item_count)</h2>";
+							echo "<h2>$set_name uploaded ($item_count)</h2><ul>";
 							foreach ($set AS $item)
 							{
-								echo "<a href='items/{$item['id']}' class=\"user-item\">{$item['name']} (v{$item['version']})</a>";
+								echo "<li><a href='items/{$item['id']}' class=\"user-item\"><img class='item-type' alt='' src='images/$item[type].png'/>{$item['name']} (v{$item['version']})</a></li>";
 							}
+							echo '</ul>';
 						}
 					}
 				}

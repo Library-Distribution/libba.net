@@ -1,0 +1,24 @@
+.letter-item {
+	font: {
+		weight: bold;
+		size: 250%;
+	}
+}
+
+.letter-container {
+	padding: 5px;
+	border: solid lightgray 1px {
+		bottom: {
+			style: double;
+			width: 5px;
+		}
+	}
+}
+
+li.lib {
+	list-style-image: url('/images/lib.png');
+}
+
+li.app {
+	list-style-image: url('/images/app.png');
+}

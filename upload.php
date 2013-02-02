@@ -15,21 +15,23 @@
 		$page_title = "Upload a new library or application";
 		$mode = "start";
 	}
+
 	$logged_in = isset($_SESSION["user"]);
+	if (!$logged_in) {
+		require_once("ALD.php");
+		$api = new ALD(API_URL);
+		$user_list = $api->getUserList();
+	}
 ?>
 <!DOCTYPE html>
 <html>
 	<head>
 		<?php require("templates/html.head.php"); ?>
 		<link rel="stylesheet" type="text/css" href="style/upload.css"/>
-		<?php
-			if ($mode == "start" && !$logged_in)
-			{
-		?>
-				<script type="text/javascript" src="javascript/validate_upload_data.js"></script>
-		<?php
-			}
-		?>
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+		<script type="text/javascript" src="javascript/jquery-ui.js"></script>
+		<script type="text/javascript" src="javascript/modernizr.js"></script>
+		<script type="text/javascript" src="javascript/polyfills/loadFormPolyfills.js"></script>
 	</head>
 	<body>
 		<h1 id="page-title"><?php echo $page_title; ?></h1>
@@ -38,36 +40,33 @@
 				if ($mode == "start")
 				{
 			?>
-					Fill in the following fields:
 					<form name="up" action="<?php echo $_SERVER["REQUEST_URI"]; ?>" method="post" enctype="multipart/form-data">
-						<table width="100%">
-							<col width="25%"/>
-							<col width="75%"/>
-							<tr class="form-header">
-								<td colspan="2">Your application or library:</td>
-							</tr>
-							<tr>
-								<td>Package:</td>
-								<td><input type="hidden" name="MAX_FILE_SIZE" value="78643200"/><input type="file" name="package" onchange="validate_upload_data()"/>
-							</tr>
+						<span class="advice">To upload your code, please fill in the following fields:</span>
+						<fieldset>
+							<legend>Package information</legend>
+							<input type="hidden" name="MAX_FILE_SIZE" value="78643200"/>
+							<label for="input_pack_file">File:</label>
+							<input id="input_pack_file" type="file" name="package" required="required"/>
+						</fieldset>
 			<?php
-					if (!$logged_in) { ?>
-							<tr class="form-header">
-								<td colspan="2">You:</td>
-							</tr>
-							<tr>
-								<td>User name:</td>
-								<td><input type="text" name="user" onchange="validate_upload_data()"/></td>
-							</tr>
-							<tr>
-								<td>Password:</td>
-								<td><input type="password" name="password" onchange="validate_upload_data()"/></td>
-							</tr>
+				if (!$logged_in) { ?>
+						<fieldset>
+							<legend>User login</legend>
+							<label for="user-name">User name:</label>
+							<input id="user-name" type="text" name="user" list="registered-users" required="required" placeholder="enter your libba.net user name..."/>
+							<datalist id="registered-users">
+							<?php
+								foreach ($user_list AS $user) {
+									echo "<option value='$user[name]'></option>";
+								}
+							?>
+							</datalist>
+							<label for="input_user_pw">Password:</label>
+							<input id="input_user_pw" type="password" name="password" required="required" placeholder="enter your libba.net password... (will be hidden)"/>
+						</fieldset>
 					<?php } ?>
-							<tr>
-								<td colspan="2"><input type="submit" name="submit_btn" <?php echo !$logged_in ? "disabled=\"disabled\"" : "" ?> value="Submit!"/></td>
-							</tr>
-						</table>
+						<input type="submit" name="submit_btn" value="Upload"/>
+						<input type="reset" name="reset_btn" value="Reset"/>
 					</form>
 			<?php
 				}

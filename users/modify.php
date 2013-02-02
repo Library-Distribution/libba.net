@@ -14,6 +14,7 @@
 	require_once("../privilege.php");
 	require_once("../api/db.php");
 	require_once("../db2.php");
+	require_once('../partials/Notice.php');
 
 	require_once("../secure_redirect.php");
 	secure_redirect();
@@ -165,7 +166,7 @@
 	<body>
 		<h1 id="page-title">
 			<?php
-				echo "<img alt=\"$user's avatar\" id=\"user-gravatar\" src=\"http://gravatar.com/avatar/{$user_data['mail']}?s=50&amp;d=mm\"/>";
+				echo "<img alt=\"$user's avatar\" id=\"user-gravatar\" src=\"http://gravatar.com/avatar/{$user_data['mail-md5']}?s=50&amp;d=mm\"/>";
 				echo $page_title;
 			?>
 		</h1>
@@ -173,73 +174,74 @@
 			<?php
 				if ($error)
 				{
-					require("../error.php");
+					error($error_message, $error_description, true);
 				}
 				else if (empty($_POST))
 				{
 			?>
 					<form action="#" method="post">
-						<table style="display: inline-table">
-							<tr>
-								<td><label for="username">user name:</label></td>
-								<td><input type="text" name="username" value="<?php echo $user; ?>"/></td>
-							</tr>
-							<tr>
-								<td><label for="mail">email:</label></td>
-								<td><input type="text" name="mail" value="<?php echo $user_profile["mail"]; ?>"/></td>
-							</tr>
-							<tr>
-								<td><label for="site_theme">website theme:</label></td>
-								<td>
-									<select name="site_theme">
-						<?php
-										foreach ($theme_options AS $theme)
-										{
-											echo "<option value=\"$theme\" "
-														. ($user_profile["site_theme"] == $theme ? "selected=\"selected\"" : "")
-														. ">$theme</option>";
-										}
-						?>
-									</select>
-								</td>
-							</tr>
-							<tr>
-								<td><label for="show_mail">email visibility:</label></td>
-								<td>
-									<select name="show_mail">
-						<?php
-										foreach ($mail_options AS $option)
-										{
-											echo "<option value=\"$option\" "
-														. ($user_profile["show_mail"] == $option ? "selected=\"selected\"" : "")
-														. ">$option</option>";
-										}
-						?>
-									</select>
-								</td>
-							</tr>
-							<tr>
-								<td><label for="allow_mails">allow users to contact me:</label></td>
-								<td>
-									<select name="allow_mails">
-						<?php
-										foreach ($contact_options AS $value)
-										{
-											echo "<option value=\"$value\" "
-														. ($user_profile["allow_mails"] == $value ? "selected=\"selected\"" : "")
-														. ">$value</option>";
-										}
-						?>
-									</select>
-								</td>
-							</tr>
-							<!-- TODO: support password change (enter twice) -->
-							<tr>
-								<td colspan="2">
-									<input type="submit" value="Submit"/>
-								</td>
-							</tr>
-						</table>
+						<fieldset>
+							<legend>user</legend>
+
+							<label for="username">user name:</label>
+							<input type="text" name="username" value="<?php echo $user; ?>"/>
+							<div class="help" lang="en" data-help-advice="The nickname you use for logging in and that is displayed to other users"></div>
+
+							<label for="mail">email:</label>
+							<input type="text" name="mail" value="<?php echo $user_profile["mail"]; ?>"/>
+							<div class="help" lang="en" data-help-advice="The email address associated with your profile. You can control its visibility below."></div>
+						</fieldset>
+
+						<fieldset>
+							<legend>display</legend>
+
+							<label for="site_theme">website theme:</label>
+							<select name="site_theme">
+								<?php
+								foreach ($theme_options AS $theme)
+								{
+									echo "<option value=\"$theme\" "
+											. ($user_profile["site_theme"] == $theme ? "selected=\"selected\"" : "")
+											. ">$theme</option>";
+								}
+								?>
+							</select>
+							<div class="help" lang="en" data-help-advice="This changes how the website is presented to you when logged in."></div>
+						</fieldset>
+
+						<fieldset>
+							<legend>privacy</legend>
+
+							<label for="show_mail">email visibility:</label>
+							<select name="show_mail">
+								<?php
+								foreach ($mail_options AS $option)
+								{
+									echo "<option value=\"$option\" "
+											. ($user_profile["show_mail"] == $option ? "selected=\"selected\"" : "")
+											. ">$option</option>";
+								}
+								?>
+							</select>
+							<div class="help" lang="en" data-help-advice="To protect your mail address from spambots, it is embedded as image (if at all)"></div>
+
+							<label for="allow_mails">allow contact by:</label>
+							<select name="allow_mails">
+								<?php
+									foreach ($contact_options AS $value)
+									{
+										echo "<option value=\"$value\" "
+												. ($user_profile["allow_mails"] == $value ? "selected=\"selected\"" : "")
+												. ">$value</option>";
+									}
+								?>
+							</select>
+							<div class="help" lang="en" data-help-advice="Contacting works without the sender seeing your mail address. Moderators can always contact you."></div>
+						</fieldset>
+						<!-- TODO: support password change (enter twice) -->
+
+						<input type="submit"/>
+						<input type="reset"/>
 					</form>
 			<?php
 				}
@@ -250,7 +252,7 @@
 			?>
 		</div>
 		<?php
-			$current_mode = "activity";
+			$current_mode = "modify";
 			require_once("user_navigation.php");
 
 			require("../footer.php");

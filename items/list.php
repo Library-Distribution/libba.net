@@ -5,6 +5,7 @@
 	require_once("../ALD.php");
 	require_once("../config/constants.php");
 	require_once("../sortArray.php");
+	require_once('../partials/Notice.php');
 
 	$api = new ALD( API_URL );
 	$logged_in = isset($_SESSION["user"]);
@@ -55,15 +56,21 @@
 <html>
 	<head>
 		<?php require("../templates/html.head.php"); ?>
+
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+		<script type="text/javascript" src="javascript/jquery-ui.js"></script>
+		<script type="text/javascript" src="javascript/items/list.js"></script>
+
 		<link rel="stylesheet" type="text/css" href="style/items/list.css"/>
 	</head>
 	<body>
 		<h1 id="page-title"><?php echo $page_title; ?></h1>
 		<div id="page-content">
+			<div id="items-list">
 			<?php
 				if ($error)
 				{
-					require("../error.php");
+					error($error_message, $error_description, true);
 				}
 				else
 				{
@@ -86,11 +93,11 @@
 						{
 							if ($last_letter != "")
 							{
-								echo "</ul></div>";
+								echo "</ul></div></div>";
 							}
-							echo "<div class='letter-container' id='items$current_letter'><span class='letter-item'>$current_letter</span><ul>";
+							echo "<div class='letter-container' id='items$current_letter'><h3>$current_letter</h3><div id='items_$current_letter'><ul>";
 						}
-						echo "<li id='item{$item['id']}'><a class='item' href='./{$item['id']}'>{$item['name']}</a> (v{$item['version']}) by <a class='userlink' href='users/{$item['user']['name']}/profile'>{$item['user']['name']}</a></li>";
+						echo "<li id='item{$item['id']}' class='$item[type]'><a class='item' href='./{$item['id']}'>{$item['name']}</a> (v{$item['version']}) by <a class='userlink' href='users/{$item['user']['name']}/profile'>{$item['user']['name']}</a></li>";
 						$last_letter = $current_letter;
 					}
 					if (count($items) > 0)
@@ -113,6 +120,7 @@
 					}
 				}
 			?>
+			</div>
 		</div>
 		<?php require("../header.php"); require("../footer.php"); ?>
 	</body>
