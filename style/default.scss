@@ -72,18 +72,47 @@ a, a:visited {
 /***********************************
  * ERROR MESSAGE STYLING
  ***********************************/
-.error-message {
+.error, .warning {
 	padding: 10px;
 	text-align: justify;
-
-	.message, .message:before {
-		font-weight: bold;
-		border-bottom: solid red 1px;
-		margin-bottom: 7.5px;
+	border: {
+		style: solid;
+		width: 1px;
 	}
-	.message:before {
-		content: 'Error: ';
-		border-bottom-style: none;
+
+	@include border-radius(5px);
+
+	img {
+		max-width: 2%;
+	}
+
+	.message {
+		font-weight: bold;
+		margin-bottom: 7.5px;
+		border-bottom: {
+			style: solid;
+			width: 1px;
+		}
+	}
+}
+
+.error {
+	color: darkred;
+	border-color: #EE1111;
+	background-color: #FEF1EC;
+
+	.message {
+		border-bottom-color: darkred;
+	}
+}
+
+.warning {
+	color: navy;
+	border-color: #DAA520;
+	background-color: #FFFACD;
+
+	.message {
+		border-bottom-color: navy;
 	}
 }
 /* END OF ERROR MESSAGE STYLING */
