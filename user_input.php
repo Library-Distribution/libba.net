@@ -1,7 +1,7 @@
 <?php
-	require_once("markdown/markdown.php");
-	require_once("smartypants/smartypants.php");
-	require_once("htmlpurifier/library/HTMLPurifier.auto.php");
+	require_once("modules/markdown/markdown.php");
+	require_once("modules/smartypants/smartypants.php");
+	require_once("modules/htmlpurifier/library/HTMLPurifier.auto.php");
 	
 	function user_input_process($raw)
 	{
