@@ -28,3 +28,5 @@ RewriteRule ^activate$ login.php?mode=activate [L,QSA]
 RewriteRule ^logout$   login.php?mode=logout   [L,QSA]
 
 RewriteRule ^sitemap$ sitemap.php [L]
+
+AddOutputFilterByType DEFLATE text/html text/css application/x-javascript
