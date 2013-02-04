@@ -47,7 +47,7 @@
 		{
 			for ($i = 0; $i < 1; $i++)
 			{
-				require_once("util/db.php");
+				require_once("api/db.php");
 				$db_connection = db_ensure_connection();
 
 				$name = $_POST["name"]; $pw = hash("sha256", $_POST["password"]);
