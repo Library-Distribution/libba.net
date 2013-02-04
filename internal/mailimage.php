@@ -1,7 +1,7 @@
 <?php
 	session_start();
 
-	require_once("../api/db.php");
+	require_once("../util/db.php");
 	require_once("../util/db2.php");
 	$db_connection = db_ensure_connection();
 
