@@ -11,7 +11,7 @@
 	require_once("../util/ALD.php");
 	require_once("../config/constants.php");
 	require_once('../modules/semver/semver.php');
-	require_once('../api/HttpException.php');
+	require_once('../modules/HttpException/HttpException.php');
 	require_once('../partials/Notice.php');
 
 	$logged_in = isset($_SESSION["user"]);
