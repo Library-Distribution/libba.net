@@ -133,7 +133,7 @@
 			$versions = $api->getItemList(0, "all", NULL, NULL, $item['name']);
 
 			# remove the current item from the array
-			require_once("../api/util.php");
+			require_once("../util/searchSubArray.php");
 			$index = searchSubArray($versions, array("id" => $item["id"]));
 			if ($index !== NULL)
 			{
