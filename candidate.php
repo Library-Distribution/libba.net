@@ -4,7 +4,6 @@
 
 	require_once("util/user_input.php");
 	require_once("util/db.php");
-	require_once("util/db2.php");
 	require_once("util/ALD.php");
 
 	require_once("config/constants.php");

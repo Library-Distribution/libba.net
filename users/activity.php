@@ -15,7 +15,6 @@
 	require_once("../util/user_input.php");
 	require_once("../util/privilege.php");
 	require_once("../util/db.php");
-	require_once("../util/db2.php");
 	require_once('../partials/Notice.php');
 
 	$api = new ALD( API_URL );
