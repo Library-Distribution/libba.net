@@ -76,12 +76,12 @@
 
 		public function initRegistration( $name, $mail, $password, $password_alt, $template )
 		{
-			$this->_Request( CURLOPT_POST, "/users/register", array(), array("name" => $name, "mail" => $mail, "password" => $password, "password-alt" => $password_alt, "template" => $template) );
+			$this->_Request( CURLOPT_POST, "/users/registration/init", array(), array("name" => $name, "mail" => $mail, "password" => $password, "password-alt" => $password_alt, "template" => $template) );
 		}
 
 		public function completeRegistration( $id, $token )
 		{
-			$this->_Request( CURLOPT_POST, "/users/register/verify/$id", array(), array("token" => $token) );
+			$this->_Request( CURLOPT_POST, "/users/registration/verify/$id", array(), array("token" => $token) );
 		}
 
 		private function _Request($method, $url, $header, $data = NULL, $user = NULL, $password = NULL)
