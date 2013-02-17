@@ -55,6 +55,9 @@
 
 				if ($mode == "register" && isset($_POST["mail"]))
 				{
+					require_once('util/ALD.php');
+					$api = new ALD( API_URL );
+
 					$should_redirect = false; # redirect after activation!
 					$page_title = "Registration failed"; # assume failure, reset on success
 
@@ -65,18 +68,19 @@
 					$joined = date("Y-m-d");
 
 					# check if already registered
-					$db_query = "SELECT name FROM $db_table_users WHERE mail = '$escaped_mail' OR name = '$escaped_name'";
-					if (!$db_result = mysql_query($db_query, $db_connection))
-					{
-						$message = "Could not access user database";
-						$error_description = "The attempt to check if a user with the same name or email already exists failed. The error message was: \"" . mysql_error() . "\".";
-						break;
+					try {
+						$api->getUser($name);
+					} catch (HttpException $e) {
+						$no_conflict = $e->getCode() == 404;
 					}
 
-					if (mysql_num_rows($db_result) > 0)
-					{
+					if (!isset($no_conflict)) {
 						$message = "Registration not possible: duplicate user";
-						$error_description = "A user with this nickname (\"$name\") or email (\"$mail\") is already registered. Duplicate names or mail addresses are not allowed.";
+						$error_description = "A user with this nickname (\"$name\") is already registered. Duplicate names are not allowed.";
+						break;
+					} else if (!$no_conflict) {
+						$message = "Could not check for duplicate user name";
+						$error_description = "The attempt to check if a user with the same name already exists failed. The API error message was: \"" . $e->getMessage() . "\".";
 						break;
 					}
 
