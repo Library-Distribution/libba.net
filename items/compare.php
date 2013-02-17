@@ -2,7 +2,7 @@
 	ob_start();
 
 	require_once('../util/ALD.php');
-	require_once('../api/semver.php');
+	require_once('../modules/semver/semver.php');
 	require_once('../config/constants.php');
 	require_once('../modules/diff/finediff.php');
 	require_once('CompareItem.php');

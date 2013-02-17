@@ -132,9 +132,3 @@
 	echo rewrite();
 	ob_end_flush();
 ?>
-<?php
-	function semver_sort($a, $b)
-	{
-		return semver_compare($b['version'], $a['version']);
-	}
-?>

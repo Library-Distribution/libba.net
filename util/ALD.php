@@ -1,5 +1,5 @@
 <?php
-	require_once(dirname(__FILE__) . "/../api/HttpException.php");
+	require_once(dirname(__FILE__) . "/../modules/HttpException/HttpException.php");
 
 	class ALD
 	{

@@ -10,8 +10,7 @@
 	require_once("../util/sortArray.php");
 	require_once("../util/ALD.php");
 	require_once("../config/constants.php");
-	require_once("../api/db.php");
-	require_once("../util/db2.php");
+	require_once("../util/db.php");
 	require_once('../util/privilege.php');
 	require_once('../util/get_privilege_symbols.php');
 	require_once('../partials/Notice.php');

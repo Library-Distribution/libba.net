@@ -10,8 +10,8 @@
 
 	require_once("../util/ALD.php");
 	require_once("../config/constants.php");
-	require_once("../api/semver.php");
-	require_once('../api/HttpException.php');
+	require_once('../modules/semver/semver.php');
+	require_once('../modules/HttpException/HttpException.php');
 	require_once('../partials/Notice.php');
 
 	$logged_in = isset($_SESSION["user"]);
@@ -94,7 +94,7 @@
 			$versions = $api->getItemList(0, "all", NULL, NULL, $item['name']);
 
 			# remove the current item from the array
-			require_once("../api/util.php");
+			require_once("../util/searchSubArray.php");
 			$index = searchSubArray($versions, array("id" => $item["id"]));
 			if ($index !== NULL)
 			{

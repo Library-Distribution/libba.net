@@ -13,3 +13,9 @@
 [submodule "modules/diff"]
 	path = modules/diff
 	url = https://github.com/gorhill/PHP-FineDiff.git
+[submodule "modules/semver"]
+	path = modules/semver
+	url = https://gist.github.com/2975235.git
+[submodule "modules/HttpException"]
+	path = modules/HttpException
+	url = https://gist.github.com/4709655.git

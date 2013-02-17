@@ -1,8 +1,7 @@
 <?php
 	session_start();
 
-	require_once("../api/db.php");
-	require_once("../util/db2.php");
+	require_once("../util/db.php");
 	$db_connection = db_ensure_connection();
 
 	$db_query = "SELECT mail, show_mail FROM $db_table_user_profile WHERE id = UNHEX('" . mysql_real_escape_string($_GET["user"]) . "')";
