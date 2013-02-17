@@ -54,45 +54,6 @@
 			error($error_message, $error_description, true);
 		}
 		else {
-			if ($logged_in)
-			{
-				require_once("../util/privilege.php");
-
-				$redirect_url = urlencode($_SERVER["REQUEST_URI"]);
-				if (hasPrivilege($_SESSION["privileges"], PRIVILEGE_REVIEW))
-				{
-					# insert review items
-					/*
-					echo "<div class=\"menu\">Code Review<ul class=\"admin-menu\">";
-					if ($item['reviewed'])
-					{
-						echo "<a href='internal/moderator-action.php?id=$id&amp;action=review&amp;value=0&amp;return_error=true&amp;redirect=$redirect_url'><li>Mark as <span style=\"font-weight: bold;\">unreviewed</span></li></a>";
-					}
-					else
-					{
-						echo "<a href='internal/moderator-action.php?id=$id&amp;action=review&amp;value=1&amp;return_error=true&amp;redirect=$redirect_url'><li>Mark as <span style=\"font-weight: bold; color: green\">secure and stable</span></li></a>";
-					}
-					echo "<a href='internal/moderator-action.php?id=$id&amp;action=review&amp;value=-1&amp;return_error=true&amp;redirect=$redirect_url'><li>Mark as <span style=\"font-weight: bold; color: red\">unsecure or unstable</span></li></a>";
-					echo "</ul></div>";
-					*/
-				}
-				if (hasPrivilege($_SESSION["privileges"], PRIVILEGE_STDLIB) && $item['type'] == "lib" && $item['reviewed'])
-				{
-					# insert default_include items
-					/*
-					echo "<div class=\"menu\">Library standard<ul class=\"admin-menu\">";
-					if ($item['default'])
-					{
-						echo "<a href='internal/moderator-action.php?id=$id&amp;action=default&amp;value=0&amp;return_error=true&amp;redirect=$redirect_url'><li><span style=\"font-weight: bold; color: red\">Remove</span></li></a>";
-					}
-					else
-					{
-						echo "<a href='internal/moderator-action.php?id=$id&amp;action=default&amp;value=1&amp;return_error=true&amp;redirect=$redirect_url'><li><span style=\"font-weight: bold; color: green\">Add</span></li></a>";
-					}
-					echo "</ul></div>";
-					*/
-				}
-			}
 		?>
 			<table id="item-details">
 				<tr>
