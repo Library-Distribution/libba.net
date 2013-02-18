@@ -36,11 +36,9 @@
 					$error_description = "Not all data required for a registration is present.";
 					break;
 				}
-
-				require("templates/registration.php");
 				try
 				{
-					$api->initRegistration( $_POST["name"], $_POST["mail"], $_POST["password"], $_POST["password_alt"], $template );
+					$api->initRegistration( $_POST["name"], $_POST["mail"], $_POST["password"], $_POST["password_alt"] );
 				}
 				catch (HttpException $e)
 				{
