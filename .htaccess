@@ -1,3 +1,10 @@
+Options -Multiviews
+
+ErrorDocument 400 /errors/400.html
+ErrorDocument 403 /errors/403.html
+ErrorDocument 404 /errors/404.html
+ErrorDocument 500 /errors/500.html
+
 AddDefaultCharset utf-8
 
 RewriteEngine On
@@ -7,9 +14,9 @@ RewriteRule ^help$ help.php [L]
 RewriteRule ^index$ index.php [L]
 RewriteRule ^upload$ upload.php [L]
 
-RewriteRule ^candidatures$ /candidatures/          [R=301] # add a trailing slash
-RewriteRule ^candidatures/$ candidature.php            [L] # the list of candidatures
-RewriteRule ^candidatures/(\d+)$ candidature.php?id=$1 [L] # a specific candidature
+RewriteRule ^candidates$ /candidates/           [R=301] # add a trailing slash
+RewriteRule ^candidates/$ candidate.php             [L] # the list of candidates
+RewriteRule ^candidates/(\d+)$ candidate.php?id=$1  [L] # a specific candidate
 
 RewriteRule ^reviews$ /reviews/                      [R=301] # add a trailing slash
 RewriteRule ^reviews/$ review.php                        [L] # the list of reviews
@@ -23,3 +30,7 @@ RewriteRule ^register$       register.php?mode=init         [L,QSA]
 RewriteRule ^register/(.+)$  register.php?mode=verify&id=$1 [L,QSA]
 
 RewriteRule ^create-account$ create-account.php [L]
+
+RewriteRule ^sitemap$ sitemap.php [L]
+
+AddOutputFilterByType DEFLATE text/html text/css application/x-javascript

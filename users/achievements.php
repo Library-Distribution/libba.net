@@ -7,9 +7,10 @@
 		header("Location: .");
 	}
 
-	require_once("../sortArray.php");
-	require_once("../ALD.php");
+	require_once("../util/sortArray.php");
+	require_once("../util/ALD.php");
 	require_once("../config/constants.php");
+	require_once('../partials/Notice.php');
 
 	$api = new ALD( API_URL );
 	$logged_in = isset($_SESSION["user"]);
@@ -56,14 +57,14 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<?php require("../templates/html.head.php"); ?>
+		<?php require("../partials/html.head.php"); ?>
 		<link rel="stylesheet" type="text/css" href="style/users/general.css"/>
 		<link rel="stylesheet" type="text/css" href="style/users/achievements.css"/>
 	</head>
 	<body>
 		<h1 id="page-title">
 			<?php
-				echo "<img alt=\"$user's avatar\" id=\"user-gravatar\" src=\"http://gravatar.com/avatar/{$user_data['mail']}?s=50&amp;d=mm\"/>";
+				echo "<img alt=\"$user's avatar\" id=\"user-gravatar\" src=\"http://gravatar.com/avatar/{$user_data['mail-md5']}?s=50&amp;d=mm\"/>";
 				echo $page_title;
 			?>
 		</h1>
@@ -71,14 +72,16 @@
 			<?php
 				if ($error)
 				{
-					require("../error.php");
+					error($error_message, $error_description, true);
 				}
 				else
 				{
+					echo '<ul>';
 					foreach ($achievements AS $a)
 					{
-						echo "<div class=\"achievement\"><a href=\"{$a["link"]}\"><img class=\"achievement-icon\" src=\"{$a["image"]}\"/></a>{$a["text"]}</div>";
+						echo '<li><a href="' . $a['link'] . '"><img class="achievement-icon" src="' . $a['image'] . '"/> ' . $a['text'] . '</a></li>';
 					}
+					echo '</ul>';
 				}
 			?>
 		</div>
@@ -86,13 +89,13 @@
 			$current_mode = "achievements";
 			require_once("user_navigation.php");
 
-			require("../footer.php");
-			require("../header.php");
+			require("../partials/footer.php");
+			require("../partials/header.php");
 		?>
 	</body>
 </html>
 <?php
-	require_once("../rewriter.php");
+	require_once("../util/rewriter.php");
 	echo rewrite();
 	ob_end_flush();
 ?>

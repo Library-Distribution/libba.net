@@ -4,6 +4,8 @@ DirectoryIndex list.php
 
 RewriteEngine On
 
-RewriteRule ^([0-9a-fA-F]{32})$ view.php?id=$1              [L]
+RewriteRule ^compare/([0-9a-fA-F]{32})\.\.\.([0-9a-fA-F]{32})$ compare.php?id1=$1&id2=$2 [L]
+RewriteRule ^compare/([^/]+)/([^/]+)\.\.\.([^/]+)$ compare.php?name=$1&version1=$2&version2=$3 [L]
+RewriteRule ^([0-9a-fA-F]{32})$ view.php?id=$1	[L]
 RewriteRule ^([^/]+)/([^/]+)$   view.php?name=$1&version=$2 [L]
 #RewriteRule ^([^/]+)$           list.php?name=$1            [L]

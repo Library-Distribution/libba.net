@@ -1,0 +1,10 @@
+﻿@import "../imports/highlight-list.scss";
+
+ul {
+	@extend %highlight-list;
+}
+
+img.item-type { /* override width and margin from import file */
+	width: 25px;
+	margin: 10px;
+}

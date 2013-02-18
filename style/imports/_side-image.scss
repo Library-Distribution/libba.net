@@ -1,0 +1,17 @@
+@import "../global/cross-browser.scss";
+
+#page-title.side-image {
+	&:before, &:after {
+		background-color: white;
+		width: 3%;
+		line-height: 2%;
+		display: inline-block;
+
+		padding: 5px;
+		margin: {
+			right: 5px;
+			left: 5px;
+		}
+		@include border-radius(50%);
+	}
+}

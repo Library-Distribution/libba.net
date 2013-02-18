@@ -1,6 +1,6 @@
 <div id="user-navigation">
 <?php
-	require_once("../privilege.php");
+	require_once("../util/privilege.php");
 
 	$possible_modes = array("profile" => "Profile",
 							"activity" => "Activity",

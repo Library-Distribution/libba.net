@@ -1,0 +1,71 @@
+/* SCSS imports */
+@import "../global/cross-browser.scss";
+@import "../imports/side-image.scss";
+
+#item-details {
+	min-width: 50%;
+	margin: {
+		right: 15px;
+		bottom: 15px;
+	}
+
+	td, th {
+		border-bottom: solid gray 1px;
+		padding: 7px;
+	}
+
+	th {
+		color: #333;
+	}
+}
+
+#item-descr-title, #item-descr {
+	display: inline;
+}
+
+ul {
+	list-style-type: none;
+
+	li {
+		display: inline-block;
+		width: 30%;
+		text-align: center;
+		margin: {
+			right: 3%;
+			bottom: 10px;
+		}
+
+		a {
+			width: 75%;
+			display: inline-block;
+		}
+
+		&:before {
+			color: #333;
+			content: '\25b6\a0\a0';
+		}
+
+		&:hover:before {
+			color: #888;
+		}
+	}
+}
+
+a.compare-link {
+	width: 20px;
+	min-height: 20px;
+	display: inline-block;
+	background: {
+		image: url('/images/diff.png');
+		repeat: no-repeat;
+		position: center center;
+	}
+}
+
+#page-title.lib:before, #page-title.lib:after {
+	content: url('/images/lib.png');
+}
+
+#page-title.app:before, #page-title.app:after {
+	content: url('/images/app.png');
+}

@@ -1,0 +1,17 @@
+@import "../imports/item-list.scss";
+
+#candidate-list {
+	dd.cand-open {
+		background-color: lightgreen;
+	}
+
+	dd.cand-closed {
+		background-color: #FF6666;
+	}
+
+	@extend %item-list;
+
+	.candidate-entry {
+		@extend %item-list-entry;
+	}
+}

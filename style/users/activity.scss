@@ -1,0 +1,45 @@
+﻿/* SCSS imports */
+@import "../global/cross-browser.scss";
+
+.activity-item {
+	width: 95%;
+	display: inline-block;
+	background-color: #BBB;
+	text-align: left;
+	border: solid #999 1px;
+	margin: 5px;
+	padding: 10px;
+
+	&, .activity-body {
+		@include border-radius(5px);
+	}
+
+	&:hover {
+		background-color: #CCC;
+	}
+
+	img.activity-icon {
+		width: 5%;
+		margin: 5px;
+		float: left;
+		vertical-align: middle;
+	}
+
+	.activity-footer {
+		font-size: 90%;
+		text-align: right;
+		color: #333;
+		width: 100%;
+		vertical-align: bottom;
+	}
+
+	.activity-body {
+		width: 90%;
+		padding: 5px;
+		margin-bottom: 3px;
+		background-color: white;
+		float: right;
+
+		border: solid gray 1px;
+	}
+}

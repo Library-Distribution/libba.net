@@ -1,0 +1,11 @@
+@import "../imports/privilege-symbols.scss";
+
+.label, .info {
+	float: left;
+	line-height: 150%;
+}
+
+.label {
+	clear: left;
+	width: 25%;
+}

@@ -1,0 +1,43 @@
+form {
+	fieldset {
+			margin-bottom: 10px;
+
+			legend {
+				font-weight: bold;
+			}
+	}
+
+	label {
+		float: left;
+		min-width: 25%;
+		clear: both;
+	}
+
+	input, select, textarea, button {
+		float: left;
+		min-width: 45%;
+	}
+
+	input[type='submit'], input[type='reset'] {
+		float: right;
+		min-width: 25%;
+		width: 25%;
+		margin: 5px;
+		clear: left;
+	}
+
+	span.advice {
+		border-bottom: solid gray 1px;
+		display: block;
+		width: 75%;
+		margin-bottom: 10px;
+		padding-left: 25px;
+
+		background: {
+			image: url('/images/info.png');
+			repeat: no-repeat;
+			size: contain;
+			position: left center;
+		}
+	}
+}
