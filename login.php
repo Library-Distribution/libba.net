@@ -26,10 +26,6 @@
 			$api = new ALD(API_URL);
 			$user_list = $api->getUserList();
 		}
-		else if ($mode == "activate")
-		{
-			$page_title = "Activate account";
-		}
 		else if ($mode == "logout")
 		{
 			$page_title = "Logged out";
@@ -49,42 +45,7 @@
 				$name = $_POST["name"]; $pw = hash("sha256", $_POST["password"]);
 				$escaped_name = mysql_real_escape_string($name, $db_connection);
 
-				if ($mode == "activate")
-				{
-					if (isset($_GET["token"]))
-					{
-						$page_title = "Activation failed"; # assume failure, reset on success
-						$token = mysql_real_escape_string($_GET["token"]);
-
-						$db_query = "SELECT activationToken FROM $db_table_users WHERE name = '$escaped_name' AND activationToken = '$token' AND pw = '$pw'";
-						if (!$db_result = mysql_query($db_query, $db_connection))
-						{
-							$message = "Could not validate activation token";
-							$error_description = "Failed to validate the activation token. The error message was: \"" . mysql_error . "\". Until the token is cleared, the account is still deactivated.";
-							break;
-						}
-
-						if (mysql_num_rows($db_result) != 1)
-						{
-							$message = "Account not found";
-							$error_description = "A user account with that user name ($name), password and token could not be found. Therefore it could not be activated.";
-							break;
-						}
-
-						$db_query = "UPDATE $db_table_users Set activationToken = '' WHERE name = '$escaped_name' AND activationToken = '$token' AND pw = '$pw'";
-						if (!mysql_query($db_query, $db_connection))
-						{
-							$message = "Could not reset activation token";
-							$error_description = "Failed to empty the activation token. The error message was: \"" . mysql_error . "\". Until the token is cleared, the account is still deactivated.";
-							break;
-						}
-
-						$message = "Your account was successfully activated.";
-						$page_title = "Account activated!";
-						$error = false;
-					}
-				}
-				else if ($mode == "login")
+				if ($mode == "login")
 				{
 					if (isset($_POST["keepLoggedIn"]) && $_POST["keepLoggedIn"])
 					{
@@ -168,31 +129,27 @@
 			?>
 					<form action="<?php echo htmlentities($_SERVER["REQUEST_URI"]); ?>" method="post">
 						<span class="advice">Enter your personal information below:</span>
-			<?php	if ($mode == "activate") { ?>
-						<input type="hidden" name="name" value="<?php echo $_GET["name"]; ?>"/>
-			<?php 	} else { ?>
 						<label for="user-name">Nickname:</label>
 						<input id="user-name" type="text" name="name" <?php echo isset($user_list) ? 'list="registered-users"' : ''; ?> required="required"/>
-						<?php if (isset($user_list)) {
+					<?php if (isset($user_list)) {
 							echo '<datalist id="registered-users">';
 							foreach ($user_list AS $user) {
 								echo "<option value='$user[name]'></option>";
 							}
 							echo '</datalist>';
 						}
-						?>
-			<?php		if ($mode == "register") {	?>
+					?>
+					<?php if ($mode == "register") {	?>
 							<label for="input_user_mail">Email:</label>
 							<input id="input_user_mail" type="email" name="mail" required="required"/>
-				<?php
+					<?php
 						}
-					}
-				?>
+					?>
 						<label for="input_user_pw">Password:</label>
 						<input id="input_user_pw" type="password" name="password" required="required"/>
 						<label for="input_login_permanent">login permanently</label>
 						<input type="checkbox" name="keepLoggedIn" id="input_login_permanent"/>
-						<input type="submit" value="<?php echo ($mode == "login") ? "Login" : "Activate"; ?>"/>
+						<input type="submit" value="Login"/>
 						<input type="reset" value="Reset"/>
 					</form>
 			<?php

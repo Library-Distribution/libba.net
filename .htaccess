@@ -23,7 +23,6 @@ RewriteRule ^reviews/$ review.php                        [L] # the list of revie
 RewriteRule ^reviews/([0-9a-fA-F]{32})$ review.php?id=$1 [L] # a specific review
 
 RewriteRule ^login$    login.php?mode=login    [L,QSA]
-RewriteRule ^activate$ login.php?mode=activate [L,QSA]
 RewriteRule ^logout$   login.php?mode=logout   [L,QSA]
 
 RewriteRule ^register$       register.php?mode=init         [L,QSA]
