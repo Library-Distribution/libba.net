@@ -49,7 +49,7 @@
 					$page_title = "Login failed"; # assume failure, reset on success
 					$should_redirect = false;
 
-					$api = new ALD( API_URL );
+					$api = new ALD( SECURE_API_URL );
 
 					try {
 						$user = $api->getUser($_POST['name'], $_POST['name'], $_POST['password']); # provide credentials only for purpose of indirect validation
