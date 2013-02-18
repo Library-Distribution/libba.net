@@ -39,12 +39,6 @@
 		{
 			for ($i = 0; $i < 1; $i++)
 			{
-				require_once("api/db.php");
-				$db_connection = db_ensure_connection();
-
-				$name = $_POST["name"]; $pw = hash("sha256", $_POST["password"]);
-				$escaped_name = mysql_real_escape_string($name, $db_connection);
-
 				if ($mode == "login")
 				{
 					if (isset($_POST["keepLoggedIn"]) && $_POST["keepLoggedIn"])
@@ -62,9 +56,9 @@
 						try
 						{
 							$api = new ALD( API_URL );
-							$user = $api->getUser($name);
+							$user = $api->getUser($_POST['name']);
 
-							$_SESSION["user"] = $name;
+							$_SESSION["user"] = $_POST['name'];
 							$_SESSION["userID"] = $user["id"];
 							$_SESSION["password"] = $_POST["password"];
 							$_SESSION["privileges"] = $user["privileges"];
