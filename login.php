@@ -133,12 +133,6 @@
 							echo '</datalist>';
 						}
 					?>
-					<?php if ($mode == "register") {	?>
-							<label for="input_user_mail">Email:</label>
-							<input id="input_user_mail" type="email" name="mail" required="required"/>
-					<?php
-						}
-					?>
 						<label for="input_user_pw">Password:</label>
 						<input id="input_user_pw" type="password" name="password" required="required"/>
 						<label for="input_login_permanent">login permanently</label>
