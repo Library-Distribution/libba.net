@@ -74,6 +74,16 @@
 			$this->_Request( CURLOPT_HTTPGET, "/items/modify/$id", array("Accept: application/json"), $data, $request_user, $request_password );
 		}
 
+		public function initRegistration( $name, $mail, $password, $password_alt )
+		{
+			$this->_Request( CURLOPT_POST, "/users/registration/init", array(), array("name" => $name, "mail" => $mail, "password" => $password, "password-alt" => $password_alt) );
+		}
+
+		public function completeRegistration( $id, $token )
+		{
+			$this->_Request( CURLOPT_POST, "/users/registration/verify/$id", array(), array("token" => $token) );
+		}
+
 		public function loadItem($id)
 		{
 			return $this->_Request( CURLOPT_HTTPGET, "/items/describe/$id", array('Accept: application/x-ald-package') );
