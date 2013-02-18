@@ -1,8 +1,7 @@
 <?php
-	require_once("ALD.php");
-	require_once("api/db.php");
-	require_once("api/HttpException.php");
-	require_once("db2.php");
+	require_once("util/ALD.php");
+	require_once("util/db.php");
+	require_once("modules/HttpException/HttpException.php");
 	require_once("config/constants.php");
 
 	try

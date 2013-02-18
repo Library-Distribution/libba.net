@@ -3,8 +3,10 @@
 	ob_start();
 
 	require_once("config/constants.php");
-	require_once("ALD.php");
-	require_once("secure_redirect.php");
+	require_once("util/ALD.php");
+	require_once("util/secure_redirect.php");
+	require_once('partials/Notice.php');
+
 	secure_redirect();
 
 	$page_title = "Registration failed";
@@ -78,7 +80,7 @@
 ?>
 <html>
 	<head>
-		<?php require("templates/html.head.php"); ?>
+		<?php require("partials/html.head.php"); ?>
 	</head>
 	<body>
 		<h1 id="page-title"><?php echo $page_title; ?></h1>
@@ -131,8 +133,7 @@
 				{
 					if ($error)
 					{
-						$error_message = $message;
-						require("error.php");
+						error($message, $error_description, true);
 					}
 					else if (!empty($message))
 					{
@@ -141,11 +142,11 @@
 				}
 			?>
 		</div>
-		<?php require("footer.php"); require("header.php"); ?>
+		<?php require("partials/footer.php"); require("partials/header.php"); ?>
 	</body>
 </html>
 <?php
-	require_once("rewriter.php");
+	require_once("util/rewriter.php");
 	echo rewrite();
 	ob_end_flush();
 ?>
