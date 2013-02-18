@@ -1,11 +1,11 @@
-[submodule "markdown"]
-	path = markdown
+[submodule "modules/markdown"]
+	path = modules/markdown
 	url = https://github.com/michelf/php-markdown.git
-[submodule "smartypants"]
-	path = smartypants
+[submodule "modules/smartypants"]
+	path = modules/smartypants
 	url = https://github.com/michelf/php-smartypants.git
-[submodule "htmlpurifier"]
-	path = htmlpurifier
+[submodule "modules/htmlpurifier"]
+	path = modules/htmlpurifier
 	url = http://repo.or.cz/r/htmlpurifier.git
 [submodule "api"]
 	path = api
