@@ -78,6 +78,7 @@
 		}
 	}
 ?>
+<!DOCTYPE html>
 <html>
 	<head>
 		<?php require("partials/html.head.php"); ?>
