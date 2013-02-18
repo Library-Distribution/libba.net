@@ -82,6 +82,7 @@
 <html>
 	<head>
 		<?php require("partials/html.head.php"); ?>
+		<link rel="stylesheet" type="text/css" href="style/register.css"/>
 	</head>
 	<body>
 		<h1 id="page-title"><?php echo $page_title; ?></h1>
@@ -99,34 +100,28 @@
 						</div>
 				<?php } ?>
 					<form action="<?php echo $_SERVER["REQUEST_URI"]; ?>" method="post">
-						<table>
-							<?php if ($mode == "verify") { ?>
-								<tr>
-									<td><label for="token">Token:</label></td>
-									<td><input name="token" type="text"/></td>
-								</tr>
-							<?php } else if ($mode == "init") { ?>
-								<tr>
-									<td><label for="name">user name:</label></td>
-									<td><input name="name" type="text"></input></td>
-								</tr>
-								<tr>
-									<td><label for="mail">email:</label></td>
-									<td><input name="mail" type="text"></input></td>
-								</tr>
-								<tr>
-									<td><label for="password">password:</label></td>
-									<td><input name="password" type="password"></input></td>
-								</tr>
-								<tr>
-									<td><label for="password_alt">repeat password:</label></td>
-									<td><input name="password_alt" type="password"></input></td>
-								</tr>
-							<?php } ?>
-								<tr>
-									<td><input type="submit" value="submit"/></td>
-								</tr>
-						</table>
+					<?php if ($mode == "verify") { ?>
+						<label for="token">Token:</label>
+						<input name="token" type="text"/>
+
+					<?php } else if ($mode == "init") { ?>
+						<span class="advice">Enter the data for the account you want to create:</span>
+
+						<label for="name">user name:</label>
+						<input name="name" type="text" placeholder="Enter your future user name..."></input>
+
+						<label for="mail">email:</label>
+						<input name="mail" type="text" placeholder="Enter your email address for this account..."></input>
+
+						<label for="password">password:</label>
+						<input name="password" type="password" placeholder="The password for your account..."></input>
+
+						<label for="password_alt">repeat password:</label>
+						<input name="password_alt" type="password" placeholder="Just to be sure, type the password again..."></input>
+
+					<?php } ?>
+						<input type="submit"/>
+						<input type="reset"/>
 					</form>
 			<?php
 				}
