@@ -49,39 +49,29 @@
 					$page_title = "Login failed"; # assume failure, reset on success
 					$should_redirect = false;
 
-					require_once("api/User.php");
+					$api = new ALD( API_URL );
 
-					if (User::validateLogin($_POST["name"], $_POST["password"], false))
-					{
-						try
-						{
-							$api = new ALD( API_URL );
-							$user = $api->getUser($_POST['name']);
-
-							$_SESSION["user"] = $_POST['name'];
-							$_SESSION["userID"] = $user["id"];
-							$_SESSION["password"] = $_POST["password"];
-							$_SESSION["privileges"] = $user["privileges"];
-						}
-						catch (HttpException $e)
-						{
-							clearSession();
-
-							$message = "Could not login";
-							$error_description = "Could not retrieve the required user data for a login. The exception message was: \"{$e->getMessage()}\".";
-							break;
+					try {
+						$user = $api->getUser($_POST['name'], $_POST['name'], $_POST['password']); # provide credentials only for purpose of indirect validation
+					} catch (HttpException $e) {
+						if ($e->getCode() == 403) {
+							$error_description = 'The given credentials were not valid.';
+						} else {
+							$error_description = 'The API error was: "' . $e->getMessage() . '"';
 						}
 
-						$page_title = "Successfully logged in!";
-						$error = false;
-						$should_redirect = true;
-					}
-					else
-					{
-						$message = "Could not login";
-						$error_description = "The given credentials were not valid.";
+						$message = 'Could not login';
 						break;
 					}
+
+					$_SESSION["user"] = $_POST['name'];
+					$_SESSION["userID"] = $user["id"];
+					$_SESSION["password"] = $_POST["password"];
+					$_SESSION["privileges"] = $user["privileges"];
+
+					$page_title = "Successfully logged in!";
+					$error = false;
+					$should_redirect = true;
 				}
 			}
 
