@@ -4,7 +4,7 @@
 	require_once("../util/db.php");
 	$db_connection = db_ensure_connection();
 
-	$db_query = "SELECT mail, show_mail FROM $db_table_user_profile WHERE id = UNHEX('" . mysql_real_escape_string($_GET["user"]) . "')";
+	$db_query = "SELECT mail, show_mail FROM " . DB_TABLE_USER_PROFILE . " WHERE id = UNHEX('" . mysql_real_escape_string($_GET["user"]) . "')";
 	$db_result = mysql_query($db_query, $db_connection);
 
 	if (!$db_connection)

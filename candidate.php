@@ -37,7 +37,7 @@
 						$vote = (int)(mysql_real_escape_string($_POST["vote"]));
 						if (in_array($vote, array(-1, 0, 1)))
 						{
-							$db_query = "SELECT COUNT(*) FROM $db_table_candidate_comments WHERE id = '$id' AND vote != '0' AND user = UNHEX('{$_SESSION["userID"]}')";
+							$db_query = "SELECT COUNT(*) FROM " . DB_TABLE_CANDIDATE_COMMENTS . " WHERE id = '$id' AND vote != '0' AND user = UNHEX('{$_SESSION["userID"]}')";
 							$db_result = mysql_query($db_query, $db_connection);
 							if (!$db_result)
 							{
@@ -54,7 +54,7 @@
 							$vote = 0;
 					}
 
-					$db_query = "INSERT INTO $db_table_candidate_comments (id, user, comment, vote) VALUES ($id, UNHEX('{$_SESSION["userID"]}'), '" . mysql_real_escape_string($_POST["newcomment"]) . "', '" . $vote . "')";
+					$db_query = "INSERT INTO " . DB_TABLE_CANDIDATE_COMMENTS . " (id, user, comment, vote) VALUES ($id, UNHEX('{$_SESSION["userID"]}'), '" . mysql_real_escape_string($_POST["newcomment"]) . "', '" . $vote . "')";
 					$db_result = mysql_query($db_query, $db_connection);
 					if (!$db_result)
 					{
@@ -67,7 +67,7 @@
 				{
 					if ($can_close)
 					{
-						$db_query = "UPDATE $db_table_candidates Set closed = '1', closed-by = UNHEX('{$_SESSION["userID"]}'), closed-date = NOW(), closed-comment = '" . mysql_real_escape_string($_POST["closecomment"]) . "' WHERE id = '$id'";
+						$db_query = "UPDATE " . DB_TABLE_CANDIDATES . " Set closed = '1', closed-by = UNHEX('{$_SESSION["userID"]}'), closed-date = NOW(), closed-comment = '" . mysql_real_escape_string($_POST["closecomment"]) . "' WHERE id = '$id'";
 						$db_result = mysql_query($db_query, $db_connection);
 						if (!$db_result)
 						{
@@ -83,7 +83,7 @@
 				header("Location: " . $_SERVER["REQUEST_URI"]); # reload to clear POST data and avoid repost of comment
 			}
 
-			$db_query = "SELECT *, HEX(libid), HEX(userid), HEX(`closed-by`) FROM $db_table_candidates WHERE id = '$id'";
+			$db_query = "SELECT *, HEX(libid), HEX(userid), HEX(`closed-by`) FROM " . DB_TABLE_CANDIDATES . " WHERE id = '$id'";
 			$db_result = mysql_query($db_query, $db_connection);
 			if (!$db_result)
 			{
@@ -122,7 +122,7 @@
 			}
 
 			$comments = array();
-			$db_query = "SELECT *, HEX(user) FROM $db_table_candidate_comments WHERE id = '$id'";
+			$db_query = "SELECT *, HEX(user) FROM " . DB_TABLE_CANDIDATE_COMMENTS . " WHERE id = '$id'";
 			$db_result = mysql_query($db_query, $db_connection);
 			if (!$db_result)
 			{
@@ -139,7 +139,7 @@
 				$comments[] = $comment;
 			}
 
-			$db_query = "SELECT COUNT(*) FROM $db_table_candidate_comments WHERE id = '$id' AND vote > '0'"; # get upvote count
+			$db_query = "SELECT COUNT(*) FROM " . DB_TABLE_CANDIDATE_COMMENTS . " WHERE id = '$id' AND vote > '0'"; # get upvote count
 			$db_result = mysql_query($db_query, $db_connection);
 			if (!$db_result)
 			{
@@ -149,7 +149,7 @@
 			}
 			$up_vote_count = mysql_fetch_object($db_result)->{'COUNT(*)'};
 
-			$db_query = "SELECT COUNT(*) FROM $db_table_candidate_comments WHERE id = '$id' AND vote < '0'"; # get downvote count
+			$db_query = "SELECT COUNT(*) FROM " . DB_TABLE_CANDIDATE_COMMENTS . " WHERE id = '$id' AND vote < '0'"; # get downvote count
 			$db_result = mysql_query($db_query, $db_connection);
 			if (!$db_result)
 			{
@@ -163,7 +163,7 @@
 
 			if ($logged_in)
 			{
-				$db_query = "SELECT COUNT(*) FROM $db_table_candidate_comments WHERE id = '$id' AND vote != '0' AND user = UNHEX('{$_SESSION["userID"]}')";
+				$db_query = "SELECT COUNT(*) FROM " . DB_TABLE_CANDIDATE_COMMENTS . " WHERE id = '$id' AND vote != '0' AND user = UNHEX('{$_SESSION["userID"]}')";
 				$db_result = mysql_query($db_query, $db_connection);
 				if (!$db_result)
 				{
@@ -194,7 +194,7 @@
 				}
 			}
 
-			$db_query = "SELECT id, HEX(libid), HEX(userid), date, closed FROM $db_table_candidates WHERE $db_cond";
+			$db_query = "SELECT id, HEX(libid), HEX(userid), date, closed FROM " . DB_TABLE_CANDIDATES . " WHERE $db_cond";
 			$db_result = mysql_query($db_query, $db_connection);
 			if (!$db_result)
 			{

@@ -73,7 +73,7 @@
 		}
 
 		# get review comments
-		$db_query = "SELECT HEX(id), comment, date FROM $db_table_review_comments WHERE user = UNHEX('{$user_data["id"]}') ORDER BY date DESC $db_limit";
+		$db_query = "SELECT HEX(id), comment, date FROM " . DB_TABLE_REVIEW_COMMENTS . " WHERE user = UNHEX('{$user_data["id"]}') ORDER BY date DESC $db_limit";
 		$db_result = mysql_query($db_query, $db_connection);
 		if (!$db_result)
 		{
@@ -103,7 +103,7 @@
 		$retrieved_candidates = array();
 
 		# get candidates opened and closed
-		$db_query = "SELECT *, HEX(libid), HEX(userid), HEX(`closed-by`) FROM $db_table_candidates WHERE userid = UNHEX('{$user_data["id"]}') ORDER BY date DESC $db_limit";
+		$db_query = "SELECT *, HEX(libid), HEX(userid), HEX(`closed-by`) FROM " . DB_TABLE_CANDIDATES . " WHERE userid = UNHEX('{$user_data["id"]}') ORDER BY date DESC $db_limit";
 		$db_result = mysql_query($db_query, $db_connection);
 		if (!$db_result)
 		{
@@ -140,7 +140,7 @@
 		if (hasPrivilege($user_data["privileges"], PRIVILEGE_STDLIB))
 		{
 			# get candidates closed by this user
-			$db_query = "SELECT *, HEX(libid), HEX(userid), HEX(`closed-by`) FROM $db_table_candidates WHERE `closed-by` = UNHEX('{$user_data["id"]}') ORDER BY date DESC $db_limit";
+			$db_query = "SELECT *, HEX(libid), HEX(userid), HEX(`closed-by`) FROM " . DB_TABLE_CANDIDATES . " WHERE `closed-by` = UNHEX('{$user_data["id"]}') ORDER BY date DESC $db_limit";
 			$db_result = mysql_query($db_query, $db_connection);
 			if (!$db_result)
 			{
@@ -156,7 +156,7 @@
 		}
 
 		# get candidate comments
-		$db_query = "SELECT id, comment, date, vote FROM $db_table_candidate_comments WHERE user = UNHEX('{$user_data["id"]}') ORDER BY date DESC $db_limit";
+		$db_query = "SELECT id, comment, date, vote FROM " . DB_TABLE_CANDIDATE_COMMENTS . " WHERE user = UNHEX('{$user_data["id"]}') ORDER BY date DESC $db_limit";
 		$db_result = mysql_query($db_query, $db_connection);
 		if (!$db_result)
 		{
@@ -255,8 +255,8 @@
 <?php
 	function getCandidate($id, &$error_message, &$error_description)
 	{
-		global $db_connection, $db_table_candidates;
-		$db_query = "SELECT *, HEX(libid), HEX(userid), HEX(`closed-by`) FROM $db_table_candidates WHERE id = '$id'";
+		global $db_connection;
+		$db_query = "SELECT *, HEX(libid), HEX(userid), HEX(`closed-by`) FROM " . DB_TABLE_CANDIDATES . " WHERE id = '$id'";
 		$db_result = mysql_query($db_query, $db_connection);
 		if (!$db_result)
 		{

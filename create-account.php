@@ -15,7 +15,7 @@
 		$db_connection = db_ensure_connection();
 
 		# check if account exists
-		$db_query = "SELECT * FROM $db_table_user_profile WHERE mail = '$mail' OR id = UNHEX('$id')";
+		$db_query = "SELECT * FROM " . DB_TABLE_USER_PROFILE . " WHERE mail = '$mail' OR id = UNHEX('$id')";
 		$db_result = mysql_query($db_query, $db_connection);
 		if (!$db_result)
 		{
@@ -45,7 +45,7 @@
 		$id = mysql_real_escape_string($_POST["id"]);
 		$mail = mysql_real_escape_string($_POST["mail"]);
 		
-		$db_query = "INSERT INTO $db_table_user_profile (id, mail) VALUES (UNHEX('$id'), '$mail')";
+		$db_query = "INSERT INTO " . DB_TABLE_USER_PROFILE . " (id, mail) VALUES (UNHEX('$id'), '$mail')";
 		$db_result = mysql_query($db_query, $db_connection);
 		if (!$db_result)
 		{

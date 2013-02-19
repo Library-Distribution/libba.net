@@ -45,7 +45,7 @@
 
 		$db_connection = db_ensure_connection();
 
-		$db_query = "SELECT * FROM $db_table_user_profile WHERE id = UNHEX('{$user_data["id"]}')";
+		$db_query = "SELECT * FROM " . DB_TABLE_USER_PROFILE . " WHERE id = UNHEX('{$user_data["id"]}')";
 		$db_result = mysql_query($db_query, $db_connection);
 		if (!$db_result)
 		{
@@ -55,19 +55,19 @@
 		}
 		$user_profile = mysql_fetch_assoc($db_result);
 
-		if (!db_get_enum_column_values($db_table_user_profile, "allow_mails", $contact_options))
+		if (!db_get_enum_column_values(DB_TABLE_USER_PROFILE, "allow_mails", $contact_options))
 		{
 			$error_message = "Cannot modify profile: MySQL error";
 			$error_description = "The possible options for 'allow_mails' could not be retrieved. MySQL error was: '" . mysql_error() . "'";
 			break;
 		}
-		if (!db_get_enum_column_values($db_table_user_profile, "show_mail", $mail_options))
+		if (!db_get_enum_column_values(DB_TABLE_USER_PROFILE, "show_mail", $mail_options))
 		{
 			$error_message = "Cannot modify profile: MySQL error";
 			$error_description = "The possible options for 'show_mail' could not be retrieved. MySQL error was: '" . mysql_error() . "'";
 			break;
 		}
-		if (!db_get_enum_column_values($db_table_user_profile, "site_theme", $theme_options))
+		if (!db_get_enum_column_values(DB_TABLE_USER_PROFILE, "site_theme", $theme_options))
 		{
 			$error_message = "Cannot modify profile: MySQL error";
 			$error_description = "The possible options for 'site_theme' could not be retrieved. MySQL error was: '" . mysql_error() . "'";
@@ -96,7 +96,7 @@
 				# todo: deactivate account, send activation mail
 
 				$mail = mysql_real_escape_string($_POST["mail"]);
-				$db_query = "UPDATE $db_table_user_profile Set mail = '$mail' WHERE id = UNHEX('{$_SESSION["userID"]}')";
+				$db_query = "UPDATE " . DB_TABLE_USER_PROFILE . " Set mail = '$mail' WHERE id = UNHEX('{$_SESSION["userID"]}')";
 
 				$db_result = mysql_query($db_query, $db_connection);
 				if (!$db_result || mysql_affected_rows() != 1)
@@ -109,7 +109,7 @@
 			if (!empty($_POST["site_theme"]) && $_POST["site_theme"] != $user_profile["site_theme"] && in_array($_POST["site_theme"], $theme_options))
 			{
 				$theme = mysql_real_escape_string($_POST["site_theme"]);
-				$db_query = "UPDATE $db_table_user_profile Set site_theme = '$theme' WHERE id = UNHEX('{$_SESSION["userID"]}')";
+				$db_query = "UPDATE " . DB_TABLE_USER_PROFILE . " Set site_theme = '$theme' WHERE id = UNHEX('{$_SESSION["userID"]}')";
 
 				$db_result = mysql_query($db_query, $db_connection);
 				if (!$db_result || mysql_affected_rows() != 1)
@@ -122,7 +122,7 @@
 			if (!empty($_POST["show_mail"]) && $_POST["show_mail"] != $user_profile["show_mail"] && in_array($_POST["show_mail"], $mail_options))
 			{	
 				$show_mail = mysql_real_escape_string($_POST["show_mail"]);
-				$db_query = "UPDATE $db_table_user_profile Set show_mail = '$show_mail' WHERE id = UNHEX('{$_SESSION["userID"]}')";
+				$db_query = "UPDATE " . DB_TABLE_USER_PROFILE . " Set show_mail = '$show_mail' WHERE id = UNHEX('{$_SESSION["userID"]}')";
 
 				$db_result = mysql_query($db_query, $db_connection);
 				if (!$db_result || mysql_affected_rows() != 1)
@@ -135,7 +135,7 @@
 			if (!empty($_POST["allow_mails"]) && $_POST["allow_mails"] != $user_profile["allow_mails"] && in_array($contact_options, $_POST["allow_mails"]))
 			{
 				$allow_mails = mysql_real_escape_string($_POST["allow_mails"]);
-				$db_query = "UPDATE $db_table_user_profile Set allow_mails = '$allow_mails' WHERE id = UNHEX('{$_SESSION["userID"]}')";
+				$db_query = "UPDATE " . DB_TABLE_USER_PROFILE . " Set allow_mails = '$allow_mails' WHERE id = UNHEX('{$_SESSION["userID"]}')";
 
 				$db_result = mysql_query($db_query, $db_connection);
 				if (!$db_result || mysql_affected_rows() != 1)

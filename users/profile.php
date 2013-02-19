@@ -36,7 +36,7 @@
 		$page_title = $user;
 		$db_connection = db_ensure_connection();
 
-		$db_query = "SELECT * FROM $db_table_user_profile WHERE id = UNHEX('{$user_data["id"]}')";
+		$db_query = "SELECT * FROM " . DB_TABLE_USER_PROFILE . " WHERE id = UNHEX('{$user_data["id"]}')";
 		$db_result = mysql_query($db_query, $db_connection);
 		if (!$db_result)
 		{

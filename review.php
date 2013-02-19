@@ -25,7 +25,7 @@
 			{
 				if ($logged_in)
 				{
-					$db_query = "INSERT INTO $db_table_review_comments (id, user, comment) VALUES (UNHEX('$id'), UNHEX('{$_SESSION["userID"]}'), '" . mysql_real_escape_string($_POST["newcomment"]) . "')";
+					$db_query = "INSERT INTO " . DB_TABLE_REVIEW_COMMENTS . " (id, user, comment) VALUES (UNHEX('$id'), UNHEX('{$_SESSION["userID"]}'), '" . mysql_real_escape_string($_POST["newcomment"]) . "')";
 					$db_result = mysql_query($db_query, $db_connection);
 					if (!$db_result)
 					{
@@ -53,7 +53,7 @@
 				}
 			}
 
-			$db_query = "SELECT HEX(user), comment, date FROM $db_table_review_comments WHERE id = UNHEX('$id')";
+			$db_query = "SELECT HEX(user), comment, date FROM " . DB_TABLE_REVIEW_COMMENTS . " WHERE id = UNHEX('$id')";
 			$db_result = mysql_query($db_query, $db_connection);
 			if (!$db_result)
 			{
