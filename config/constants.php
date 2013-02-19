@@ -9,7 +9,7 @@
 	define('ROOT_URL', (IS_HTTPS ? "https" : "http") . "://"
 						. $_SERVER["SERVER_NAME"]
 						. REL_ADDRESS);
-	define('SECURE_ROOT_URL', IS_SECURE ? ROOT_URL : "https://ahk4.net/user/maulesel/");
+	define('SECURE_ROOT_URL', IS_SECURE ? ROOT_URL : "https://libba.net/");
 
 	define('API_URL', ROOT_URL . "api");
 	define('SECURE_API_URL', SECURE_ROOT_URL . "api");
