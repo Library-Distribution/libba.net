@@ -2,12 +2,12 @@
 	ob_start();
 	session_start();
 
-	require_once("util/user_input.php");
-	require_once("util/db.php");
-	require_once("util/ALD.php");
+	require_once('util/user_input.php');
+	require_once('util/db.php');
+	require_once('util/ALD.php');
 
-	require_once("config/constants.php");
-	require_once("util/privilege.php");
+	require_once('config/constants.php');
+	require_once('util/privilege.php');
 	require_once('modules/semver/semver.php');
 	require_once('util/get_privilege_symbols.php');
 
@@ -21,28 +21,28 @@
 		$error = true; # assume error here, reset on success
 		$page_title = 'ERROR';
 
-		if (isset($_GET["id"]))
+		if (isset($_GET['id']))
 		{
-			$id = mysql_real_escape_string($_GET["id"], $db_connection);
-			$logged_in = isset($_SESSION["userID"]);
-			$can_close = $logged_in && hasPrivilege($_SESSION["privileges"], PRIVILEGE_STDLIB);
+			$id = mysql_real_escape_string($_GET['id'], $db_connection);
+			$logged_in = isset($_SESSION['userID']);
+			$can_close = $logged_in && hasPrivilege($_SESSION['privileges'], PRIVILEGE_STDLIB);
 			$diff = false;
 
 			if (!empty($_POST) && $logged_in)
 			{
-				if (isset($_POST["newcomment"]))
+				if (isset($_POST['newcomment']))
 				{
-					if (isset($_POST["vote"]))
+					if (isset($_POST['vote']))
 					{
-						$vote = (int)(mysql_real_escape_string($_POST["vote"]));
+						$vote = (int)(mysql_real_escape_string($_POST['vote']));
 						if (in_array($vote, array(-1, 0, 1)))
 						{
-							$db_query = "SELECT COUNT(*) FROM $db_table_candidate_comments WHERE id = '$id' AND vote != '0' AND user = UNHEX('{$_SESSION["userID"]}')";
+							$db_query = 'SELECT COUNT(*) FROM ' . DB_TABLE_CANDIDATE_COMMENTS . ' WHERE id = "' . $id . '" AND vote != "0" AND user = UNHEX("' . $_SESSION['userID'] . '")';
 							$db_result = mysql_query($db_query, $db_connection);
 							if (!$db_result)
 							{
-								$error_message = "Failed to get previous votes: MySQL error";
-								$error_description = "Could not check if current user has already voted. MySQL error was: '" . mysql_error() . "'";
+								$error_message = 'Failed to get previous votes: MySQL error';
+								$error_description = 'Could not check if current user has already voted. MySQL error was: "' . mysql_error() . '"';
 								break;
 							}
 							$can_vote = mysql_fetch_object($db_result)->{'COUNT(*)'} == 0; # set to false if there's already a comment by the current user with a vote
@@ -54,60 +54,60 @@
 							$vote = 0;
 					}
 
-					$db_query = "INSERT INTO $db_table_candidate_comments (id, user, comment, vote) VALUES ($id, UNHEX('{$_SESSION["userID"]}'), '" . mysql_real_escape_string($_POST["newcomment"]) . "', '" . $vote . "')";
+					$db_query = 'INSERT INTO ' . DB_TABLE_CANDIDATE_COMMENTS . ' (id, user, comment, vote) VALUES (' . $id . ', UNHEX("' . $_SESSION['userID'] . '"), "' . mysql_real_escape_string($_POST['newcomment']) . '", "' . $vote . '")';
 					$db_result = mysql_query($db_query, $db_connection);
 					if (!$db_result)
 					{
-						$error_message = "Failed to save comment: MySQL error";
-						$error_description = "Could not save your last comment on this thread. MySQL error was: '" . mysql_error() . "'";
+						$error_message = 'Failed to save comment: MySQL error';
+						$error_description = 'Could not save your last comment on this thread. MySQL error was: "' . mysql_error() . '"';
 						break;
 					}
 				}
-				else if (isset($_POST["accept"]) || isset($_POST["reject"]))
+				else if (isset($_POST['accept']) || isset($_POST['reject']))
 				{
 					if ($can_close)
 					{
-						$db_query = "UPDATE $db_table_candidates Set closed = '1', closed-by = UNHEX('{$_SESSION["userID"]}'), closed-date = NOW(), closed-comment = '" . mysql_real_escape_string($_POST["closecomment"]) . "' WHERE id = '$id'";
+						$db_query = 'UPDATE ' . DB_TABLE_CANDIDATES . ' Set closed = "1", closed-by = UNHEX("' . $_SESSION['userID'] . '"), closed-date = NOW(), closed-comment = "' . mysql_real_escape_string($_POST['closecomment']) . '" WHERE id = "' . $id . '"';
 						$db_result = mysql_query($db_query, $db_connection);
 						if (!$db_result)
 						{
-							$error_message = "Failed to close this thread: MySQL error";
-							$error_description = "Could not close the thread. MySQL error was: '" . mysql_error() . "'";
+							$error_message = 'Failed to close this thread: MySQL error';
+							$error_description = 'Could not close the thread. MySQL error was: "' . mysql_error() . '"';
 							break;
 						}
 
-						$db_query = "UPDATE $db_table_main Set default_include = '1' WHERE id = UNHEX('')"; # todo
+						$db_query = 'UPDATE $db_table_main Set default_include = "1" WHERE id = UNHEX("")'; # todo
 						# TODO
 					}
 				}
-				header("Location: " . $_SERVER["REQUEST_URI"]); # reload to clear POST data and avoid repost of comment
+				header('Location: ' . $_SERVER['REQUEST_URI']); # reload to clear POST data and avoid repost of comment
 			}
 
-			$db_query = "SELECT *, HEX(libid), HEX(userid), HEX(`closed-by`) FROM $db_table_candidates WHERE id = '$id'";
+			$db_query = 'SELECT *, HEX(libid), HEX(userid), HEX(`closed-by`) FROM ' . DB_TABLE_CANDIDATES . ' WHERE id = "' . $id . '"';
 			$db_result = mysql_query($db_query, $db_connection);
 			if (!$db_result)
 			{
-				$error_message = "Failed to retrieve thread: MySQL error";
-				$error_description = "Could not retrieve data on this thread. MySQL error was: '" . mysql_error() . "'";
+				$error_message = 'Failed to retrieve thread: MySQL error';
+				$error_description = 'Could not retrieve data on this thread. MySQL error was: "' . mysql_error() . '"';
 				break;
 			}
 			if (mysql_num_rows($db_result) != 1)
 			{
-				$error_message = "Failed to retrieve thread: not found";
-				$error_description = "Could not find this thread. Most likely, the URL is incorrect.";
+				$error_message = 'Failed to retrieve thread: not found';
+				$error_description = 'Could not find this thread. Most likely, the URL is incorrect.';
 				break;
 			}
 			$candidate = mysql_fetch_assoc($db_result);
 
-			$lib = $api->getItemById($candidate["HEX(libid)"]);
-			$candidate["libname"] = $lib["name"];
-			$candidate["libversion"] = $lib["version"];
-			$temp = $api->getUserById($candidate["HEX(userid)"]);
-			$candidate["username"] = $temp["name"];
-			if ($candidate["closed"])
+			$lib = $api->getItemById($candidate['HEX(libid)']);
+			$candidate['libname'] = $lib['name'];
+			$candidate['libversion'] = $lib['version'];
+			$temp = $api->getUserById($candidate['HEX(userid)']);
+			$candidate['username'] = $temp['name'];
+			if ($candidate['closed'])
 			{
-				$temp = $api->getUserById($candidate["HEX(`closed-by`)"]);
-				$candidate["closed-by"] = $temp["name"];
+				$temp = $api->getUserById($candidate['HEX(`closed-by`)']);
+				$candidate['closed-by'] = $temp['name'];
 			}
 			else
 			{
@@ -116,45 +116,45 @@
 				if (count($list) > 0)
 				{
 					$diff = true;
-					usort($list, "semver_sort"); # sort by version numbers (descending)
+					usort($list, 'semver_sort'); # sort by version numbers (descending)
 					$diff_base = $list[0]['version'];
 				}
 			}
 
 			$comments = array();
-			$db_query = "SELECT *, HEX(user) FROM $db_table_candidate_comments WHERE id = '$id'";
+			$db_query = 'SELECT *, HEX(user) FROM ' . DB_TABLE_CANDIDATE_COMMENTS . ' WHERE id = "' . $id . '"';
 			$db_result = mysql_query($db_query, $db_connection);
 			if (!$db_result)
 			{
-				$error_message = "Failed to retrieve comments: MySQL error";
-				$error_description = "Could not read the comments on this thread. MySQL error was: '" . mysql_error() . "'";
+				$error_message = 'Failed to retrieve comments: MySQL error';
+				$error_description = 'Could not read the comments on this thread. MySQL error was: "' . mysql_error() . '"';
 				break;
 			}
 			while ($comment = mysql_fetch_assoc($db_result))
 			{
-				$temp = $api->getUserById($comment["HEX(user)"]);
-				$comment["user"] = $temp["name"];
-				$comment["user-mail"] = $temp["mail-md5"];
+				$temp = $api->getUserById($comment['HEX(user)']);
+				$comment['user'] = $temp['name'];
+				$comment['user-mail'] = $temp['mail-md5'];
 				$comment['user-privilege'] = $temp['privileges'];
 				$comments[] = $comment;
 			}
 
-			$db_query = "SELECT COUNT(*) FROM $db_table_candidate_comments WHERE id = '$id' AND vote > '0'"; # get upvote count
+			$db_query = 'SELECT COUNT(*) FROM ' . DB_TABLE_CANDIDATE_COMMENTS . ' WHERE id = "' . $id . '" AND vote > 0'; # get upvote count
 			$db_result = mysql_query($db_query, $db_connection);
 			if (!$db_result)
 			{
-				$error_message = "Failed to retrieve upvote count: MySQL error";
-				$error_description = "The number of upvotes could not be read. MySQL error was: '" . mysql_error() . "'";
+				$error_message = 'Failed to retrieve upvote count: MySQL error';
+				$error_description = 'The number of upvotes could not be read. MySQL error was: "' . mysql_error() . '"';
 				break;
 			}
 			$up_vote_count = mysql_fetch_object($db_result)->{'COUNT(*)'};
 
-			$db_query = "SELECT COUNT(*) FROM $db_table_candidate_comments WHERE id = '$id' AND vote < '0'"; # get downvote count
+			$db_query = 'SELECT COUNT(*) FROM ' . DB_TABLE_CANDIDATE_COMMENTS . ' WHERE id = "' . $id . '" AND vote < 0'; # get downvote count
 			$db_result = mysql_query($db_query, $db_connection);
 			if (!$db_result)
 			{
-				$error_message = "Failed to retrieve downvote count: MySQL error";
-				$error_description = "The number of downvotes could not be read. MySQL error was: '" . mysql_error() . "'";
+				$error_message = 'Failed to retrieve downvote count: MySQL error';
+				$error_description = 'The number of downvotes could not be read. MySQL error was: "' . mysql_error() . '"';
 				break;
 			}
 			$down_vote_count = mysql_fetch_object($db_result)->{'COUNT(*)'};
@@ -163,55 +163,55 @@
 
 			if ($logged_in)
 			{
-				$db_query = "SELECT COUNT(*) FROM $db_table_candidate_comments WHERE id = '$id' AND vote != '0' AND user = UNHEX('{$_SESSION["userID"]}')";
+				$db_query = 'SELECT COUNT(*) FROM ' . DB_TABLE_CANDIDATE_COMMENTS . ' WHERE id = "' . $id . '" AND vote != 0 AND user = UNHEX("' . $_SESSION['userID'] . '")';
 				$db_result = mysql_query($db_query, $db_connection);
 				if (!$db_result)
 				{
-					$error_message = "Failed to get previous votes: MySQL error";
-					$error_description = "Could not check if current user has already voted. MySQL error was: '" . mysql_error() . "'";
+					$error_message = 'Failed to get previous votes: MySQL error';
+					$error_description = 'Could not check if current user has already voted. MySQL error was: "' . mysql_error() . '"';
 					break;
 				}
 				$can_vote = mysql_fetch_object($db_result)->{'COUNT(*)'} == 0; # set to false if there's already a comment by the current user with a vote
 			}
 
-			$page_title = ($candidate["closed"] ? "closed: " : "") . $candidate["libname"] . " v" . $candidate["libversion"] . " | Candidate for stdlib";
+			$page_title = ($candidate['closed'] ? 'closed: ' : '') . $candidate['libname'] . ' v' . $candidate['libversion'] . ' | Candidate for stdlib';
 		}
 		else
 		{
-			$page_title = "Candidates for the standard library";
+			$page_title = 'Candidates for the standard library';
 
-			$db_cond = "closed != '1'";
-			if (isset($_GET["mode"]))
+			$db_cond = 'closed != 1';
+			if (isset($_GET['mode']))
 			{
-				if (strtolower($_GET["mode"]) == "closed")
+				if (strtolower($_GET['mode']) == 'closed')
 				{
-					$db_cond = "closed = '1'";
-					$page_title .= " (closed)";
+					$db_cond = 'closed = 1';
+					$page_title .= ' (closed)';
 				}
-				else if (strtolower($_GET["mode"]) == "all")
+				else if (strtolower($_GET['mode']) == 'all')
 				{
-					$db_cond = "'1' = '1'";
+					$db_cond = '1 = 1';
 				}
 			}
 
-			$db_query = "SELECT id, HEX(libid), HEX(userid), date, closed FROM $db_table_candidates WHERE $db_cond";
+			$db_query = 'SELECT id, HEX(libid), HEX(userid), date, closed FROM ' . DB_TABLE_CANDIDATES . ' WHERE ' . $db_cond;
 			$db_result = mysql_query($db_query, $db_connection);
 			if (!$db_result)
 			{
-				$error_message = "Failed to retrieve list of candidates: MySQL error";
-				$error_description = "The list of candidates could not be read. MySQL error was: '" . mysql_error() . "'";
+				$error_message = 'Failed to retrieve list of candidates: MySQL error';
+				$error_description = 'The list of candidates could not be read. MySQL error was: "' . mysql_error() . '"';
 				break;
 			}
 
 			$candidates = array();
 			while ($candidate = mysql_fetch_assoc($db_result))
 			{
-				$lib = $api->getItemById($candidate["HEX(libid)"]);
-				$candidate["lib-name"] = $lib["name"];
-				$candidate["lib-version"] = $lib["version"];
+				$lib = $api->getItemById($candidate['HEX(libid)']);
+				$candidate['lib-name'] = $lib['name'];
+				$candidate['lib-version'] = $lib['version'];
 
-				$temp = $api->getUserById($candidate["HEX(userid)"]);
-				$candidate["user"] = $temp["name"];
+				$temp = $api->getUserById($candidate['HEX(userid)']);
+				$candidate['user'] = $temp['name'];
 
 				$candidates[] = $candidate;
 			}
@@ -222,7 +222,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<?php require("partials/html.head.php"); ?>
+		<?php require('partials/html.head.php'); ?>
 		<?php if (isset($id)) { ?>
 			<link rel="stylesheet" type="text/css" href="style/candidates/view.css"/>
 		<?php } else { ?>
@@ -249,15 +249,15 @@
 						<tbody>
 							<tr>
 								<th>Library:</th>
-								<td><a href="items/<?php echo $candidate["HEX(libid)"]; ?>"><?php echo $candidate["libname"]; ?> (v<?php echo $candidate["libversion"]; ?>)</a></td>
+								<td><a href="items/<?php echo $candidate['HEX(libid)']; ?>"><?php echo $candidate['libname']; ?> (v<?php echo $candidate['libversion']; ?>)</a></td>
 							</tr>
 							<tr>
 								<th>User:</th>
-								<td><a href="users/<?php echo $candidate["username"]; ?>/profile"><?php echo $candidate["username"]; ?></a></td>
+								<td><a href="users/<?php echo $candidate['username']; ?>/profile"><?php echo $candidate['username']; ?></a></td>
 							</tr>
 							<tr>
 								<th>Applied:</th>
-								<td><?php echo $candidate["date"]; ?></td>
+								<td><?php echo $candidate['date']; ?></td>
 							</tr>
 							<?php if ($diff) { ?>
 							<tr>
@@ -266,11 +266,11 @@
 							</tr>
 							<?php } ?>
 							<tr>
-								<td colspan="2" class="topic-details"><div class='markdown'><?php echo user_input_process($candidate["text"]); ?></div></td>
+								<td colspan="2" class="topic-details"><div class='markdown'><?php echo user_input_process($candidate['text']); ?></div></td>
 							</tr>
 						</tbody>
 					</table>
-					<div id="votes"><div class="vote upvote">+<?php echo $up_vote_count; ?></div><div class="vote downvote">-<?php echo $down_vote_count; ?></div><div class="vote"><?php echo ($total_vote_count > 0 ? "+" : "-") . $total_vote_count; ?> votes</div></div>
+					<div id="votes"><div class="vote upvote">+<?php echo $up_vote_count; ?></div><div class="vote downvote">-<?php echo $down_vote_count; ?></div><div class="vote"><?php echo ($total_vote_count > 0 ? '+' : '-') . $total_vote_count; ?> votes</div></div>
 					<h2>Comments</h2>
 					<table id="candidate-comments">
 						<tbody>
@@ -278,14 +278,14 @@
 							foreach ($comments AS $comment)
 							{
 								$symbols = get_privilege_symbols($comment['user-privilege']);
-								echo "<tr><td><img alt=\"avatar\" src=\"http://gravatar.com/avatar/{$comment['user-mail']}?s=50&amp;d=mm\" class=\"comment-avatar\"/><br/><a href=\"users/{$comment["user"]}/profile\">{$comment["user"]}</a>$symbols<hr/>{$comment["date"]}</td>"
-									. "<td><div class='markdown'>" . user_input_process($comment["comment"]) . '</div>' . (!empty($comment["vote"]) ? "<div class=\"vote\" style=\"float: right\">+1</div>" : "") . "</td></tr>";
+								echo '<tr><td><img alt="avatar" src="http://gravatar.com/avatar/' . $comment['user-mail'] . '?s=50&amp;d=mm" class="comment-avatar"/><br/><a href="users/' . $comment['user'] . '/profile">' . $comment['user'] . '</a>' . $symbols . '<hr/>' . $comment['date'] . '</td>'
+									. '<td><div class="markdown">' . user_input_process($comment['comment']) . '</div>' . (!empty($comment['vote']) ? '<div class="vote" style="float: right">+1</div>' : '') . '</td></tr>';
 							}
-							if (!$candidate["closed"] && $logged_in)
+							if (!$candidate['closed'] && $logged_in)
 							{
 						?>
 								<tr>
-									<td><a href="users/<?php echo $_SESSION["user"]; ?>/profile">You</a><hr/>Now</td>
+									<td><a href="users/<?php echo $_SESSION['user']; ?>/profile">You</a><hr/>Now</td>
 									<td>
 										<form action="#" method="post">
 											<textarea class="preview-source" name="newcomment" style="width: 99.5%" placeholder="Enter your comment..."></textarea>
@@ -320,10 +320,10 @@
 					<?php
 								}
 							}
-							else if ($candidate["closed"])
+							else if ($candidate['closed'])
 							{
-								echo "<tr><td><a href=\"users/{$candidate["closed-by"]}/profile\">{$candidate["closed-by"]}</a><hr/>{$candidate["closed-date"]}</td>"
-									. "<td id=\"close-comment\" class=\"" . ( /* todo: get if included in stdlib or not */ "") . "\"><div class='markdown'>" . user_input_process($candidate["closed-comment"]) . "</div></td></tr>";
+								echo '<tr><td><a href="users/' . $candidate['closed-by'] . '/profile">' . $candidate['closed-by'] . '</a><hr/>' . $candidate['closed-date'] . '</td>'
+									. '<td id="close-comment" class="' . ( /* todo: get if included in stdlib or not */ '') . '"><div class="markdown">' . user_input_process($candidate['closed-comment']) . '</div></td></tr>';
 								/*
 								if ($can_close && !$in_standard)
 								{
@@ -346,14 +346,14 @@
 							{
 								$status = $cand['closed'] ? 'closed' : 'open';
 								echo '<div class="candidate-entry">'
-									. "<h3 class='candidate-header'>{$cand['lib-name']} (v{$cand['lib-version']})</h3>"
+									. '<h3 class="candidate-header">' . $cand['lib-name'] . ' (v' . $cand['lib-version'] . ')</h3>'
 									. '<dl class="candidate-details">'
-										. "<dt>Name</dt><dd><a href='items/{$cand['HEX(libid)']}'>{$cand['lib-name']}</a></dd>"
-										. "<dt>Version</dt><dd>{$cand['lib-version']}</dd>"
-										. "<dt>User</dt><dd><a href='users/$cand[user]/profile'>$cand[user]</a></dd>"
-										. "<dt>Date</dt><dd>$cand[date]</dd>"
-										. "<dt>Status</dt><dd class='cand-$status'>$status</dd>"
-										. "<dt>Link</dt><dd>&#9654; <a href='./$cand[id]'>Go to discussion thread</a> &#9654;</dd>"
+										. '<dt>Name</dt><dd><a href="items/' . $cand['HEX(libid)'] . '">' . $cand['lib-name'] . '</a></dd>'
+										. '<dt>Version</dt><dd>' . $cand['lib-version'] . '</dd>'
+										. '<dt>User</dt><dd><a href="users/' . $cand['user'] . '/profile">' . $cand['user'] . '</a></dd>'
+										. '<dt>Date</dt><dd>' . $cand['date'] . '</dd>'
+										. '<dt>Status</dt><dd class="cand-' . $status . '">' . $status . '</dd>'
+										. '<dt>Link</dt><dd>&#9654; <a href="./' . $cand['id'] . '">Go to discussion thread</a> &#9654;</dd>'
 									. '</dl></div>';
 							}
 						?>
@@ -362,11 +362,11 @@
 				}
 			?>
 		</div>
-		<?php require("partials/footer.php"); require("partials/header.php"); ?>
+		<?php require('partials/footer.php'); require('partials/header.php'); ?>
 	</body>
 </html>
 <?php
-	require_once("util/rewriter.php");
+	require_once('util/rewriter.php');
 	echo rewrite();
 	ob_end_flush();
 ?>

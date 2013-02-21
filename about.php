@@ -1,11 +1,11 @@
 <?php
 	session_start();
-	$page_title = "About";
+	$page_title = 'About';
 ?>
 <!DOCTYPE html>
 <html>
 	<head>
-		<?php require("partials/html.head.php"); ?>
+		<?php require('partials/html.head.php'); ?>
 	</head>
 	<body>
 		<h1 id="page-title">About</h1>
@@ -34,6 +34,6 @@
 				</ul>
 			</p>
 		</div>
-		<?php require("partials/footer.php"); require("partials/header.php"); ?>
+		<?php require('partials/footer.php'); require('partials/header.php'); ?>
 	</body>
 </html>

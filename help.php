@@ -1,11 +1,11 @@
 <?php
 	session_start();
-	$page_title = "Help";
+	$page_title = 'Help';
 ?>
 <!DOCTYPE html>
 <html>
 	<head>
-		<?php require("partials/html.head.php"); ?>
+		<?php require('partials/html.head.php'); ?>
 		<link rel="stylesheet" type="text/css" href="style/help.css"/>
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 		<script type="text/javascript" src="javascript/jquery-ui.js"></script>
@@ -45,6 +45,6 @@
 				</p>
 			</div>
 		</div>
-		<?php require("partials/footer.php"); require("partials/header.php"); ?>
+		<?php require('partials/footer.php'); require('partials/header.php'); ?>
 	</body>
 </html>

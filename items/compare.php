@@ -13,7 +13,7 @@
 	define('ACT_DEL', 2);
 	define('ACT_MOD', 3);
 
-	$page_title = "Compare ERROR";
+	$page_title = 'Compare ERROR';
 	$error = true; $warning = false;
 	for ($i = 0; $i < 1; $i++) {
 		$api = new ALD(API_URL);
@@ -153,7 +153,7 @@
 			}
 		}
 
-		$page_title = "Comparing $item_name v$version_old with v$version_new";
+		$page_title = 'Comparing ' . $item_name . ' v' . $version_old . ' with v' . $version_new;
 		$error = false;
 	}
 ?>
@@ -207,10 +207,10 @@
 						foreach ($meta_actions AS $action) {
 							switch ($action['type']) {
 								case ACT_ADD: $prefix = 'Added:';
-											$details = "Property <code>$action[property]</code> has been added to the package metadata.";
+											$details = 'Property <code>' . $action['property'] . '</code> has been added to the package metadata.';
 											break;
 								case ACT_DEL: $prefix = 'Deleted:';
-											$details = "Property <code>$action[property]</code> has been removed from the package metadata.";
+											$details = 'Property <code>' . $action['property'] . '</code> has been removed from the package metadata.';
 											break;
 								default:
 								case ACT_MOD: $prefix = 'Modified:';
@@ -227,7 +227,7 @@
 	</body>
 </html>
 <?php
-	require_once("../util/rewriter.php");
+	require_once('../util/rewriter.php');
 	echo rewrite();
 	ob_end_flush();
 ?>

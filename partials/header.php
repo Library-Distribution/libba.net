@@ -38,9 +38,9 @@
 
 <div id="login">
 	<?php
-		if (isset($_SESSION["user"]))
+		if (isset($_SESSION['user']))
 		{
-			echo "Welcome<br/><a href='users/$_SESSION[user]/profile'>$_SESSION[user]</a>!<hr/><a href='logout'>Logout</a>";
+			echo 'Welcome<br/><a href="users/' . $_SESSION['user'] . '/profile">' . $_SESSION['user'] . '</a>!<hr/><a href="logout">Logout</a>';
 		}
 		else
 		{

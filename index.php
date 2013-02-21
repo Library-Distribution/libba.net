@@ -1,15 +1,15 @@
 <?php
 	session_start();
-	$page_title = "Home";
+	$page_title = 'Home';
 ?>
 <!DOCTYPE html>
 <html>
 	<head>
-		<?php require("partials/html.head.php"); ?>
+		<?php require('partials/html.head.php'); ?>
 		<link rel="stylesheet" type="text/css" href="style/index.css"/>
 	</head>
 	<body>
-		<?php require("partials/header.php"); ?>
+		<?php require('partials/header.php'); ?>
 		<div id="page-content">
 			<a href="about" title="Get to know libba.net"><img id="logo" alt="libba.net logo" src="images/logo.png"/></a>
 
@@ -40,6 +40,6 @@
 				<a href="http://apache.org" title="Running on Apache"><img alt="apache" src="images/apache.gif"/></a>
 			</div>
 		</div>
-		<?php require("partials/footer.php"); ?>
+		<?php require('partials/footer.php'); ?>
 	</body>
 </html>
