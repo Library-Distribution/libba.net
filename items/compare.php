@@ -1,5 +1,6 @@
 <?php
 	ob_start();
+	session_start();
 
 	require_once('../util/ALD.php');
 	require_once('../modules/semver/semver.php');
