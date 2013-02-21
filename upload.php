@@ -1,24 +1,24 @@
 <?php
 	session_start();
 
-	require_once("config/constants.php");
-	require_once("util/secure_redirect.php");
+	require_once('config/constants.php');
+	require_once('util/secure_redirect.php');
 	secure_redirect();
 
 	if ($_POST && $_FILES)
 	{
-		$page_title = "Uploading...";
-		$mode = "process";
+		$page_title = 'Uploading...';
+		$mode = 'process';
 	}
 	else
 	{
-		$page_title = "Upload a new library or application";
-		$mode = "start";
+		$page_title = 'Upload a new library or application';
+		$mode = 'start';
 	}
 
-	$logged_in = isset($_SESSION["user"]);
+	$logged_in = isset($_SESSION['user']);
 	if (!$logged_in) {
-		require_once("util/ALD.php");
+		require_once('util/ALD.php');
 		$api = new ALD(API_URL);
 		$user_list = $api->getUserList();
 	}
@@ -26,7 +26,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<?php require("partials/html.head.php"); ?>
+		<?php require('partials/html.head.php'); ?>
 		<link rel="stylesheet" type="text/css" href="style/upload.css"/>
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 		<script type="text/javascript" src="javascript/jquery-ui.js"></script>
@@ -37,10 +37,10 @@
 		<h1 id="page-title"><?php echo $page_title; ?></h1>
 		<div id="page-content">
 			<?php
-				if ($mode == "start")
+				if ($mode == 'start')
 				{
 			?>
-					<form name="up" action="<?php echo $_SERVER["REQUEST_URI"]; ?>" method="post" enctype="multipart/form-data">
+					<form name="up" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="post" enctype="multipart/form-data">
 						<span class="advice">To upload your code, please fill in the following fields:</span>
 						<fieldset>
 							<legend>Package information</legend>
@@ -57,7 +57,7 @@
 							<datalist id="registered-users">
 							<?php
 								foreach ($user_list AS $user) {
-									echo "<option value='$user[name]'></option>";
+									echo '<option value="' . $user['name'] . '"></option>';
 								}
 							?>
 							</datalist>
@@ -70,22 +70,22 @@
 					</form>
 			<?php
 				}
-				else if ($mode == "process")
+				else if ($mode == 'process')
 				{
-					if (isset($_FILES["package"]) && ((isset($_POST["user"]) && isset($_POST["password"])) || isset($_SESSION["user"])))
+					if (isset($_FILES['package']) && ((isset($_POST['user']) && isset($_POST['password'])) || isset($_SESSION['user'])))
 					{
-						$user = isset($_POST["user"]) ? $_POST["user"] : $_SESSION["user"];
-						$password = isset($_POST["password"]) ? $_POST["password"] : $_SESSION["password"];
+						$user = isset($_POST['user']) ? $_POST['user'] : $_SESSION['user'];
+						$password = isset($_POST['password']) ? $_POST['password'] : $_SESSION['password'];
 
-						require_once("util/ALD.php");
+						require_once('util/ALD.php');
 						try
 						{
 							$conn = new ALD( SECURE_API_URL );
-							$id = $conn->uploadItem($_FILES["package"]["tmp_name"], $user, $password);
+							$id = $conn->uploadItem($_FILES['package']['tmp_name'], $user, $password);
 						}
 						catch (HttpException $e)
 						{
-							echo "Failed to upload: {$e->getCode()}<p>{$e->getMessage()}</p>";
+							echo 'Failed to upload: ' . $e->getCode() . '<p>' . $e->getMessage() . '</p>';
 							$error = true;
 						}
 						if (!isset($error))
@@ -98,10 +98,10 @@
 						}
 					}
 					else
-						echo "Failed to upload: required data is missing.";
+						echo 'Failed to upload: required data is missing.';
 				}
 			?>
 		</div>
-		<?php require("partials/footer.php"); require("partials/header.php"); ?>
+		<?php require('partials/footer.php'); require('partials/header.php'); ?>
 	</body>
 </html>

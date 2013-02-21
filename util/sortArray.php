@@ -8,7 +8,7 @@ function sortArray($data, $field)
 		$field = array($field => false);
 	}
 	sortArray_storage($field);
-	usort($data, "sortArray_sort");
+	usort($data, 'sortArray_sort');
 	return $data;
 }
 
