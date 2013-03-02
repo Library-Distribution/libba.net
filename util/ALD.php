@@ -60,7 +60,7 @@
 
 		public function uploadItem( $file, $user, $password )
 		{
-			return json_decode( $this->_Request( CURLOPT_POST, "/items/add", array("Accept: application/json"), array("package" => "@$file"), $user, $password) )->id;
+			$this->_Request( CURLOPT_PUT, "/items/add", array('Content-type: application/x-ald-package'), $file, $user, $password);
 		}
 
 		public function modifyItemById( $id, $request_user, $request_password, $reviewed = NULL, $default = NULL, $user = NULL )
@@ -101,6 +101,9 @@
 			if (is_array($data))
 			{
 				curl_setopt($conn, CURLOPT_POSTFIELDS, $data); # data to upload (@ for files)
+			} else if ($data != NULL) {
+				curl_setopt($conn, CURLOPT_INFILE, fopen($data, 'r'));
+				curl_setopt($conn, CURLOPT_INFILESIZE, filesize($data));
 			}
 
 			if ($user != NULL && $password != NULL)
