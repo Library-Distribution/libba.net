@@ -81,7 +81,7 @@
 						try
 						{
 							$conn = new ALD( SECURE_API_URL );
-							$id = $conn->uploadItem($_FILES["package"]["tmp_name"], $user, $password);
+							$conn->uploadItem($_FILES["package"]["tmp_name"], $user, $password);
 						}
 						catch (HttpException $e)
 						{
@@ -93,7 +93,6 @@
 			?>
 							<b>Successfully uploaded!</b><br/>
 							<a href="index">Go to index</a><br />
-							<a href="items/<?php echo $id; ?>">View uploaded app or library</a>
 			<?php
 						}
 					}
