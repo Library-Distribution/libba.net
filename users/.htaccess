@@ -4,9 +4,4 @@ DirectoryIndex list.php
 
 RewriteEngine On
 
-RewriteRule ^(.+)/profile$      profile.php?user=$1      [L]
-RewriteRule ^(.+)/activity$     activity.php?user=$1     [L]
-RewriteRule ^(.+)/items$        items.php?user=$1        [L]
-RewriteRule ^(.+)/achievements$ achievements.php?user=$1 [L]
-RewriteRule ^(.+)/modify$       modify.php?user=$1       [L]
-RewriteRule ^(.+)/suspend$      suspend.php?user=$1      [L]
+RewriteRule ^(.+)/(profile|activity|items|achievements|modify|suspend)$      $2.php?user=$1      [L]
