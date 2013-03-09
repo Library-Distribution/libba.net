@@ -1,0 +1,5 @@
+Options -Multiviews
+
+RewriteEngine On
+
+DirectoryIndex list.php

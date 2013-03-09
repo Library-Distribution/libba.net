@@ -1,0 +1,17 @@
+@import "../imports/item-list.scss";
+
+#release-list {
+	dd.release-published {
+		background-color: lightgreen;
+	}
+
+	dd.release-unpublished {
+		background-color: #FFFF73;
+	}
+
+	@extend %item-list;
+
+	.release-entry {
+		@extend %item-list-entry;
+	}
+}
