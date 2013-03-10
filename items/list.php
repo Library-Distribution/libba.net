@@ -30,6 +30,7 @@
 			AND $page_title .= " by $user";
 		$stdlib = !empty($_GET["stdlib"]) ? $_GET["stdlib"] : "both"
 			AND $page_title .= !empty($_GET["stdlib"]) ? " (lib standard)" : "";
+		$unreviewed = !empty($_GET['reviewed']) ? $_GET['reviewed'] : 'yes';
 		$tags = isset($_GET["tags"]) ? explode("|", $_GET["tags"]) : NULL
 			AND $page_title .= " (tags: " . implode($tags, ", ") . ")";
 
@@ -39,7 +40,7 @@
 
 		try
 		{
-			$items = $api->getItemList($start_index, $page_itemcount + 1, $type, $user, NULL, $tags, "latest", $stdlib);
+			$items = $api->getItemList($start_index, $page_itemcount + 1, $type, $user, NULL, $tags, "latest", $stdlib, $unreviewed);
 		}
 		catch (HttpException $e)
 		{
@@ -109,7 +110,10 @@
 							}
 							echo "<div class='letter-container' id='items$current_letter'><h3>$current_letter</h3><div id='items_$current_letter'><ul>";
 						}
-						echo "<li id='item{$item['id']}' class='$item[type]'><a class='item' href='./{$item['id']}'>{$item['name']}</a> (v{$item['version']}) by <a class='userlink' href='users/{$item['user']['name']}/profile'>{$item['user']['name']}</a></li>";
+						echo "<li id='item{$item['id']}' class='$item[type]'>",
+								"<a class='item' href='./{$item['id']}'>{$item['name']}</a> (v{$item['version']}) by <a class='userlink' href='users/{$item['user']['name']}/profile'>{$item['user']['name']}</a>",
+								$item['reviewed'] ? '' : '<a title="This item has not yet been reviewed" href="reviews/' . $item['id'] . '" class="unreviewed"></a>',
+							"</li>";
 						$last_letter = $current_letter;
 					}
 					if (count($items) > 0)
