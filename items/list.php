@@ -50,6 +50,16 @@
 		if (count($items) > 0)
 		{
 			$items = sortArray($items, "name");
+			foreach ($items AS &$item) {
+				try {
+					$item_data = $api->getItemById($item['id']);
+				} catch (HttpException $e) {
+					$error_message = 'Failed to get item details: API error';
+					$error_description = 'The details on item "' . $item['name'] . '" could not be read. API error was: "' . $e->getMessage() . '"';
+					break;
+				}
+				$item = array_merge($item, $item_data);
+			}
 		}
 		$error = false;
 	}
