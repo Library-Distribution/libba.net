@@ -93,7 +93,7 @@
 			{
 				echo "<meta http-equiv=\"REFRESH\" content=\"10;url=$redirect\">";
 		?>
-				<script type="text/javascript" src="javascript/update_redirect_time.js"></script>
+				<script type="text/javascript" src="javascript/login.js"></script>
 		<?php
 			} else {
 		?>
