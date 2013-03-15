@@ -88,7 +88,6 @@
 		<link rel="stylesheet" type="text/css" href="style/reviews/<?php echo isset($id) ? 'view' : 'list'; ?>.css"/>
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 		<script type="text/javascript" src="javascript/jquery-ui.js"></script>
-		<script type="text/javascript" src="javascript/comments.js"></script>
 		<script type="text/javascript" src="javascript/default.js"></script>
 	</head>
 	<body>
