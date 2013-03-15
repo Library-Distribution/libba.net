@@ -232,7 +232,7 @@
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 		<script type="text/javascript" src="javascript/jquery-ui.js"></script>
 		<script type="text/javascript" src="javascript/comments.js"></script>
-		<script type="text/javascript" src="javascript/candidate.js"></script>
+		<script type="text/javascript" src="javascript/default.js"></script>
 	</head>
 	<body>
 		<h1 id="page-title"><?php echo $page_title; ?></h1>
@@ -340,13 +340,13 @@
 				else
 				{
 			?>
-					<div id="candidate-list">
+					<div id="candidate-list" class="js-ui-accordion">
 						<?php
 							foreach ($candidates AS $cand)
 							{
 								$status = $cand['closed'] ? 'closed' : 'open';
 								echo '<div class="candidate-entry">'
-									. "<h3 class='candidate-header'>{$cand['lib-name']} (v{$cand['lib-version']})</h3>"
+									. "<h3 class='candidate-header js-ui-accordion-header'>{$cand['lib-name']} (v{$cand['lib-version']})</h3>"
 									. '<dl class="candidate-details">'
 										. "<dt>Name</dt><dd><a href='items/{$cand['HEX(libid)']}'>{$cand['lib-name']}</a></dd>"
 										. "<dt>Version</dt><dd>{$cand['lib-version']}</dd>"

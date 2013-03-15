@@ -72,6 +72,7 @@
 
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 		<script type="text/javascript" src="javascript/jquery-ui.js"></script>
+		<script type="text/javascript" src="javascript/default.js"></script>
 		<script type="text/javascript" src="javascript/items/list.js"></script>
 
 		<link rel="stylesheet" type="text/css" href="style/items/list.css"/>
@@ -79,7 +80,7 @@
 	<body>
 		<h1 id="page-title"><?php echo $page_title; ?></h1>
 		<div id="page-content">
-			<div id="items-list">
+			<div id="items-list" class="js-ui-accordion">
 			<?php
 				if ($error)
 				{
@@ -108,7 +109,7 @@
 							{
 								echo "</ul></div></div>";
 							}
-							echo "<div class='letter-container' id='items$current_letter'><h3>$current_letter</h3><div id='items_$current_letter'><ul>";
+							echo "<div class='letter-container' id='items$current_letter'><h3 class='js-ui-accordion-header'>$current_letter</h3><div id='items_$current_letter'><ul>";
 						}
 						echo "<li id='item{$item['id']}' class='$item[type]'>",
 								"<a class='item' href='./{$item['id']}'>{$item['name']}</a> (v{$item['version']}) by <a class='userlink' href='users/{$item['user']['name']}/profile'>{$item['user']['name']}</a>",

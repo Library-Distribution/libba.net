@@ -89,7 +89,7 @@
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 		<script type="text/javascript" src="javascript/jquery-ui.js"></script>
 		<script type="text/javascript" src="javascript/comments.js"></script>
-		<script type="text/javascript" src="javascript/review.js"></script>
+		<script type="text/javascript" src="javascript/default.js"></script>
 	</head>
 	<body>
 		<h1 id="page-title"><?php echo $page_title; ?></h1>
@@ -159,12 +159,12 @@
 				else
 				{
 			?>
-					<div id="review-list">
+					<div id="review-list" class="js-ui-accordion">
 						<?php
 							foreach ($items AS $item)
 							{
 								echo '<div class="review-entry">'
-									. "<h3 class='review-header'>$item[name]</h3>"
+									. "<h3 class='review-header js-ui-accordion-header'>$item[name]</h3>"
 									. '<dl>'
 										. "<dt>Library</dt><dd><a href='items/$item[id]'>$item[name]</a></dd>"
 										. "<dt>Version</dt><dd>$item[version]</dd>"
