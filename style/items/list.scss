@@ -5,7 +5,7 @@
 	}
 }
 
-.letter-container {
+html.no-js .letter-container { /* styles for non-javascript clients (use jQueryUI with JS instead) */
 	padding: 5px;
 	border: solid lightgray 1px {
 		bottom: {
@@ -21,4 +21,22 @@ li.lib {
 
 li.app {
 	list-style-image: url('/images/app.png');
+}
+
+#items-list li {
+	position: relative;
+	background-color: transparent;
+}
+
+li a.unreviewed {
+	background-image: url('/images/review.png');
+	background-position:  right center;
+	background-size: auto 50%;
+	background-repeat: no-repeat;
+
+	width: 10%;
+	position: absolute;
+	top: 0px;
+	bottom: 0px;
+	right: 0px;
 }

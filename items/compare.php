@@ -167,8 +167,8 @@
 		<link type="text/css" rel="stylesheet" href="style/items/compare.css"/>
 
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-		<script type="text/javascript" src="javascript/jquery-ui.js"></script>
-		<script type="text/javascript" src="javascript/items/compare.js"></script>
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="javascript/default.js"></script>
 	</head>
 	<body>
 		<h1 id="page-title" class="side-image"><?php echo $page_title; ?></h1>
@@ -181,7 +181,7 @@
 					warning($warn_message, $warn_description); # do not clean here
 				} else {
 			?>
-				<ul id="diff-steps">
+				<ul id="diff-steps" class="js-ui-accordion">
 					<?php
 						foreach($actions AS $category => $steps) {
 							if (count($steps) > 0) {
@@ -200,7 +200,7 @@
 												$details = '<div class="compare-diff">' . $action['diff'] . '</div>';
 												break;
 								}
-								echo '<li><span class="action-summary"><span class="action-type">' . $prefix . '</span> ' . $file . '</span><div class="action-details">' . $details . '</div></li>';
+								echo '<li><span class="action-summary js-ui-accordion-header"><span class="action-type">' . $prefix . '</span> ' . $file . '</span><div class="action-details">' . $details . '</div></li>';
 							}
 						}
 						echo '<h3>metadata</h3>';
@@ -217,7 +217,7 @@
 											$details = '<table><tr class="old-meta"><th>Previous value:</th><td>' . $action['old'] . '</td></tr><tr class="new-meta"><th>New value:</th><td>' . $action['new'] . '</td></tr></table>';
 											break;
 							}
-							echo '<li><span class="action-summary"><span class="action-type">' . $prefix . '</span> ' . $action['property'] . '</span><div class="action-details">' . $details . '</div></li>';
+							echo '<li><span class="action-summary js-ui-accordion-header"><span class="action-type">' . $prefix . '</span> ' . $action['property'] . '</span><div class="action-details">' . $details . '</div></li>';
 						}
 					?>
 				</ul>

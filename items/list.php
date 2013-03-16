@@ -30,6 +30,7 @@
 			AND $page_title .= " by $user";
 		$stdlib = !empty($_GET["stdlib"]) ? $_GET["stdlib"] : "both"
 			AND $page_title .= !empty($_GET["stdlib"]) ? " (lib standard)" : "";
+		$unreviewed = !empty($_GET['reviewed']) ? $_GET['reviewed'] : 'yes';
 		$tags = isset($_GET["tags"]) ? explode("|", $_GET["tags"]) : NULL
 			AND $page_title .= " (tags: " . implode($tags, ", ") . ")";
 
@@ -39,7 +40,7 @@
 
 		try
 		{
-			$items = $api->getItemList($start_index, $page_itemcount + 1, $type, $user, NULL, $tags, "latest", $stdlib);
+			$items = $api->getItemList($start_index, $page_itemcount + 1, $type, $user, NULL, $tags, "latest", $stdlib, $unreviewed);
 		}
 		catch (HttpException $e)
 		{
@@ -50,25 +51,35 @@
 		if (count($items) > 0)
 		{
 			$items = sortArray($items, "name");
+			foreach ($items AS &$item) {
+				try {
+					$item_data = $api->getItemById($item['id']);
+				} catch (HttpException $e) {
+					$error_message = 'Failed to get item details: API error';
+					$error_description = 'The details on item "' . $item['name'] . '" could not be read. API error was: "' . $e->getMessage() . '"';
+					break;
+				}
+				$item = array_merge($item, $item_data);
+			}
 		}
 		$error = false;
 	}
 ?>
 <!DOCTYPE html>
-<html>
+<html class="no-js">
 	<head>
 		<?php require("../partials/html.head.php"); ?>
 
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-		<script type="text/javascript" src="javascript/jquery-ui.js"></script>
-		<script type="text/javascript" src="javascript/items/list.js"></script>
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="javascript/default.js"></script>
 
 		<link rel="stylesheet" type="text/css" href="style/items/list.css"/>
 	</head>
 	<body>
 		<h1 id="page-title"><?php echo $page_title; ?></h1>
 		<div id="page-content">
-			<div id="items-list">
+			<div id="items-list" class="js-ui-accordion">
 			<?php
 				if ($error)
 				{
@@ -97,9 +108,12 @@
 							{
 								echo "</ul></div></div>";
 							}
-							echo "<div class='letter-container' id='items$current_letter'><h3>$current_letter</h3><div id='items_$current_letter'><ul>";
+							echo "<div class='letter-container' id='items$current_letter'><h3 class='js-ui-accordion-header'>$current_letter</h3><div id='items_$current_letter'><ul>";
 						}
-						echo "<li id='item{$item['id']}' class='$item[type]'><a class='item' href='./{$item['id']}'>{$item['name']}</a> (v{$item['version']}) by <a class='userlink' href='users/{$item['user']['name']}/profile'>{$item['user']['name']}</a></li>";
+						echo "<li id='item{$item['id']}' class='$item[type]'>",
+								"<a class='item' href='./{$item['id']}'>{$item['name']}</a> (v{$item['version']}) by <a class='userlink' href='users/{$item['user']['name']}/profile'>{$item['user']['name']}</a>",
+								$item['reviewed'] ? '' : '<a title="This item has not yet been reviewed" href="reviews/' . $item['id'] . '" class="unreviewed"></a>',
+							"</li>";
 						$last_letter = $current_letter;
 					}
 					if (count($items) > 0)

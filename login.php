@@ -93,14 +93,14 @@
 			{
 				echo "<meta http-equiv=\"REFRESH\" content=\"10;url=$redirect\">";
 		?>
-				<script type="text/javascript" src="javascript/update_redirect_time.js"></script>
+				<script type="text/javascript" src="javascript/login.js"></script>
 		<?php
 			} else {
 		?>
 			<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-			<script type="text/javascript" src="javascript/jquery-ui.js"></script>
+			<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
 			<script type="text/javascript" src="javascript/modernizr.js"></script>
-			<script type="text/javascript" src="javascript/polyfills/loadFormPolyfills.js"></script>
+			<script type="text/javascript" src="javascript/form.js"></script>
 		<?php } ?>
 	</head>
 	<body <?php echo $should_redirect ? "onload=\"setInterval(update_redirect_time, 999)\"" : ""; ?>>
