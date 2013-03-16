@@ -8,19 +8,19 @@
 		<?php require("partials/html.head.php"); ?>
 		<link rel="stylesheet" type="text/css" href="style/help.css"/>
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-		<script type="text/javascript" src="javascript/jquery-ui.js"></script>
-		<script type="text/javascript" src="javascript/help.js"></script>
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="javascript/default.js"></script>
 	</head>
 	<body>
 		<h1 id="page-title">libba.net help page</h1>
-		<div id="page-content">
-			<h2 class="question">What is this?</h2>
+		<div id="page-content" class="js-ui-accordion">
+			<h2 class="question js-ui-accordion-header">What is this?</h2>
 			<div class="answer">
 				This is a draft for a webpage backend for a standardized AutoHotkey library distribution system.
 				Users can <a href="login.php?mode=register">register</a> (really simple) to upload their libraries and applications written in AutoHotkey here.
 				Anyone can download them in a standardized way and use them.
 			</div>
-			<h2 class="question">How can I use the software provided here?</h2>
+			<h2 class="question js-ui-accordion-header">How can I use the software provided here?</h2>
 			<div class="answer">
 				<p>
 					You can download and install the software provided here using <a href="https://github.com/maul-esel/marmoreal">marmoreal</a>.
@@ -31,7 +31,7 @@
 					You can unpack it and extract the included files. The <cite>definition.ald</cite> file is for internal use by marmoreal and this website only.
 				</p>
 			</div>
-			<h2 class="question">How can I upload my stuff?</h2>
+			<h2 class="question js-ui-accordion-header">How can I upload my stuff?</h2>
 			<div class="answer">
 				<p>
 					As well as for downloading, you can use <a href="https://github.com/maul-esel/marmoreal">marmoreal</a>.
