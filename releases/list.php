@@ -42,7 +42,7 @@ for ($i = 0; $i < 1; $i++) {
 
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 		<script type="text/javascript" src="javascript/jquery-ui.js"></script>
-		<script type="text/javascript" src="javascript/releases/list.js"></script>
+		<script type="text/javascript" src="javascript/default.js"></script>
 	</head>
 	<body>
 		<h1 id="page-title"><?php echo $page_title; ?></h1>
@@ -51,10 +51,10 @@ for ($i = 0; $i < 1; $i++) {
 				if ($error) {
 					error($error_message, $error_description, true);
 				} else {
-					echo '<div id="release-list">';
+					echo '<div id="release-list" class="js-ui-accordion">';
 					foreach ($releases AS $release)  {
 						echo '<div class="release-entry">',
-							'<h3 class="release-header">', $release['release'], '</h3>',
+							'<h3 class="release-header js-ui-accordion-header">', $release['release'], '</h3>',
 							'<dl class="release-details">',
 								'<dt>Date</dt><dd>', $release['date'], '</dd>',
 								'<dt>Published</dt><dd class="release-', $release['published'] ? 'published' : 'unpublished', '">', $release['published'] ? 'yes' : 'no', '</dd>',
