@@ -5,8 +5,12 @@ session_start();
 require_once dirname(__FILE__) . '/Layout.php';
 
 $layout = new Layout($layout);
+$data = array();
+
 try {
-	$data = logic();
+	if (function_exists('logic')) {
+		$data = logic();
+	}
 } catch (LibbaException $e) {
 	$layout = new Layout('error');
 	$data = array('msg' => $e->getMessage(), 'description' => $e->getDescription(), 'type' => $e->getType());
