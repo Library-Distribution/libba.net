@@ -79,6 +79,10 @@
 	{
 		$page_title = "Unreviewed items";
 		$items = $api->getItemList(0, "all", NULL, NULL, NULL, NULL, NULL, "both", "no");
+		foreach ($items AS &$item) {
+			$item_data = $api->getItemById($item['id']);
+			$item['user'] = $item_data['user']['name'];
+		}
 	}
 ?>
 <!DOCTYPE html>
@@ -167,7 +171,7 @@
 									. '<dl>'
 										. "<dt>Library</dt><dd><a href='items/$item[id]'>$item[name]</a></dd>"
 										. "<dt>Version</dt><dd>$item[version]</dd>"
-										. "<dt>User</dt><dd><a href=\"users/{$item["user"]["name"]}/profile\">{$item["user"]["name"]}</a></dd>"
+										. '<dt>User</dt><dd><a href="users/', $item['user'], '/profile">', $item['user'], '</a></dd>'
 										. "<dt>Link</dt><dd>&#9654; <a href='./$item[id]'>Go to discussion thread</a> &#9654;</dd>"
 									. '</dl></div>';
 							}
