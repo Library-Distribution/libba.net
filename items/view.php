@@ -83,6 +83,10 @@
 					<th>Download Count:</th>
 					<td><?php echo $item['downloads']; ?></td>
 				</tr>
+				<tr>
+					<th>Average Rating by Users:</th>
+					<td><?php echo $item['rating']; ?></td>
+				</tr>
 			</table>
 			<h3 id="item-descr-title">Description</h3>
 			<p id="item-descr">
