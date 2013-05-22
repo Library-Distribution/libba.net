@@ -79,6 +79,10 @@
 					<th>Reviewed:</th>
 					<td><?php echo "<span style=\"font-weight: bolder; color: " . ($item['reviewed'] ? "green\">Yes" : "red\">No") . "</span>"; ?></td>
 				</tr>
+				<tr>
+					<th>Download Count:</th>
+					<td><?php echo $item['downloads']; ?></td>
+				</tr>
 			</table>
 			<h3 id="item-descr-title">Description</h3>
 			<p id="item-descr">
