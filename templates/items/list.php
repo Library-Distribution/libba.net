@@ -4,7 +4,7 @@
 	<?php require dirname(__FILE__) . '/../../partials/html.body.upper.php'; ?>
 
 	<div id='items-list' class='js-ui-accordion'>
-	<?php foreach ($template['items'] AS $letter => $items) { ?>
+	<?php foreach (group_array($template['items'], 'first_letter') AS $letter => $items) { ?>
 		<div class='letter-container' id='items<?php echo $letter; ?>'>
 			<h3 class='js-ui-accordion-header'><?php echo $letter; ?></h3>
 			<div id='items_<?php echo $letter; ?>'>
@@ -27,3 +27,23 @@
 
 	<?php require dirname(__FILE__) . '/../../partials/html.body.lower.php'; ?>
 </html>
+<?php
+function group_array($array, $selector) {
+	$grouped = array();
+	foreach ($array AS $item) {
+		$key = is_callable($selector) ? $selector($item) : $item[$selector];
+		if (!isset($grouped[$key])) {
+			$grouped[$key] = array();
+		}
+		$grouped[$key][] = $item;
+	}
+	return $grouped;
+}
+function first_letter($item) {
+	$letter = strtoupper(substr($item['name'], 0, 1));
+	if (!ctype_alpha($letter)) {
+		$letter = '.#?1';
+	}
+	return $letter;
+}
+?>

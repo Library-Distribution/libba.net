@@ -45,9 +45,8 @@ function logic() {
 
 	if (count($items) > 0) {
 		$items = sortArray($items, 'name');
-		$grouped_items = array();
 
-		foreach ($items AS $item) {
+		foreach ($items AS &$item) {
 			# find more information on the item
 			try {
 				$item_data = $api->getItemById($item['id']);
@@ -56,19 +55,9 @@ function logic() {
 						'The details on item "' . $item['name'] . '" could not be read. API error was: "' . htmlentities($e->getMessage()) . '"');
 			}
 			$item = array_merge($item, $item_data);
-
-			# group the item by first letter of its name
-			$letter = strtoupper(substr($item['name'], 0, 1));
-			if (!ctype_alpha($letter)) {
-				$letter = ".#?1";
-			}
-			if (!isset($grouped_items[$letter])) {
-				$grouped_items[$letter] = array();
-			}
-			array_push($grouped_items[$letter], $item);
 		}
 	}
 
-	return array('page_title' => $page_title, 'items' => $grouped_items);
+	return array('page_title' => $page_title, 'items' => $items);
 }
 ?>
