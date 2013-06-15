@@ -89,6 +89,14 @@
 			return $this->_Request( CURLOPT_HTTPGET, "/items/describe/$id", array('Accept: application/x-ald-package') );
 		}
 
+		public function getStdlibReleases() {
+			return json_decode( $this->_Request( CURLOPT_HTTPGET, '/stdlib/releases/list', array('Accept: application/json') ), true );
+		}
+
+		public function describeStdlibRelease($release) {
+			return json_decode( $this->_Request( CURLOPT_HTTPGET, '/stdlib/releases/describe/' . $release, array('Accept: application/json') ), true );
+		}
+
 		private function _Request($method, $url, $header, $data = NULL, $user = NULL, $password = NULL)
 		{
 			$conn = curl_init();
